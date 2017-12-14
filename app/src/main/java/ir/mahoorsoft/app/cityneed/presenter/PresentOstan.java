@@ -24,11 +24,6 @@ public class PresentOstan implements Ostan.OnOstanListener {
         ostan.getOstan();
     }
 
-    public void searchOstan(String flag){
-        Ostan ostan = new Ostan(this);
-        ostan.searchOstan(flag);
-    }
-
     @Override
     public void onReceiveOstan(ArrayList<StOstan> ostans) {
         ArrayList<StCity> ostanName = new ArrayList<>();

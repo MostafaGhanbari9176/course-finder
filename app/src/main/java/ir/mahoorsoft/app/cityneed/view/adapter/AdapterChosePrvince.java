@@ -48,7 +48,6 @@ public class AdapterChosePrvince extends RecyclerView.Adapter<AdapterChosePrvinc
             txt = (TextView) itemView.findViewById(R.id.txtItemProvince);
             item = (LinearLayout) view.findViewById(R.id.itemChoseProvince);
             img = (ImageView) itemView.findViewById(R.id.imgChosePrvince);
-
         }
 
         public void bindData(String city, final int position) {
