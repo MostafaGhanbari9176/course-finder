@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/back_grand_layout"
+    android:gravity="right|center"
+    android:orientation="vertical"
+    android:paddingTop="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right|center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtUserName_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:gravity="bottom|right|center"
+                android:text="کاربر مهمان"
+                android:textColor="@color/colorDark"
+                android:textSize="@dimen/txt_size_smal" />
+
+            <TextView
+                android:id="@+id/txtProfileButton_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:gravity="top|right|center"
+                android:text="ثبت نام-ورود"
+                android:textColor="@color/colorDark"
+                android:textSize="@dimen/txt_size_smal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_profile"
+                android:layout_width="@dimen/img_fragment_karbar"
+                android:layout_height="@dimen/img_fragment_karbar"
+                android:layout_weight="1"
+                android:background="@drawable/icon_self" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/colorLine"
+        android:background="@color/line_item"
+        android:orientation="horizontal"></LinearLayout>
+
+</LinearLayout>

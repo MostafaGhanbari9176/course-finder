@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#16815a</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#66cca6</color>
+<!--  0000  -->
+    <color name="text_home">#000</color>
+    <color name="text_item">#000</color>
+    <color name="text_dialog">#000</color>
+    <color name="dark">#000</color>
+    <color name="colorDark">#1a4d3a</color>
+    <color name="light">#ffffff</color>
+    <color name="colorLight">#16815a</color>
+    <color name="text_profile_one">#1a4d3a</color>
+    <color name="text_profile_two">#000000</color>
+    <color name="line_item">#1e5843</color>
+    <color name="btn_true">#16815a</color>
+    <color name="btn_false">#79caaf</color>
+    <color name="back_grand_nav_buttom">#fff</color>
+    <color name="back_grand_txt_search">#29a176</color>
+    <color name="back_grand_txt_search_dialog">#ffffff</color>
+    <color name="back_grand_item">#ffffff</color>
+    <color name="back_grand_button">#85d9bb</color>
+    <color name="back_grand_layout">#E8F5E9</color>
+    <color name="back_grand_dialog">#a0aca1</color>
+    <color name="toolbar_elements1">#fff</color>
+    <color name="error">#F06292</color>
+
+</resources>

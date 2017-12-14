@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary"
+        android:id="@+id/tlbPhoneConfirm"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|right">
+
+
+            <TextView
+                android:text="ورود به نیازمندی شهر"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView8"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:textSize="@dimen/txt_toolbar"
+                android:textColor="@color/toolbar_elements1"
+                android:layout_marginRight="16dp" />
+
+            <Button
+                android:layout_width="@dimen/btn_nav"
+                android:layout_height="@dimen/btn_nav"
+                android:id="@+id/btnBackPhoneConfirm"
+                android:background="@drawable/icon_back"
+                android:layout_marginRight="8dp" />
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/contentPhoneConfirm">
+
+    </FrameLayout>
+
+</LinearLayout>
