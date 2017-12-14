@@ -19,7 +19,6 @@ public class G extends Application {
     public static SharedPreferences preferences;
     public static String Name ;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
