@@ -103,7 +103,14 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         this.finish();
     }
 
-   /*public static void showDialog(DialogPrvince.OnDialogPrvinceListener onDialogPrvinceListener) {
+    @Override
+    protected void onResume() {
+        G.activity = this;
+        G.context = this;
+        super.onResume();
+    }
+
+    /*public static void showDialog(DialogPrvince.OnDialogPrvinceListener onDialogPrvinceListener) {
         if (dialogPrvince == null) {
             dialogPrvince = new DialogPrvince(ActivityProfile.this, onDialogPrvinceListener);
             dialogPrvince.showDialog();

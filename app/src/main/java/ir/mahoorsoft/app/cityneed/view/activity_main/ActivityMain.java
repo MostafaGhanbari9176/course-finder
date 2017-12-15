@@ -1,6 +1,5 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -11,20 +10,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.activity_phone_confirm.ActivityPhoneConfirm;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityPhoneConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
@@ -160,15 +156,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void initProfile() {
-        View view = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null, false);
-
-        ((TextView) view.findViewById(R.id.txtProfileButton_menu)).setText("");
-    }
-
     @Override
     protected void onResume() {
-
+        G.activity = this;
+        G.context = this;
         profileCheck();
         super.onResume();
     }
