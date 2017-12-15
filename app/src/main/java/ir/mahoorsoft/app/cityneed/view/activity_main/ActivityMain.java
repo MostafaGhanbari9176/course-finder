@@ -93,8 +93,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     private void startActivity(Class aClass) {
         Intent intent = new Intent(this, aClass);
         startActivity(intent);
-        //this.finish();
-       // FragmentHome.counter = -4;
 
     }
 

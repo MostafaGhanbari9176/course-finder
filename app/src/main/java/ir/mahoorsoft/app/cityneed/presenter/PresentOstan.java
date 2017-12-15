@@ -1,8 +1,6 @@
 package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
-
-import ir.mahoorsoft.app.cityneed.model.db.DB;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.tables.ostan.Ostan;

@@ -30,16 +30,6 @@ public interface Api {
             @Path("flag") String flag
     );
 
-    @GET("searchCity/{flag}")
-    Call<ArrayList<StCity>> searchCity(
-            @Path("flag") String flag
-    );
-
-    @GET("searchOstan/{flag}")
-    Call<ArrayList<StOstan>> serachOstan(
-            @Path("flag") String flag
-    );
-
     @GET("savePhone/{phone}")
     Call<ArrayList<Response>> savePhone(
             @Path("phone") long phone
@@ -60,6 +50,9 @@ public interface Api {
     Call<ArrayList<StUser>> getUser(
             @Path ("phone") long phone
     );
+
+
+
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(
             @Path("tableName") String tableName,

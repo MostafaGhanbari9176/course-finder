@@ -6,7 +6,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import retrofit2.Call;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.db.DB;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,22 +39,6 @@ public class City {
         });
 
 
-    }
-
-    public void searchCity(String flag) {
-        Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StCity>> search = api.searchCity(flag);
-        search.enqueue(new Callback<ArrayList<StCity>>() {
-            @Override
-            public void onResponse(Call<ArrayList<StCity>> call, Response<ArrayList<StCity>> response) {
-                onCityListener.onReceiveCity(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<StCity>> call, Throwable t) {
-                onCityListener.sendMessage(Message.convertRetrofitMessage(t.toString()));
-            }
-        });
     }
 
     public interface OnCityListener {

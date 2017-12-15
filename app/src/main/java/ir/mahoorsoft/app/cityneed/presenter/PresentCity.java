@@ -1,8 +1,6 @@
 package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
-
-import ir.mahoorsoft.app.cityneed.model.db.DB;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.tables.city.City;
 
@@ -22,13 +20,6 @@ public class PresentCity implements City.OnCityListener {
     public void getCity(String flag) {
         City city = new City(this);
         city.getCity(flag);
-    }
-
-    public void searchCity(String flag) {
-
-        City city = new City(this);
-        city.searchCity(flag);
-
     }
 
     @Override
