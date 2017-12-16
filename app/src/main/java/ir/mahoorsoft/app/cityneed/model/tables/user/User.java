@@ -21,9 +21,9 @@ public class User {
         this.onUserLitener = onUserLitener;
     }
 
-    public void savePhone(long phone) {
+    public void logIn(long phone) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> savePhone = api.savePhone(phone);
+        Call<ArrayList<Response>> savePhone = api.logIn(phone);
         savePhone.enqueue(new Callback<ArrayList<Response>>() {
             @Override
             public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
@@ -70,6 +70,22 @@ public class User {
             }
         });
 
+    }
+
+    public void logOut(long phone){
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<Response>> logOut = api.logOut(phone);
+        logOut.enqueue(new Callback<ArrayList<Response>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
+                onUserLitener.onReceiveFlag(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
+                onUserLitener.sendMessage(Message.convertRetrofitMessage(t.toString()));
+            }
+        });
     }
 
     public interface OnUserLitener {

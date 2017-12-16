@@ -1,6 +1,5 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.activity_phone_confirm;
+package ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +11,8 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.activity_phone_confirm.fragment_confirm_code.FragmentConfirmCode;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.activity_phone_confirm.fragment_get_phone.FragmentGetPhone;
-import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.fragment_confirm_code.FragmentConfirmCode;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.fragment_get_phone.FragmentGetPhone;
 
 /**
  * Created by MAHNAZ on 10/22/2017.

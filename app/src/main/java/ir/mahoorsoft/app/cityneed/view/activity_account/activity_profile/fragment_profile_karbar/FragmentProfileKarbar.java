@@ -77,10 +77,11 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
 
         txtName = (TextView) view.findViewById(R.id.txtNAme_karbar);
         txtFamilyName = (TextView) view.findViewById(R.id.txtFamilyName_Karbar);
-        (txtPhone = (TextView) view.findViewById(R.id.txtPhone_Karbar)).setOnClickListener(new View.OnClickListener() {
+        (txtPhone = (TextView) view.findViewById(R.id.txtPhone_Karbar)).setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
                 updatePhone();
+                return false;
             }
         });
         (txtLocation = (TextView) view.findViewById(R.id.txtLocation_Karbar)).setOnTouchListener(new View.OnTouchListener() {
@@ -109,7 +110,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
                 starterActivity(ActivityRegistering.class);
                 break;
             case R.id.btnSave_Karbar:
-                saveProfile();
+                checkValidInf();
                 break;
             case R.id.txtLocation_Karbar:
                 showDialog();
@@ -189,5 +190,16 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
     private void updatePhone() {
         txtPhone.setEnabled(false);
     }
+
+    private void checkValidInf(){
+        if((txtName.getText() != null && txtName.getText().length() !=0)&&
+                (txtFamilyName.getText() != null && txtFamilyName.getText().length() !=0)){
+            saveProfile();
+        }else{
+            Toast.makeText(G.context, "لطفا اطلاعات را کامل وارد کنید...", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+
+
 

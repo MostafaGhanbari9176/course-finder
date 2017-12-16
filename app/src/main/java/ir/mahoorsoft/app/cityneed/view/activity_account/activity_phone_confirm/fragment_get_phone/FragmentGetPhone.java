@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.activity_phone_confirm.fragment_get_phone;
+package ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.fragment_get_phone;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,8 +19,8 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.activity_phone_confirm.ActivityPhoneConfirm;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.activity_phone_confirm.fragment_confirm_code.FragmentConfirmCode;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityPhoneConfirm;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.fragment_confirm_code.FragmentConfirmCode;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -86,7 +86,7 @@ public class FragmentGetPhone extends Fragment implements View.OnClickListener, 
         PresentUser presentUser = new PresentUser(this);
         try {
             dialogProgres.showProgresBar();
-            presentUser.savePhone(Long.parseLong(phone));
+            presentUser.logIn(Long.parseLong(phone));
             Pref.saveStringValue(PrefKey.fakePhone,phone);
         } catch (Exception e) {
             dialogProgres.closeProgresBar();

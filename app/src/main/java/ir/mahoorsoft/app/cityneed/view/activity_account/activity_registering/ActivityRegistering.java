@@ -103,6 +103,6 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
 
     @Override
     public void locationInformation() {
-        btnChosePrvince.setText(Pref.getStringValue(PrefKey.location,""));
+        btnChosePrvince.setText(Pref.getStringValue(PrefKey.fakeLocation,""));
     }
 }

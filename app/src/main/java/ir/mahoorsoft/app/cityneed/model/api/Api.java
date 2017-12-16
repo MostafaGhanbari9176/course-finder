@@ -30,8 +30,8 @@ public interface Api {
             @Path("flag") String flag
     );
 
-    @GET("savePhone/{phone}")
-    Call<ArrayList<Response>> savePhone(
+    @GET("logIn/{phone}")
+    Call<ArrayList<Response>> logIn(
             @Path("phone") long phone
     );
 
@@ -49,6 +49,11 @@ public interface Api {
     @GET("getUser/{phone}")
     Call<ArrayList<StUser>> getUser(
             @Path ("phone") long phone
+    );
+
+    @GET("logOut/{phone}")
+    Call<ArrayList<Response>> logOut(
+            @Path("phone") long phone
     );
 
 

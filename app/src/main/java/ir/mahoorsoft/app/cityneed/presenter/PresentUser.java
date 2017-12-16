@@ -2,7 +2,6 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
-import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.Response;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.model.tables.user.User;
@@ -18,13 +17,9 @@ public class PresentUser implements User.OnUserLitener {
         this.onPresentUserLitener = onPresentUserLitener;
     }
 
-    private long phone;
-    private boolean flag = false;
-
-    public void savePhone(long phone) {
-        this.phone = phone;
+    public void logIn(long phone) {
         User user = new User(this);
-        user.savePhone(phone);
+        user.logIn(phone);
     }
 
     public void updateUser(long phone, String name, String family, int status, int type, int cityIde, int apiCode) {
@@ -35,6 +30,12 @@ public class PresentUser implements User.OnUserLitener {
     public void getUser(long phone) {
         User user = new User(this);
         user.getUser(phone);
+    }
+
+    public void logOut(long phone){
+        User user = new User(this);
+        user.logOut(phone);
+
     }
 
     @Override

@@ -79,7 +79,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
-        presentUser.updateUser(Long.parseLong(Pref.getStringValue(PrefKey.phone, "")), Pref.getStringValue(PrefKey.userName, ""), Pref.getStringValue(PrefKey.userFamily, ""), 0, 0, Pref.getIntegerValue(PrefKey.cityId, -1), 0);
+        presentUser.logOut(Long.parseLong(Pref.getStringValue(PrefKey.phone, "")));
     }
 
     @Override
