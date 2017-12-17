@@ -48,7 +48,7 @@ public interface Api {
 
     @GET("getUser/{phone}")
     Call<ArrayList<StUser>> getUser(
-            @Path ("phone") long phone
+            @Path("phone") long phone
     );
 
     @GET("logOut/{phone}")
@@ -56,6 +56,16 @@ public interface Api {
             @Path("phone") long phone
     );
 
+    @GET("createAndSaveSmsCode/{phone}")
+    Call<ArrayList<Response>> createSmsCode(
+            @Path("phone") long phone
+    );
+
+    @GET("checkedSmsCode/{phone}/{code}")
+    Call<ArrayList<Response>> checkedSmsCode(
+            @Path("phone") long phone,
+            @Path("code") int code
+    );
 
 
     @GET("remaining_credit/{tableName}/{phone}")

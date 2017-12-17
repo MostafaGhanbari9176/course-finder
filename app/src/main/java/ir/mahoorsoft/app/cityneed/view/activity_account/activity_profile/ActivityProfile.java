@@ -94,7 +94,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void confirm(boolean flag) {
+    public void confirmUser(boolean flag) {
         dialogProgres.closeProgresBar();
         Pref.removeValue(PrefKey.phone);
         Pref.removeValue(PrefKey.userFamily);

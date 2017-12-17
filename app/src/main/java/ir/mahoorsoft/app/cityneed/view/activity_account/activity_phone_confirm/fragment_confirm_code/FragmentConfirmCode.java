@@ -20,14 +20,16 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
+import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by MAHNAZ on 10/22/2017.
  */
 
-public class FragmentConfirmCode extends Fragment implements View.OnClickListener ,PresentUser.OnPresentUserLitener{
+public class FragmentConfirmCode extends Fragment implements View.OnClickListener,PresentSmsCode.OnPresentSmsCodeListener,PresentUser.OnPresentUserLitener {
 
     private static final int SEND_AGAIN_BUTTON = 3;
     Thread thread;
@@ -36,6 +38,7 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
     Button btnOk;
     Button btnReplay;
     TextView txt;
+    DialogProgres dialogProgres;
     Handler handler = new Handler();
 
     @Nullable
@@ -53,6 +56,7 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
         txt = (TextView) view.findViewById(R.id.txtgetCode);
         btnOk = (Button) view.findViewById(R.id.btnOkCode);
         btnReplay = (Button) view.findViewById(R.id.btnReplaySend);
+        dialogProgres = new DialogProgres(G.context);
 
         btnReplay.setOnClickListener(this);
         btnOk.setOnClickListener(this);
@@ -66,31 +70,12 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
         switch (view.getId()) {
 
             case R.id.btnOkCode:
-                getCode();
+                checkCode();
                 break;
             case R.id.btnReplaySend:
                 //REPLAY SEND
                 break;
         }
-    }
-
-    private void getCode() {
-
-        if (txt.getText().length() != 0) {
-            checkCode(txt.getText().toString().trim());
-            Pref.saveBollValue(PrefKey.codeFlag,false);
-            Pref.saveStringValue(PrefKey.phone,Pref.getStringValue(PrefKey.fakePhone,""));
-            PresentUser presentUser = new PresentUser(this);
-            presentUser.getUser(Long.parseLong(Pref.getStringValue(PrefKey.phone,"")));
-            Intent intent = new Intent(G.context,ActivityProfile.class);
-            startActivity(intent);
-            G.activity.finish();
-
-        } else {
-
-            Toast.makeText(G.context, "لطفا کد را وارد کنید", Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     private void showButton() {
@@ -110,11 +95,17 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
 
     }
 
-    private void checkCode(String code){
-
+    private void checkCode() {
+        try {
+            PresentSmsCode presentSmsCode = new PresentSmsCode(this);
+            presentSmsCode.checkedSmsCode(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone, "")), Integer.parseInt(txt.getText().toString().trim()));
+            dialogProgres.showProgresBar();
+        } catch (Exception e) {
+            Toast.makeText(G.context, "لطفا کد را صحیح وارد کنید...", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void timer(){
+    private void timer() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -137,17 +128,47 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void sendMessageFUT(String message) {
-
+    public void confirmSmsCode(boolean flag) {
+        dialogProgres.closeProgresBar();
+        if(flag) {
+            Pref.saveBollValue(PrefKey.codeFlag, false);
+            Pref.saveStringValue(PrefKey.phone, Pref.getStringValue(PrefKey.fakePhone, ""));
+            Intent intent = new Intent(G.context, ActivityProfile.class);
+            startActivity(intent);
+            G.activity.finish();
+        }
+        else{
+            Toast.makeText(G.context,"کد صحیح نمی باشد...", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
-    public void confirm(boolean flag) {
+    public void sendMessageFScT(String message) {
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void confirmSmsCodeAndReturnUser() {
+
+        PresentUser presentUser = new PresentUser(this);
+        presentUser.getUser(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone,"")));
+    }
+
+    @Override
+    public void sendMessageFUT(String message) {
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void confirmUser(boolean flag) {
 
     }
 
     @Override
     public void onReceiveUser(ArrayList<StUser> users) {
+        confirmSmsCode(true);
+        Pref.saveStringValue(PrefKey.userName,users.get(0).name);
+        Pref.saveStringValue(PrefKey.userFamily,users.get(0).family);
 
     }
 }

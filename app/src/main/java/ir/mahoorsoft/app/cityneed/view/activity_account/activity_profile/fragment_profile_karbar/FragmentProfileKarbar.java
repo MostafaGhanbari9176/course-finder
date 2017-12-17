@@ -173,7 +173,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void confirm(boolean flag) {
+    public void confirmUser(boolean flag) {
         dialogProgres.closeProgresBar();
         Pref.saveStringValue(PrefKey.location,Pref.getStringValue(PrefKey.fakeLocation,""));
         Pref.saveIntegerValue(PrefKey.cityId,Pref.getIntegerValue(PrefKey.fakeCityId,-1));

@@ -32,7 +32,7 @@ public class PresentUser implements User.OnUserLitener {
         user.getUser(phone);
     }
 
-    public void logOut(long phone){
+    public void logOut(long phone) {
         User user = new User(this);
         user.logOut(phone);
 
@@ -40,11 +40,7 @@ public class PresentUser implements User.OnUserLitener {
 
     @Override
     public void onReceiveFlag(ArrayList<Response> res) {
-        if (res.get(0).code == 0) {
-            onPresentUserLitener.confirm(true);
-        } else {
-            onPresentUserLitener.confirm(false);
-        }
+        onPresentUserLitener.confirmUser((res.get(0).code) == 0 ? false : true);
     }
 
     @Override
@@ -61,7 +57,7 @@ public class PresentUser implements User.OnUserLitener {
     public interface OnPresentUserLitener {
         void sendMessageFUT(String message);
 
-        void confirm(boolean flag);
+        void confirmUser(boolean flag);
 
         void onReceiveUser(ArrayList<StUser> users);
     }

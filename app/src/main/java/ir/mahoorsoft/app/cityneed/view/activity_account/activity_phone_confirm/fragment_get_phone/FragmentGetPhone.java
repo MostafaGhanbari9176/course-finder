@@ -18,6 +18,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
+import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityPhoneConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.fragment_confirm_code.FragmentConfirmCode;
@@ -27,11 +28,10 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by MAHNAZ on 10/22/2017.
  */
 
-public class FragmentGetPhone extends Fragment implements View.OnClickListener, PresentUser.OnPresentUserLitener {
+public class FragmentGetPhone extends Fragment implements View.OnClickListener, PresentSmsCode.OnPresentSmsCodeListener {
 
     Context context = G.context;
     Button btnGet;
-    Button btnBefore;
     TextView txt;
     View view;
     DialogProgres dialogProgres;
@@ -73,7 +73,7 @@ public class FragmentGetPhone extends Fragment implements View.OnClickListener, 
 
     private void getPhone() {
         if (txt.getText().length() == 11) {
-            queryForPhone(phone = txt.getText().toString().trim());
+            queryForCreateSmsCode(phone = txt.getText().toString().trim());
 
         } else {
             showMassage("لطفا شماره تلفن خود را صحیح وارد کنید.");
@@ -81,38 +81,36 @@ public class FragmentGetPhone extends Fragment implements View.OnClickListener, 
 
     }
 
-    private void queryForPhone(String phone) {
-//به جایه ذخیره در دیتابیس باید جهت دریافت کد ارسال شود
-        PresentUser presentUser = new PresentUser(this);
-        try {
-            dialogProgres.showProgresBar();
-            presentUser.logIn(Long.parseLong(phone));
-            Pref.saveStringValue(PrefKey.fakePhone,phone);
-        } catch (Exception e) {
-            dialogProgres.closeProgresBar();
-            showMassage("لطفا شماره تلفن خود را صحیح وارد کنید.");
-        }
-
+    private void queryForCreateSmsCode(String phone) {
+        dialogProgres.showProgresBar();
+        PresentSmsCode presentSmsCode = new PresentSmsCode(this);
+        presentSmsCode.createAndSaveSmsCode(Long.parseLong(phone));
     }
 
     private void showMassage(String message) {
         dialogProgres.closeProgresBar();
-        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void sendMessageFUT(String message) {
+    public void confirmSmsCode(boolean flag) {
+        if (flag) {
+            Pref.saveStringValue(PrefKey.fakePhone, phone);
+            ActivityPhoneConfirm.replaceContentWith(new FragmentConfirmCode());
+            dialogProgres.closeProgresBar();
+        } else {
+            showMassage("خطا لطفا مجددا تلاش کنید..");
+        }
+    }
+
+    @Override
+    public void sendMessageFScT(String message) {
+
         showMassage(message);
     }
 
     @Override
-    public void confirm(boolean flag) {
-        ActivityPhoneConfirm.replaceContentWith(new FragmentConfirmCode());
-        dialogProgres.closeProgresBar();
-    }
-
-    @Override
-    public void onReceiveUser(ArrayList<StUser> users) {
+    public void confirmSmsCodeAndReturnUser() {
 
     }
 }
