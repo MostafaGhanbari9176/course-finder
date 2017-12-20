@@ -8,18 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
-import ir.mahoorsoft.app.cityneed.model.struct.StCity;
-import ir.mahoorsoft.app.cityneed.presenter.PresentCity;
-import ir.mahoorsoft.app.cityneed.presenter.PresentOstan;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterChosePrvince;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
 
 /**
@@ -32,6 +25,9 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     Button bntSave;
     Button btnChosePrvince;
     DialogPrvince dialogPrvince;
+    TextView txtPhone;
+    TextView txtSubject;
+    TextView txtAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,14 +84,17 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.btnSaveRegistery:
-                saveInformation();
+                confirmData();
                 break;
 
         }
     }
 
-    private void saveInformation() {
+    private void confirmData() {
 
+        if(txtPhone.getText().toString().trim().length() !=11){
+
+        }
     }///barresi
 
     @Override

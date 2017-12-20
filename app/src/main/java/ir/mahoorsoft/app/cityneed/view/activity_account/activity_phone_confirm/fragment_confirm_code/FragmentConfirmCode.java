@@ -167,6 +167,7 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
     @Override
     public void onReceiveUser(ArrayList<StUser> users) {
         confirmSmsCode(true);
+        Pref.saveIntegerValue(PrefKey.cityId,users.get(0).cityId);
         Pref.saveStringValue(PrefKey.location,users.get(0).location);
         Pref.saveStringValue(PrefKey.userName,users.get(0).name);
         Pref.saveStringValue(PrefKey.userFamily,users.get(0).family);
