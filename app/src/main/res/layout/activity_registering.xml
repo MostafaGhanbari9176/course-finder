@@ -40,321 +40,297 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/txtNameProfileAmozeshgah"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
                         android:ems="10"
                         android:gravity="right|center"
-                        android:paddingRight="48dp"
-                        android:textSize="@dimen/txt_submit_iformation"
                         android:hint="شماره تماس : "
-                        android:textColor="@color/text_home" />
-
-                    <ImageView
-                        android:layout_width="@dimen/btn_nav"
-                        android:layout_height="@dimen/btn_nav"
-                        app:srcCompat="@drawable/icon_phone"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:inputType="textPersonName"
-                        android:ems="10"
-                        android:gravity="right|center_vertical"
                         android:paddingRight="48dp"
-                        android:textSize="@dimen/txt_submit_iformation"
-                        android:hint="عنوان آموزش : "
-                        android:textColor="@color/text_home" />
-
-                    <ImageView
-                        android:layout_width="@dimen/btn_nav"
-                        android:layout_height="@dimen/btn_nav"
-                        app:srcCompat="@drawable/icon_self"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp">
-
-                    <ImageView
-                        android:layout_width="@dimen/btn_nav"
-                        android:layout_height="@dimen/btn_nav"
-                        app:srcCompat="@drawable/icon_family"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:gravity="right|center_vertical"
-                        android:paddingRight="48dp"
-                        android:textSize="@dimen/txt_submit_iformation"
-                        android:hint="آدرس آموزشگاه : "
                         android:textColor="@color/text_home"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp">
+                        android:textSize="@dimen/txt_submit_iformation" />
 
                     <ImageView
                         android:layout_width="@dimen/btn_nav"
                         android:layout_height="@dimen/btn_nav"
-                        app:srcCompat="@drawable/icon_map_true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true" />
+                        app:srcCompat="@drawable/icon_phone" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/txtSubject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:gravity="right|center_vertical"
-                        android:paddingRight="48dp"
-                        android:textSize="@dimen/txt_submit_iformation"
-                        android:textColor="@color/text_home"
-                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:hint="لطفا دکمه زیر را فشار دهید"
-                        android:enabled="false"
-                        android:id="@+id/txtsetLocation" />
+                        android:layout_alignParentTop="true"
+                        android:ems="10"
+                        android:gravity="right|center_vertical"
+                        android:hint="عنوان آموزش : "
+                        android:inputType="textPersonName"
+                        android:paddingRight="48dp"
+                        android:textColor="@color/text_home"
+                        android:textSize="@dimen/txt_submit_iformation" />
+
+                    <ImageView
+                        android:layout_width="@dimen/btn_nav"
+                        android:layout_height="@dimen/btn_nav"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/icon_self" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/btn_nav"
+                        android:layout_height="@dimen/btn_nav"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/icon_family" />
+
+                    <EditText
+                        android:id="@+id/txtAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:ems="10"
+                        android:gravity="right|center_vertical"
+                        android:hint="آدرس آموزشگاه : "
+                        android:inputType="textPersonName"
+                        android:paddingRight="48dp"
+                        android:textColor="@color/text_home"
+                        android:textSize="@dimen/txt_submit_iformation" />
 
                 </RelativeLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
                     android:layout_margin="8dp"
                     android:gravity="right|center"
-                    android:layout_gravity="right|center">
+                    android:orientation="horizontal">
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
                         android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_weight="1">
 
                         <Button
+                            android:id="@+id/btnChosePrvince"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
-                            android:textSize="@dimen/txt_submit_iformation"
-                            android:textColor="@color/text_home"
-                            android:text="انتخاب استان"
+                            android:layout_margin="4dp"
                             android:background="@drawable/btn_dialog"
                             android:gravity="center"
-                            android:layout_margin="4dp"
-                            android:id="@+id/btnChosePrvince" />
+                            android:inputType="textPersonName"
+                            android:text="انتخاب شهر محل سکونت"
+                            android:textColor="@color/text_home"
+                            android:textSize="@dimen/txt_submit_iformation" />
                     </android.support.v7.widget.CardView>
 
                     <ImageView
                         android:layout_width="@dimen/btn_nav"
                         android:layout_height="@dimen/btn_nav"
-                        app:srcCompat="@drawable/icon_map_true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true" />
+                        app:srcCompat="@drawable/icon_map_true" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right|center">
+                android:gravity="right|center"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:gravity="right|center"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginTop="16dp">
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center"
                         android:text="انتخاب نوع آموزش : "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right|center"
-                        android:textSize="@dimen/txt_size_smal"
-                        android:textColor="@color/text_home" />
+                        android:textColor="@color/text_home"
+                        android:textSize="@dimen/txt_size_smal" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginRight="36dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
                         android:text="آموزش عمومی(آموزشگاه)"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:textSize="@dimen/txt_size_smal"
-                        android:textColor="@color/text_profile_two" />
+                        android:textColor="@color/text_profile_two"
+                        android:textSize="@dimen/txt_size_smal" />
 
                     <CheckBox
+                        android:id="@+id/cbxPublicCurce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
                         android:gravity="center"
-                        android:id="@+id/cbxPublicCurce" />
+                        android:text="" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginRight="36dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:text="آموزش خصوصی"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center"
-                        android:textSize="@dimen/txt_size_smal"
-                        android:textColor="@color/text_profile_two" />
+                        android:text="آموزش خصوصی"
+                        android:textColor="@color/text_profile_two"
+                        android:textSize="@dimen/txt_size_smal" />
 
                     <CheckBox
+                        android:id="@+id/cbxSingleCurce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
                         android:gravity="center"
-                        android:id="@+id/cbxSingleCurce" />
+                        android:text="" />
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right|center">
+                android:gravity="right|center"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right|center"
                     android:layout_marginBottom="16dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="16dp"
+                    android:gravity="right|center"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:text="بار گذاری مدرک یا مجوز آموزشی : "
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="right|center"
-                        android:textSize="@dimen/txt_size_smal"
-                        android:textColor="@color/text_home" />
+                        android:text="بار گذاری مدرک یا مجوز آموزشی : "
+                        android:textColor="@color/text_home"
+                        android:textSize="@dimen/txt_size_smal" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="36dp"
                     android:gravity="right|center"
-                    android:layout_marginRight="36dp">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:text="TextView"
+                        android:id="@+id/textView14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView14"
-                        android:textSize="@dimen/txt_size_smal"
-                        android:textColor="@color/text_home" />
+                        android:text="TextView"
+                        android:textColor="@color/text_home"
+                        android:textSize="@dimen/txt_size_smal" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:gravity="center">
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginLeft="16dp">
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp">
 
                         <Button
-                            android:text="بارگذاری مدرک"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
-                            android:textSize="@dimen/txt_size_smal"
+                            android:background="@drawable/btn_dialog"
+                            android:text="بارگذاری مدرک"
                             android:textColor="@color/text_home"
-                            android:background="@drawable/btn_dialog" />
+                            android:textSize="@dimen/txt_size_smal" />
                     </android.support.v7.widget.CardView>
 
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:gravity="center">
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp">
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp">
 
                     <Button
                         android:id="@+id/btnSaveRegistery"

@@ -31,7 +31,6 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     Button btnBack;
     Button bntSave;
     Button btnChosePrvince;
-    TextView txtLocation;
     DialogPrvince dialogPrvince;
 
     @Override
@@ -54,8 +53,6 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         btnBack = (Button) findViewById(R.id.btnBack_SumbitInformation);
         bntSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnChosePrvince = (Button) findViewById(R.id.btnChosePrvince);
-        txtLocation = (TextView) findViewById(R.id.txtsetLocation);
-
         bntSave.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnChosePrvince.setOnClickListener(this);

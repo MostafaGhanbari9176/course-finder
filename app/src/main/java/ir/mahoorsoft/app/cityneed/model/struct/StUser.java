@@ -12,6 +12,7 @@ public class StUser {
     public int type;
     public int cityId;
     public int apiCode;
+    public String location;
 
     public  StUser(Long phone,String name ,String family){
         this.phone = phone;
