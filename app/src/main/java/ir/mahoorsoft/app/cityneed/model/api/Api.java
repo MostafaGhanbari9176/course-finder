@@ -56,6 +56,8 @@ public interface Api {
             @Path("phone") long phone
     );
 
+  //  @GET()
+
     @GET("createAndSaveSmsCode/{phone}")
     Call<ArrayList<Response>> createSmsCode(
             @Path("phone") long phone

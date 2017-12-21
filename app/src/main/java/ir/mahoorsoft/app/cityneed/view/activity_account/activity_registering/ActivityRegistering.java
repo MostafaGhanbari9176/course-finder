@@ -19,7 +19,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
  * Created by MAHNAZ on 10/16/2017.
  */
 
-public class ActivityRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener{
+public class ActivityRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener {
 
     Button btnBack;
     Button bntSave;
@@ -28,14 +28,15 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     TextView txtPhone;
     TextView txtSubject;
     TextView txtAddress;
+    TextView txtTozihat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registering);
         pointers();
-        btnChosePrvince.setText(Pref.getStringValue(PrefKey.location,"انتخاب شهر محل سکونت"));
-        dialogPrvince = new DialogPrvince(this , this);
+        btnChosePrvince.setText(Pref.getStringValue(PrefKey.location, "انتخاب شهر محل سکونت"));
+        dialogPrvince = new DialogPrvince(this, this);
     }
 
     @Override
@@ -45,7 +46,10 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     }
 
     private void pointers() {
-
+        txtTozihat = (TextView) findViewById(R.id.txtTozihat);
+        txtPhone = (TextView) findViewById(R.id.txtPhoneRegistery);
+        txtAddress = (TextView) findViewById(R.id.txtAddress);
+        txtSubject = (TextView) findViewById(R.id.txtSubject);
         btnBack = (Button) findViewById(R.id.btnBack_SumbitInformation);
         bntSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnChosePrvince = (Button) findViewById(R.id.btnChosePrvince);
@@ -92,13 +96,20 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
 
     private void confirmData() {
 
-        if(txtPhone.getText().toString().trim().length() !=11){
+        if (txtPhone.getText().toString().trim().length() != 11 &&
+                txtSubject.getText().toString().trim().length()!=0 &&
+                txtAddress.getText().toString().trim().length()!=0&&
+                btnChosePrvince.getText().length()!=0) {
 
+
+
+        } else {
+            Toast.makeText(this, "لطفا اطلاعات را کامل وصحیح وارد کنید...", Toast.LENGTH_SHORT).show();
         }
     }///barresi
 
     @Override
     public void locationInformation() {
-        btnChosePrvince.setText(Pref.getStringValue(PrefKey.fakeLocation,""));
+        btnChosePrvince.setText(Pref.getStringValue(PrefKey.fakeLocation, ""));
     }
 }
