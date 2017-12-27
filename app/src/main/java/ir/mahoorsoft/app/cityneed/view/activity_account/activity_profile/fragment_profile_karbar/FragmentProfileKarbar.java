@@ -87,7 +87,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
         (txtLocation = (TextView) view.findViewById(R.id.txtLocation_Karbar)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                showDialog();
+                dialogPrvince.showDialog();
                 return false;
             }
         });
@@ -112,11 +112,6 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
             case R.id.btnSave_Karbar:
                 checkValidInf();
                 break;
-            case R.id.txtLocation_Karbar:
-                showDialog();
-                break;
-
-
         }
     }
 
@@ -152,7 +147,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
     }
 
     private void showDialog() {
-        dialogPrvince.showDialog();
+
     }
 
     @Override

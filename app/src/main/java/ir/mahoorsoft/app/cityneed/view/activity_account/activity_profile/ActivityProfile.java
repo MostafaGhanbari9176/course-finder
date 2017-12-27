@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -27,7 +30,8 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
  */
 
 public class ActivityProfile extends AppCompatActivity implements View.OnClickListener, PresentUser.OnPresentUserLitener {
-
+    TextView txtUserType;
+    ImageView imgProfile;
     Button btnBack;
     Button btnLogOut;
     DialogProgres dialogProgres;
@@ -40,13 +44,17 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         dialogProgres = new DialogProgres(this);
         setContentView(R.layout.activity_profile);
         pointer();
-        replaceContentWith(new FragmentProfileKarbar());
+        checkUserType();
+
     }
 
     private void pointer() {
 
+        imgProfile = (ImageView) findViewById(R.id.imgProfile);
+        txtUserType = (TextView) findViewById(R.id.txtUserType);
         (btnBack = (Button) findViewById(R.id.btnBack_Profile)).setOnClickListener(this);
         (btnLogOut = (Button) findViewById(R.id.btnLogOut)).setOnClickListener(this);
+
     }
 
     @Override
@@ -108,6 +116,27 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         G.activity = this;
         G.context = this;
         super.onResume();
+    }
+
+    private void checkUserType() {
+        int typeMode = Pref.getIntegerValue(PrefKey.usreTypeMode,0);
+        switch (typeMode){
+            case 0:
+                txtUserType.setText("دانشجو");
+                imgProfile.setImageResource(R.drawable.icon_self);
+                replaceContentWith(new FragmentProfileKarbar());
+                break;
+            case 1:
+                txtUserType.setText("آموزشگاه");
+                imgProfile.setImageResource(R.drawable.icon_college);
+                replaceContentWith(new FragmentProfileAmozeshgah());
+                break;
+            case 2:
+                txtUserType.setText("آموزش خصوصی");
+                imgProfile.setImageResource(R.drawable.icon_college);
+                replaceContentWith(new FragmentProfileAmozeshgah());
+                break;
+        }
     }
 
     /*public static void showDialog(DialogPrvince.OnDialogPrvinceListener onDialogPrvinceListener) {

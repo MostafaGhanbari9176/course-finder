@@ -148,11 +148,15 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void confirmSmsCodeAndReturnUser() {
+    public void confirmSmsCodeAndExistUser(int code) {
+        if(code==2) {
+            PresentUser presentUser = new PresentUser(this);
+            presentUser.getUser(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone, "")));
+        }
+        else{
 
-        PresentUser presentUser = new PresentUser(this);
-        presentUser.getUser(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone,"")));
-    }
+        }
+        }
 
     @Override
     public void sendMessageFUT(String message) {

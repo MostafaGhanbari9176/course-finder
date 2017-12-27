@@ -9,7 +9,7 @@ public class StUser {
     public String name;
     public String family;
     public int status;
-    public int type;
+    public int type;//0-->student && 1-->teacher
     public int cityId;
     public int apiCode;
     public String location;

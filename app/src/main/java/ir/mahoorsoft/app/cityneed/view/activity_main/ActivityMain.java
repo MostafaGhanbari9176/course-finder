@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ir.mahoorsoft.app.cityneed.G;
@@ -31,7 +32,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     TextView txtUserName;
     TextView txtProfileButton;
     View viewMenu;
-
+    LinearLayout llNavHeder;
     DrawerLayout drawer;
     NavigationView navigationView;
     FrameLayout contentMain;
@@ -63,18 +64,20 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         viewMenu = navigationView.inflateHeaderView(R.layout.nav_header_main);
         txtUserName = (TextView) viewMenu.findViewById(R.id.txtUserName_menu);
         txtProfileButton = (TextView) viewMenu.findViewById(R.id.txtProfileButton_menu);
+        llNavHeder = (LinearLayout) viewMenu.findViewById(R.id.navHederMain);
         contentMain = (FrameLayout) findViewById(R.id.contentMain);
-
-        txtProfileButton.setOnClickListener(this);
+        llNavHeder.setOnClickListener(this);
+       // txtProfileButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.txtProfileButton_menu:
+            case R.id.navHederMain:
                 acountCheck();
                 break;
+
         }
 
     }

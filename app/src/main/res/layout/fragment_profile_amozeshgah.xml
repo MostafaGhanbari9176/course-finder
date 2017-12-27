@@ -18,205 +18,231 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/img_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="16dp"
-                android:gravity="center"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_margin="2dp"
-                    android:background="@color/line_item"
-                    android:orientation="vertical"></LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:orientation="horizontal">
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="2dp"
+                                app:cardBackgroundColor="@color/back_grand_layout">
+
+                                <EditText
+                                    android:id="@+id/txtNAme_karbar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="2dp"
+                                    android:enabled="false"
+                                    android:gravity="right|center"
+                                    android:textColor="@color/text_item"
+                                    android:textSize="@dimen/txt_size_smal" />
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="2dp"
+                                android:gravity="right|center"
+                                android:text="نام : "
+                                android:textColor="@color/text_profile_one"
+                                android:textSize="@dimen/txt_size_smal" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="2dp"
+                                app:cardBackgroundColor="@color/back_grand_layout">
+
+                                <EditText
+                                    android:id="@+id/txtFamilyName_Karbar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="2dp"
+                                    android:enabled="false"
+                                    android:gravity="right|center"
+                                    android:textColor="@color/text_item"
+                                    android:textSize="@dimen/txt_size_smal" />
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="2dp"
+                                android:gravity="right|center"
+                                android:text="نام خانوادگی : "
+                                android:textColor="@color/text_profile_one"
+                                android:textSize="@dimen/txt_size_smal" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="2dp"
+                                app:cardBackgroundColor="@color/back_grand_layout">
+
+                                <EditText
+                                    android:id="@+id/txtLocation_Karbar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="2dp"
+                                    android:enabled="false"
+                                    android:gravity="right|center"
+                                    android:textColor="@color/text_item"
+                                    android:textSize="@dimen/txt_size_smal" />
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="2dp"
+                                android:gravity="right|center"
+                                android:text="محل سکونت : "
+                                android:textColor="@color/text_profile_one"
+                                android:textSize="@dimen/txt_size_smal" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
+                        android:layout_margin="2dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="right|center"
-                            android:textColor="@color/text_item"
-                            android:textSize="@dimen/txt_size_smal" />
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="2dp"
+                                app:cardBackgroundColor="@color/back_grand_layout">
+
+                                <EditText
+                                    android:id="@+id/txtPhone_Karbar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="2dp"
+                                    android:enabled="false"
+                                    android:gravity="right|center"
+                                    android:textColor="@color/text_item"
+                                    android:textSize="@dimen/txt_size_smal" />
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="2dp"
+                                android:gravity="right|center"
+                                android:text="شماره تلفن : "
+                                android:textColor="@color/text_profile_one"
+                                android:textSize="@dimen/txt_size_smal" />
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:text="نام آموزشگاه: "
-                            android:textColor="@color/text_profile_one"
-                            android:textSize="@dimen/txt_size_smal" />
-                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:orientation="horizontal">
+                    android:layout_height="16dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:textColor="@color/text_item"
-                            android:textSize="@dimen/txt_size_smal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:text="نام خانوادگی : "
-                            android:textColor="@color/text_profile_one"
-                            android:textSize="@dimen/txt_size_smal" />
-                    </LinearLayout>
+                        android:layout_height="2dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/line_item"
+                        android:orientation="vertical"></LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:textColor="@color/text_item"
-                            android:textSize="@dimen/txt_size_smal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:text="شماره تلفن : "
-                            android:textColor="@color/text_profile_one"
-                            android:textSize="@dimen/txt_size_smal" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:textColor="@color/text_item"
-                            android:textSize="@dimen/txt_size_smal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:text="تعداد دوره ها : "
-                            android:textColor="@color/text_profile_one"
-                            android:textSize="@dimen/txt_size_smal" />
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="16dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_margin="2dp"
-                    android:background="@color/line_item"
-                    android:orientation="vertical"></LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -232,30 +258,30 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="2dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:text="حذف دوره"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:id="@+id/txtCbx_Profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right|center"
-                            android:textSize="@dimen/txt_size_smal"
-                            android:textColor="@color/text_profile_two" />
+                            android:text="حذف دوره"
+                            android:textColor="@color/text_profile_two"
+                            android:textSize="@dimen/txt_size_smal" />
 
                         <CheckBox
+                            android:id="@+id/cbxDelete"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
                             android:gravity="center"
-                            android:id="@+id/cbxDelete" />
+                            android:text="" />
                     </LinearLayout>
 
                     <LinearLayout

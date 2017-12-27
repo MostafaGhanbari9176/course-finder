@@ -144,7 +144,7 @@
                         android:layout_height="@dimen/btn_nav"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        app:srcCompat="@drawable/icon_txtShort" />
+                        app:srcCompat="@drawable/icon_txtshort" />
 
                     <EditText
                         android:id="@+id/txtTozihat"

@@ -15,4 +15,5 @@ public class PrefKey {
     public static String location = "location";
     public static String cityId = "cityId";
     public static String fakeCityId = "fakeCityId";
+    public static String usreTypeMode = "usreTypeMode";//0-->student&&1-->college&&2-->PrivateEducation
 }

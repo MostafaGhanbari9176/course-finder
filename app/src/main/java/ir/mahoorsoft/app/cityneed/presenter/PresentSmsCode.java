@@ -34,15 +34,17 @@ public class PresentSmsCode implements SmsCode.OnSmsCodeListener {
 
         void sendMessageFScT(String message);
 
-        void confirmSmsCodeAndReturnUser();
+        void confirmSmsCodeAndExistUser(int code);
 
     }
 
     @Override
     public void onRecirveFlag(ArrayList<Response> response) {
 
-        if (response.get(0).code == -1) {
-            onPresentSmsCodeListener.confirmSmsCodeAndReturnUser();
+        if (response.get(0).code == 2) {
+            onPresentSmsCodeListener.confirmSmsCodeAndExistUser(2);
+        } else if (response.get(0).code == 3) {
+            onPresentSmsCodeListener.confirmSmsCodeAndExistUser(3);
         } else {
             onPresentSmsCodeListener.confirmSmsCode((response.get(0).code) == 0 ? false : true);
         }

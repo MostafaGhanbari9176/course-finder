@@ -6,6 +6,7 @@
     <dimen name="txt_size_smal">32dp</dimen>
     <dimen name="txt_size_big">48dp</dimen>
     <dimen name="txt_size_vbig">64dp</dimen>
+    <dimen name="txt_toolbar">18dp</dimen>
 
 
 </resources>
