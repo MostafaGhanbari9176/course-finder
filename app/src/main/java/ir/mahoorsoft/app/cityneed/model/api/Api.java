@@ -60,12 +60,12 @@ public interface Api {
 
     @GET("createAndSaveSmsCode/{phone}")
     Call<ArrayList<Response>> createSmsCode(
-            @Path("phone") long phone
+            @Path("phone") String phone
     );
 
     @GET("checkedSmsCode/{phone}/{code}")
     Call<ArrayList<Response>> checkedSmsCode(
-            @Path("phone") long phone,
+            @Path("phone") String phone,
             @Path("code") int code
     );
 

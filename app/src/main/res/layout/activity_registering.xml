@@ -241,7 +241,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center"
                         android:text="آموزش عمومی(آموزشگاه)"
-                        android:textColor="@color/text_profile_two"
+                        android:textColor="@color/dark"
                         android:textSize="@dimen/txt_size_smal" />
 
                     <CheckBox
@@ -267,7 +267,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center"
                         android:text="آموزش خصوصی"
-                        android:textColor="@color/text_profile_two"
+                        android:textColor="@color/dark"
                         android:textSize="@dimen/txt_size_smal" />
 
                     <CheckBox

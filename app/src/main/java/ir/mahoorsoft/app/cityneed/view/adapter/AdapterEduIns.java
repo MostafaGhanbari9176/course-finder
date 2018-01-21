@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,7 +90,7 @@ public class AdapterEduIns extends RecyclerView.Adapter<AdapterEduIns.Holder> {
 
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_home, parent, false);
-
+        view.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         Holder holder = new Holder(view);
         return holder;
     }

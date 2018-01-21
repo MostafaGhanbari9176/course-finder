@@ -98,7 +98,7 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
     private void checkCode() {
         try {
             PresentSmsCode presentSmsCode = new PresentSmsCode(this);
-            presentSmsCode.checkedSmsCode(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone, "")), Integer.parseInt(txt.getText().toString().trim()));
+           // presentSmsCode.checkedSmsCode(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone, "")), Integer.parseInt(txt.getText().toString().trim()));
             dialogProgres.showProgresBar();
         } catch (Exception e) {
             Toast.makeText(G.context, "لطفا کد را صحیح وارد کنید...", Toast.LENGTH_SHORT).show();
@@ -131,8 +131,8 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
     public void confirmSmsCode(boolean flag) {
         dialogProgres.closeProgresBar();
         if(flag) {
-            Pref.saveBollValue(PrefKey.codeFlag, false);
-            Pref.saveStringValue(PrefKey.phone, Pref.getStringValue(PrefKey.fakePhone, ""));
+          //  Pref.saveBollValue(PrefKey.codeFlag, false);
+          //  Pref.saveStringValue(PrefKey.phone, Pref.getStringValue(PrefKey.fakePhone, ""));
             Intent intent = new Intent(G.context, ActivityProfile.class);
             startActivity(intent);
             G.activity.finish();
@@ -151,7 +151,7 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
     public void confirmSmsCodeAndExistUser(int code) {
         if(code==2) {
             PresentUser presentUser = new PresentUser(this);
-            presentUser.getUser(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone, "")));
+          //  presentUser.getUser(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone, "")));
         }
         else{
 

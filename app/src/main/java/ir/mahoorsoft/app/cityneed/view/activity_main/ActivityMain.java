@@ -135,7 +135,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     }
 
     private void acountCheck() {
-        if (Pref.getStringValue(PrefKey.phone, "").length() != 0) {
+        if (Pref.getBollValue(PrefKey.IsLogin,false)) {
             startActivity(ActivityProfile.class);
 
         } else {

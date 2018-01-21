@@ -46,7 +46,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
     View view;
     DialogPrvince dialogPrvince;
     DialogProgres dialogProgres;
-
+    int cityId;
 
     @Nullable
     @Override
@@ -143,7 +143,6 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
         updateUser(Long.parseLong(Pref.getStringValue(PrefKey.phone, "0")), txtName.getText().toString().trim(), txtFamilyName.getText().toString().trim());
 
 
-
     }
 
     private void showDialog() {
@@ -151,27 +150,28 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void locationInformation() {
-        txtLocation.setText(Pref.getStringValue(PrefKey.fakeLocation, ""));
+    public void locationInformation(String location, int cityId) {
+        txtLocation.setText(location);
+        this.cityId = cityId;
     }
 
     private void updateUser(long phone, String name, String family) {
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
-        presentUser.updateUser(phone, name, family, 1, 0, Pref.getIntegerValue(PrefKey.fakeCityId, -1), 0);
+        //  presentUser.updateUser(phone, name, family, 1, 0, Pref.getIntegerValue(PrefKey.fakeCityId, -1), 0);
     }
 
     @Override
     public void sendMessageFUT(String message) {
-       dialogProgres.closeProgresBar();
+        dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void confirmUser(boolean flag) {
         dialogProgres.closeProgresBar();
-        Pref.saveStringValue(PrefKey.location,Pref.getStringValue(PrefKey.fakeLocation,""));
-        Pref.saveIntegerValue(PrefKey.cityId,Pref.getIntegerValue(PrefKey.fakeCityId,-1));
+        Pref.saveStringValue(PrefKey.location, txtLocation.getText().toString());
+        Pref.saveIntegerValue(PrefKey.cityId, cityId);
         Pref.saveStringValue(PrefKey.userName, txtName.getText().toString().trim());
         Pref.saveStringValue(PrefKey.userFamily, txtFamilyName.getText().toString().trim());
         Toast.makeText(G.context, "اطلاعات جدید ذخیره شد.", Toast.LENGTH_SHORT).show();
@@ -186,11 +186,11 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
         txtPhone.setEnabled(false);
     }
 
-    private void checkValidInf(){
-        if((txtName.getText() != null && txtName.getText().length() !=0)&&
-                (txtFamilyName.getText() != null && txtFamilyName.getText().length() !=0)){
+    private void checkValidInf() {
+        if ((txtName.getText() != null && txtName.getText().length() != 0) &&
+                (txtFamilyName.getText() != null && txtFamilyName.getText().length() != 0)) {
             saveProfile();
-        }else{
+        } else {
             Toast.makeText(G.context, "لطفا اطلاعات را کامل وارد کنید...", Toast.LENGTH_SHORT).show();
         }
     }

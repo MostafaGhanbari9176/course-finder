@@ -108,8 +108,9 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         }
     }///barresi
 
+
     @Override
-    public void locationInformation() {
-        btnChosePrvince.setText(Pref.getStringValue(PrefKey.fakeLocation, ""));
+    public void locationInformation(String location, int cityId) {
+
     }
 }

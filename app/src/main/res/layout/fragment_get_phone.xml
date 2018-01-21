@@ -72,7 +72,7 @@
                     android:layout_marginRight="16dp"
                     android:background="@drawable/btn_dialog"
                     android:gravity="center"
-                    android:text="تایید شماره همراه"
+                    android:text="ادامه"
                     android:textColor="@color/text_home"
                     android:textSize="@dimen/txt_phone_confirm" />
             </android.support.v7.widget.CardView>

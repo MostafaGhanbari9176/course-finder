@@ -19,7 +19,7 @@ public class SmsCode {
         this.onSmsCodeListener = onSmsCodeListener;
     }
 
-    public void createAndSaveSmsCode(long phone) {
+    public void createAndSaveSmsCode(String phone) {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<Response>> smsCode = api.createSmsCode(phone);
         smsCode.enqueue(new Callback<ArrayList<Response>>() {
@@ -35,7 +35,7 @@ public class SmsCode {
         });
     }
 
-    public void checkedSmsCode(long phone, int code) {
+    public void checkedSmsCode(String phone, int code) {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<Response>> checkedSmsCode = api.checkedSmsCode(phone, code);
         checkedSmsCode.enqueue(new Callback<ArrayList<Response>>() {

@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:gravity="bottom|right|center"
                 android:text="کاربر مهمان"
-                android:textColor="@color/colorDark"
+                android:textColor="@color/dark_green"
                 android:textSize="@dimen/txt_size_smal" />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:layout_weight="1"
                 android:gravity="top|right|center"
                 android:text="ثبت نام-ورود"
-                android:textColor="@color/colorDark"
+                android:textColor="@color/dark_green"
                 android:textSize="@dimen/txt_size_smal" />
         </LinearLayout>
 

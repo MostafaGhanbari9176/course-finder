@@ -63,15 +63,15 @@
                 android:background="@color/back_grand_layout">
 
                 <Button
+                    android:id="@+id/btnOkCode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/btnOkCode"
+                    android:layout_margin="4dp"
                     android:background="@drawable/btn_dialog"
-                    android:text="تایید"
                     android:gravity="center"
+                    android:text="بررسی کد"
                     android:textColor="@color/text_home"
-                    android:textSize="@dimen/txt_phone_confirm"
-                    android:layout_margin="4dp" />
+                    android:textSize="@dimen/txt_phone_confirm" />
             </android.support.v7.widget.CardView>
 
         </LinearLayout>

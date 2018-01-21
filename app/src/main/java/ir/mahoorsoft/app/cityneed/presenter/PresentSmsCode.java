@@ -18,12 +18,12 @@ public class PresentSmsCode implements SmsCode.OnSmsCodeListener {
         this.onPresentSmsCodeListener = onPresentSmsCodeListener;
     }
 
-    public void createAndSaveSmsCode(long phone) {
+    public void createAndSaveSmsCode(String phone) {
         SmsCode smsCode = new SmsCode(this);
         smsCode.createAndSaveSmsCode(phone);
     }
 
-    public void checkedSmsCode(long phone, int code) {
+    public void checkedSmsCode(String phone, int code) {
         SmsCode smsCode = new SmsCode(this);
         smsCode.checkedSmsCode(phone, code);
     }

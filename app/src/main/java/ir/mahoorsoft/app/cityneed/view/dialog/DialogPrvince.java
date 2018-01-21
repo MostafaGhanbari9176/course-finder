@@ -180,9 +180,7 @@ public class DialogPrvince implements PresentCity.OnPresentCityListener, Present
         } else {
             dialog.cancel();
             map += " , " + lastSource.get(position).name;
-            Pref.saveStringValue(PrefKey.fakeLocation,map);
-            Pref.saveIntegerValue(PrefKey.fakeCityId,lastSource.get(position).cityId);
-            onDialogPrvinceListener.locationInformation();
+            onDialogPrvinceListener.locationInformation(map,lastSource.get(position).cityId );
         }
     }
 
@@ -192,6 +190,6 @@ public class DialogPrvince implements PresentCity.OnPresentCityListener, Present
     }
 
     public interface OnDialogPrvinceListener{
-         void locationInformation();
+         void locationInformation(String location, int cityId);
     }
 }

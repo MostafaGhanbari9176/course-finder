@@ -56,7 +56,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/back_grand_nav_buttom"
+            android:background="@color/light"
             android:orientation="horizontal"
             android:layout_weight="0.3">
 

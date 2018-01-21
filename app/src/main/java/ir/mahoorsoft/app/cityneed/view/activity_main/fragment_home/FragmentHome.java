@@ -170,7 +170,7 @@ public class FragmentHome extends Fragment implements AdapterEduIns.setOnClickIt
     private void setTextFont() {
 
         Typeface typeface = Typeface.createFromAsset(G.context.getResources().getAssets(),
-                "fonts/Far_Nazanin.ttf");
+                "fonts/Far_Homa.ttf");
         txtOne.setTypeface(typeface);
         txtTwo.setTypeface(typeface);
         txtThree.setTypeface(typeface);

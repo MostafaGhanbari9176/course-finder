@@ -5,15 +5,11 @@ package ir.mahoorsoft.app.cityneed.model.struct;
  */
 
 public class PrefKey {
-
-    public static String codeFlag = "flag";
-    public static String phone = "phone";
-    public static String fakePhone = "fakePhone";
-    public static String userName = "UserName";
-    public static String userFamily = "UserFamily";
-    public static String fakeLocation = "fakeLocation";
-    public static String location = "location";
-    public static String cityId = "cityId";
-    public static String fakeCityId = "fakeCityId";
-    public static String usreTypeMode = "usreTypeMode";//0-->student&&1-->college&&2-->PrivateEducation
+    public static final String IsLogin = "flag";
+    public static final String phone = "phone";
+    public static final String userName = "UserName";
+    public static final String userFamily = "UserFamily";
+    public static final String location = "location";
+    public static final String cityId = "cityId";
+    public static final String usreTypeMode = "usreTypeMode";//0-->student&&1-->college&&2-->PrivateEducation
 }
