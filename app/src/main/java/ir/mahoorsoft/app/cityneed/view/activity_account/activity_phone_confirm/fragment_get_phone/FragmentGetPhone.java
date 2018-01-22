@@ -110,7 +110,9 @@ public class FragmentGetPhone extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void confirmSmsCodeAndExistUser() {
+    public void confirmSmsCodeAndExistUser(int code) {
 
     }
+
+
 }
