@@ -84,7 +84,7 @@ public class FragmentGetPhone extends Fragment implements View.OnClickListener, 
     private void queryForCreateSmsCode(String phone) {
         dialogProgres.showProgresBar();
         PresentSmsCode presentSmsCode = new PresentSmsCode(this);
-      //  presentSmsCode.createAndSaveSmsCode(Long.parseLong(phone));
+        presentSmsCode.createAndSaveSmsCode(Long.parseLong(phone));
     }
 
     private void showMassage(String message) {
@@ -95,8 +95,8 @@ public class FragmentGetPhone extends Fragment implements View.OnClickListener, 
     @Override
     public void confirmSmsCode(boolean flag) {
         if (flag) {
-         //   Pref.saveStringValue(PrefKey.fakePhone, phone);
-            //ActivityPhoneConfirm.replaceContentWith(new FragmentConfirmCode());
+            Pref.saveStringValue(PrefKey.fakePhone, phone);
+            ActivityPhoneConfirm.replaceContentWith(new FragmentConfirmCode());
             dialogProgres.closeProgresBar();
         } else {
             showMassage("خطا لطفا مجددا تلاش کنید..");
@@ -110,8 +110,7 @@ public class FragmentGetPhone extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void confirmSmsCodeAndExistUser(int code) {
+    public void confirmSmsCodeAndExistUser() {
 
     }
-
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/back_grand_layout">
+    android:background="@color/light"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,24 +16,45 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/img_view_pager_height"
                 android:gravity="center"
-                android:layout_height="@dimen/img_view_pager_height">
+                android:orientation="horizontal">
 
-                <cn.lightsky.infiniteindicator.InfiniteIndicator
-                    android:id="@+id/viewPager"
-                    app:indicator_type="indicator_anim_circle"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/btnCoursesMenu"
+                        android:layout_width="@dimen/btn_toolbar"
+                        android:layout_height="@dimen/btn_toolbar"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/icon_list" />
+
+                    <cn.lightsky.infiniteindicator.InfiniteIndicator
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        app:indicator_type="indicator_anim_circle">
+
+                    </cn.lightsky.infiniteindicator.InfiniteIndicator>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,9 +64,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginBottom="4dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="4dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/txtOne"
@@ -72,13 +93,13 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/line_item"
-                    android:layout_marginTop="8dp"></LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,9 +109,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginBottom="4dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="4dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/txtTwo"
@@ -116,25 +137,25 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/line_item"
-                    android:layout_marginTop="8dp"></LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginBottom="4dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="4dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/txtThree"
@@ -148,14 +169,14 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
                         <android.support.v7.widget.RecyclerView
+                            android:id="@+id/RV_three"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/RV_three" />
+                            android:layout_height="match_parent" />
                     </LinearLayout>
 
                 </LinearLayout>

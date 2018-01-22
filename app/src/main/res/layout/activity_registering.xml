@@ -2,34 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light"
     android:gravity="center"
-    android:background="@color/back_grand_layout">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
         android:layout_height="56dp"
-        android:gravity="right|center">
+        android:background="@color/colorPrimary"
+        android:gravity="right|center"
+        android:orientation="horizontal">
 
         <TextView
-            android:text="لطفا اطلاعات زیر را تکمیل کنید"
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView4"
+            android:layout_marginRight="16dp"
             android:gravity="right|center"
-            android:textSize="@dimen/txt_toolbar"
+            android:text="لطفا اطلاعات زیر را تکمیل کنید"
             android:textColor="@color/toolbar_elements1"
-            android:layout_marginRight="16dp" />
+            android:textSize="@dimen/txt_toolbar" />
 
         <Button
+            android:id="@+id/btnBack_SumbitInformation"
             android:layout_width="@dimen/btn_nav"
             android:layout_height="@dimen/btn_nav"
-            android:id="@+id/btnBack_SumbitInformation"
-            android:background="@drawable/icon_back"
-            android:layout_marginRight="8dp" />
+            android:layout_marginRight="8dp"
+            android:background="@drawable/icon_back" />
 
     </LinearLayout>
 
@@ -173,8 +174,10 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
+                        android:layout_marginTop="2dp"
                         android:layout_weight="1">
 
                         <Button
@@ -185,7 +188,7 @@
                             android:background="@drawable/btn_dialog"
                             android:gravity="center"
                             android:inputType="textPersonName"
-                            android:text="انتخاب شهر محل سکونت"
+                            android:text="انتخاب استان وشهر"
                             android:textColor="@color/text_home"
                             android:textSize="@dimen/txt_submit_iformation" />
                     </android.support.v7.widget.CardView>
@@ -288,42 +291,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="right|center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right|center"
-                        android:text="بار گذاری مدرک یا مجوز آموزشی : "
-                        android:textColor="@color/text_home"
-                        android:textSize="@dimen/txt_size_smal" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="36dp"
-                    android:gravity="right|center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textColor="@color/text_home"
-                        android:textSize="@dimen/txt_size_smal" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="16dp"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -331,13 +299,70 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginBottom="2dp"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp">
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="2dp">
 
                         <Button
+                            android:id="@+id/btnUploadImg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/btn_dialog"
+                            android:text="بارگذاری تصویری مرتبط با موضوع یا محیط آموزش"
+                            android:textColor="@color/text_home"
+                            android:textSize="@dimen/txt_size_smal" />
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="right|center"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/pgbUploadImg"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="2dp">
+
+                        <Button
+                            android:id="@+id/button2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
                             android:background="@drawable/btn_dialog"
                             android:text="بارگذاری مدرک"
                             android:textColor="@color/text_home"
@@ -345,27 +370,48 @@
                     </android.support.v7.widget.CardView>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="right|center"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar2"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="2dp">
 
                     <Button
                         android:id="@+id/btnSaveRegistery"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_margin="4dp"
                         android:background="@drawable/btn_dialog"
                         android:text="ذخیره اطلاعات"
                         android:textColor="@color/text_home"
