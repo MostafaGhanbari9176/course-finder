@@ -9,7 +9,7 @@ public class StUser {
     public String name;
     public String family;
     public int status;
-    public int type;//0-->student && 1-->teacher
+    public int type;//0-->student && 1-->Teacher
     public int cityId;
     public int apiCode;
     public String location;
@@ -22,6 +22,5 @@ public class StUser {
     public StUser(){
         status = 0;
         type = 0;
-
     }
 }

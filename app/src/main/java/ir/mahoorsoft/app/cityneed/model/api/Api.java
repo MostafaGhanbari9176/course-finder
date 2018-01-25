@@ -37,7 +37,7 @@ public interface Api {
 
     @GET("updateUser/{phone}/{name}/{family}/{status}/{type}/{cityId}/{apiCode}")
     Call<ArrayList<Response>> updateUser(
-            @Path("phone") long phone,
+            @Path("phone") String phone,
             @Path("name") String name,
             @Path("family") String family,
             @Path("status") int status,
@@ -48,12 +48,12 @@ public interface Api {
 
     @GET("getUser/{phone}")
     Call<ArrayList<StUser>> getUser(
-            @Path("phone") long phone
+            @Path("phone") String phone
     );
 
     @GET("logOut/{phone}")
     Call<ArrayList<Response>> logOut(
-            @Path("phone") long phone
+            @Path("phone") String phone
     );
 
   //  @GET()
@@ -69,7 +69,15 @@ public interface Api {
             @Path("code") int code
     );
 
-
+    @GET("addTeacher/{phone}/{landPhone}/{address}/{subject}/{tozihat}/{type}")
+    Call<ArrayList<Response>> addTeacher(
+            @Path("phone") String phone,
+            @Path("landPhone") String landPhone,
+            @Path("address") String address,
+            @Path("subject") String subject,
+            @Path("tozihat") String tozihat,
+            @Path("type") int type
+    );
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(
             @Path("tableName") String tableName,

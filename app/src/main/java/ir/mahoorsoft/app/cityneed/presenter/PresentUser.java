@@ -22,17 +22,17 @@ public class PresentUser implements User.OnUserLitener {
         user.logIn(phone);
     }
 
-    public void updateUser(long phone, String name, String family, int status, int type, int cityIde, int apiCode) {
+    public void updateUser(String phone, String name, String family, int status, int type, int cityIde, int apiCode) {
         User user = new User(this);
         user.updateUser(phone, name, family, status, type, cityIde, apiCode);
     }
 
-    public void getUser(long phone) {
+    public void getUser(String phone) {
         User user = new User(this);
         user.getUser(phone);
     }
 
-    public void logOut(long phone) {
+    public void logOut(String phone) {
         User user = new User(this);
         user.logOut(phone);
 

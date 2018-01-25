@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -17,7 +16,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
@@ -30,7 +28,6 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.uploadFile.AndroidMultiPartEntity;
 import ir.mahoorsoft.app.cityneed.model.uploadFile.Config;
-import ir.mahoorsoft.app.cityneed.model.uploadFile.UploadFileToServer;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
@@ -42,15 +39,16 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
 public class ActivityRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener {
 
     Button btnBack;
-    Button bntSave;
+    Button btnSave;
     Button btnUploadImag;
-    Button btnChosePrvince;
+    Button btnLocation;
     DialogPrvince dialogPrvince;
     TextView txtPhone;
     TextView txtSubject;
     TextView txtAddress;
     TextView txtTozihat;
     ProgressBar pb;
+    int cityId;
     Handler handler = new Handler();
 
     @Override
@@ -58,7 +56,7 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registering);
         pointers();
-        btnChosePrvince.setText(Pref.getStringValue(PrefKey.location, "انتخاب استان وشهر"));
+        btnLocation.setText(Pref.getStringValue(PrefKey.location, "انتخاب استان وشهر"));
         dialogPrvince = new DialogPrvince(this, this);
     }
 
@@ -75,12 +73,12 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         txtSubject = (TextView) findViewById(R.id.txtSubject);
         btnBack = (Button) findViewById(R.id.btnBack_SumbitInformation);
         btnUploadImag = (Button) findViewById(R.id.btnUploadImg);
-        bntSave = (Button) findViewById(R.id.btnSaveRegistery);
-        btnChosePrvince = (Button) findViewById(R.id.btnChosePrvince);
+        btnSave = (Button) findViewById(R.id.btnSaveRegistery);
+        btnLocation = (Button) findViewById(R.id.btnLocation);
         pb = (ProgressBar) findViewById(R.id.pgbUploadImg);
-        bntSave.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-        btnChosePrvince.setOnClickListener(this);
+        btnLocation.setOnClickListener(this);
         btnUploadImag.setOnClickListener(this);
     }
 
@@ -109,12 +107,12 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
                 starterActivitry(ActivityProfile.class);
                 break;
 
-            case R.id.btnChosePrvince:
+            case R.id.btnLocation:
                 reqForData();
                 break;
 
             case R.id.btnSaveRegistery:
-                confirmData();
+                getData();
                 break;
 
             case R.id.btnUploadImg:
@@ -124,12 +122,12 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void confirmData() {
+    private void getData() {
 
         if (txtPhone.getText().toString().trim().length() != 11 &&
                 txtSubject.getText().toString().trim().length() != 0 &&
                 txtAddress.getText().toString().trim().length() != 0 &&
-                btnChosePrvince.getText().length() != 0) {
+                btnLocation.getText().length() != 0) {
 
 
         } else {
@@ -147,6 +145,8 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         try {
             super.onActivityResult(requestCode, resultCode, data);
 
+
+
             /*if (requestCode == 1 && resultCode == RESULT_OK) {
                 UploadFileToServer upFile = new UploadFileToServer(data.getStringExtra("path"), pb, this);
                 upFile.execute();*/
@@ -159,10 +159,6 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         }
     }
 
-    @Override
-    public void locationInformation() {
-        btnChosePrvince.setText(Pref.getStringValue(PrefKey.fakeLocation, ""));
-    }
 
     long totalSize = 0;
 
@@ -196,13 +192,13 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
                     File sourceFile = new File(filePath);
 
                     // Adding file data to http body
-                    entity.addPart("image", new FileBody(sourceFile));
+                    entity.addPart("fileToUpload", new FileBody(sourceFile));
 
                     // Extra parameters if you want to pass to server
-                    entity.addPart("website",
+                   /* entity.addPart("website",
                             new StringBody("www.androidhive.info"));
                     entity.addPart("email", new StringBody("abc@gmail.com"));
-
+*/
 
                     totalSize = entity.getContentLength();
                     httppost.setEntity(entity);
@@ -227,5 +223,11 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void locationInformation(String location, int cityId) {
+        btnLocation.setText(location);
+        this.cityId = cityId;
     }
 }

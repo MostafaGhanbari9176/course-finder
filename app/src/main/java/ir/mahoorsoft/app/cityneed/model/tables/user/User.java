@@ -37,7 +37,7 @@ public class User {
         });
     }
 
-    public void updateUser(long phone, String name, String family, int status, int type, int cityIde, int apiCode) {
+    public void updateUser(String phone, String name, String family, int status, int type, int cityIde, int apiCode) {
 
 
         Api api = ApiClient.getClient().create(Api.class);
@@ -55,7 +55,7 @@ public class User {
         });
     }
 
-    public void getUser(long phone){
+    public void getUser(String phone){
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StUser>> getUser = api.getUser(phone);
         getUser.enqueue(new Callback<ArrayList<StUser>>() {
@@ -72,7 +72,7 @@ public class User {
 
     }
 
-    public void logOut(long phone){
+    public void logOut(String phone){
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<Response>> logOut = api.logOut(phone);
         logOut.enqueue(new Callback<ArrayList<Response>>() {

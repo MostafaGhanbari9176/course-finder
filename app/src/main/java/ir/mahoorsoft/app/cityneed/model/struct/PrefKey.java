@@ -11,5 +11,6 @@ public class PrefKey {
     public static final String userFamily = "UserFamily";
     public static final String location = "location";
     public static final String cityId = "cityId";
-    public static final String usreTypeMode = "usreTypeMode";//0-->student&&1-->college&&2-->PrivateEducation
+    public static final String userTypeMode = "userTypeMode";// 0-->student && 1-->college && 1-->private
+
 }
