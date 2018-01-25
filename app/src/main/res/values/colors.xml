@@ -12,6 +12,7 @@
     <color name="light">#ffffff</color>
     <color name="light_green">#16815a</color>
     <color name="light_green2">#66cca6</color>
+    <color name="light_orange">#ff6600</color>
     <color name="dark_blue">#34495e</color>
     <color name="line_item">#1e5843</color>
     <color name="btn_true">#16815a</color>
