@@ -9,23 +9,13 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="4dp"
             android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/txtItemProvince"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:gravity="right|center"
-                android:paddingRight="48dp"
-                android:textColor="@color/text_home"
-                android:textSize="@dimen/txt_submit_iformation" />
 
             <ImageView
                 android:id="@+id/imgChosePrvince"
@@ -34,6 +24,15 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/icon_map_true" />
+
+            <TextView
+                android:id="@+id/txtItemProvince"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right|center"
+                android:paddingRight="48dp"
+                android:textColor="@color/text_home"
+                android:textSize="@dimen/txt_submit_iformation" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

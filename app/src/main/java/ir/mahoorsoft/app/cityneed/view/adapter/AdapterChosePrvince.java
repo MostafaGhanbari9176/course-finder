@@ -51,7 +51,7 @@ public class AdapterChosePrvince extends RecyclerView.Adapter<AdapterChosePrvinc
         }
 
         public void bindData(String city, final int position) {
-            img.setOnTouchListener(new View.OnTouchListener() {
+            txt.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     itemClick.showCity(position);

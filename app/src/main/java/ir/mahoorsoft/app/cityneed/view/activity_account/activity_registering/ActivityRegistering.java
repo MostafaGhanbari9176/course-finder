@@ -4,39 +4,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.api.Api;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
-import ir.mahoorsoft.app.cityneed.model.uploadFile.AndroidMultiPartEntity;
-import ir.mahoorsoft.app.cityneed.model.uploadFile.Config;
+import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
+import ir.mahoorsoft.app.cityneed.model.struct.UploadRes;
+import ir.mahoorsoft.app.cityneed.model.uploadFile.ProgressRequestBody;
+import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by MAHNAZ on 10/16/2017.
  */
 
-public class ActivityRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener {
+public class ActivityRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentTeacher.OnPresentTeacherListener {
 
     Button btnBack;
     Button btnSave;
@@ -47,7 +50,10 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     TextView txtSubject;
     TextView txtAddress;
     TextView txtTozihat;
-    ProgressBar pb;
+    CheckBox cbxPublic;
+    CheckBox cbxPrivate;
+    ProgressBar progressBar;
+    DialogProgres dialogProgres;
     int cityId;
     Handler handler = new Handler();
 
@@ -58,6 +64,7 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         pointers();
         btnLocation.setText(Pref.getStringValue(PrefKey.location, "انتخاب استان وشهر"));
         dialogPrvince = new DialogPrvince(this, this);
+        dialogProgres = new DialogProgres(this);
     }
 
     @Override
@@ -67,15 +74,18 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     }
 
     private void pointers() {
+        cbxPrivate = (CheckBox) findViewById(R.id.cbxSingleCurce);
+        cbxPublic = (CheckBox) findViewById(R.id.cbxPublicCurce);
         txtTozihat = (TextView) findViewById(R.id.txtTozihat);
         txtPhone = (TextView) findViewById(R.id.txtPhoneRegistery);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtSubject = (TextView) findViewById(R.id.txtSubject);
-        btnBack = (Button) findViewById(R.id.btnBack_SumbitInformation);
+        btnBack = (Button) findViewById(R.id.btnBackRegistery);
         btnUploadImag = (Button) findViewById(R.id.btnUploadImg);
         btnSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnLocation = (Button) findViewById(R.id.btnLocation);
-        pb = (ProgressBar) findViewById(R.id.pgbUploadImg);
+        progressBar = (ProgressBar) findViewById(R.id.pgbUploadImg);
+
         btnSave.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnLocation.setOnClickListener(this);
@@ -91,7 +101,7 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     }
 
     private void reqForData() {
-        dialogPrvince.showDialog();
+
     }
 
     public static void showMessage(String message) {
@@ -103,12 +113,12 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.btnBack_SumbitInformation:
+            case R.id.btnBackRegistery:
                 starterActivitry(ActivityProfile.class);
                 break;
 
             case R.id.btnLocation:
-                reqForData();
+                dialogPrvince.showDialog();
                 break;
 
             case R.id.btnSaveRegistery:
@@ -127,9 +137,15 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
         if (txtPhone.getText().toString().trim().length() != 11 &&
                 txtSubject.getText().toString().trim().length() != 0 &&
                 txtAddress.getText().toString().trim().length() != 0 &&
+                txtTozihat.getText().toString().trim().length() != 0 &&
                 btnLocation.getText().length() != 0) {
-
-
+            if (cbxPrivate.isChecked() || cbxPublic.isChecked()) {
+                dialogProgres.showProgresBar();
+                PresentTeacher presentTeacher = new PresentTeacher(this);
+                presentTeacher.addTeacher(txtSubject.getText().toString().trim(), txtAddress.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, cityId);
+            } else {
+                Toast.makeText(this, "لطفا نوع آموزش خود را مشخص کنید", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(this, "لطفا اطلاعات را کامل وصحیح وارد کنید...", Toast.LENGTH_SHORT).show();
         }
@@ -137,6 +153,7 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
 
     private void choseFile() {
         Intent intent = new Intent(this, ActivityFiles.class);
+        intent.putExtra("isImage", true);
         startActivityForResult(intent, 1);
     }
 
@@ -144,90 +161,84 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-
-
-
-            /*if (requestCode == 1 && resultCode == RESULT_OK) {
-                UploadFileToServer upFile = new UploadFileToServer(data.getStringExtra("path"), pb, this);
-                upFile.execute();*/
-            if (requestCode == 1 && resultCode == RESULT_OK) {
-                uploadFile(data.getStringExtra("path"));
-            }
+            if (requestCode == 1 && resultCode == RESULT_OK)
+                uploadFile(data.getStringExtra("path"), Pref.getStringValue(PrefKey.phone, "") + ".png");
         } catch (Exception ex) {
             Toast.makeText(ActivityRegistering.this, ex.toString(),
                     Toast.LENGTH_SHORT).show();
         }
     }
 
-
-    long totalSize = 0;
-
-    private void uploadFile(final String filePath) {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String responseString;
-
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost(Config.FILE_UPLOAD_URL);
-
-                try {
-                    AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
-                            new AndroidMultiPartEntity.ProgressListener() {
-
-                                @Override
-                                public void transferred(final long num) {
-                                    handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            int percent = (int) ((num / (float) totalSize) * 100);
-                                            pb.setProgress(percent);
-
-                                        }
-                                    });
-                                }
-                            });
-
-                    File sourceFile = new File(filePath);
-
-                    // Adding file data to http body
-                    entity.addPart("fileToUpload", new FileBody(sourceFile));
-
-                    // Extra parameters if you want to pass to server
-                   /* entity.addPart("website",
-                            new StringBody("www.androidhive.info"));
-                    entity.addPart("email", new StringBody("abc@gmail.com"));
-*/
-
-                    totalSize = entity.getContentLength();
-                    httppost.setEntity(entity);
-
-                    // Making server call
-                    HttpResponse response = httpclient.execute(httppost);
-                    HttpEntity r_entity = response.getEntity();
-
-                    int statusCode = response.getStatusLine().getStatusCode();
-                    if (statusCode == 200) {
-                        // Server response
-                        responseString = EntityUtils.toString(r_entity);
-                    } else {
-                        responseString = "Error occurred! Http Status Code: "
-                                + statusCode;
-                    }
-
-                } catch (ClientProtocolException e) {
-                    responseString = e.toString();
-                } catch (IOException e) {
-                    responseString = e.toString();
-                }
-            }
-        }).start();
-    }
-
     @Override
     public void locationInformation(String location, int cityId) {
         btnLocation.setText(location);
         this.cityId = cityId;
+    }
+
+    private void uploadFile(String path, String fileName) {
+        // create upload service client
+        Api service = ApiClient.getClient().create(Api.class);
+
+        // use the FileUtils to get the actual file by uri
+        File file = new File(path);
+
+        // create RequestBody instance from file
+        ProgressRequestBody fileBody = new ProgressRequestBody(file, new ProgressRequestBody.UploadCallbacks() {
+            @Override
+            public void onProgressUpdate(int percentage) {
+                progressBar.setProgress(30);
+            }
+        });
+       /* RequestBody requestFile =
+                RequestBody.create(MediaType.parse(getContentResolver().getType(fileUri)), file);*/
+
+        // MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body = MultipartBody.Part.createFormData("fileToUpload", fileName, fileBody);
+
+        // add another part within the multipart request
+        String descriptionString = "hello, this is description speaking";
+        RequestBody description =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, descriptionString);
+
+        // finally, execute the request
+        Call<UploadRes> call = service.upload(description, body);
+        call.enqueue(new Callback<UploadRes>() {
+            @Override
+            public void onResponse(Call<UploadRes> call, Response<UploadRes> response) {
+                Log.v("Upload", "success");
+            }
+
+            @Override
+            public void onFailure(Call<UploadRes> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void sendMessageFTT(String message) {
+        dialogProgres.closeProgresBar();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void confirmTeacher(boolean flag) {
+        dialogProgres.closeProgresBar();
+        if(flag){
+            Pref.saveStringValue(PrefKey.landPhone,txtPhone.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.subject,txtSubject.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.address,txtAddress.getText().toString().trim());
+            Pref.saveIntegerValue(PrefKey.madrak,0);
+            Pref.saveIntegerValue(PrefKey.userTypeMode, cbxPublic.isChecked() ? 1: 2);
+            starterActivitry(ActivityProfile.class);
+        }
+        else
+            sendMessageFTT("خطا");
+    }
+
+    @Override
+    public void onReceiveTeacher(ArrayList<StTeacher> users) {
+
     }
 }

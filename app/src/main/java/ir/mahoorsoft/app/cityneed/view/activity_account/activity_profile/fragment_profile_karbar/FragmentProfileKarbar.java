@@ -26,6 +26,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_registering.ActivityRegistering;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogAnswer;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
 
@@ -34,7 +35,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
  * Created by MAHNAZ on 10/23/2017.
  */
 
-public class FragmentProfileKarbar extends Fragment implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentUser.OnPresentUserLitener {
+public class FragmentProfileKarbar extends Fragment implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentUser.OnPresentUserLitener, DialogAnswer.OnClickDialogAnswerListener {
 
     LinearLayout btnEdit;
     LinearLayout btnAdd;
@@ -107,7 +108,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
                 editProfile();
                 break;
             case R.id.btnAddCurse_Karbar:
-                starterActivity(ActivityRegistering.class);
+              addCourse();
                 break;
             case R.id.btnSave_Karbar:
                 checkValidInf();
@@ -123,6 +124,24 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
         txtFamilyName.setEnabled(true);
         txtPhone.setEnabled(true);
         txtLocation.setEnabled(true);
+    }
+
+    private void addCourse(){
+        if(Pref.getIntegerValue(PrefKey.userTypeMode,0)==0)
+            new DialogAnswer(G.context,"برای ثبت دوره باید کاربری خود را به مدرس ارتقاء دهید",this).showDialog();
+        else
+            starterActivity(ActivityProfile.class);
+
+    }
+
+    private void checkValidInf() {
+        if ((txtName.getText() != null && txtName.getText().length() != 0) &&
+                (txtFamilyName.getText() != null && txtFamilyName.getText().length() != 0)&&
+                (txtLocation.getText() != null && txtLocation.getText().length() != 0)) {
+            updateUser(Pref.getStringValue(PrefKey.phone, ""), txtName.getText().toString().trim(), txtFamilyName.getText().toString().trim());
+        } else {
+            Toast.makeText(G.context, "لطفا اطلاعات را کامل وارد کنید...", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void starterActivity(Class aClass) {
@@ -181,15 +200,15 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
         txtPhone.setEnabled(false);
     }
 
-    private void checkValidInf() {
-        if ((txtName.getText() != null && txtName.getText().length() != 0) &&
-                (txtFamilyName.getText() != null && txtFamilyName.getText().length() != 0)&&
-                (txtLocation.getText() != null && txtLocation.getText().length() != 0)) {
-            updateUser(Pref.getStringValue(PrefKey.phone, ""), txtName.getText().toString().trim(), txtFamilyName.getText().toString().trim());
-        } else {
-            Toast.makeText(G.context, "لطفا اطلاعات را کامل وارد کنید...", Toast.LENGTH_SHORT).show();
-        }
+
+
+    @Override
+    public void answer(boolean answer) {
+        if(answer)
+            starterActivity(ActivityRegistering.class);
     }
+
+
 }
 
 

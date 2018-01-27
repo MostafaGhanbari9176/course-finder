@@ -10,8 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
 
-    public static final String serverAddress = "192.168.129.176:8080";
-    static final String BASE_URL = "http://"+serverAddress+"/city_need/v1/";
+    public static final String serverAddress = "http://192.168.129.176:8080";
+    static final String BASE_URL = serverAddress+"/city_need/v1/";
     private static Retrofit retrofit = null;
 
 

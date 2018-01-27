@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +16,18 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
@@ -41,12 +50,14 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     DialogProgres dialogProgres;
     ImageView backImage;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         G.activity = this;
         G.context = this;
         dialogProgres = new DialogProgres(this);
+
         setContentView(R.layout.activity_profile);
         pointer();
         checkUserType();
@@ -130,12 +141,14 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         switch (typeMode) {
             case 0:
                 txtUserType.setText("دانشجو");
-                setImageWithBackBlur(R.drawable.notebook, imgProfile, backImage);
+
+                //setImageWithBackBlur(R.drawable.a, imgProfile, backImage);
                 replaceContentWith(new FragmentProfileKarbar());
                 break;
             case 1:
                 txtUserType.setText("آموزشگاه");
-                //G.setImageWithGlide(R.drawable.icon_college, imgProfile);
+                // imgLoader.DisplayImage(ApiClient.serverAddress+"/city_need/v1/uploads/"+Pref.getStringValue(PrefKey.phone,"")+".png", R.drawable.notebook, imgProfile);
+                setImageWithBackBlur(Pref.getStringValue(PrefKey.phone, ""), imgProfile, backImage);
                 replaceContentWith(new FragmentProfileAmozeshgah());//4
                 break;
             case 2:
@@ -146,21 +159,48 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void setImageWithBackBlur(int Source, ImageView image, ImageView backImage) {
+    private void setImageWithBackBlur(String name, ImageView image, ImageView backImage) {
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        BlurBuilder.blur(this, BitmapFactory.decodeResource(getResources(), Source)).compress(Bitmap.CompressFormat.PNG, 100, stream);
+       Bitmap bit =  BlurBuilder.blur(this, getBitmapFromUrl(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png"));
         Glide.with(this)
-                .load(stream.toByteArray())
+
+                .load(bit)
                 .asBitmap()
-                .centerCrop()
                 .error(R.drawable.c)
+                .centerCrop()
+
                 .into(backImage);
         Glide.with(this)
-                .load(Source)
+                .load(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png")
                 .centerCrop()
-                .error(R.drawable.c)
+
                 .into(image);
+
+    }
+
+    protected Bitmap getBitmapFromUrl(final String src) {
+        final Bitmap[] bit = new Bitmap[1];
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(src);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                    bit[0] = myBitmap;
+                } catch (Exception e) {
+
+                    bit[0] = null;
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+        return bit[0];
 
     }
 

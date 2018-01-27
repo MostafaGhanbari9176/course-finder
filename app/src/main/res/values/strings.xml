@@ -4,10 +4,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="list_text_one">آموزشگاه کنکور</string>
-    <string name="list_text_two">آموزشگاه زبان های خارجی</string>
-    <string name="list_text_three">کلاس خصوصی</string>
-
+    <string name="list_text_one">دوره های برگزیده</string>
+    <string name="list_text_two">درحال تکمیل ظرفیت</string>
+    <string name="list_text_three">دوره های جدید</string>
+    <string name="internal_storage">Internal storage</string>
     <string name="dialog_checkbox_one">کلاس خصوصی</string>
     <string name="dialog_checkbox_two">آموزشگاه</string>
     <string name="dialog_text_one">نزدیکترین</string>

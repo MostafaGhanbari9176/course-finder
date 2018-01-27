@@ -26,15 +26,6 @@
                     android:layout_height="match_parent"
                     android:gravity="right">
 
-                    <Button
-                        android:id="@+id/btnCoursesMenu"
-                        android:layout_width="@dimen/btn_toolbar"
-                        android:layout_height="@dimen/btn_toolbar"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/icon_list" />
-
                     <cn.lightsky.infiniteindicator.InfiniteIndicator
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
@@ -48,6 +39,16 @@
 
                 </RelativeLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout

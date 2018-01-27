@@ -169,12 +169,7 @@ public class FragmentHome extends Fragment implements AdapterEduIns.setOnClickIt
         txtOne = (TextView) view.findViewById(R.id.txtOne);
         txtTwo = (TextView) view.findViewById(R.id.txtTwo);
         txtThree = (TextView) view.findViewById(R.id.txtThree);
-        ((Button) view.findViewById(R.id.btnCoursesMenu)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCourcesMenu();
-            }
-        });
+
     }
 
     private void setTextFont() {

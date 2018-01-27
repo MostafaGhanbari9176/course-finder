@@ -7,12 +7,17 @@ import ir.mahoorsoft.app.cityneed.model.struct.Response;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
+import ir.mahoorsoft.app.cityneed.model.struct.UploadRes;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -69,15 +74,24 @@ public interface Api {
             @Path("code") int code
     );
 
-    @GET("addTeacher/{phone}/{landPhone}/{address}/{subject}/{tozihat}/{type}")
+    @GET("addTeacher/{phone}/{landPhone}/{address}/{subject}/{tozihat}/{type}/{cityId}")
     Call<ArrayList<Response>> addTeacher(
             @Path("phone") String phone,
             @Path("landPhone") String landPhone,
             @Path("address") String address,
             @Path("subject") String subject,
             @Path("tozihat") String tozihat,
-            @Path("type") int type
+            @Path("type") int type,
+            @Path("cityId") int cityId
     );
+
+    @Multipart
+    @POST("upload.php")
+    Call<UploadRes> upload(
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part file
+    );
+
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(
             @Path("tableName") String tableName,
