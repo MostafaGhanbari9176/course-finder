@@ -5,7 +5,7 @@ package ir.mahoorsoft.app.cityneed.model.struct;
  */
 
 public class StUser {
-    public long phone;
+    public String phone;
     public String name;
     public String family;
     public int status;
@@ -14,7 +14,7 @@ public class StUser {
     public int apiCode;
     public String location;
 
-    public  StUser(Long phone,String name ,String family){
+    public  StUser(String phone,String name ,String family){
         this.phone = phone;
         this.name = name;
         this.family = family;

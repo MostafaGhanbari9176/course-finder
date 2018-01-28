@@ -22,6 +22,16 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         Teacher teacher = new Teacher(this);
         teacher.addTeacher(landPhone, address, subject, tozihat, type, cityId);
     }
+
+    public void getTeacher(){
+        Teacher teacher = new Teacher(this);
+        teacher.getTeacher();
+    }
+
+    public void updateTeacher(String landPhone, String subject, String address, int cityId, int madrak){
+        Teacher teacher = new Teacher(this);
+        teacher.updateTeacher(landPhone, subject, address, cityId, madrak);
+    }
     @Override
     public void onReceiveFlag(ArrayList<Response> res) {
         onPresentTeacherListener.confirmTeacher( res.get(0).code == 0 ? false : true);
@@ -29,7 +39,7 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
 
     @Override
     public void onReceiveData(ArrayList<StTeacher> data) {
-
+        onPresentTeacherListener.onReceiveTeacher(data);
     }
 
     @Override

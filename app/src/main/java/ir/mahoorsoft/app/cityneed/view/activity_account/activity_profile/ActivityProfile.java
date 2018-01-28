@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,8 +24,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -125,6 +130,11 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         Pref.removeValue(PrefKey.userName);
         Pref.removeValue(PrefKey.location);
         Pref.removeValue(PrefKey.cityId);
+        Pref.removeValue(PrefKey.subject);
+        Pref.removeValue(PrefKey.address);
+        Pref.removeValue(PrefKey.userTypeMode);
+        Pref.removeValue(PrefKey.landPhone);
+        Pref.removeValue(PrefKey.madrak);
         Pref.removeValue(PrefKey.IsLogin);
         this.finish();
     }
@@ -141,14 +151,12 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         switch (typeMode) {
             case 0:
                 txtUserType.setText("دانشجو");
-
-                //setImageWithBackBlur(R.drawable.a, imgProfile, backImage);
+                setImageWithBackBlur(R.drawable.user, imgProfile, backImage);
                 replaceContentWith(new FragmentProfileKarbar());
                 break;
             case 1:
                 txtUserType.setText("آموزشگاه");
-                // imgLoader.DisplayImage(ApiClient.serverAddress+"/city_need/v1/uploads/"+Pref.getStringValue(PrefKey.phone,"")+".png", R.drawable.notebook, imgProfile);
-                setImageWithBackBlur(Pref.getStringValue(PrefKey.phone, ""), imgProfile, backImage);
+                setUrlWithBackBlur(Pref.getStringValue(PrefKey.phone,""), imgProfile, backImage);
                 replaceContentWith(new FragmentProfileAmozeshgah());//4
                 break;
             case 2:
@@ -159,23 +167,52 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void setImageWithBackBlur(String name, ImageView image, ImageView backImage) {
-
+    private void setUrlWithBackBlur(String name, ImageView image, ImageView backImage) {
+        Bitmap theBitmap = null;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-       Bitmap bit =  BlurBuilder.blur(this, getBitmapFromUrl(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png"));
+        try {
+            theBitmap =
+                    Glide.with(this)
+                            .load(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png")
+                            .asBitmap()
+                            .into(100, 100) // Width and height
+                            .get();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //BlurBuilder.blur(this, DownloadImage(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png")).compress(Bitmap.CompressFormat.PNG, 100, stream);
         Glide.with(this)
-
-                .load(bit)
+                .load(stream.toByteArray())
                 .asBitmap()
-                .error(R.drawable.c)
                 .centerCrop()
-
                 .into(backImage);
+        backImage.setImageBitmap(DownloadImage(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png"));
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png")
-                .centerCrop()
-
+                .fitCenter()
+                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .into(image);
+
+
+    }
+
+    private void setImageWithBackBlur(int img, ImageView image, ImageView backImage) {
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        BlurBuilder.blur(this, BitmapFactory.decodeResource(getResources(), img)).compress(Bitmap.CompressFormat.PNG, 100, stream);
+        Glide.with(this)
+                .load(stream.toByteArray())
+                .asBitmap()
+                .centerCrop()
+                .into(backImage);
+
+        Glide.with(this)
+                .load(img)
+                .fitCenter()
+                .into(image);
+
 
     }
 
@@ -204,6 +241,53 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    private Bitmap DownloadImage(String URL)
+    {
+//      System.out.println("image inside="+URL);
+        Bitmap bitmap = null;
+        InputStream in = null;
+        try {
+            in = OpenHttpConnection(URL.substring(0,URL.lastIndexOf('.')));
+            bitmap = BitmapFactory.decodeStream(in);
+            in.close();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+//        System.out.println("image last");
+        return bitmap;
+    }
+    private InputStream OpenHttpConnection(String urlString)
+            throws IOException
+    {
+        InputStream in = null;
+        int response = -1;
+
+        URL url = new URL(urlString);
+        URLConnection conn = url.openConnection();
+
+        if (!(conn instanceof HttpURLConnection))
+            throw new IOException("Not an HTTP connection");
+
+        try{
+            HttpURLConnection httpConn = (HttpURLConnection) conn;
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("GET");
+            httpConn.connect();
+
+            response = httpConn.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK)
+            {
+                in = httpConn.getInputStream();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new IOException("Error connecting");
+        }
+        return in;
+    }
     /*public static void showDialog(DialogPrvince.OnDialogPrvinceListener onDialogPrvinceListener) {
         if (dialogPrvince == null) {
             dialogPrvince = new DialogPrvince(ActivityProfile.this, onDialogPrvinceListener);

@@ -15,12 +15,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
-import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCity;
 import ir.mahoorsoft.app.cityneed.presenter.PresentOstan;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_registering.ActivityRegistering;
+import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterChosePrvince;
 
 /**
@@ -150,7 +148,7 @@ public class DialogPrvince implements PresentCity.OnPresentCityListener, Present
     @Override
     public void sendMessageFCT(String message) {
         dialogProgres.closeProgresBar();
-        ActivityRegistering.showMessage(message);
+        ActivityTeacherRegistering.showMessage(message);
     }
 
     @Override

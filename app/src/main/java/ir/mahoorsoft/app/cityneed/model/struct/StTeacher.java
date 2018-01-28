@@ -5,8 +5,8 @@ package ir.mahoorsoft.app.cityneed.model.struct;
  */
 
 public class StTeacher {
-    public long landPhone;
-    public long phone;
+    public String landPhone;
+    public String phone;
     public int type;//0-->college && 1-->privateEducation
     public String address;
     public int madrak;//0 --> no && 1 --> upload 2 --> uploadAndAccept
@@ -17,11 +17,12 @@ public class StTeacher {
     public String endDate;
     public String tozihat;
     public int cityId;
+    public String location;
 
     public StTeacher() {
     }
 
-    public StTeacher(long phone,long landPhone, String address, String subject, int cityId,String tozihat,int type) {
+    public StTeacher(String phone,String landPhone, String address, String subject, int cityId,String tozihat,int type) {
         this.landPhone = landPhone;
         this.phone = phone;
         this.address = address;

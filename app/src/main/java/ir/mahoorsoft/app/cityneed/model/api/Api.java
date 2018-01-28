@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.model.struct.Response;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
+import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.model.struct.UploadRes;
 import okhttp3.MultipartBody;
@@ -91,6 +92,21 @@ public interface Api {
             @Part("description") RequestBody description,
             @Part MultipartBody.Part file
     );
+
+    @GET("getTeacher/{phone}")
+    Call<ArrayList<StTeacher>> getTeacher(
+            @Path("phone") String phone
+    );
+
+    @GET("updateTeacher/{phone}/{landPhone}/{address}/{subject}/{cityId}/{madrak}")
+    Call<ArrayList<Response>> updateTeacher(
+            @Path("phone") String phone,
+            @Path("landPhone") String landPhone,
+            @Path("address") String address,
+            @Path("subject") String subject,
+            @Path("cityId") int cityId ,
+            @Path("madrak") int madrak
+            );
 
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(

@@ -1,10 +1,7 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar;
 
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,18 +21,19 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_registering.ActivityRegistering;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogAnswer;
+import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
+import ir.mahoorsoft.app.cityneed.view.dialog.ActivityDialogAnswer;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
  * Created by MAHNAZ on 10/23/2017.
  */
 
-public class FragmentProfileKarbar extends Fragment implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentUser.OnPresentUserLitener, DialogAnswer.OnClickDialogAnswerListener {
+public class FragmentProfileKarbar extends Fragment implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentUser.OnPresentUserLitener {
 
     LinearLayout btnEdit;
     LinearLayout btnAdd;
@@ -108,7 +106,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
                 editProfile();
                 break;
             case R.id.btnAddCurse_Karbar:
-              addCourse();
+                addCourse();
                 break;
             case R.id.btnSave_Karbar:
                 checkValidInf();
@@ -126,17 +124,17 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
         txtLocation.setEnabled(true);
     }
 
-    private void addCourse(){
-        if(Pref.getIntegerValue(PrefKey.userTypeMode,0)==0)
-            new DialogAnswer(G.context,"برای ثبت دوره باید کاربری خود را به مدرس ارتقاء دهید",this).showDialog();
-        else
-            starterActivity(ActivityProfile.class);
+    private void addCourse() {
+        Intent intent = new Intent(G.context, ActivityDialogAnswer.class);
+        intent.putExtra("txt", "برای ثبت دوره باید کاربری خود را به مدرس ارتقاء دهید");
+        startActivityForResult(intent, 1);
+
 
     }
 
     private void checkValidInf() {
         if ((txtName.getText() != null && txtName.getText().length() != 0) &&
-                (txtFamilyName.getText() != null && txtFamilyName.getText().length() != 0)&&
+                (txtFamilyName.getText() != null && txtFamilyName.getText().length() != 0) &&
                 (txtLocation.getText() != null && txtLocation.getText().length() != 0)) {
             updateUser(Pref.getStringValue(PrefKey.phone, ""), txtName.getText().toString().trim(), txtFamilyName.getText().toString().trim());
         } else {
@@ -173,10 +171,10 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
     @Override
     public void confirmUser(boolean flag) {
         dialogProgres.closeProgresBar();
-        if(!flag){
+        if (!flag) {
             sendMessageFUT("خطا");
-        }
-        else {
+            G.activity.finish();
+        } else {
             btnSave.setVisibility(View.GONE);
             txtName.setEnabled(false);
             txtFamilyName.setEnabled(false);
@@ -200,15 +198,15 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
         txtPhone.setEnabled(false);
     }
 
-
-
     @Override
-    public void answer(boolean answer) {
-        if(answer)
-            starterActivity(ActivityRegistering.class);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            if (data.getBooleanExtra("answer", false))
+                starterActivity(ActivityTeacherRegistering.class);
+        }
+
     }
-
-
 }
 
 

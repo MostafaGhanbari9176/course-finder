@@ -17,8 +17,10 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
+import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -27,7 +29,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by MAHNAZ on 10/22/2017.
  */
 
-public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSmsCode.OnPresentSmsCodeListener, PresentUser.OnPresentUserLitener {
+public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSmsCode.OnPresentSmsCodeListener, PresentUser.OnPresentUserLitener, PresentTeacher.OnPresentTeacherListener {
 
     int timer = 120;
     Toolbar tlb;
@@ -196,7 +198,10 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
             PresentUser presentUser = new PresentUser(this);
             presentUser.getUser(Pref.getStringValue(PrefKey.phone, ""));
         } else if (code == 3) {
-            //PresentTeacher
+            dialogProgres.showProgresBar();
+            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
+            PresentTeacher presentTeacher = new PresentTeacher(this);
+            presentTeacher.getTeacher();
         }
     }
 
@@ -221,6 +226,33 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         Pref.saveStringValue(PrefKey.location, users.get(0).location);
         Pref.saveIntegerValue(PrefKey.cityId, users.get(0).cityId);
         Pref.saveIntegerValue(PrefKey.userTypeMode, users.get(0).type);
+        Intent intent = new Intent(this, ActivityProfile.class);
+        startActivity(intent);
+        this.finish();
+    }
+
+    @Override
+    public void sendMessageFTT(String message) {
+        sendMessageFUT(message);
+    }
+
+    @Override
+    public void confirmTeacher(boolean flag) {
+
+    }
+
+    @Override
+    public void onReceiveTeacher(ArrayList<StTeacher> teacher) {
+
+        dialogProgres.closeProgresBar();
+        Pref.saveBollValue(PrefKey.IsLogin, true);
+        Pref.saveIntegerValue(PrefKey.cityId,teacher.get(0).cityId);
+        Pref.saveStringValue(PrefKey.location,teacher.get(0).location);
+        Pref.saveStringValue(PrefKey.landPhone,teacher.get(0).landPhone);
+        Pref.saveStringValue(PrefKey.subject,teacher.get(0).subject);
+        Pref.saveStringValue(PrefKey.address,teacher.get(0).address);
+        Pref.saveIntegerValue(PrefKey.madrak,teacher.get(0).madrak);
+        Pref.saveIntegerValue(PrefKey.userTypeMode,teacher.get(0).type == 0 ? 1:2);
         Intent intent = new Intent(this, ActivityProfile.class);
         startActivity(intent);
         this.finish();

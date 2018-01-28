@@ -14,7 +14,8 @@
     <dimen name="img_view_pager_height">160dp</dimen>
     <dimen name="img_item_width">44dp</dimen>
     <dimen name="img_item_height">44dp</dimen>
-    <dimen name="img_fragment_karbar">150dp</dimen>
+    <dimen name="img_fragment_karbar">128dp</dimen>
+    <dimen name="img_item">90dp</dimen>
     <dimen name="txt_toolbar">22dp</dimen>
     <dimen name="progresbar">44dp</dimen>
 

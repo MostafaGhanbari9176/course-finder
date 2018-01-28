@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.activity_registering;
+package ir.mahoorsoft.app.cityneed.view.activity_account.registering;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,7 +39,7 @@ import retrofit2.Response;
  * Created by MAHNAZ on 10/16/2017.
  */
 
-public class ActivityRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentTeacher.OnPresentTeacherListener {
+public class ActivityTeacherRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentTeacher.OnPresentTeacherListener {
 
     Button btnBack;
     Button btnSave;
@@ -164,7 +164,7 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
             if (requestCode == 1 && resultCode == RESULT_OK)
                 uploadFile(data.getStringExtra("path"), Pref.getStringValue(PrefKey.phone, "") + ".png");
         } catch (Exception ex) {
-            Toast.makeText(ActivityRegistering.this, ex.toString(),
+            Toast.makeText(ActivityTeacherRegistering.this, ex.toString(),
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -226,6 +226,8 @@ public class ActivityRegistering extends AppCompatActivity implements View.OnCli
     public void confirmTeacher(boolean flag) {
         dialogProgres.closeProgresBar();
         if(flag){
+            Pref.saveIntegerValue(PrefKey.cityId,cityId);
+            Pref.saveStringValue(PrefKey.location,btnLocation.getText().toString().trim());
             Pref.saveStringValue(PrefKey.landPhone,txtPhone.getText().toString().trim());
             Pref.saveStringValue(PrefKey.subject,txtSubject.getText().toString().trim());
             Pref.saveStringValue(PrefKey.address,txtAddress.getText().toString().trim());
