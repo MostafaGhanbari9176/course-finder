@@ -2,7 +2,6 @@ package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.fragment_sli
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,9 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-
-import ir.mahoorsoft.app.cityneed.AdverFeature;
+import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
@@ -67,9 +64,9 @@ public class FragmentSlide extends Fragment {
 
     private void sendImageId(){
 
-        AdverFeature adverFeature =new AdverFeature();
-        adverFeature.image=imageUrl;
-        ActivityShowFeature.adverFeatures= adverFeature;
+        Items items =new Items();
+      //  items.image=imageUrl;
+        ActivityShowFeature.adverFeatures= items;
         Intent intent = new Intent(G.context,ActivityShowFeature.class);
         startActivity(intent);
 

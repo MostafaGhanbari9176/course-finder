@@ -25,6 +25,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.A
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 
 
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -111,6 +112,12 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnSearch_Menu:
                 replaceContentWith(new FragmentSearch());
+                flag = false;
+                break;
+            case R.id.tabaghe:
+                Intent intent = new Intent(this, ActivityCoursesList.class);
+                intent.putExtra("dirName", "tabaghe");
+                startActivity(intent);
                 flag = false;
                 break;
         }

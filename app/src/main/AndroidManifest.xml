@@ -46,6 +46,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing"/>
+
         <activity
             android:name=".view.activity_account.activity_phone_confirm.ActivityPhoneConfirm"
             android:screenOrientation="portrait"

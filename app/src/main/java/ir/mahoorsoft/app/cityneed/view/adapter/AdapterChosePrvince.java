@@ -46,7 +46,7 @@ public class AdapterChosePrvince extends RecyclerView.Adapter<AdapterChosePrvinc
         public Holder(View itemView) {
             super(itemView);
             txt = (TextView) itemView.findViewById(R.id.txtItemProvince);
-            item = (LinearLayout) view.findViewById(R.id.itemChoseProvince);
+            item = (LinearLayout) itemView.findViewById(R.id.itemChoseProvince);
             img = (ImageView) itemView.findViewById(R.id.imgChosePrvince);
         }
 

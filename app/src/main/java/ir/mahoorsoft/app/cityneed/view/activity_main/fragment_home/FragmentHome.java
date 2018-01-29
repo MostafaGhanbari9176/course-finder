@@ -1,10 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -13,12 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
@@ -26,30 +22,27 @@ import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.AdverFeature;
+import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.fragment_slider.FragmentSlide;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterEduIns;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
 
 /**
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentHome extends Fragment implements AdapterEduIns.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener {
+public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener {
 
     private ArrayList<Page> pageViews;
     private InfiniteIndicator mAnimCircleIndicator;
     TextView txtOne;
     TextView txtTwo;
     TextView txtThree;
-
     View view;
     RecyclerView list;
-    AdapterEduIns adapterListView;
-    ArrayList<AdverFeature> surce = new ArrayList<>();
+    AdapterHomeLists adapterListView;
+    ArrayList<Items> surce = new ArrayList<>();
     ViewPager vPager;
 
     @Nullable
@@ -96,7 +89,7 @@ public class FragmentHome extends Fragment implements AdapterEduIns.setOnClickIt
         list = (RecyclerView) view.findViewById(R.id.RV_one);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, true);
-        adapterListView = new AdapterEduIns(G.context, surce, this);
+        adapterListView = new AdapterHomeLists(G.context, surce, this);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapterListView);
         adapterListView.notifyDataSetChanged();
@@ -109,7 +102,7 @@ public class FragmentHome extends Fragment implements AdapterEduIns.setOnClickIt
         list = (RecyclerView) view.findViewById(R.id.RV_two);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, true);
-        adapterListView = new AdapterEduIns(G.context, surce, this);
+        adapterListView = new AdapterHomeLists(G.context, surce, this);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapterListView);
         adapterListView.notifyDataSetChanged();
@@ -122,7 +115,7 @@ public class FragmentHome extends Fragment implements AdapterEduIns.setOnClickIt
         list = (RecyclerView) view.findViewById(R.id.RV_three);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, true);
-        adapterListView = new AdapterEduIns(G.context, surce, this);
+        adapterListView = new AdapterHomeLists(G.context, surce, this);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapterListView);
         adapterListView.notifyDataSetChanged();
@@ -132,36 +125,6 @@ public class FragmentHome extends Fragment implements AdapterEduIns.setOnClickIt
 
     private void setSurce() {
 
-
-        for (int i = 1; i <= 4; i++) {
-            AdverFeature character = new AdverFeature();
-            switch (i) {
-                case 1:
-                    character.image = R.drawable.aa;
-                    character.collegeName = "مجری برکزار کننده دروه های اموزشی کنکور";
-                    character.kind = i * 29 + "";
-                    break;
-                case 2:
-                    character.image = R.drawable.bb;
-                    character.collegeName = "برگزار کننده کلاس های تمرین";
-                    character.kind = i * 29 + "";
-                    break;
-                case 3:
-                    character.image = R.drawable.cc;
-                    character.collegeName = "برگزار کننده کلاس امتحانات نهایی";
-                    character.kind = "مجری برکزار کننده دروه های اموزشی کنکور";
-                    break;
-                case 4:
-                    character.image = R.drawable.dd;
-                    character.collegeName = i * 20 + "";
-                    character.kind = i * 29 + "";
-                    break;
-            }
-
-            surce.add(character);
-            adapterListView.notifyDataSetChanged();
-
-        }
     }
 
     private void pointer() {
@@ -183,15 +146,6 @@ public class FragmentHome extends Fragment implements AdapterEduIns.setOnClickIt
 
     @Override
     public void itemClick(int number) {
-
-        AdverFeature adverFeature = new AdverFeature();
-        adverFeature.image = surce.get(number).image;
-        adverFeature.kind = surce.get(number).kind;
-        adverFeature.collegeName = surce.get(number).collegeName;
-        ActivityShowFeature.adverFeatures = adverFeature;
-        Intent intent = new Intent(G.context, ActivityShowFeature.class);
-        startActivity(intent);
-
 
     }
 

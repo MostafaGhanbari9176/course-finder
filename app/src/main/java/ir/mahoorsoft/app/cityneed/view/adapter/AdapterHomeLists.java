@@ -17,13 +17,14 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.AdverFeature;
+import ir.mahoorsoft.app.cityneed.Items;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 
 /**
  * Created by M-gh on 07-Oct-17.
  */
 
-public class AdapterEduIns extends RecyclerView.Adapter<AdapterEduIns.Holder> {
+public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Holder> {
 
     public interface setOnClickItem {
 
@@ -33,9 +34,9 @@ public class AdapterEduIns extends RecyclerView.Adapter<AdapterEduIns.Holder> {
 
     setOnClickItem setOnClickItem;
     Context context;
-    ArrayList<AdverFeature> surce = new ArrayList<>();
+    ArrayList<Items> surce = new ArrayList<>();
 
-    public AdapterEduIns(Context context, ArrayList<AdverFeature> surce
+    public AdapterHomeLists(Context context, ArrayList<Items> surce
             , setOnClickItem setOnClickItem) {
         this.context = context;
         this.surce = surce;
@@ -45,30 +46,31 @@ public class AdapterEduIns extends RecyclerView.Adapter<AdapterEduIns.Holder> {
     public class Holder extends RecyclerView.ViewHolder {
 
         ImageView imgItem;
-        TextView txtName;
-        TextView txtKind;
+        TextView txtMasterName;
+        TextView txtCourseName;
         LinearLayout item;
 
         public Holder(View itemView) {
             super(itemView);
 
             imgItem = (ImageView) itemView.findViewById(R.id.img_item);
-            txtName = (TextView) itemView.findViewById(R.id.txt_name_item);
-            txtKind = (TextView) itemView.findViewById(R.id.txt_kind_item);
-            item = (LinearLayout) itemView.findViewById(R.id.item);
+            txtMasterName = (TextView) itemView.findViewById(R.id.txtMasterNameHomeItem);
+            txtCourseName = (TextView) itemView.findViewById(R.id.txtNameCourseHomeItem);
+            item = (LinearLayout) itemView.findViewById(R.id.itemHome);
         }
 
-        public void bindData(AdverFeature adverFeature, final int number) {
+        public void bindData(Items items, final int number) {
             Glide.with(context)
-                    .load(adverFeature.image)
+                    .load(ApiClient.BASE_URL+"/upload/course/"+items.id+".png")
+                    .error(R.drawable.user)
                     .centerCrop()
                     .into(imgItem);
 
             Typeface tf = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/Far_Homa.ttf");
-            txtName.setTypeface(tf);
-            txtKind.setTypeface(tf);
-            txtKind.setText(adverFeature.kind);
-            txtName.setText(adverFeature.collegeName);
+            txtMasterName.setTypeface(tf);
+            txtCourseName.setTypeface(tf);
+            txtCourseName.setText(items.CourseName);
+            txtMasterName.setText(items.MasterName);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -98,9 +100,9 @@ public class AdapterEduIns extends RecyclerView.Adapter<AdapterEduIns.Holder> {
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
-        AdverFeature adverFeature = surce.get(position);
+        Items items = surce.get(position);
 
-        holder.bindData(adverFeature, position);
+        holder.bindData(items, position);
     }
 
     @Override

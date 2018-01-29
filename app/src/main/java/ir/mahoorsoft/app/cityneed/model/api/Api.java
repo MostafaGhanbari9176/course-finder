@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.model.struct.Response;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
+import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.model.struct.UploadRes;
@@ -107,6 +108,11 @@ public interface Api {
             @Path("cityId") int cityId ,
             @Path("madrak") int madrak
             );
+
+    @GET("getTabaghe/{uperId}")
+    Call<ArrayList<StTabaghe>> getTabaghe(
+            @Path("uperId") int uperId
+    );
 
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(

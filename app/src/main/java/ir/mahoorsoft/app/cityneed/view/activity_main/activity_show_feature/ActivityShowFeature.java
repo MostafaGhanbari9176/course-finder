@@ -7,9 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-
-import ir.mahoorsoft.app.cityneed.AdverFeature;
+import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.R;
 
 /**
@@ -22,7 +20,7 @@ public class ActivityShowFeature extends AppCompatActivity {
     TextView txtName;
     TextView txtKind;
 
-    public static AdverFeature adverFeatures ;
+    public static Items adverFeatures ;
     int imageUrl;
 
     @Override
@@ -55,7 +53,7 @@ public class ActivityShowFeature extends AppCompatActivity {
 
     private void setImage() {
 
-        imageUrl = adverFeatures.image;
+       // imageUrl = adverFeatures.image;
 
         Glide.with(this)
                 .load(imageUrl)
@@ -67,8 +65,8 @@ public class ActivityShowFeature extends AppCompatActivity {
 
     private void setOther() {
 
-        txtKind.setText(adverFeatures.kind);
-        txtName.setText(adverFeatures.collegeName);
+      //  txtKind.setText(adverFeatures.kind);
+      //  txtName.setText(adverFeatures.collegeName);
 
     }
 
