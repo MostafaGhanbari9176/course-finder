@@ -13,7 +13,7 @@ import ir.mahoorsoft.app.cityneed.model.tables.tabaghe.Tabaghe;
 public class PresentTabaghe implements Tabaghe.OnTabagheListener {
 
     public interface OnPresentTabagheListener {
-        void onResiveTabaghe(ArrayList<Items> data);
+        void onResiveTabaghe(ArrayList<StTabaghe> data);
 
         void tabagheNahaei();
 
@@ -33,18 +33,10 @@ public class PresentTabaghe implements Tabaghe.OnTabagheListener {
 
     @Override
     public void resiveData(ArrayList<StTabaghe> data) {
-        ArrayList<Items> itemses = new ArrayList<>();
-        if (data.size() == 1) {
+        if (data.get(0).subject.equalsIgnoreCase("-1"))
             onPresentTabagheListener.tabagheNahaei();
-            return;
-        }
-        for (int i = 0; i < data.size(); i++) {
-            Items items = new Items();
-            items.id = data.get(i).id;
-            items.MasterName = data.get(i).subject;
-            itemses.add(items);
-        }
-        onPresentTabagheListener.onResiveTabaghe(itemses);
+        else
+            onPresentTabagheListener.onResiveTabaghe(data);
     }
 
     @Override

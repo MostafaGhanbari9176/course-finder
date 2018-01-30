@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.struct.Response;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
+import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
@@ -89,7 +90,7 @@ public interface Api {
 
     @Multipart
     @POST("upload.php")
-    Call<UploadRes> upload(
+    Call<ArrayList<Response>> upload(
             @Part("description") RequestBody description,
             @Part MultipartBody.Part file
     );
@@ -112,6 +113,36 @@ public interface Api {
     @GET("getTabaghe/{uperId}")
     Call<ArrayList<StTabaghe>> getTabaghe(
             @Path("uperId") int uperId
+    );
+
+    @GET("addCourse/{teacher_id}/{subject}/{tabaghe_id}/{type}/{capacity}/{mony}/{sharayet}/{tozihat}/{start_date}/{end_date}/{day}/{hours}/{old_range}")
+    Call<ArrayList<Response>> addCourse(
+            @Path("teacher_id") String teacherId,
+            @Path("subject") String subject,
+            @Path("tabaghe_id") int tabagheId,
+            @Path("type") int type,
+            @Path("capacity") int capacity,
+            @Path("mony") int mony,
+            @Path("sharayet") String sharayet,
+            @Path("tozihat") String tozihat,
+            @Path("start_date") String startDate,
+            @Path("end_date") String endDate,
+            @Path("day") String day,
+            @Path("hours") String hours,
+            @Path("old_range") String old_range
+    );
+
+    @GET("getAllCourse")
+    Call<ArrayList<StCourse>> getAllCourse();
+
+    @GET("getCourseById/{id}")
+    Call<ArrayList<StCourse>> getCourseById(
+            @Path("id") int id
+    );
+
+    @GET("getCourseByTeacherId/{id}")
+    Call<ArrayList<StCourse>> getCourseByTeacherId(
+            @Path("id") String id
     );
 
     @GET("remaining_credit/{tableName}/{phone}")

@@ -1,5 +1,6 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
+import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
 
@@ -27,7 +29,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
  * Created by MAHNAZ on 10/23/2017.
  */
 
-public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince.OnDialogPrvinceListener, View.OnClickListener, PresentTeacher.OnPresentTeacherListener{
+public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince.OnDialogPrvinceListener, View.OnClickListener, PresentTeacher.OnPresentTeacherListener {
     TextView txtPhone;
     TextView txtLocation;
     TextView txtSubject;
@@ -37,29 +39,30 @@ public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince
     LinearLayout btnAddCourse;
     DialogPrvince dialogPrvince;
     DialogProgres dialogProgres;
-    int cityId = Pref.getIntegerValue(PrefKey.cityId,-1);
-    int madrak = Pref.getIntegerValue(PrefKey.madrak,0);
+    int cityId = Pref.getIntegerValue(PrefKey.cityId, -1);
+    int madrak = Pref.getIntegerValue(PrefKey.madrak, 0);
     View view;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_profile_teacher,container,false);
+        view = inflater.inflate(R.layout.fragment_profile_teacher, container, false);
         init();
         return view;
     }
 
-    private void init(){
+    private void init() {
         pointers();
-        dialogProgres = new DialogProgres(G.context );
-        dialogPrvince = new DialogPrvince(G.context,this);
-        txtAddress.setText(Pref.getStringValue(PrefKey.address,""));
-        txtSubject.setText(Pref.getStringValue(PrefKey.subject,""));
-        txtLocation.setText(Pref.getStringValue(PrefKey.location,""));
-        txtPhone.setText(Pref.getStringValue(PrefKey.landPhone,""));
+        dialogProgres = new DialogProgres(G.context);
+        dialogPrvince = new DialogPrvince(G.context, this);
+        txtAddress.setText(Pref.getStringValue(PrefKey.address, ""));
+        txtSubject.setText(Pref.getStringValue(PrefKey.subject, ""));
+        txtLocation.setText(Pref.getStringValue(PrefKey.location, ""));
+        txtPhone.setText(Pref.getStringValue(PrefKey.landPhone, ""));
         btnSave.setVisibility(View.GONE);
     }
 
-    private void pointers(){
+    private void pointers() {
         txtAddress = (TextView) view.findViewById(R.id.txtAddressProfileTeacher);
         txtPhone = (TextView) view.findViewById(R.id.txtPhoneProfileTeacher);
         (txtLocation = (TextView) view.findViewById(R.id.txtLocationProfileTeacher)).setOnTouchListener(new View.OnTouchListener() {
@@ -106,26 +109,28 @@ public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince
         txtLocation.setEnabled(true);
     }
 
-    private void addCourse(){
+    private void addCourse() {
+        Intent intent = new Intent(G.context, ActivityCourseRegistring.class);
+        startActivity(intent);
 
 
     }
 
     private void checkValidInf() {
         if ((txtAddress.getText() != null && txtAddress.getText().toString().trim().length() != 0) &&
-                (txtSubject.getText() != null && txtSubject.getText().toString().trim().length() != 0)&&
-                (txtPhone.getText() != null && txtPhone.getText().toString().trim().length() != 0)&&
+                (txtSubject.getText() != null && txtSubject.getText().toString().trim().length() != 0) &&
+                (txtPhone.getText() != null && txtPhone.getText().toString().trim().length() != 0) &&
                 (txtLocation.getText() != null && txtLocation.getText().toString().trim().length() != 0)) {
             dialogProgres.showProgresBar();
             PresentTeacher presentTeacher = new PresentTeacher(this);
-            presentTeacher.updateTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtAddress.getText().toString().trim(), cityId,madrak );
+            presentTeacher.updateTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtAddress.getText().toString().trim(), cityId, madrak);
         } else {
             Toast.makeText(G.context, "لطفا اطلاعات را کامل وارد کنید...", Toast.LENGTH_SHORT).show();
         }
     }
 
 
-    public void startActivitys(Class aClass , boolean flag) {
+    public void startActivitys(Class aClass, boolean flag) {
 
         Intent intent = new Intent(G.context, aClass);
         startActivity(intent);
@@ -149,17 +154,16 @@ public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince
     @Override
     public void confirmTeacher(boolean flag) {
         dialogProgres.closeProgresBar();
-        if(!flag){
+        if (!flag) {
             sendMessageFTT("خطا");
             G.activity.finish();
-        }
-        else{
-            Pref.saveIntegerValue(PrefKey.cityId,cityId);
-            Pref.saveStringValue(PrefKey.location,txtLocation.getText().toString().trim());
-            Pref.saveStringValue(PrefKey.landPhone,txtPhone.getText().toString().trim());
-            Pref.saveStringValue(PrefKey.subject,txtSubject.getText().toString().trim());
-            Pref.saveStringValue(PrefKey.address,txtAddress.getText().toString().trim());
-            Pref.saveIntegerValue(PrefKey.madrak,madrak);
+        } else {
+            Pref.saveIntegerValue(PrefKey.cityId, cityId);
+            Pref.saveStringValue(PrefKey.location, txtLocation.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.landPhone, txtPhone.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.subject, txtSubject.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
+            Pref.saveIntegerValue(PrefKey.madrak, madrak);
             btnSave.setVisibility(View.GONE);
             txtAddress.setEnabled(false);
             txtSubject.setEnabled(false);

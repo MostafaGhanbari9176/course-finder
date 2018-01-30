@@ -1,5 +1,6 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,102 +9,110 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentTabaghe;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
- * Created by RCC1 on 1/22/2018.
+ * Created by RCC1 on 1/30/2018.
  */
 
-public class ActivityCoursesList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
-    int id;
-    boolean getAllCourse = false;
-    AdapterCourseList adapter;
+public class ActivityTabagheList extends AppCompatActivity implements AdapterTabagheList.OnClickItemTabagheList, PresentTabaghe.OnPresentTabagheListener {
+    Stack<Integer> id = new Stack<>();
+    int oldId = -1;
+    int newId = -1;
+    AdapterTabagheList adapter;
     RecyclerView list;
-    ArrayList<StCourse> surce;
-    DialogProgres dialogProgres = new DialogProgres(this);
+    ArrayList<StTabaghe> surce;
+    DialogProgres dialogProgres;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
+        dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
-        adapter = new AdapterCourseList(this, surce, this);
+        adapter = new AdapterTabagheList(this, surce, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
                 , LinearLayoutManager.VERTICAL, false);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        if (getIntent().getExtras() == null)
-            getAllCourse = true;
-        else
-            id = getIntent().getIntExtra("id", 0);
-        setSource(getAllCourse);
-
-
+        setSource(-1);
     }
 
-    private void setSource(boolean getAllCourse) {
+    private void setSource(int id) {
+
+        newId = id;
         dialogProgres.showProgresBar();
-        if (getAllCourse) {
-            PresentCourse presentCourse = new PresentCourse(this);
-            presentCourse.getAllCourse();
-        } else {
-            PresentCourse presentCourse = new PresentCourse(this);
-            presentCourse.getCourseById(id);
-        }
-
+        PresentTabaghe presentTabaghe = new PresentTabaghe(this);
+        presentTabaghe.getTabaghe(id);
     }
-
 
     @Override
-    public void sendMessageFCT(String message) {
+    public void tabagheListItemClick(int position) {
+        setSource(surce.get(position).id);
+    }
+
+    @Override
+    public void tabagheNahaei() {
+        dialogProgres.closeProgresBar();
+        Intent intent = getIntent();
+        intent.putExtra("id", newId);
+        setResult(RESULT_OK, intent);
+        this.finish();
+        //sendMessageFTabagheT(newId + "");
+    }
+
+    @Override
+    public void sendMessageFTabagheT(String message) {
         dialogProgres.closeProgresBar();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void confirmCourse(boolean flag) {
+    public void onBackPressed() {
 
+
+        if (id.size() > 1)
+
+        {
+            int x = id.pop();
+            oldId = id.pop();
+            setSource(x);
+        } else
+
+        {
+            super.onBackPressed();
+            this.finish();
+        }
     }
 
     @Override
-    public void onReceiveCourse(ArrayList<StCourse> course) {
+    public void onResiveTabaghe(ArrayList<StTabaghe> data) {
+        this.id.push(oldId);
+        oldId = newId;
+        surce = data;
         dialogProgres.closeProgresBar();
+        adapter = new AdapterTabagheList(this, data, this);
         list = (RecyclerView) findViewById(R.id.RVList);
-        adapter = new AdapterCourseList(this, course, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
                 , LinearLayoutManager.VERTICAL, false);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void courseListItemClick(int position) {
 
     }
-}/*
- @Override
-    public void onResiveTabaghe(ArrayList<StTabaghe> data) {
-        surce = data;
-        dialogProgres.closeProgresBar();
-        adapter = new AdapterCourseList(this, data, this);
-        list = (RecyclerView) findViewById(R.id.RVCourseList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.VERTICAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-    }
-
+}
+/*
     @Override
     public void tabagheNahaei() {
         if(id.size()!=0)
@@ -128,3 +137,4 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
         }
     }
 */
+

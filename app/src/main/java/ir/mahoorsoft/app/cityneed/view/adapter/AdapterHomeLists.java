@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 
 /**
  * Created by M-gh on 07-Oct-17.
@@ -34,9 +35,9 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
 
     setOnClickItem setOnClickItem;
     Context context;
-    ArrayList<Items> surce = new ArrayList<>();
+    ArrayList<StCourse> surce = new ArrayList<>();
 
-    public AdapterHomeLists(Context context, ArrayList<Items> surce
+    public AdapterHomeLists(Context context, ArrayList<StCourse> surce
             , setOnClickItem setOnClickItem) {
         this.context = context;
         this.surce = surce;
@@ -59,7 +60,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             item = (LinearLayout) itemView.findViewById(R.id.itemHome);
         }
 
-        public void bindData(Items items, final int number) {
+        public void bindData(StCourse items, final int number) {
             Glide.with(context)
                     .load(ApiClient.BASE_URL+"/upload/course/"+items.id+".png")
                     .error(R.drawable.user)
@@ -69,8 +70,8 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             Typeface tf = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/Far_Homa.ttf");
             txtMasterName.setTypeface(tf);
             txtCourseName.setTypeface(tf);
-            txtCourseName.setText(items.CourseName);
-            txtMasterName.setText(items.MasterName);
+            txtCourseName.setText(items.Name);
+            txtMasterName.setText(items.MastreName);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -100,7 +101,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
-        Items items = surce.get(position);
+        StCourse items = surce.get(position);
 
         holder.bindData(items, position);
     }

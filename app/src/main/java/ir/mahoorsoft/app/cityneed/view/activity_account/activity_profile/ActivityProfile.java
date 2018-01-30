@@ -173,7 +173,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         try {
             theBitmap =
                     Glide.with(this)
-                            .load(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png")
+                            .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png")
                             .asBitmap()
                             .into(100, 100) // Width and height
                             .get();
@@ -188,9 +188,9 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 .asBitmap()
                 .centerCrop()
                 .into(backImage);
-        backImage.setImageBitmap(DownloadImage(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png"));
+        backImage.setImageBitmap(DownloadImage(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png"));
         Glide.with(this)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png")
+                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png")
                 .fitCenter()
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .into(image);

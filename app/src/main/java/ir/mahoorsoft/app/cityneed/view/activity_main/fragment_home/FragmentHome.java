@@ -23,6 +23,7 @@ import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.Items;
+import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
@@ -42,7 +43,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     View view;
     RecyclerView list;
     AdapterHomeLists adapterListView;
-    ArrayList<Items> surce = new ArrayList<>();
+    ArrayList<StCourse> surce = new ArrayList<>();
     ViewPager vPager;
 
     @Nullable

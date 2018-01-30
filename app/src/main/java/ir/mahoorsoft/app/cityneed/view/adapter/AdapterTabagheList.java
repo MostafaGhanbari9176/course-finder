@@ -18,26 +18,27 @@ import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
 
 /**
- * Created by RCC1 on 1/22/2018.
+ * Created by RCC1 on 1/30/2018.
  */
 
-public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Holder> {
+public class AdapterTabagheList extends RecyclerView.Adapter<AdapterTabagheList.Holder> {
 
-    public interface OnClickItemCourseList {
-        void courseListItemClick(int position);
+    public interface OnClickItemTabagheList {
+        void tabagheListItemClick(int position);
     }
 
-    private OnClickItemCourseList onClickItemCourseList;
+    private OnClickItemTabagheList onClickItemTabagheList;
     private Context context;
-    private ArrayList<StCourse> surce = new ArrayList<>();
+    private ArrayList<StTabaghe> surce = new ArrayList<>();
 
 
-    public AdapterCourseList(Context context, ArrayList<StCourse> surce, OnClickItemCourseList onClickItemCourseList) {
+    public AdapterTabagheList(Context context, ArrayList<StTabaghe> surce, OnClickItemTabagheList onClickItemTabagheList) {
         this.context = context;
         this.surce = surce;
-        this.onClickItemCourseList = onClickItemCourseList;
+        this.onClickItemTabagheList = onClickItemTabagheList;
 
     }
 
@@ -65,7 +66,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterTabagheList.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_course_list, parent, false);
         Holder holder = new Holder(view);
 
@@ -73,12 +74,14 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, final int position) {
-        StCourse items = surce.get(position);
+    public void onBindViewHolder(AdapterTabagheList.Holder holder, final int position) {
+        StTabaghe items = surce.get(position);
 
-        holder.txtCourseName.setText(items.Name);
-        holder.txtstartDate.setText(items.startTime + "");
-        holder.txtMasterName.setText(items.MastreName);
+        holder.llStartDate.setVisibility(View.GONE);
+        holder.llName.setVisibility(View.GONE);
+        holder.txtUnusable.setVisibility(View.GONE);
+
+        holder.txtMasterName.setText(items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
                 .error(R.drawable.user)
@@ -88,7 +91,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCourseList.courseListItemClick(position);
+                onClickItemTabagheList.tabagheListItemClick(position);
             }
         });
     }

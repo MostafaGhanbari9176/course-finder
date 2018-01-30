@@ -26,6 +26,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing"/>
+        <activity android:name=".view.activity_account.registering.ActivityCourseRegistring"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing"/>
         <activity android:name=".view.activity_account.activity_profile.ActivityProfile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -35,6 +39,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing"/>
         <activity android:name=".view.activity_main.ActivityCoursesList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing"/>
+        <activity android:name=".view.activity_main.ActivityTabagheList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing"/>

@@ -25,6 +25,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.UploadRes;
 import ir.mahoorsoft.app.cityneed.model.uploadFile.ProgressRequestBody;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
+import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
+import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -39,7 +41,7 @@ import retrofit2.Response;
  * Created by MAHNAZ on 10/16/2017.
  */
 
-public class ActivityTeacherRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentTeacher.OnPresentTeacherListener {
+public class ActivityTeacherRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
 
     Button btnBack;
     Button btnSave;
@@ -161,8 +163,10 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == 1 && resultCode == RESULT_OK)
-                uploadFile(data.getStringExtra("path"), Pref.getStringValue(PrefKey.phone, "") + ".png");
+            if (requestCode == 1 && resultCode == RESULT_OK) {
+               uploadFile(data.getStringExtra("path"));
+                }
+
         } catch (Exception ex) {
             Toast.makeText(ActivityTeacherRegistering.this, ex.toString(),
                     Toast.LENGTH_SHORT).show();
@@ -175,46 +179,6 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         this.cityId = cityId;
     }
 
-    private void uploadFile(String path, String fileName) {
-        // create upload service client
-        Api service = ApiClient.getClient().create(Api.class);
-
-        // use the FileUtils to get the actual file by uri
-        File file = new File(path);
-
-        // create RequestBody instance from file
-        ProgressRequestBody fileBody = new ProgressRequestBody(file, new ProgressRequestBody.UploadCallbacks() {
-            @Override
-            public void onProgressUpdate(int percentage) {
-                progressBar.setProgress(30);
-            }
-        });
-       /* RequestBody requestFile =
-                RequestBody.create(MediaType.parse(getContentResolver().getType(fileUri)), file);*/
-
-        // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body = MultipartBody.Part.createFormData("fileToUpload", fileName, fileBody);
-
-        // add another part within the multipart request
-        String descriptionString = "hello, this is description speaking";
-        RequestBody description =
-                RequestBody.create(
-                        okhttp3.MultipartBody.FORM, descriptionString);
-
-        // finally, execute the request
-        Call<UploadRes> call = service.upload(description, body);
-        call.enqueue(new Callback<UploadRes>() {
-            @Override
-            public void onResponse(Call<UploadRes> call, Response<UploadRes> response) {
-                Log.v("Upload", "success");
-            }
-
-            @Override
-            public void onFailure(Call<UploadRes> call, Throwable t) {
-                Log.e("Upload error:", t.getMessage());
-            }
-        });
-    }
 
     @Override
     public void sendMessageFTT(String message) {
@@ -225,22 +189,34 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     @Override
     public void confirmTeacher(boolean flag) {
         dialogProgres.closeProgresBar();
-        if(flag){
-            Pref.saveIntegerValue(PrefKey.cityId,cityId);
-            Pref.saveStringValue(PrefKey.location,btnLocation.getText().toString().trim());
-            Pref.saveStringValue(PrefKey.landPhone,txtPhone.getText().toString().trim());
-            Pref.saveStringValue(PrefKey.subject,txtSubject.getText().toString().trim());
-            Pref.saveStringValue(PrefKey.address,txtAddress.getText().toString().trim());
-            Pref.saveIntegerValue(PrefKey.madrak,0);
-            Pref.saveIntegerValue(PrefKey.userTypeMode, cbxPublic.isChecked() ? 1: 2);
+        if (flag) {
+            Pref.saveIntegerValue(PrefKey.cityId, cityId);
+            Pref.saveStringValue(PrefKey.location, btnLocation.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.landPhone, txtPhone.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.subject, txtSubject.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
+            Pref.saveIntegerValue(PrefKey.madrak, 0);
+            Pref.saveIntegerValue(PrefKey.userTypeMode, cbxPublic.isChecked() ? 1 : 2);
             starterActivitry(ActivityProfile.class);
-        }
-        else
+        } else
             sendMessageFTT("خطا");
+    }
+
+    private void uploadFile(String path){
+        dialogProgres = new DialogProgres(this,"درحال بارگذاری");
+        dialogProgres.showProgresBar();
+        PresentUpload presentUpload = new PresentUpload(this);
+        presentUpload.uploadFile("teacher", Pref.getStringValue(PrefKey.phone, "") + ".png", path);
+
     }
 
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> users) {
 
+    }
+    @Override
+    public void messageFromUpload(String message) {
+        //dialogProgres.closeProgresBar();
+        sendMessageFTT(message);
     }
 }

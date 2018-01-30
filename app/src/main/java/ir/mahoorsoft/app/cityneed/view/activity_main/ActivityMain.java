@@ -26,6 +26,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
 
 
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -115,8 +116,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 flag = false;
                 break;
             case R.id.tabaghe:
-                Intent intent = new Intent(this, ActivityCoursesList.class);
-                intent.putExtra("dirName", "tabaghe");
+                Intent intent = new Intent(this, ActivityTabagheList.class);
                 startActivity(intent);
                 flag = false;
                 break;
