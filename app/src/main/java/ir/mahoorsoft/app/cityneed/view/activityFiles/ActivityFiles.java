@@ -88,6 +88,7 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
                     if (getIntent().getExtras().getBoolean("isImage")) {
                         if (files[i].getName().toLowerCase().endsWith(".png") || files[i].getName().toLowerCase().endsWith(".jpeg") || files[i].getName().toLowerCase().endsWith(".jpg")) {
                             file.Image = R.drawable.file_orange_icon;
+                            file.path = files[i].getAbsolutePath();
                             folderList.add(files[i]);
                             surce.add(file);
                         }

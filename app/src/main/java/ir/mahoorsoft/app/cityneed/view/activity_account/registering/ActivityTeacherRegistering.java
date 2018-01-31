@@ -54,7 +54,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     TextView txtTozihat;
     CheckBox cbxPublic;
     CheckBox cbxPrivate;
-    ProgressBar progressBar;
+
     DialogProgres dialogProgres;
     int cityId;
     Handler handler = new Handler();
@@ -86,7 +86,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         btnUploadImag = (Button) findViewById(R.id.btnUploadImg);
         btnSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnLocation = (Button) findViewById(R.id.btnLocation);
-        progressBar = (ProgressBar) findViewById(R.id.pgbUploadImg);
+
 
         btnSave.setOnClickListener(this);
         btnBack.setOnClickListener(this);

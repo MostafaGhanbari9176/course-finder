@@ -60,9 +60,9 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             item = (LinearLayout) itemView.findViewById(R.id.itemHome);
         }
 
-        public void bindData(StCourse items, final int number) {
+        public void bindData(final StCourse items) {
             Glide.with(context)
-                    .load(ApiClient.BASE_URL+"/upload/course/"+items.id+".png")
+                    .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
                     .error(R.drawable.user)
                     .centerCrop()
                     .into(imgItem);
@@ -70,12 +70,12 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             Typeface tf = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/Far_Homa.ttf");
             txtMasterName.setTypeface(tf);
             txtCourseName.setTypeface(tf);
-            txtCourseName.setText(items.Name);
-            txtMasterName.setText(items.MastreName);
+            txtCourseName.setText(items.CourseName);
+            txtMasterName.setText(items.MasterName);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    setOnClickItem.itemClick(number);
+                    setOnClickItem.itemClick(items.id);
                 }
             });
             item.setOnLongClickListener(new View.OnLongClickListener() {
@@ -103,7 +103,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
 
         StCourse items = surce.get(position);
 
-        holder.bindData(items, position);
+        holder.bindData(items);
     }
 
     @Override

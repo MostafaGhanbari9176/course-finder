@@ -15,9 +15,10 @@ public class PresentCourse implements Course.OnCourseLitener {
     public interface OnPresentCourseLitener {
         void sendMessageFCT(String message);
 
-        void confirmCourse(boolean flag);
+        void confirmCourse(int id);
 
-        void onReceiveCourse(ArrayList<StCourse> users);
+        void onReceiveCourse(ArrayList<StCourse> course);
+
     }
 
     OnPresentCourseLitener onPresentCourseLitener;
@@ -26,7 +27,7 @@ public class PresentCourse implements Course.OnCourseLitener {
         this.onPresentCourseLitener = onPresentCourseLitener;
     }
 
-    public void addCourse(String teacherId, String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, String oldRange) {
+    public void addCourse(String teacherId, String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int oldRange) {
         Course course = new Course(this);
         course.addtCource(teacherId, subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, oldRange);
     }
@@ -49,7 +50,10 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     @Override
     public void onReceiveFlag(ArrayList<Response> res) {
-        onPresentCourseLitener.confirmCourse(res.get(0).code == 0 ? false:true);
+        if(res.get(0).code == 0)
+            sendMessage("error");
+      else
+          onPresentCourseLitener.confirmCourse(res.get(0).code);
     }
 
     @Override

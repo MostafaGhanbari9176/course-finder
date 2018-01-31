@@ -67,6 +67,12 @@ public class ActivityTabagheList extends AppCompatActivity implements AdapterTab
         dialogProgres.closeProgresBar();
         Intent intent = getIntent();
         intent.putExtra("id", newId);
+
+       for (int i = 0;i<surce.size();i++){
+           if(surce.get(i).id == newId)
+               intent.putExtra("name",surce.get(i).subject);
+
+       }
         setResult(RESULT_OK, intent);
         this.finish();
         //sendMessageFTabagheT(newId + "");

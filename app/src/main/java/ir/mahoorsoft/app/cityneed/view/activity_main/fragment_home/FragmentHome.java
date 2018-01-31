@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -24,16 +25,18 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener {
+public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener {
 
     private ArrayList<Page> pageViews;
     private InfiniteIndicator mAnimCircleIndicator;
@@ -44,6 +47,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     RecyclerView list;
     AdapterHomeLists adapterListView;
     ArrayList<StCourse> surce = new ArrayList<>();
+    DialogProgres dialogProgres;
     ViewPager vPager;
 
     @Nullable
@@ -55,12 +59,13 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void init() {
+        dialogProgres = new DialogProgres(G.context);
         pointer();
         setTextFont();
         settingUpVPager();
-        settingUpList_one();
-        settingUpList_three();
-        settingUpList_two();
+        //settingUpList_one();
+        settingUpListThree();
+        //settingUpList_two();
 
 
     }
@@ -111,7 +116,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     }
 
-    private void settingUpList_three() {
+    private void settingUpListThree() {
 
         list = (RecyclerView) view.findViewById(R.id.RV_three);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
@@ -120,12 +125,14 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapterListView);
         adapterListView.notifyDataSetChanged();
-        setSurce();
+        setSurceThree();
 
     }
 
-    private void setSurce() {
-
+    private void setSurceThree() {
+        dialogProgres.showProgresBar();
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.getAllCourse();
     }
 
     private void pointer() {
@@ -146,13 +153,10 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void itemClick(int number) {
-
-    }
-
-    private void showCourcesMenu() {
-        Intent intent = new Intent(G.context, ActivityCoursesList.class);
-        startActivityForResult(intent,1);
+    public void itemClick(int id) {
+        Intent intent = new Intent(G.context, ActivityShowFeature.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
 
     }
 
@@ -187,5 +191,29 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         pageViews.add(new Page("A", "https://raw.githubusercontent.com/lightSky/InfiniteIndicator/master/res/a.jpg", this));
         pageViews.add(new Page("B", "https://raw.githubusercontent.com/lightSky/InfiniteIndicator/master/res/b.jpg", this));
         pageViews.add(new Page("C", "https://raw.githubusercontent.com/lightSky/InfiniteIndicator/master/res/c.jpg", this));
+    }
+
+    @Override
+    public void sendMessageFCT(String message) {
+        dialogProgres.closeProgresBar();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void confirmCourse(int id) {
+
+    }
+
+    @Override
+    public void onReceiveCourse(ArrayList<StCourse> course) {
+        dialogProgres.closeProgresBar();
+        surce = course;
+        list = (RecyclerView) view.findViewById(R.id.RV_three);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                , LinearLayoutManager.HORIZONTAL, true);
+        adapterListView = new AdapterHomeLists(G.context, surce, this);
+        list.setLayoutManager(layoutManager);
+        list.setAdapter(adapterListView);
+        adapterListView.notifyDataSetChanged();
     }
 }

@@ -115,21 +115,21 @@ public interface Api {
             @Path("uperId") int uperId
     );
 
-    @GET("addCourse/{teacher_id}/{subject}/{tabaghe_id}/{type}/{capacity}/{mony}/{sharayet}/{tozihat}/{start_date}/{end_date}/{day}/{hours}/{old_range}")
+    @GET("addCourse/{teacherId}/{subject}/{tabagheId}/{type}/{capacity}/{mony}/{sharayet}/{tozihat}/{startDate}/{endDate}/{day}/{hours}/{oldRange}")
     Call<ArrayList<Response>> addCourse(
-            @Path("teacher_id") String teacherId,
+            @Path("teacherId") String teacherId,
             @Path("subject") String subject,
-            @Path("tabaghe_id") int tabagheId,
+            @Path("tabagheId") int tabagheId,
             @Path("type") int type,
             @Path("capacity") int capacity,
             @Path("mony") int mony,
             @Path("sharayet") String sharayet,
             @Path("tozihat") String tozihat,
-            @Path("start_date") String startDate,
-            @Path("end_date") String endDate,
+            @Path("startDate") String startDate,
+            @Path("endDate") String endDate,
             @Path("day") String day,
             @Path("hours") String hours,
-            @Path("old_range") String old_range
+            @Path("oldRange") int oldRange
     );
 
     @GET("getAllCourse")

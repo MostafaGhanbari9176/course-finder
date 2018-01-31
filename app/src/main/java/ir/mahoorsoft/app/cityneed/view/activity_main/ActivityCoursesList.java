@@ -20,7 +20,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityCoursesList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
-    int id;
+    String id;
     boolean getAllCourse = false;
     AdapterCourseList adapter;
     RecyclerView list;
@@ -43,7 +43,7 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
         if (getIntent().getExtras() == null)
             getAllCourse = true;
         else
-            id = getIntent().getIntExtra("id", 0);
+            id = getIntent().getStringExtra("id");
         setSource(getAllCourse);
 
 
@@ -56,7 +56,7 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
             presentCourse.getAllCourse();
         } else {
             PresentCourse presentCourse = new PresentCourse(this);
-            presentCourse.getCourseById(id);
+            presentCourse.getCourseByTeacherId(id);
         }
 
     }
@@ -69,9 +69,11 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
     }
 
     @Override
-    public void confirmCourse(boolean flag) {
+    public void confirmCourse(int id) {
 
     }
+
+
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course) {
@@ -89,42 +91,4 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
     public void courseListItemClick(int position) {
 
     }
-}/*
- @Override
-    public void onResiveTabaghe(ArrayList<StTabaghe> data) {
-        surce = data;
-        dialogProgres.closeProgresBar();
-        adapter = new AdapterCourseList(this, data, this);
-        list = (RecyclerView) findViewById(R.id.RVCourseList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.VERTICAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-    }
-
-    @Override
-    public void tabagheNahaei() {
-        if(id.size()!=0)
-        id.pop();
-        sendMessageFTabagheT(oldId + "");
-    }
-
-    @Override
-    public void sendMessageFTabagheT(String message) {
-        dialogProgres.closeProgresBar();
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        if (id.size() == 0) {
-            super.onBackPressed();
-            this.finish();
-        } else{
-            setSource(oldId = id.pop());
-        }
-    }
-*/
+}

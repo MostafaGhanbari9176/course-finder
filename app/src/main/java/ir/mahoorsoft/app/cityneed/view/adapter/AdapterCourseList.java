@@ -76,9 +76,9 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
     public void onBindViewHolder(Holder holder, final int position) {
         StCourse items = surce.get(position);
 
-        holder.txtCourseName.setText(items.Name);
-        holder.txtstartDate.setText(items.startTime + "");
-        holder.txtMasterName.setText(items.MastreName);
+        holder.txtCourseName.setText(items.CourseName);
+        holder.txtstartDate.setText(items.startDate );
+        holder.txtMasterName.setText(items.MasterName);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
                 .error(R.drawable.user)

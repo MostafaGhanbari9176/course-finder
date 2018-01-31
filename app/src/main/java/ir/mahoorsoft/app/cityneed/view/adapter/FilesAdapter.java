@@ -1,6 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.R;
@@ -70,7 +77,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.Holder> {
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_backup, parent, false);
+                .inflate(R.layout.item_files, parent, false);
 
         Holder holder = new Holder(view);
         return holder;
@@ -81,10 +88,24 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.Holder> {
     @Override
     public void onBindViewHolder(final Holder holder, final int position) {
 
-        final file custumer1 = fileList.get(position);
+        final file item = fileList.get(position);
 
-        holder.fileName.setText(custumer1.fileName);
-        holder.img.setImageResource(custumer1.Image);
+        holder.fileName.setText(item.fileName);
+        holder.img.setImageResource(item.Image);
+        try {
+            File imgFile = new File(item.path);
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Glide.with(context)
+                    .load(stream.toByteArray())
+                    .asBitmap()
+                    .centerCrop()
+                    .into(holder.img);
+        }catch (Exception e){
+            holder.img.setImageResource(item.Image);
+        }
+
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

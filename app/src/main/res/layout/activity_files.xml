@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activityFiles.ActivityFiles"
-    >
+    android:background="@color/light_green"
+    android:orientation="vertical"
+    tools:context=".view.activityFiles.ActivityFiles">
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.07"></LinearLayout>
+        android:layout_weight="0.07"
+        android:orientation="horizontal"></LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.758">
+        android:layout_weight="0.758"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.085"></LinearLayout>
+            android:layout_weight="0.085"
+            android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.83">
+            android:layout_weight="0.83"
+            android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/folderview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/folderview" />
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.085"></LinearLayout>
+            android:layout_weight="0.085"
+            android:orientation="horizontal"></LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.08">
+        android:layout_weight="0.08"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,14 +105,14 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1"
+                android:layout_weight="0.085"
                 android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="0.8"
+                android:layout_weight="0.83"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -126,17 +126,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
-                        >
+                        app:cardBackgroundColor="@color/dark_green">
 
                         <Button
                             android:id="@+id/btn_folder_list_back"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="4dp"
-                            android:background="@drawable/btn_dialog"
+                            android:background="@color/light_green"
                             android:text="برگشت به عقب"
-                            android:textColor="@color/dark"
-                            android:textSize="@dimen/txt_size_smal" />
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
                     </android.support.v7.widget.CardView>
                 </LinearLayout>
 
@@ -145,17 +146,17 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1"
+                android:layout_weight="0.085"
                 android:orientation="vertical"></LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.08"></LinearLayout>
+        android:layout_weight="0.08"
+        android:orientation="vertical"></LinearLayout>
 
 
 </LinearLayout>
