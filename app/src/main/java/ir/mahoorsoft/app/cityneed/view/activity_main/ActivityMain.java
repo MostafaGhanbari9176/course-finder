@@ -20,17 +20,18 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedServer;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityPhoneConfirm;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
-public class ActivityMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
-    Toolbar t;
+public class ActivityMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, PresentCheckedServer.OnPresentCheckServrer {
+   public static Toolbar toolbar;
     TextView txtUserName;
     TextView txtProfileButton;
     View viewMenu;
@@ -38,6 +39,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     DrawerLayout drawer;
     NavigationView navigationView;
     FrameLayout contentMain;
+    public DialogProgres dialogProgres;
     boolean flag = true;
 
     @Override
@@ -45,22 +47,34 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         G.activity = this;
         G.context = this;
+        dialogProgres = new DialogProgres(this);
         setContentView(R.layout.activity_main);
+        init();
+        checkedServer();
 
-        replaceContentWith(new FragmentHome());
+    }
+
+    private void init() {
 
         pointers();
         profileCheck();
-        setSupportActionBar(t);
+        setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, t, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void checkedServer() {
+        dialogProgres.showProgresBar();
+        PresentCheckedServer presentCheckedServer = new PresentCheckedServer(this);
+        presentCheckedServer.checkedServer();
+    }
+
     private void pointers() {
-        t = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         viewMenu = navigationView.inflateHeaderView(R.layout.nav_header_main);
@@ -69,7 +83,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         llNavHeder = (LinearLayout) viewMenu.findViewById(R.id.navHederMain);
         contentMain = (FrameLayout) findViewById(R.id.contentMain);
         llNavHeder.setOnClickListener(this);
-       // txtProfileButton.setOnClickListener(this);
+        // txtProfileButton.setOnClickListener(this);
     }
 
     @Override
@@ -142,7 +156,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     }
 
     private void acountCheck() {
-        if (Pref.getBollValue(PrefKey.IsLogin,false)) {
+        if (Pref.getBollValue(PrefKey.IsLogin, false)) {
             startActivity(ActivityProfile.class);
 
         } else {
@@ -172,5 +186,17 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         G.context = this;
         profileCheck();
         super.onResume();
+    }
+
+    @Override
+    public void serverChecked(boolean online) {
+        dialogProgres.closeProgresBar();
+        if (online) {
+            replaceContentWith(new FragmentHome());
+        } else {
+
+            toolbar.setVisibility(View.GONE);
+            replaceContentWith(new FragmentErrorServer());
+        }
     }
 }

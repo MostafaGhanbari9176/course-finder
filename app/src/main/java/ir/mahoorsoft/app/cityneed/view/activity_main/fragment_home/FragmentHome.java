@@ -24,10 +24,12 @@ import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.Items;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -54,6 +56,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        ActivityMain.toolbar.setVisibility(View.VISIBLE);
         init();
         return view;
     }
@@ -155,7 +158,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void itemClick(int id) {
         Intent intent = new Intent(G.context, ActivityShowFeature.class);
-        intent.putExtra("id",id);
+        intent.putExtra("id", id);
         startActivity(intent);
 
     }
@@ -177,7 +180,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onPageClick(int position, Page page) {
-
+        Intent intent = new Intent(G.context, ActivityShowFeature.class);
+        intent.putExtra("id", surce.get(position).id);
+        startActivity(intent);
     }
 
     @Override
@@ -188,9 +193,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     private void initData() {
         pageViews = new ArrayList<>();
-        pageViews.add(new Page("A", "https://raw.githubusercontent.com/lightSky/InfiniteIndicator/master/res/a.jpg", this));
-        pageViews.add(new Page("B", "https://raw.githubusercontent.com/lightSky/InfiniteIndicator/master/res/b.jpg", this));
-        pageViews.add(new Page("C", "https://raw.githubusercontent.com/lightSky/InfiniteIndicator/master/res/c.jpg", this));
+        for (int i = 0 ;i < surce.size(); i++) {
+            pageViews.add(new Page(surce.get(i).id+"",ApiClient.serverAddress + "/city_need/v1/uploads/course/" + surce.get(i).id + ".png", this));
+        }
     }
 
     @Override
@@ -207,6 +212,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course) {
         dialogProgres.closeProgresBar();
+        settingUpVPager();
         surce = course;
         list = (RecyclerView) view.findViewById(R.id.RV_three);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
@@ -215,5 +221,11 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapterListView);
         adapterListView.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setSurceThree();
     }
 }

@@ -145,6 +145,21 @@ public interface Api {
             @Path("id") String id
     );
 
+    @GET("checkedServer")
+    Call<ArrayList<Response>> checkedServer();
+
+    @GET("sabtenam/{idCourse}/{idTeacher}/{idUser}")
+    Call<ArrayList<Response>> sabtenam(
+            @Path("idCourse") int idCourse,
+            @Path("idTeacher") String idTeacher,
+            @Path("idUser") String idUser
+    );
+
+    @GET("getUserCourse/{id}")
+    Call<ArrayList<StCourse>> getUserCourse(
+            @Path("id") int id
+    );
+
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(
             @Path("tableName") String tableName,

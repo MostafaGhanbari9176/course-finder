@@ -26,7 +26,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Holder> {
 
     public interface OnClickItemCourseList {
-        void courseListItemClick(int position);
+        void courseListItemClick(int id);
     }
 
     private OnClickItemCourseList onClickItemCourseList;
@@ -74,13 +74,13 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
 
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
-        StCourse items = surce.get(position);
+        final StCourse items = surce.get(position);
 
         holder.txtCourseName.setText(items.CourseName);
         holder.txtstartDate.setText(items.startDate );
         holder.txtMasterName.setText(items.MasterName);
         Glide.with(context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
+                .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
                 .error(R.drawable.user)
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .centerCrop()
@@ -88,7 +88,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCourseList.courseListItemClick(position);
+                onClickItemCourseList.courseListItemClick(items.id);
             }
         });
     }

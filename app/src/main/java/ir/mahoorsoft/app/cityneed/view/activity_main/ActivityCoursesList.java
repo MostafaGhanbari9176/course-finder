@@ -1,5 +1,6 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -21,17 +24,17 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 public class ActivityCoursesList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
     String id;
-    boolean getAllCourse = false;
+    String modeShow = "";
     AdapterCourseList adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
-    DialogProgres dialogProgres = new DialogProgres(this);
+    DialogProgres dialogProgres;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
+        dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
         adapter = new AdapterCourseList(this, surce, this);
@@ -40,23 +43,25 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        if (getIntent().getExtras() == null)
-            getAllCourse = true;
-        else
-            id = getIntent().getStringExtra("id");
-        setSource(getAllCourse);
+        if (getIntent().getExtras() != null)
+            modeShow = getIntent().getStringExtra("mode");
+        id = getIntent().getStringExtra("id");
+        setSource();
 
 
     }
 
-    private void setSource(boolean getAllCourse) {
+    private void setSource() {
         dialogProgres.showProgresBar();
-        if (getAllCourse) {
+        if (modeShow.equalsIgnoreCase("allCourse")) {
             PresentCourse presentCourse = new PresentCourse(this);
             presentCourse.getAllCourse();
-        } else {
+        } else if(modeShow.equalsIgnoreCase("byTeacherId")){
             PresentCourse presentCourse = new PresentCourse(this);
             presentCourse.getCourseByTeacherId(id);
+        }else if(modeShow.equalsIgnoreCase("sabtenam")){
+            PresentCourse presentCourse = new PresentCourse(this);
+
         }
 
     }
@@ -74,7 +79,6 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
     }
 
 
-
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course) {
         dialogProgres.closeProgresBar();
@@ -88,7 +92,9 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
     }
 
     @Override
-    public void courseListItemClick(int position) {
-
+    public void courseListItemClick(int id) {
+        Intent intent = new Intent(G.context, ActivityShowFeature.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 }

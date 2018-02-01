@@ -94,11 +94,8 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.Holder> {
         holder.img.setImageResource(item.Image);
         try {
             File imgFile = new File(item.path);
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             Glide.with(context)
-                    .load(stream.toByteArray())
+                    .load(imgFile)
                     .asBitmap()
                     .centerCrop()
                     .into(holder.img);

@@ -22,6 +22,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
 
@@ -37,6 +39,8 @@ public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince
     LinearLayout btnEdit;
     LinearLayout btnSave;
     LinearLayout btnAddCourse;
+    LinearLayout btnListSabtenam;
+    LinearLayout btnListCourse;
     DialogPrvince dialogPrvince;
     DialogProgres dialogProgres;
     int cityId = Pref.getIntegerValue(PrefKey.cityId, -1);
@@ -77,9 +81,12 @@ public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince
         btnEdit = (LinearLayout) view.findViewById(R.id.btnEditProfileTeacher);
         btnAddCourse = (LinearLayout) view.findViewById(R.id.btnAddCuorseProfileTeacher);
         btnSave = (LinearLayout) view.findViewById(R.id.btnSaveProfileTeacher);
+        btnListCourse = (LinearLayout) view.findViewById(R.id.btnListCuorseProfileTeacher);
+        btnListSabtenam = (LinearLayout) view.findViewById(R.id.btnSabtenamListProfileTeacher);
         btnAddCourse.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+        btnListCourse.setOnClickListener(this);
     }
 
     @Override
@@ -96,7 +103,19 @@ public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince
             case R.id.btnSaveProfileTeacher:
                 checkValidInf();
                 break;
+            case R.id.btnListCuorseProfileTeacher:
+                showCourse();
+                break;
+            case R.id.btnSabtenamListProfileTeacher:
+                showCourse();
+                break;
         }
+    }
+
+    private void showCourse() {
+        Intent intent = new Intent(G.context, ActivityCoursesList.class);
+        intent.putExtra("id", Pref.getStringValue(PrefKey.phone, ""));
+        startActivity(intent);
     }
 
     private void editProfile() {

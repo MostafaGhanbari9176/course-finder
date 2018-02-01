@@ -2,7 +2,11 @@ package ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,15 +17,19 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by MAHNAZ on 10/15/2017.
  */
 
-public class ActivityShowFeature extends AppCompatActivity implements PresentCourse.OnPresentCourseLitener{
+public class ActivityShowFeature extends AppCompatActivity implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener {
 
     ImageView img;
     ImageView backImage;
@@ -37,8 +45,14 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     TextView txtCapacity;
     TextView txtsharayet;
     TextView txtRange;
+    CardView moreDetails;
+    LinearLayout btnMoreDetails;
+    Button btnRegister;
     int courseId;
+    String idTeacher;
+    String idUser = Pref.getStringValue(PrefKey.phone,"");
     DialogProgres dialogProgres;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +64,8 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         dialogProgres = new DialogProgres(this);
         dialogProgres.showProgresBar();
         pointers();
-        if(getIntent().getExtras() != null)
-            courseId = getIntent().getIntExtra("id",-1);
+        if (getIntent().getExtras() != null)
+            courseId = getIntent().getIntExtra("id", -1);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseById(courseId);
 
@@ -74,8 +88,35 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         txtRange = (TextView) this.findViewById(R.id.txtRangeFeature);
         txtMony = (TextView) this.findViewById(R.id.txtMonyFeature);
         txtCapacity = (TextView) this.findViewById(R.id.txtCapacityFeature);
+        moreDetails = (CardView) this.findViewById(R.id.MoreDetailsShowFeature);
+        btnMoreDetails = (LinearLayout) this.findViewById(R.id.btnMoreDetailsShowFeature);
+        btnRegister = (Button) this.findViewById(R.id.btnRegisterShowFeature);
+        moreDetails.setVisibility(View.GONE);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerHe();
+            }
+        });
+        btnMoreDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (moreDetails.getVisibility() == View.GONE)
+                    moreDetails.setVisibility(View.VISIBLE);
+                else
+                    moreDetails.setVisibility(View.GONE);
+            }
+        });
 
     }
+
+    private void registerHe() {
+        dialogProgres.showProgresBar();
+        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+        presentSabtenam.add(courseId, idTeacher, idUser);
+    }
+
     private void setImage() {
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
@@ -102,16 +143,16 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     }
 
 
-
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course) {
         dialogProgres.closeProgresBar();
-        txtMony.setText(course.get(0).mony+"");
-        txtCapacity.setText(course.get(0).capacity+"");
-        txtRange.setText(course.get(0).range+"");
+        idTeacher = course.get(0).idTeacher;
+        txtMony.setText(course.get(0).mony + "");
+        txtCapacity.setText(course.get(0).capacity + "");
+        txtRange.setText(course.get(0).range + "");
         txtStartDate.setText(course.get(0).startDate);
         txtEndDate.setText(course.get(0).endDate);
-        txtType.setText(course.get(0).type == 0 ? "عمومی":"خصوصی");
+        txtType.setText(course.get(0).type == 0 ? "عمومی" : "خصوصی");
         txtName.setText(course.get(0).CourseName);
         txtMasterName.setText(course.get(0).MasterName);
         txtHours.setText(course.get(0).hours);
@@ -120,5 +161,20 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         txtsharayet.setText(course.get(0).sharayet);
         setImage();
 
+    }
+
+    @Override
+    public void sendMessageFST(String message) {
+        sendMessageFCT(message);
+    }
+
+    @Override
+    public void confirmSabtenam(boolean flag) {
+        dialogProgres.closeProgresBar();
+        if(flag){
+            sendMessageFCT("انجام شد");
+        }
+        else
+            sendMessageFCT("خطا");
     }
 }
