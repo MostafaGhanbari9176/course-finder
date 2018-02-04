@@ -121,35 +121,6 @@
                             android:layout_height="@dimen/btn_nav"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_family" />
-
-                        <EditText
-                            android:id="@+id/txtAddress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center_vertical"
-                            android:hint="آدرس : "
-                            android:inputType="textPersonName"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/text_home"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="8dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
                             app:srcCompat="@drawable/icon_txtshort" />
 
                         <EditText
@@ -196,7 +167,7 @@
                         android:background="@drawable/btn_dialog"
                         android:gravity="center"
                         android:inputType="textPersonName"
-                        android:text="انتخاب استان وشهر"
+                        android:text="تعیین موقعیت مکانی (آدرس)"
                         android:textColor="@color/text_home"
                         android:textSize="@dimen/txt_submit_iformation" />
                 </android.support.v7.widget.CardView>
@@ -268,7 +239,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center"
-                        android:text="آموزش خصوصی"
+                        android:text="تدریس خصوصی"
                         android:textColor="@color/dark"
                         android:textSize="@dimen/txt_size_smal" />
 
@@ -306,7 +277,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
                             android:background="@drawable/btn_dialog"
-                            android:text="بارگذاری تصویری مرتبط با موضوع یا محیط آموزش"
+                            android:text="بارگذاری تصویری مرتبط با موضوع یا محیط آموزشی"
                             android:textColor="@color/text_home"
                             android:textSize="@dimen/txt_size_smal" />
                     </android.support.v7.widget.CardView>

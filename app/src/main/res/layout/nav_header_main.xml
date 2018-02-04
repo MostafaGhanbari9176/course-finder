@@ -51,8 +51,8 @@
 
             <ImageView
                 android:id="@+id/img_profile"
-                android:layout_width="@dimen/img_fragment_karbar"
-                android:layout_height="@dimen/img_fragment_karbar"
+                android:layout_width="@dimen/img_item"
+                android:layout_height="@dimen/img_item"
                 android:layout_weight="1"
                 android:background="@drawable/icon_self" />
         </LinearLayout>

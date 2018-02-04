@@ -8,7 +8,7 @@
             android:title="@string/menu_text_two" />
         <item
             android:id="@+id/btnMap_Menu"
-            android:icon="@drawable/icon_map_true"
+            android:icon="@drawable/icon_map"
             android:title="@string/menu_text_nine" />
         <item
             android:id="@+id/btnHome_Menu"

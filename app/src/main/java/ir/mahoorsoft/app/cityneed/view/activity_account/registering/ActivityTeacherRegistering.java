@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
+import ir.mahoorsoft.app.cityneed.MapsActivity;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -50,7 +51,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     DialogPrvince dialogPrvince;
     TextView txtPhone;
     TextView txtSubject;
-    TextView txtAddress;
+    //TextView txtAddress;
     TextView txtTozihat;
     CheckBox cbxPublic;
     CheckBox cbxPrivate;
@@ -64,7 +65,6 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registering);
         pointers();
-        btnLocation.setText(Pref.getStringValue(PrefKey.location, "انتخاب استان وشهر"));
         dialogPrvince = new DialogPrvince(this, this);
         dialogProgres = new DialogProgres(this);
     }
@@ -80,7 +80,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         cbxPublic = (CheckBox) findViewById(R.id.cbxPublicCurce);
         txtTozihat = (TextView) findViewById(R.id.txtTozihat);
         txtPhone = (TextView) findViewById(R.id.txtPhoneRegistery);
-        txtAddress = (TextView) findViewById(R.id.txtAddress);
+        //txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtSubject = (TextView) findViewById(R.id.txtSubject);
         btnBack = (Button) findViewById(R.id.btnBackRegistery);
         btnUploadImag = (Button) findViewById(R.id.btnUploadImg);
@@ -120,7 +120,8 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
                 break;
 
             case R.id.btnLocation:
-                dialogPrvince.showDialog();
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.btnSaveRegistery:
@@ -138,13 +139,13 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
 
         if (txtPhone.getText().toString().trim().length() != 11 &&
                 txtSubject.getText().toString().trim().length() != 0 &&
-                txtAddress.getText().toString().trim().length() != 0 &&
+                //txtAddress.getText().toString().trim().length() != 0 &&
                 txtTozihat.getText().toString().trim().length() != 0 &&
                 btnLocation.getText().length() != 0) {
             if (cbxPrivate.isChecked() || cbxPublic.isChecked()) {
                 dialogProgres.showProgresBar();
                 PresentTeacher presentTeacher = new PresentTeacher(this);
-                presentTeacher.addTeacher(txtSubject.getText().toString().trim(), txtAddress.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, cityId);
+                presentTeacher.addTeacher(txtSubject.getText().toString().trim(), "", txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, cityId);
             } else {
                 Toast.makeText(this, "لطفا نوع آموزش خود را مشخص کنید", Toast.LENGTH_SHORT).show();
             }
@@ -194,7 +195,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
             Pref.saveStringValue(PrefKey.location, btnLocation.getText().toString().trim());
             Pref.saveStringValue(PrefKey.landPhone, txtPhone.getText().toString().trim());
             Pref.saveStringValue(PrefKey.subject, txtSubject.getText().toString().trim());
-            Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
+          //  Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
             Pref.saveIntegerValue(PrefKey.madrak, 0);
             Pref.saveIntegerValue(PrefKey.userTypeMode, cbxPublic.isChecked() ? 1 : 2);
             starterActivitry(ActivityProfile.class);

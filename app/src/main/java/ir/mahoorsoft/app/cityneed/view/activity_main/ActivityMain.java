@@ -10,10 +10,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import ir.mahoorsoft.app.cityneed.G;
@@ -25,16 +27,21 @@ import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.Activit
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityPhoneConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentSelfCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, PresentCheckedServer.OnPresentCheckServrer {
-   public static Toolbar toolbar;
+    public static Toolbar toolbar;
     TextView txtUserName;
     TextView txtProfileButton;
+    View viewNavHeder;
     View viewMenu;
+    LinearLayout llRadioGroup;
+    RadioButton rbSelf;
+    RadioButton rbOther;
     LinearLayout llNavHeder;
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -73,16 +80,21 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     }
 
     private void pointers() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        rbSelf = (RadioButton) findViewById(R.id.rbSelfMain);
+        rbOther = (RadioButton) findViewById(R.id.rbOtherMain);
+        llRadioGroup = (LinearLayout) findViewById(R.id.llRadioGroupMain);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        viewMenu = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        txtUserName = (TextView) viewMenu.findViewById(R.id.txtUserName_menu);
-        txtProfileButton = (TextView) viewMenu.findViewById(R.id.txtProfileButton_menu);
-        llNavHeder = (LinearLayout) viewMenu.findViewById(R.id.navHederMain);
+        viewNavHeder = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        txtUserName = (TextView) viewNavHeder.findViewById(R.id.txtUserName_menu);
+        txtProfileButton = (TextView) viewNavHeder.findViewById(R.id.txtProfileButton_menu);
+        llNavHeder = (LinearLayout) viewNavHeder.findViewById(R.id.navHederMain);
         contentMain = (FrameLayout) findViewById(R.id.contentMain);
         llNavHeder.setOnClickListener(this);
+        rbOther.setOnClickListener(this);
+        rbSelf.setOnClickListener(this);
         // txtProfileButton.setOnClickListener(this);
     }
 
@@ -93,9 +105,22 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
             case R.id.navHederMain:
                 acountCheck();
                 break;
+            case R.id.rbOtherMain:
+                showCourseMode();
+                break;
+            case R.id.rbSelfMain:
+                showCourseMode();
+                break;
 
         }
 
+    }
+
+    private void showCourseMode() {
+        if (rbSelf.isChecked())
+            replaceContentWith(new FragmentSelfCourse());
+        else
+            replaceContentWith(new FragmentHome());
     }
 
     public static void replaceContentWith(Fragment fragment) {
@@ -166,9 +191,15 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     private void profileCheck() {
 
-        if (Pref.getStringValue(PrefKey.phone, "").length() != 0) {
-            if (Pref.getStringValue(PrefKey.userName, "").length() != 0 || Pref.getStringValue(PrefKey.userFamily, "").length() != 0) {
-                txtUserName.setText(Pref.getStringValue(PrefKey.userName, "") + " " + Pref.getStringValue(PrefKey.userFamily, ""));
+        if (Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 0 || !(Pref.getBollValue(PrefKey.IsLogin, false))) {
+            llRadioGroup.setVisibility(View.GONE);
+        } else {
+            rbOther.setEnabled(true);
+        }
+        if (Pref.getBollValue(PrefKey.IsLogin, false)) {
+
+            if (Pref.getStringValue(PrefKey.userName, "").length() != 0 ) {
+                txtUserName.setText(Pref.getStringValue(PrefKey.userName, ""));
                 txtProfileButton.setText("پروفایل");
             } else {
                 txtUserName.setText(Pref.getStringValue(PrefKey.phone, ""));

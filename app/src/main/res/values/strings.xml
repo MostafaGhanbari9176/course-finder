@@ -23,7 +23,7 @@
     <string name="menu_text_seven">پرداخت</string>
     <string name="menu_text_eight">خانه</string>
     <string name="menu_text_nine">نقشه</string>
-
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

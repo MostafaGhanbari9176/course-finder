@@ -37,11 +37,11 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
 
     LinearLayout btnEdit;
     LinearLayout btnAdd;
-    LinearLayout btnSave;
+   // LinearLayout btnSave;
     TextView txtName;
-    TextView txtFamilyName;
+   // TextView txtFamilyName;
     TextView txtPhone;
-    TextView txtLocation;
+    //TextView txtLocation;
     View view;
     DialogPrvince dialogPrvince;
     DialogProgres dialogProgres;
@@ -61,21 +61,21 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
         pointers();
         txtPhone.setText(Pref.getStringValue(PrefKey.phone, ""));
         txtName.setText(Pref.getStringValue(PrefKey.userName, ""));
-        txtFamilyName.setText(Pref.getStringValue(PrefKey.userFamily, ""));
-        txtLocation.setText(Pref.getStringValue(PrefKey.location, ""));
-        btnSave.setVisibility(View.GONE);
+//        txtFamilyName.setText(Pref.getStringValue(PrefKey.userFamily, ""));
+      //  txtLocation.setText(Pref.getStringValue(PrefKey.location, ""));
+      //  btnSave.setVisibility(View.GONE);
 
     }
 
     private void pointers() {
 
         dialogProgres = new DialogProgres(G.context);
-        btnEdit = (LinearLayout) view.findViewById(R.id.btnEditProfile_Karbar);
-        btnAdd = (LinearLayout) view.findViewById(R.id.btnAddCurse_Karbar);
-        btnSave = (LinearLayout) view.findViewById(R.id.btnSave_Karbar);
+        //btnEdit = (LinearLayout) view.findViewById(R.id.btnEditProfile_Karbar);
+       // btnAdd = (LinearLayout) view.findViewById(R.id.btnAddCurse_Karbar);
+       // btnSave = (LinearLayout) view.findViewById(R.id.btnSave_Karbar);
 
         txtName = (TextView) view.findViewById(R.id.txtNAme_karbar);
-        txtFamilyName = (TextView) view.findViewById(R.id.txtFamilyName_Karbar);
+       // txtFamilyName = (TextView) view.findViewById(R.id.txtFamilyName_Karbar);
         (txtPhone = (TextView) view.findViewById(R.id.txtPhone_Karbar)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -83,17 +83,11 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
                 return false;
             }
         });
-        (txtLocation = (TextView) view.findViewById(R.id.txtLocation_Karbar)).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                dialogPrvince.showDialog();
-                return false;
-            }
-        });
 
-        btnAdd.setOnClickListener(this);
-        btnEdit.setOnClickListener(this);
-        btnSave.setOnClickListener(this);
+
+//        btnAdd.setOnClickListener(this);
+       // btnEdit.setOnClickListener(this);
+       // btnSave.setOnClickListener(this);
 
     }
 
@@ -102,26 +96,18 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
 
         switch (view.getId()) {
 
-            case R.id.btnEditProfile_Karbar:
-                editProfile();
-                break;
-            case R.id.btnAddCurse_Karbar:
-                addCourse();
-                break;
-            case R.id.btnSave_Karbar:
-                checkValidInf();
-                break;
+
         }
     }
 
     private void editProfile() {
 
-        btnSave.setVisibility(View.VISIBLE);
+    //    btnSave.setVisibility(View.VISIBLE);
         Toast.makeText(G.context, "لطفا اطلاعات جدید را وارد کنید.", Toast.LENGTH_SHORT).show();
         txtName.setEnabled(true);
-        txtFamilyName.setEnabled(true);
+    //    txtFamilyName.setEnabled(true);
         txtPhone.setEnabled(true);
-        txtLocation.setEnabled(true);
+      //  txtLocation.setEnabled(true);
     }
 
     private void addCourse() {
@@ -132,15 +118,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
 
     }
 
-    private void checkValidInf() {
-        if ((txtName.getText() != null && txtName.getText().length() != 0) &&
-                (txtFamilyName.getText() != null && txtFamilyName.getText().length() != 0) &&
-                (txtLocation.getText() != null && txtLocation.getText().length() != 0)) {
-            updateUser(Pref.getStringValue(PrefKey.phone, ""), txtName.getText().toString().trim(), txtFamilyName.getText().toString().trim());
-        } else {
-            Toast.makeText(G.context, "لطفا اطلاعات را کامل وارد کنید...", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     private void starterActivity(Class aClass) {
 
@@ -152,7 +130,7 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
 
     @Override
     public void locationInformation(String location, int cityId) {
-        txtLocation.setText(location);
+       // txtLocation.setText(location);
         this.cityId = cityId;
     }
 
@@ -170,25 +148,31 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
 
     @Override
     public void confirmUser(boolean flag) {
-        dialogProgres.closeProgresBar();
-        if (!flag) {
-            sendMessageFUT("خطا");
-            G.activity.finish();
-        } else {
-            btnSave.setVisibility(View.GONE);
-            txtName.setEnabled(false);
-            txtFamilyName.setEnabled(false);
-            txtPhone.setEnabled(false);
-            txtLocation.setEnabled(false);
 
-            Pref.saveStringValue(PrefKey.location, txtLocation.getText().toString());
-            Pref.saveIntegerValue(PrefKey.cityId, cityId);
-            Pref.saveStringValue(PrefKey.userName, txtName.getText().toString().trim());
-            Pref.saveStringValue(PrefKey.userFamily, txtFamilyName.getText().toString().trim());
-            Toast.makeText(G.context, "اطلاعات جدید ذخیره شد.", Toast.LENGTH_SHORT).show();
-        }
     }
 
+    /*
+        @Override
+       public void confirmUser(boolean flag) {
+            dialogProgres.closeProgresBar();
+            if (!flag) {
+                sendMessageFUT("خطا");
+                G.activity.finish();
+            } else {
+                btnSave.setVisibility(View.GONE);
+                txtName.setEnabled(false);
+                txtFamilyName.setEnabled(false);
+                txtPhone.setEnabled(false);
+                txtLocation.setEnabled(false);
+
+                Pref.saveStringValue(PrefKey.location, txtLocation.getText().toString());
+                Pref.saveIntegerValue(PrefKey.cityId, cityId);
+                Pref.saveStringValue(PrefKey.userName, txtName.getText().toString().trim());
+                Pref.saveStringValue(PrefKey.userFamily, txtFamilyName.getText().toString().trim());
+                Toast.makeText(G.context, "اطلاعات جدید ذخیره شد.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    */
     @Override
     public void onReceiveUser(ArrayList<StUser> users) {
 

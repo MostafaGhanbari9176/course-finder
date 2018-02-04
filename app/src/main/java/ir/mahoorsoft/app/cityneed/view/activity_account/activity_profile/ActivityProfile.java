@@ -1,12 +1,14 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,19 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -37,9 +35,10 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
-import ir.mahoorsoft.app.cityneed.view.BlurBuilder;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
+import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
@@ -48,12 +47,19 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityProfile extends AppCompatActivity implements View.OnClickListener, PresentUser.OnPresentUserLitener {
-    TextView txtUserType;
+    boolean mapIsShow = false;
     ImageView imgProfile;
-    Button btnBack;
     Button btnLogOut;
+    Button btnAddCourse;
+    Button btnListCourse;
+    Button btnListAddCourse;
+    Button btnMap;
+    Button btnTrendingUp;
+    LinearLayout llAddCourse;
+    LinearLayout llListAddCourse;
+    LinearLayout llTrendingUP;
     DialogProgres dialogProgres;
-    ImageView backImage;
+    //ImageView backImage;
 
 
     @Override
@@ -70,11 +76,18 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     }
 
     private void pointer() {
-        backImage = (ImageView) findViewById(R.id.backImageProfile);
+
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
-        txtUserType = (TextView) findViewById(R.id.txtUserType);
-        (btnBack = (Button) findViewById(R.id.btnBack_Profile)).setOnClickListener(this);
         (btnLogOut = (Button) findViewById(R.id.btnLogOut)).setOnClickListener(this);
+        (btnAddCourse = (Button) findViewById(R.id.btnAddCourseProfile)).setOnClickListener(this);
+        (btnListAddCourse = (Button) findViewById(R.id.btnAddCourseListProfile)).setOnClickListener(this);
+        (btnTrendingUp = (Button) findViewById(R.id.btnTrendingUpProfile)).setOnClickListener(this);
+        (btnMap = (Button) findViewById(R.id.btnMapProfile)).setOnClickListener(this);
+        (btnListCourse = (Button) findViewById(R.id.btnCourseListProfile)).setOnClickListener(this);
+
+        llAddCourse = (LinearLayout) findViewById(R.id.llAddCourseProfile);
+        llListAddCourse = (LinearLayout) findViewById(R.id.llAddCourseListProfile);
+        llTrendingUP = (LinearLayout) findViewById(R.id.llTrendingUpProfile);
 
     }
 
@@ -85,8 +98,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         super.onBackPressed();
     }
 
-    public static void replaceContentWith(Fragment fragment) {
-
+    public void replaceContentWith(Fragment fragment) {
         G.activity.getSupportFragmentManager().beginTransaction().
                 replace(R.id.contentProfile, fragment).commit();
 
@@ -95,11 +107,32 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnBack_Profile:
-                onBackPressed();
-                break;
+
             case R.id.btnLogOut:
-                queryForLogOut();
+                showAlertDialog("خروج از حساب", "آیا می خواهید از حساب کاربری خود خارج شوید", "بله", "خیر");
+                break;
+            case R.id.btnAddCourseProfile:
+
+                break;
+            case R.id.btnCourseListProfile:
+
+                break;
+            case R.id.btnTrendingUpProfile:
+                Intent intent = new Intent(this, ActivityTeacherRegistering.class);
+                startActivity(intent);
+                break;
+            case R.id.btnAddCourseListProfile:
+
+                break;
+            case R.id.btnMapProfile:
+                if (!mapIsShow) {
+                    replaceContentWith(new FragmentMap());
+                    mapIsShow = true;
+                } else{
+                    mapIsShow = false;
+                    checkUserType();
+                }
+
                 break;
         }
     }
@@ -126,7 +159,6 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     public void confirmUser(boolean flag) {
         dialogProgres.closeProgresBar();
         Pref.removeValue(PrefKey.phone);
-        Pref.removeValue(PrefKey.userFamily);
         Pref.removeValue(PrefKey.userName);
         Pref.removeValue(PrefKey.location);
         Pref.removeValue(PrefKey.cityId);
@@ -150,24 +182,25 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         int typeMode = Pref.getIntegerValue(PrefKey.userTypeMode, 0);
         switch (typeMode) {
             case 0:
-                txtUserType.setText("دانشجو");
-                setImageWithBackBlur(R.drawable.user, imgProfile, backImage);
+                llListAddCourse.setVisibility(View.GONE);
+                llAddCourse.setVisibility(View.GONE);
+                setImageWithBack(R.drawable.user, imgProfile);
                 replaceContentWith(new FragmentProfileKarbar());
                 break;
             case 1:
-                txtUserType.setText("آموزشگاه");
-                setUrlWithBackBlur(Pref.getStringValue(PrefKey.phone,""), imgProfile, backImage);
+                llTrendingUP.setVisibility(View.GONE);
+                setUrlWithBack(Pref.getStringValue(PrefKey.phone, ""), imgProfile);
                 replaceContentWith(new FragmentProfileAmozeshgah());//4
                 break;
             case 2:
-                txtUserType.setText("آموزش خصوصی");
-                imgProfile.setImageResource(R.drawable.icon_college);
+                llTrendingUP.setVisibility(View.GONE);
+                setUrlWithBack(Pref.getStringValue(PrefKey.phone, ""), imgProfile);
                 replaceContentWith(new FragmentProfileAmozeshgah());
                 break;
         }
     }
 
-    private void setUrlWithBackBlur(String name, ImageView image, ImageView backImage) {
+    private void setUrlWithBack(String name, ImageView image) {
         Bitmap theBitmap = null;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
@@ -184,33 +217,25 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
         //BlurBuilder.blur(this, DownloadImage(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png")).compress(Bitmap.CompressFormat.PNG, 100, stream);
         Glide.with(this)
-                .load(stream.toByteArray())
-                .asBitmap()
-                .centerCrop()
-                .into(backImage);
-        backImage.setImageBitmap(DownloadImage(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png"));
-        Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png")
                 .fitCenter()
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                .error(R.drawable.user)
                 .into(image);
 
 
     }
 
-    private void setImageWithBackBlur(int img, ImageView image, ImageView backImage) {
+    private void setImageWithBack(int img, ImageView image) {
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        BlurBuilder.blur(this, BitmapFactory.decodeResource(getResources(), img)).compress(Bitmap.CompressFormat.PNG, 100, stream);
-        Glide.with(this)
-                .load(stream.toByteArray())
-                .asBitmap()
-                .centerCrop()
-                .into(backImage);
+        // ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        // BlurBuilder.blur(this, BitmapFactory.decodeResource(getResources(), img)).compress(Bitmap.CompressFormat.PNG, 100, stream);
+
 
         Glide.with(this)
                 .load(img)
                 .fitCenter()
+                .error(R.drawable.user)
                 .into(image);
 
 
@@ -241,13 +266,12 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private Bitmap DownloadImage(String URL)
-    {
+    private Bitmap DownloadImage(String URL) {
 //      System.out.println("image inside="+URL);
         Bitmap bitmap = null;
         InputStream in = null;
         try {
-            in = OpenHttpConnection(URL.substring(0,URL.lastIndexOf('.')));
+            in = OpenHttpConnection(URL.substring(0, URL.lastIndexOf('.')));
             bitmap = BitmapFactory.decodeStream(in);
             in.close();
         } catch (IOException e1) {
@@ -257,9 +281,9 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 //        System.out.println("image last");
         return bitmap;
     }
+
     private InputStream OpenHttpConnection(String urlString)
-            throws IOException
-    {
+            throws IOException {
         InputStream in = null;
         int response = -1;
 
@@ -269,7 +293,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         if (!(conn instanceof HttpURLConnection))
             throw new IOException("Not an HTTP connection");
 
-        try{
+        try {
             HttpURLConnection httpConn = (HttpURLConnection) conn;
             httpConn.setAllowUserInteraction(false);
             httpConn.setInstanceFollowRedirects(true);
@@ -277,16 +301,35 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             httpConn.connect();
 
             response = httpConn.getResponseCode();
-            if (response == HttpURLConnection.HTTP_OK)
-            {
+            if (response == HttpURLConnection.HTTP_OK) {
                 in = httpConn.getInputStream();
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new IOException("Error connecting");
         }
         return in;
+    }
+
+    private void showAlertDialog(String title, String message, String buttonTrue, String btnFalse) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+
+        alertDialog.setPositiveButton(buttonTrue, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                queryForLogOut();
+                dialog.cancel();
+
+            }
+        });
+        alertDialog.setNegativeButton(btnFalse, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
     /*public static void showDialog(DialogPrvince.OnDialogPrvinceListener onDialogPrvinceListener) {
         if (dialogPrvince == null) {

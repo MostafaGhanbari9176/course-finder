@@ -6,7 +6,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        app:srcCompat="@drawable/icon_map_false"
+        app:srcCompat="@drawable/icon_map"
         android:id="@+id/imgPager"
         android:layout_height="160dp" />
 </LinearLayout>
