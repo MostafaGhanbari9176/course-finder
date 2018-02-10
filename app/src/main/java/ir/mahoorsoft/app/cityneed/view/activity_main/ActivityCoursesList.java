@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
@@ -23,7 +25,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityCoursesList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
-    String id;
+
     String modeShow = "";
     AdapterCourseList adapter;
     RecyclerView list;
@@ -45,7 +47,7 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
         adapter.notifyDataSetChanged();
         if (getIntent().getExtras() != null)
             modeShow = getIntent().getStringExtra("mode");
-        id = getIntent().getStringExtra("id");
+
         setSource();
 
 
@@ -58,7 +60,7 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
             presentCourse.getAllCourse();
         } else if(modeShow.equalsIgnoreCase("byTeacherId")){
             PresentCourse presentCourse = new PresentCourse(this);
-            presentCourse.getCourseByTeacherId(id);
+            presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.phone,""));
         }else if(modeShow.equalsIgnoreCase("sabtenam")){
             PresentCourse presentCourse = new PresentCourse(this);
 

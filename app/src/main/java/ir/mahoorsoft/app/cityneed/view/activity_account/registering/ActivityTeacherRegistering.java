@@ -1,14 +1,17 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.registering;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,13 +45,12 @@ import retrofit2.Response;
  * Created by MAHNAZ on 10/16/2017.
  */
 
-public class ActivityTeacherRegistering extends AppCompatActivity implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
-
+public class ActivityTeacherRegistering extends AppCompatActivity implements View.OnClickListener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
+    boolean locationIsSet = false;
     Button btnBack;
     Button btnSave;
     Button btnUploadImag;
     Button btnLocation;
-    DialogPrvince dialogPrvince;
     TextView txtPhone;
     TextView txtSubject;
     //TextView txtAddress;
@@ -65,7 +67,6 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registering);
         pointers();
-        dialogPrvince = new DialogPrvince(this, this);
         dialogProgres = new DialogProgres(this);
     }
 
@@ -89,6 +90,8 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
 
 
         btnSave.setOnClickListener(this);
+        cbxPrivate.setOnClickListener(this);
+        cbxPublic.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnLocation.setOnClickListener(this);
         btnUploadImag.setOnClickListener(this);
@@ -120,8 +123,9 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
                 break;
 
             case R.id.btnLocation:
+
                 Intent intent = new Intent(this, MapsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
                 break;
 
             case R.id.btnSaveRegistery:
@@ -132,27 +136,58 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
                 choseFile();
                 break;
 
+            case R.id.cbxPublicCurce:
+                if (cbxPublic.isChecked())
+                    cbxPrivate.setChecked(false);
+                else
+                    cbxPrivate.setChecked(true);
+                break;
+
+            case R.id.cbxSingleCurce:
+                if (cbxPrivate.isChecked())
+                    cbxPublic.setChecked(false);
+                else
+                    cbxPublic.setChecked(true);
+                break;
+
         }
     }
 
     private void getData() {
 
-        if (txtPhone.getText().toString().trim().length() != 11 &&
-                txtSubject.getText().toString().trim().length() != 0 &&
+
+        try {
+        if(Pref.getStringValue(PrefKey.lat,"").length() == 0)
+            throw new Exception("لطفا موقعیت مکانی خود را تعیین کنید.");
+            Long.parseLong(txtPhone.getText().toString().trim());
+            if (txtPhone.getText().toString().trim().length() != 11)
+                throw new Exception("لطفا شماره تماس خود را صحیح وارد کنید.");
+
+        if (txtSubject.getText().toString().trim().length() != 0 &&
                 //txtAddress.getText().toString().trim().length() != 0 &&
                 txtTozihat.getText().toString().trim().length() != 0 &&
                 btnLocation.getText().length() != 0) {
             if (cbxPrivate.isChecked() || cbxPublic.isChecked()) {
-                dialogProgres.showProgresBar();
-                PresentTeacher presentTeacher = new PresentTeacher(this);
-                presentTeacher.addTeacher(txtSubject.getText().toString().trim(), "", txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, cityId);
-            } else {
-                Toast.makeText(this, "لطفا نوع آموزش خود را مشخص کنید", Toast.LENGTH_SHORT).show();
+                showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید؟", "بله", "بررسی");
+                } else {
+                showDialog("خطا", "لطفا نوع آموزش خود را مشخص کنید", "", "قبول");
+
             }
         } else {
-            Toast.makeText(this, "لطفا اطلاعات را کامل وصحیح وارد کنید...", Toast.LENGTH_SHORT).show();
+            showDialog("خطا", "لطفا اطلاعات را کامل وصحیح وارد کنید...", "", "قبول");
+
+        }
+        } catch (Exception e) {
+            showDialog("خطا", e.getMessage(), "", "قبول");
         }
     }///barresi
+
+    private void sendDataForServer(){
+        dialogProgres.showProgresBar();
+        PresentTeacher presentTeacher = new PresentTeacher(this);
+        presentTeacher.addTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, Pref.getStringValue(PrefKey.lat,""), Pref.getStringValue(PrefKey.lon,""));
+
+    }
 
     private void choseFile() {
         Intent intent = new Intent(this, ActivityFiles.class);
@@ -165,21 +200,17 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         try {
             super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == 1 && resultCode == RESULT_OK) {
-               uploadFile(data.getStringExtra("path"));
-                }
+                uploadFile(data.getStringExtra("path"));
+            }
+            if (requestCode == 2 && resultCode == RESULT_OK) {
+                locationIsSet = true;
+            }
 
         } catch (Exception ex) {
             Toast.makeText(ActivityTeacherRegistering.this, ex.toString(),
                     Toast.LENGTH_SHORT).show();
         }
     }
-
-    @Override
-    public void locationInformation(String location, int cityId) {
-        btnLocation.setText(location);
-        this.cityId = cityId;
-    }
-
 
     @Override
     public void sendMessageFTT(String message) {
@@ -195,7 +226,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
             Pref.saveStringValue(PrefKey.location, btnLocation.getText().toString().trim());
             Pref.saveStringValue(PrefKey.landPhone, txtPhone.getText().toString().trim());
             Pref.saveStringValue(PrefKey.subject, txtSubject.getText().toString().trim());
-          //  Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
+            //  Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
             Pref.saveIntegerValue(PrefKey.madrak, 0);
             Pref.saveIntegerValue(PrefKey.userTypeMode, cbxPublic.isChecked() ? 1 : 2);
             starterActivitry(ActivityProfile.class);
@@ -203,8 +234,8 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
             sendMessageFTT("خطا");
     }
 
-    private void uploadFile(String path){
-        dialogProgres = new DialogProgres(this,"درحال بارگذاری");
+    private void uploadFile(String path) {
+        dialogProgres = new DialogProgres(this, "درحال بارگذاری");
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
         presentUpload.uploadFile("teacher", Pref.getStringValue(PrefKey.phone, "") + ".png", path);
@@ -215,9 +246,32 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     public void onReceiveTeacher(ArrayList<StTeacher> users) {
 
     }
+
     @Override
     public void messageFromUpload(String message) {
         //dialogProgres.closeProgresBar();
         sendMessageFTT(message);
     }
+
+    private void showDialog(String title, String message, String btntrue, String btnFalse) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(btntrue, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sendDataForServer();
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton(btnFalse, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+
 }

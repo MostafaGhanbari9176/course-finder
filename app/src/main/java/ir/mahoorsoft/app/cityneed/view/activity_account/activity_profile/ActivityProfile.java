@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +34,13 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
+import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedServer;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
+import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -53,14 +56,15 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     Button btnAddCourse;
     Button btnListCourse;
     Button btnListAddCourse;
+    Button btnUpload;
+    TextView txtUpload;
+    RelativeLayout rlUpload;
     Button btnMap;
     Button btnTrendingUp;
     LinearLayout llAddCourse;
     LinearLayout llListAddCourse;
     LinearLayout llTrendingUP;
     DialogProgres dialogProgres;
-    //ImageView backImage;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,23 +72,30 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         G.activity = this;
         G.context = this;
         dialogProgres = new DialogProgres(this);
-
+        //checkedServer();
         setContentView(R.layout.activity_profile);
         pointer();
         checkUserType();
 
     }
 
+    private void getInfFromServer(){
+        dialogProgres.showProgresBar();
+       // PresentCheckedServer presentCheckedServer = new PresentCheckedServer(this);
+       // presentCheckedServer.checkedServer();
+    }
+
     private void pointer() {
 
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         (btnLogOut = (Button) findViewById(R.id.btnLogOut)).setOnClickListener(this);
+        (rlUpload = (RelativeLayout) findViewById(R.id.rlUploadMadrak)).setOnClickListener(this);
         (btnAddCourse = (Button) findViewById(R.id.btnAddCourseProfile)).setOnClickListener(this);
-        (btnListAddCourse = (Button) findViewById(R.id.btnAddCourseListProfile)).setOnClickListener(this);
+        (btnListAddCourse = (Button) findViewById(R.id.btnSabtenamListProfile)).setOnClickListener(this);
         (btnTrendingUp = (Button) findViewById(R.id.btnTrendingUpProfile)).setOnClickListener(this);
         (btnMap = (Button) findViewById(R.id.btnMapProfile)).setOnClickListener(this);
         (btnListCourse = (Button) findViewById(R.id.btnCourseListProfile)).setOnClickListener(this);
-
+        txtUpload = (TextView) findViewById(R.id.txtUploadMadrak);
         llAddCourse = (LinearLayout) findViewById(R.id.llAddCourseProfile);
         llListAddCourse = (LinearLayout) findViewById(R.id.llAddCourseListProfile);
         llTrendingUP = (LinearLayout) findViewById(R.id.llTrendingUpProfile);
@@ -112,23 +123,29 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 showAlertDialog("خروج از حساب", "آیا می خواهید از حساب کاربری خود خارج شوید", "بله", "خیر");
                 break;
             case R.id.btnAddCourseProfile:
-
+                starterActivity(ActivityCourseRegistring.class);
                 break;
             case R.id.btnCourseListProfile:
-
-                break;
-            case R.id.btnTrendingUpProfile:
-                Intent intent = new Intent(this, ActivityTeacherRegistering.class);
+                Intent intent = new Intent(this, ActivityCoursesList.class);
+                intent.putExtra("mode", "byTeacherId");
                 startActivity(intent);
                 break;
-            case R.id.btnAddCourseListProfile:
+            case R.id.btnTrendingUpProfile:
+                starterActivity(ActivityTeacherRegistering.class);
+                this.finish();
+                break;
+            case R.id.btnSabtenamListProfile:
+                starterActivity(ActivityCoursesList.class);
+                break;
 
+            case R.id.rlUploadMadrak:
+                uploalMadrak();
                 break;
             case R.id.btnMapProfile:
                 if (!mapIsShow) {
                     replaceContentWith(new FragmentMap());
                     mapIsShow = true;
-                } else{
+                } else {
                     mapIsShow = false;
                     checkUserType();
                 }
@@ -137,12 +154,22 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void uploalMadrak(){
+
+    }
+
     private void queryForLogOut() {
 
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
         presentUser.logOut(Pref.getStringValue(PrefKey.phone, ""));
     }
+
+    private void starterActivity(Class aClass) {
+        Intent intent = new Intent(this, aClass);
+        startActivity(intent);
+    }
+
 
     @Override
     public void sendMessageFUT(String message) {
@@ -167,6 +194,8 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         Pref.removeValue(PrefKey.userTypeMode);
         Pref.removeValue(PrefKey.landPhone);
         Pref.removeValue(PrefKey.madrak);
+        Pref.removeValue(PrefKey.lat);
+        Pref.removeValue(PrefKey.lon);
         Pref.removeValue(PrefKey.IsLogin);
         this.finish();
     }
@@ -182,6 +211,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         int typeMode = Pref.getIntegerValue(PrefKey.userTypeMode, 0);
         switch (typeMode) {
             case 0:
+                rlUpload.setVisibility(View.GONE);
                 llListAddCourse.setVisibility(View.GONE);
                 llAddCourse.setVisibility(View.GONE);
                 setImageWithBack(R.drawable.user, imgProfile);

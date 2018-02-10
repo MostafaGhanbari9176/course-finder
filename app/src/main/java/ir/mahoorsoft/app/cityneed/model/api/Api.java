@@ -43,15 +43,10 @@ public interface Api {
             @Path("phone") long phone
     );
 
-    @GET("updateUser/{phone}/{name}/{family}/{status}/{type}/{cityId}/{apiCode}")
+    @GET("updateUser/{phone}/{name}")
     Call<ArrayList<Response>> updateUser(
             @Path("phone") String phone,
-            @Path("name") String name,
-            @Path("family") String family,
-            @Path("status") int status,
-            @Path("type") int type,
-            @Path("cityId") int cityId,
-            @Path("apiCode") int apiCode
+            @Path("name") String name
     );
 
     @GET("getUser/{phone}")
@@ -77,15 +72,15 @@ public interface Api {
             @Path("code") int code
     );
 
-    @GET("addTeacher/{phone}/{landPhone}/{address}/{subject}/{tozihat}/{type}/{cityId}")
+    @GET("addTeacher/{phone}/{landPhone}/{subject}/{tozihat}/{type}/{lat}/{lon}")
     Call<ArrayList<Response>> addTeacher(
             @Path("phone") String phone,
             @Path("landPhone") String landPhone,
-            @Path("address") String address,
             @Path("subject") String subject,
             @Path("tozihat") String tozihat,
             @Path("type") int type,
-            @Path("cityId") int cityId
+            @Path("lat") String lat,
+            @Path("lon") String lon
     );
 
     @Multipart

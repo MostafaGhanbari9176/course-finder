@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#16815a</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryDark">@color/light_eq</color>
     <color name="colorAccent">#25D366</color>
+
 <!--  0000  -->
     <color name="text_home">#000</color>
     <color name="text_item">#000</color>
@@ -24,5 +25,9 @@
     <color name="back_grand_layout">#E8F5E9</color>
     <color name="toolbar_elements1">#fff</color>
     <color name="error">#F06292</color>
+    <!--color primary group  == eq -->
+    <color name="blue_eq">#41cdb0</color>
+    <color name="dark_eq">#263238</color>
+    <color name="light_eq">#384248</color>
 
 </resources>

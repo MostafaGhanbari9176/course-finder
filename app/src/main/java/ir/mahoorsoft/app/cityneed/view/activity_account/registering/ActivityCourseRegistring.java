@@ -1,22 +1,32 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.registering;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerController;
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 
 
+import com.mohamadamin.persianmaterialdatetimepicker.date.DayPickerView;
+import com.mohamadamin.persianmaterialdatetimepicker.date.MonthAdapter;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 
 import java.util.ArrayList;
@@ -28,6 +38,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
+import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityTabagheList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -37,10 +48,18 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityCourseRegistring extends AppCompatActivity implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener {
-
+    RadioButton rb1;
+    RadioButton rb2;
+    RadioButton rb3;
+    RadioButton rb4;
+    RadioButton rb5;
+    RadioButton rb6;
+    RadioButton rb7;
     TextView txtSubject;
+    boolean isUserChanged = true;
     TextView txtTozihat;
-    TextView txtRange;
+    TextView txtMinRange;
+    TextView txtMaxRange;
     TextView txtCapacity;
     TextView txtSharayet;
     TextView txtMony;
@@ -49,7 +68,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     Button btnEndDate;
     Button btnTime;
     Button btnTabaghe;
-    TextView txtDay;
+
     String teacherId = Pref.getStringValue(PrefKey.phone, "");
     DialogProgres dialogProgres;
     CheckBox publik;
@@ -71,18 +90,48 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     private void pointers() {
         txtCapacity = (TextView) findViewById(R.id.txtCapacityRegisteryCourse);
         txtMony = (TextView) findViewById(R.id.txtMonyRegisteryCourse);
-        txtRange = (TextView) findViewById(R.id.txtOldRangeRegisteryCourse);
+        txtMinRange = (TextView) findViewById(R.id.txtMinRange);
+        txtMaxRange = (TextView) findViewById(R.id.txtMaxRange);
         txtSubject = (TextView) findViewById(R.id.txtSubjectRegisteryCourse);
         txtTozihat = (TextView) findViewById(R.id.txtTozihatRegisteryCourse);
         txtSharayet = (TextView) findViewById(R.id.txtsharayetRegisteryCourse);
+        Typeface typeface = Typeface.createFromAsset(this.getResources().getAssets(), "fonts/Far_Nazanin.ttf");
 
-        txtDay = (TextView) findViewById(R.id.txtDayRegisteryCourse);
+        txtSharayet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUserChanged) {
+                    isUserChanged = false;
+                   // txtSharayet.setTextKeepState();
+                    txtSharayet.setTextKeepState(CharCheck.faCheck(txtSharayet.getText().toString()));
+
+                } else
+                    isUserChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         btnEndDate = (Button) findViewById(R.id.btnEndDateRegisteryCourse);
         btnStartDate = (Button) findViewById(R.id.btnStartDateRegisteryCourse);
         btnSave = (Button) findViewById(R.id.btnSaveRegisteryRegisteryCourse);
         btnTime = (Button) findViewById(R.id.btnChooseTimeRegisteryCourse);
         btnTabaghe = (Button) findViewById(R.id.btnChoseTabaghe);
 
+        rb1 = (RadioButton) findViewById(R.id.rbSaturday);
+        rb2 = (RadioButton) findViewById(R.id.rbSunday);
+        rb3 = (RadioButton) findViewById(R.id.rbMonday);
+        rb4 = (RadioButton) findViewById(R.id.rb3);
+        rb5 = (RadioButton) findViewById(R.id.rb4);
+        rb6 = (RadioButton) findViewById(R.id.rb5);
+        rb7 = (RadioButton) findViewById(R.id.rbFriday);
 
         publik = (CheckBox) findViewById(R.id.cbxPublicCurceRegisteryCourse);
         privat = (CheckBox) findViewById(R.id.cbxSingleCurceRegisteryCourse);
@@ -124,6 +173,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     }
 
     private void showDatePicker(final boolean isStartDate) {
+
         PersianCalendar now = new PersianCalendar();
         DatePickerDialog datePickerDialog = DatePickerDialog.newInstance
                 (new DatePickerDialog.OnDateSetListener() {
@@ -145,6 +195,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     private void showTimePicker() {
 
+
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
 
@@ -159,16 +210,26 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     }
 
     private void checkData() {
-        if (txtSharayet.getText() != null && txtSharayet.getText().toString().trim().length() != 0 &&
-                txtTozihat.getText() != null && txtTozihat.getText().toString().trim().length() != 0 &&
-                txtSubject.getText() != null && txtSubject.getText().toString().trim().length() != 0 &&
-                txtRange.getText() != null && txtRange.getText().toString().trim().length() != 0 &&
-                txtMony.getText() != null && txtMony.getText().toString().trim().length() != 0 &&
-                txtDay.getText() != null && txtDay.getText().toString().trim().length() != 0 &&
-                txtCapacity.getText() != null && txtCapacity.getText().toString().trim().length() != 0) {
-            sendDataForServer();
-        } else {
+        try {
+            Long.parseLong(txtMony.getText().toString().trim());
+            Integer.parseInt(txtCapacity.getText().toString().trim());
+            Integer.parseInt(txtMinRange.getText().toString().trim());
+            Integer.parseInt(txtMaxRange.getText().toString().trim());
 
+
+            if (txtSharayet.getText() != null && txtSharayet.getText().toString().trim().length() != 0 &&
+                    txtTozihat.getText() != null && txtTozihat.getText().toString().trim().length() != 0 &&
+                    txtSubject.getText() != null && txtSubject.getText().toString().trim().length() != 0 &&
+                    txtMinRange.getText() != null && txtMinRange.getText().toString().trim().length() != 0 &&
+                    txtMony.getText() != null && txtMony.getText().toString().trim().length() != 0 &&
+                    txtMaxRange.getText() != null && txtMaxRange.getText().toString().trim().length() != 0 &&
+                    txtCapacity.getText() != null && txtCapacity.getText().toString().trim().length() != 0) {
+                showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید", "بله", "بررسی");
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            showDialog("خطا!", "لطفا اطلاعات را صحیح وارد کنید", "", "قبول");
         }
     }
 
@@ -179,8 +240,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         if (requestCode == 1) {
             tabagheId = data.getIntExtra("id", -2);
             btnTabaghe.setText(data.getStringExtra("name"));
-        }
-        else if(requestCode == 2){
+        } else if (requestCode == 2) {
             uploadImage(data.getStringExtra("path"));
         }
     }
@@ -197,9 +257,9 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                 txtTozihat.getText().toString().trim(),
                 btnStartDate.getText().toString().trim(),
                 btnEndDate.getText().toString().trim(),
-                txtDay.getText().toString().trim(),
+                txtMaxRange.getText().toString().trim(),//////////////
                 btnTime.getText().toString().trim(),
-                Integer.parseInt(txtRange.getText().toString().trim()));
+                Integer.parseInt(txtMaxRange.getText().toString().trim()));////////////////
 
     }
 
@@ -227,7 +287,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         dialogProgres = new DialogProgres(this, "درحال بارگذاری");
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("course",id+".png", path);
+        presentUpload.uploadFile("course", id + ".png", path);
     }
 
     private void shoDialog() {
@@ -265,6 +325,29 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     public void messageFromUpload(String message) {
         sendMessageFCT(message);
         this.finish();
+    }
+
+    private void showDialog(String title, String message, String btntrue, String btnFalse) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(btntrue, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sendDataForServer();
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton(btnFalse, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void getDay() {
     }
 }
 

@@ -21,27 +21,11 @@ public class User {
         this.onUserLitener = onUserLitener;
     }
 
-    public void logIn(long phone) {
-        Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> savePhone = api.logIn(phone);
-        savePhone.enqueue(new Callback<ArrayList<Response>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
-                onUserLitener.onReceiveFlag(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
-                onUserLitener.sendMessage(Message.convertRetrofitMessage(t.toString()));
-            }
-        });
-    }
-
-    public void updateUser(String phone, String name, String family, int status, int type, int cityIde, int apiCode) {
+    public void updateUser(String phone, String name) {
 
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> updateUser = api.updateUser(phone,name,family,status,type,cityIde,apiCode);
+        Call<ArrayList<Response>> updateUser = api.updateUser(phone,name);
         updateUser.enqueue(new Callback<ArrayList<Response>>() {
             @Override
             public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {

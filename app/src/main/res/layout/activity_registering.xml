@@ -68,7 +68,7 @@
                             android:layout_alignParentTop="true"
                             android:ems="10"
                             android:gravity="right|center_vertical"
-                            android:hint="عنوان آموزش : "
+                            android:hint="عنوان آموزش "
                             android:inputType="textPersonName"
                             android:paddingRight="48dp"
                             android:textColor="@color/text_home"
@@ -93,10 +93,11 @@
                             android:id="@+id/txtPhoneRegistery"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:gravity="right|center"
-                            android:hint="تلفن ثابت :"
-                            android:inputType="textPersonName"
+                            android:gravity="right"
+                            android:hint="تلفن ثابت همراه با پیش شماره"
+                            android:inputType="phone"
+                            android:maxLength="11"
+                            android:maxLines="1"
                             android:paddingRight="48dp"
                             android:textColor="@color/text_home"
                             android:textSize="@dimen/txt_submit_iformation" />
@@ -131,8 +132,10 @@
                             android:layout_alignParentTop="true"
                             android:ems="10"
                             android:gravity="right|center_vertical"
-                            android:hint="توضیحات : "
+                            android:hint="توضیحات "
                             android:inputType="textPersonName"
+                            android:maxLength="110"
+                            android:maxLines="5"
                             android:paddingRight="48dp"
                             android:textColor="@color/text_home"
                             android:textSize="@dimen/txt_submit_iformation" />
@@ -175,6 +178,7 @@
             </LinearLayout>
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right|center"
@@ -199,58 +203,63 @@
                         android:textSize="@dimen/txt_size_smal" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginRight="36dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="36dp"
+                        android:layout_marginTop="2dp"
                         android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:text="آموزش عمومی(آموزشگاه)"
-                        android:textColor="@color/dark"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/cbxPublicCurce"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:text="آموزش عمومی(آموزشگاه)"
+                            android:textColor="@color/dark"
+                            android:textSize="@dimen/txt_size_smal" />
+
+                        <CheckBox
+                            android:id="@+id/cbxPublicCurce"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginRight="36dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="36dp"
+                        android:layout_marginTop="2dp"
                         android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:text="تدریس خصوصی"
-                        android:textColor="@color/dark"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/cbxSingleCurce"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="" />
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:text="تدریس خصوصی"
+                            android:textColor="@color/dark"
+                            android:textSize="@dimen/txt_size_smal" />
 
+                        <CheckBox
+                            android:id="@+id/cbxSingleCurce"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+                    </LinearLayout>
+                </RadioGroup>
             </LinearLayout>
 
             <LinearLayout

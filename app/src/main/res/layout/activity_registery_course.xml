@@ -108,7 +108,7 @@
                             android:ems="10"
                             android:gravity="right|center"
                             android:hint="شرایط و پیش نیاز ها "
-                            android:inputType="textPersonName"
+                            android:inputType="textMultiLine"
                             android:paddingRight="48dp"
                             android:textColor="@color/text_home"
                             android:textSize="@dimen/txt_submit_iformation" />
@@ -118,7 +118,7 @@
                             android:layout_height="@dimen/btn_nav"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_landphone" />
+                            app:srcCompat="@drawable/icon_txtshort" />
 
                     </RelativeLayout>
 
@@ -144,7 +144,7 @@
                             android:ems="10"
                             android:gravity="right|center_vertical"
                             android:hint="شهریه(تومان)"
-                            android:inputType="textPersonName"
+                            android:inputType="number"
                             android:paddingRight="48dp"
                             android:textColor="@color/text_home"
                             android:textSize="@dimen/txt_submit_iformation" />
@@ -158,7 +158,7 @@
                         android:orientation="horizontal">
 
                         <EditText
-                            android:id="@+id/txtOldRangeRegisteryCourse"
+                            android:id="@+id/txtMinRange"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
@@ -166,8 +166,38 @@
                             android:layout_alignParentTop="true"
                             android:ems="10"
                             android:gravity="right|center_vertical"
-                            android:hint="رنج سنی"
-                            android:inputType="textPersonName"
+                            android:hint="مینیمم رنج سنی"
+                            android:inputType="number"
+                            android:paddingRight="48dp"
+                            android:textColor="@color/text_home"
+                            android:textSize="@dimen/txt_submit_iformation" />
+
+                        <ImageView
+                            android:layout_width="@dimen/btn_nav"
+                            android:layout_height="@dimen/btn_nav"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/icon_range" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/txtMaxRange"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:ems="10"
+                            android:gravity="right|center_vertical"
+                            android:hint="ماکسیمم رنج سنی"
+                            android:inputType="number"
                             android:paddingRight="48dp"
                             android:textColor="@color/text_home"
                             android:textSize="@dimen/txt_submit_iformation" />
@@ -225,35 +255,6 @@
                             app:srcCompat="@drawable/icon_txtshort" />
 
                         <EditText
-                            android:id="@+id/txtDayRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center_vertical"
-                            android:hint="روز برگزاری"
-                            android:inputType="textPersonName"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/text_home"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="8dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_txtshort" />
-
-                        <EditText
                             android:id="@+id/txtTozihatRegisteryCourse"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -270,6 +271,69 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp" >
+
+                <RadioGroup
+                    android:id="@+id/radioButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="RadioButton">
+
+                    <RadioButton
+                        android:id="@+id/rbSaturday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="شنبه" />
+
+                    <RadioButton
+                        android:id="@+id/rbSunday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="یکشنبه" />
+
+                    <RadioButton
+                        android:id="@+id/rbMonday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="دوشنبه" />
+
+                    <RadioButton
+                        android:id="@+id/rb3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="سه شنبه" />
+
+                    <RadioButton
+                        android:id="@+id/rb4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="چهار شنبه" />
+
+                    <RadioButton
+                        android:id="@+id/rb5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="پنج شنبه" />
+
+                    <RadioButton
+                        android:id="@+id/rbFriday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="جمعه" />
+                </RadioGroup>
             </android.support.v7.widget.CardView>
 
             <LinearLayout

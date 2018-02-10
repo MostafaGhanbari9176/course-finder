@@ -40,6 +40,7 @@ public class Pref {
         return editor.commit();
     }
 
+
     public static Long getLongValue(String name, long defValue) {
         return G.preferences.getLong(name, defValue);
     }

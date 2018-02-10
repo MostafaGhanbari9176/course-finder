@@ -6,6 +6,8 @@ package ir.mahoorsoft.app.cityneed.model.struct;
 
 public class PrefKey {
     public static final String IsLogin = "flag";
+    public static final String lat = "lat";
+    public static final String lon = "lon";
     public static final String address = "address";
     public static final String landPhone = "landPhone";
     public static final String subject = "subject";

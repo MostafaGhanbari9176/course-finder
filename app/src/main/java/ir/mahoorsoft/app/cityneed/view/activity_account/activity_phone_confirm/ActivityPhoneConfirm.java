@@ -2,11 +2,14 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
+import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -35,7 +39,8 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSmsCode.OnPresentSmsCodeListener, PresentUser.OnPresentUserLitener, PresentTeacher.OnPresentTeacherListener {
-
+    boolean isUserChangeForTxtCode = true;
+    boolean isUserChangeForTxtPhone = true;
     int timer = 120;
     Toolbar tlb;
     Button btnConfirmPhone;
@@ -57,7 +62,17 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
 
         dialogProgres = new DialogProgres(this);
         pointers();
+        setFont();
+
         // setSupportActionBar(tlb);
+    }
+
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
+        txtTimer.setTypeface(typeface);
+        txtCode.setTypeface(typeface);
+        txtPhone.setTypeface(typeface);
+
     }
 
     private void pointers() {
@@ -156,7 +171,8 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         if (flag && isResponseForCode) {
             Pref.saveBollValue(PrefKey.IsLogin, flag);//***************************************************************
             Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
-            showDialogForName();
+            next();
+            //  showDialogForName();
         } else if (!flag && isResponseForCode)
             showAlertDialog("خطا", "کده وارد شده صحیح نیست!!!", "", "قبول");
 
@@ -208,7 +224,7 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
     public void confirmSmsCodeAndExistUser(int code) {
         if (code == 2) {
             dialogProgres.showProgresBar();
-            //***************************************************************
+            //************************************************************************
             Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
             PresentUser presentUser = new PresentUser(this);
             presentUser.getUser(Pref.getStringValue(PrefKey.phone, ""));
@@ -308,8 +324,8 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
                         if (editText.getText().toString() != null && editText.getText().toString().trim().length() != 0) {
                             Pref.saveStringValue(PrefKey.userName, editText.getText().toString().trim());
                             dialog.cancel();
-                            next();
-                        }else{
+
+                        } else {
 
                         }
 

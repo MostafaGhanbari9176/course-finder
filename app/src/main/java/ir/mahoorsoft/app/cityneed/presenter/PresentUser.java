@@ -16,15 +16,9 @@ public class PresentUser implements User.OnUserLitener {
     public PresentUser(OnPresentUserLitener onPresentUserLitener) {
         this.onPresentUserLitener = onPresentUserLitener;
     }
-
-    public void logIn(long phone) {
+    public void updateUser(String phone, String name) {
         User user = new User(this);
-        user.logIn(phone);
-    }
-
-    public void updateUser(String phone, String name, String family, int status, int type, int cityIde, int apiCode) {
-        User user = new User(this);
-        user.updateUser(phone, name, family, status, type, cityIde, apiCode);
+        user.updateUser(phone, name);
     }
 
     public void getUser(String phone) {

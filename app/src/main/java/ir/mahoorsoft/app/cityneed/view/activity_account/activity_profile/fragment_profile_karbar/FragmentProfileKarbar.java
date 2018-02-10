@@ -1,14 +1,18 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +25,7 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
+import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
 import ir.mahoorsoft.app.cityneed.view.dialog.ActivityDialogAnswer;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -33,19 +38,14 @@ import static android.app.Activity.RESULT_OK;
  * Created by MAHNAZ on 10/23/2017.
  */
 
-public class FragmentProfileKarbar extends Fragment implements View.OnClickListener, DialogPrvince.OnDialogPrvinceListener, PresentUser.OnPresentUserLitener {
+public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPresentUserLitener {
 
-    LinearLayout btnEdit;
-    LinearLayout btnAdd;
-   // LinearLayout btnSave;
     TextView txtName;
-   // TextView txtFamilyName;
     TextView txtPhone;
-    //TextView txtLocation;
     View view;
-    DialogPrvince dialogPrvince;
     DialogProgres dialogProgres;
-    int cityId;
+    Typeface typeface;
+    String name;
 
     @Nullable
     @Override
@@ -56,141 +56,99 @@ public class FragmentProfileKarbar extends Fragment implements View.OnClickListe
     }
 
     private void init() {
-
-        dialogPrvince = new DialogPrvince(G.context, this);
+        dialogProgres = new DialogProgres(G.context, "درحال بروزرسانی");
         pointers();
+        setFont();
         txtPhone.setText(Pref.getStringValue(PrefKey.phone, ""));
         txtName.setText(Pref.getStringValue(PrefKey.userName, ""));
-//        txtFamilyName.setText(Pref.getStringValue(PrefKey.userFamily, ""));
-      //  txtLocation.setText(Pref.getStringValue(PrefKey.location, ""));
-      //  btnSave.setVisibility(View.GONE);
 
+    }
+
+    private void setFont() {
+        typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
+        txtName.setTypeface(typeface);
+        txtPhone.setTypeface(typeface);
     }
 
     private void pointers() {
 
         dialogProgres = new DialogProgres(G.context);
-        //btnEdit = (LinearLayout) view.findViewById(R.id.btnEditProfile_Karbar);
-       // btnAdd = (LinearLayout) view.findViewById(R.id.btnAddCurse_Karbar);
-       // btnSave = (LinearLayout) view.findViewById(R.id.btnSave_Karbar);
-
         txtName = (TextView) view.findViewById(R.id.txtNAme_karbar);
-       // txtFamilyName = (TextView) view.findViewById(R.id.txtFamilyName_Karbar);
-        (txtPhone = (TextView) view.findViewById(R.id.txtPhone_Karbar)).setOnTouchListener(new View.OnTouchListener() {
+        txtPhone = (TextView) view.findViewById(R.id.txtPhone_Karbar);
+        txtName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                updatePhone();
-                return false;
+            public void onClick(View v) {
+                showDialog();
             }
         });
 
 
-//        btnAdd.setOnClickListener(this);
-       // btnEdit.setOnClickListener(this);
-       // btnSave.setOnClickListener(this);
-
     }
 
-    @Override
-    public void onClick(View view) {
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
+        final EditText editText = new EditText(G.context);
+        editText.setTypeface(typeface);
+        builder.setView(editText);
+        builder.setTitle("تغییر نام کاربری");
+        builder.setMessage("از این نام برای ثبت نام شما در دوره های انتخابی استفاده می شود.");
+        builder.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(editText.getText() != null) {
+                    name = CharCheck.faCheck(editText.getText().toString().trim());
+                    if (name.length() == 0)
+                        showDialog();
+                    else {
+                        updateName(name);
+                        dialog.cancel();
+                    }
+                }else
+                    showDialog();
+            }
+        });
 
-        switch (view.getId()) {
+        builder.setNegativeButton("رد کردن", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
 
-
-        }
-    }
-
-    private void editProfile() {
-
-    //    btnSave.setVisibility(View.VISIBLE);
-        Toast.makeText(G.context, "لطفا اطلاعات جدید را وارد کنید.", Toast.LENGTH_SHORT).show();
-        txtName.setEnabled(true);
-    //    txtFamilyName.setEnabled(true);
-        txtPhone.setEnabled(true);
-      //  txtLocation.setEnabled(true);
-    }
-
-    private void addCourse() {
-        Intent intent = new Intent(G.context, ActivityDialogAnswer.class);
-        intent.putExtra("txt", "برای ثبت دوره باید کاربری خود را به مدرس ارتقاء دهید");
-        startActivityForResult(intent, 1);
-
-
-    }
-
-
-
-    private void starterActivity(Class aClass) {
-
-        Intent intent = new Intent(G.context, aClass);
-        startActivity(intent);
-        getActivity().finish();
-
-    }
-
-    @Override
-    public void locationInformation(String location, int cityId) {
-       // txtLocation.setText(location);
-        this.cityId = cityId;
-    }
-
-    private void updateUser(String phone, String name, String family) {
-        dialogProgres.showProgresBar();
-        PresentUser presentUser = new PresentUser(this);
-        presentUser.updateUser(phone, name, family, 1, 0, cityId, -1);
     }
 
     @Override
     public void sendMessageFUT(String message) {
+        dialogProgres.closeProgresBar();
         dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void confirmUser(boolean flag) {
+        dialogProgres.closeProgresBar();
+        if (flag) {
 
+            Pref.saveStringValue(PrefKey.userName, name);
+            txtName.setText(name);
+        } else {
+            Toast.makeText(G.context, "خطا,عملیات شکست خورد.", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    /*
-        @Override
-       public void confirmUser(boolean flag) {
-            dialogProgres.closeProgresBar();
-            if (!flag) {
-                sendMessageFUT("خطا");
-                G.activity.finish();
-            } else {
-                btnSave.setVisibility(View.GONE);
-                txtName.setEnabled(false);
-                txtFamilyName.setEnabled(false);
-                txtPhone.setEnabled(false);
-                txtLocation.setEnabled(false);
 
-                Pref.saveStringValue(PrefKey.location, txtLocation.getText().toString());
-                Pref.saveIntegerValue(PrefKey.cityId, cityId);
-                Pref.saveStringValue(PrefKey.userName, txtName.getText().toString().trim());
-                Pref.saveStringValue(PrefKey.userFamily, txtFamilyName.getText().toString().trim());
-                Toast.makeText(G.context, "اطلاعات جدید ذخیره شد.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    */
     @Override
     public void onReceiveUser(ArrayList<StUser> users) {
 
     }
 
-    private void updatePhone() {
-        txtPhone.setEnabled(false);
+    private void updateName(String name) {
+        dialogProgres.showProgresBar();
+        PresentUser presentUser = new PresentUser(this);
+        presentUser.updateUser(Pref.getStringValue(PrefKey.phone, ""), name);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            if (data.getBooleanExtra("answer", false))
-                starterActivity(ActivityTeacherRegistering.class);
-        }
-
-    }
 }
 
 

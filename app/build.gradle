@@ -46,4 +46,5 @@ dependencies {
     compile 'com.mohamadamin:persianmaterialdatetimepicker:1.2.1'
     compile 'cn.lightsky.infiniteindicator:library:1.2.2'
     compile 'com.google.android.gms:play-services-maps:10.2.6'
+
 }

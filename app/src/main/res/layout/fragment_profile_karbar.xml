@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light"
+    android:background="@color/light_eq"
     android:orientation="vertical">
 
     <ScrollView
@@ -29,19 +29,20 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
                         android:layout_weight="1"
                         android:gravity="right|center"
                         android:orientation="vertical">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/txtNAme_karbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:enabled="false"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="16dp"
                             android:gravity="center"
-                            android:inputType="textPersonName"
-                            android:textColor="@color/text_item"
+                            android:hint="لطفا برای تعیین نام کاربری کلیک کنید"
+                            android:textColor="@color/light"
+                            android:textColorHint="@color/blue_eq"
                             android:textSize="@dimen/txt_size_smal" />
 
                     </LinearLayout>
@@ -57,7 +58,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
                         android:layout_weight="1"
                         android:gravity="right|center"
                         android:orientation="vertical">
@@ -66,10 +66,12 @@
                             android:id="@+id/txtPhone_Karbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
                             android:enabled="false"
                             android:gravity="center"
                             android:inputType="textPersonName"
-                            android:textColor="@color/text_item"
+                            android:textColor="@color/light"
+                            android:textColorHighlight="@color/blue"
                             android:textSize="@dimen/txt_size_smal" />
 
                     </LinearLayout>
