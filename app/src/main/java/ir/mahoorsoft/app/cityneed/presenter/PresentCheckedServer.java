@@ -3,7 +3,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.CheckedServer;
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 
 /**
  * Created by RCC1 on 2/1/2018.
@@ -24,7 +24,7 @@ public class PresentCheckedServer implements CheckedServer.OnCheckServer {
         checkedServer.checkServer();
     }
     @Override
-    public void serverChecked(ArrayList<Response> res) {
+    public void serverChecked(ArrayList<ResponseOfServer> res) {
         onPresentCheckServrer.serverChecked(res.get(0).code == 0 ? false : true);
     }
 

@@ -33,6 +33,7 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 ;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedServer;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
@@ -177,13 +178,10 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onReceiveUser(ArrayList<StUser> users) {
 
-    }
 
     @Override
-    public void confirmUser(boolean flag) {
+    public void LogOut(boolean flag) {
         dialogProgres.closeProgresBar();
         Pref.removeValue(PrefKey.phone);
         Pref.removeValue(PrefKey.userName);
@@ -198,6 +196,16 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         Pref.removeValue(PrefKey.lon);
         Pref.removeValue(PrefKey.IsLogin);
         this.finish();
+    }
+
+    @Override
+    public void LogIn(ResponseOfServer res) {
+
+    }
+
+    @Override
+    public void LogUp(ResponseOfServer res) {
+
     }
 
     @Override

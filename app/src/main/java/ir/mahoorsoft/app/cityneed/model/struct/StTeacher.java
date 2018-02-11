@@ -9,7 +9,7 @@ public class StTeacher {
     public String phone;
     public int type;//0-->college && 1-->privateEducation
     public String address;
-    public int madrak;//0 --> no && 1 --> upload 2 --> uploadAndAccept
+    public int m;//0 --> no && 1 --> upload 2 --> uploadAndAccept
     public String subject;
     public int vaziat;//0-->no && 1-->yes
     public String definitionDate;
@@ -18,6 +18,8 @@ public class StTeacher {
     public String tozihat;
     public int cityId;
     public String location;
+    public String lt;
+    public String lg;
 
     public StTeacher() {
     }

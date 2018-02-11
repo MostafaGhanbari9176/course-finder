@@ -2,7 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 
 import ir.mahoorsoft.app.cityneed.model.tables.course.Course;
@@ -49,7 +49,7 @@ public class PresentCourse implements Course.OnCourseLitener {
     }
 
     @Override
-    public void onReceiveFlag(ArrayList<Response> res) {
+    public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
         if(res.get(0).code == 0)
             sendMessage("error");
       else

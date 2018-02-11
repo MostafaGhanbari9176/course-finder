@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
-import ir.mahoorsoft.app.cityneed.model.struct.StUser;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -16,7 +15,7 @@ import retrofit2.Callback;
 public class Sabtenam {
 
     public interface OnSabtenamListener {
-        void onReceiveFlag(ArrayList<Response> res);
+        void onReceiveFlag(ArrayList<ResponseOfServer> res);
 
         void sendMessage(String message);
     }
@@ -29,15 +28,15 @@ public class Sabtenam {
 
     public void add(int idCourse, String idTeacher, String idUser) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> add = api.sabtenam(idCourse, idTeacher, idUser);
-        add.enqueue(new Callback<ArrayList<Response>>() {
+        Call<ArrayList<ResponseOfServer>> add = api.sabtenam(idCourse, idTeacher, idUser);
+        add.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
                 onSabtenamListener.onReceiveFlag(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
                 onSabtenamListener.sendMessage(t.getMessage());
             }
         });

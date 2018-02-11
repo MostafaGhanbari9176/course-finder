@@ -3,7 +3,7 @@ package ir.mahoorsoft.app.cityneed.model.tables.user;
 import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -21,38 +21,22 @@ public class SmsCode {
 
     public void createAndSaveSmsCode(String phone) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> smsCode = api.createSmsCode(phone);
-        smsCode.enqueue(new Callback<ArrayList<Response>>() {
+        Call<ArrayList<ResponseOfServer>> smsCode = api.createSmsCode(phone);
+        smsCode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
-                onSmsCodeListener.onRecirveFlag(response.body());
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
+                onSmsCodeListener.responseOfServer(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
-                onSmsCodeListener.sendMessage(t.toString());
-            }
-        });
-    }
-
-    public void checkedSmsCode(String phone, int code) {
-        Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> checkedSmsCode = api.checkedSmsCode(phone, code);
-        checkedSmsCode.enqueue(new Callback<ArrayList<Response>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
-                onSmsCodeListener.onRecirveFlag(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
                 onSmsCodeListener.sendMessage(t.toString());
             }
         });
     }
 
     public interface OnSmsCodeListener {
-        void onRecirveFlag(ArrayList<Response> response);
+        void responseOfServer(ArrayList<ResponseOfServer> responseOfServer);
 
         void sendMessage(String message);
     }

@@ -12,21 +12,19 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.TimerTask;
-import java.util.zip.Adler32;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
-import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
@@ -38,20 +36,21 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by MAHNAZ on 10/22/2017.
  */
 
-public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSmsCode.OnPresentSmsCodeListener, PresentUser.OnPresentUserLitener, PresentTeacher.OnPresentTeacherListener {
-    boolean isUserChangeForTxtCode = true;
-    boolean isUserChangeForTxtPhone = true;
+public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnClickListener, PresentSmsCode.OnPresentSmsCodeListener, PresentUser.OnPresentUserLitener, PresentTeacher.OnPresentTeacherListener {
+    boolean isUserChanged = true;
     int timer = 120;
     Toolbar tlb;
+    LinearLayout llName;
     Button btnConfirmPhone;
     Button btnConfirmCode;
     TextView txtPhone;
+    TextView txtName;
     TextView txtTimer;
+    TextView txtSubject;
     TextView txtCode;
     DialogProgres dialogProgres;
-    boolean isResponseForCode = false;
-    boolean isBtnConfirmPhone = true;
     Handler handler = new Handler();
+    boolean isLogIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +58,20 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         G.activity = this;
         G.context = this;
         setContentView(R.layout.activity_phone_confirm);
-
         dialogProgres = new DialogProgres(this);
         pointers();
         setFont();
+        startDialog();
 
-        // setSupportActionBar(tlb);
     }
 
     private void setFont() {
         Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
+        txtName.setTypeface(typeface);
         txtTimer.setTypeface(typeface);
         txtCode.setTypeface(typeface);
         txtPhone.setTypeface(typeface);
+        txtSubject.setTypeface(typeface);
 
     }
 
@@ -79,49 +79,53 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         // btnBack = (Button) findViewById(R.id.btnBackPhoneConfirm);
         tlb = (Toolbar) findViewById(R.id.tlbPhoneConfirm);
         txtCode = (TextView) findViewById(R.id.txtSmsCodeConfirmPhone);
+        txtCode.setEnabled(false);
+        txtSubject = (TextView) findViewById(R.id.txtSubjectPhoneConfirm);
+        txtName = (TextView) findViewById(R.id.txtNamePhoneConfirm);
         txtTimer = (TextView) findViewById(R.id.txtTimerConfirmPhone);
+        txtTimer.setVisibility(View.GONE);
         txtPhone = (TextView) findViewById(R.id.txtPhoneConfirmPhone);
         btnConfirmPhone = (Button) findViewById(R.id.btnConfirmPhoneConfirmPhone);
         btnConfirmCode = (Button) findViewById(R.id.btnConfirmCodeConfirmPhone);
+        llName = (LinearLayout) findViewById(R.id.llNamePhoneConfirm);
         txtPhone.setText("");
         txtCode.setText("");
-        btnConfirmPhone.setOnClickListener(new View.OnClickListener() {
+        txtName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                if (isBtnConfirmPhone) {
-                    checkPhone(txtPhone.getText().toString());
-                    timer = 120;
-                } else {
-                    timer = 0;
-                    btnConfirmCode.setEnabled(false);
-                    txtCode.setText("");
-                    txtPhone.setEnabled(true);
-                    btnConfirmPhone.setText("تایید شماره همراه");
-                    isBtnConfirmPhone = true;
-                }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
-        });
-        btnConfirmCode.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                checkCode(txtPhone.getText().toString(), txtCode.getText().toString());
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUserChanged) {
+                    isUserChanged = false;
+                    // txtSharayet.setTextKeepState();
+                    txtName.setTextKeepState(CharCheck.faCheck(txtName.getText().toString()));
+
+                } else
+                    isUserChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
+        btnConfirmPhone.setOnClickListener(this);
+        btnConfirmCode.setOnClickListener(this);
+        txtTimer.setOnClickListener(this);
 
-        txtTimer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessageFScT("ok");
-            }
-        });
     }
 
     private void checkPhone(String phone) {
-        phone.trim();
+        if (!isLogIn && txtName.getText().length() == 0) {
+            showAlertDialog("خطا", "لطفا نام خود را صحیح وارد کنید", "", "قبول");
+            return;
+        }
         try {
-            Long.parseLong(phone);
-            if (phone.length() != 11) {
+            Long.parseLong(phone.trim());
+            if (phone.trim().length() != 11) {
                 showAlertDialog("خطا", "لطفا شماره همراه را صحیح وارد کنید", "", "قبول");
             } else {
                 sendPhoneForserver(phone);
@@ -133,14 +137,18 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
 
     }
 
-    private void checkCode(String phone, String code) {
-        phone.trim();
-        code.trim();
+    private void checkCode() {
+        if (!isLogIn && txtName.getText().length() == 0) {
+            showAlertDialog("خطا", "لطفا نام خود را صحیح وارد کنید", "", "قبول");
+            return;
+        }
         try {
-            Integer.parseInt(code);
-            PresentSmsCode presentSms = new PresentSmsCode(this);
-            presentSms.checkedSmsCode(phone, Integer.parseInt(code));
-            isResponseForCode = true;
+            Integer.parseInt(txtCode.getText().toString().trim());
+            PresentUser presentUser = new PresentUser(this);
+            if (!isLogIn)
+                presentUser.logUp(txtPhone.getText().toString().trim(), txtName.getText().toString().trim(), Integer.parseInt(txtCode.getText().toString().trim()));
+            else
+                presentUser.logIn(txtPhone.getText().toString().trim(), Integer.parseInt(txtCode.getText().toString().trim()));
         } catch (Exception e) {
             showAlertDialog("خطا", "لطفا کد را صحیح وارد کنید", "", "قبول");
         }
@@ -149,7 +157,6 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
 
     private void sendPhoneForserver(String phone) {
         dialogProgres.showProgresBar();
-        isResponseForCode = false;
         PresentSmsCode p = new PresentSmsCode(this);
         p.createAndSaveSmsCode(phone);
     }
@@ -158,35 +165,28 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
     @Override
     public void confirmSmsCode(boolean flag) {
         dialogProgres.closeProgresBar();
-        if (!flag && !isResponseForCode)
-            showAlertDialog("خطا", "لطفا چند لحظه بعد امتحان کنید", "", "قبول");
+        if (!flag)
+            showAlertDialog("با ارز پوزش", "تعداد دفعات ارسال پیام به شما از حد مجاز گذشته لطفا تا فردا منتظر بمانید", "", "قبول");
 
         if (flag) {
             btnConfirmPhone.setText("تغیر شماره همراه");
             txtPhone.setEnabled(false);
+            txtCode.setEnabled(true);
             btnConfirmCode.setEnabled(true);
-            isBtnConfirmPhone = false;
             timer();
         }
-        if (flag && isResponseForCode) {
-            Pref.saveBollValue(PrefKey.IsLogin, flag);//***************************************************************
-            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
-            next();
-            //  showDialogForName();
-        } else if (!flag && isResponseForCode)
-            showAlertDialog("خطا", "کده وارد شده صحیح نیست!!!", "", "قبول");
 
     }
 
     private void timer() {
-
+        txtTimer.setVisibility(View.VISIBLE);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 while (timer >= 1) {
                     timer--;
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -202,13 +202,9 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                txtTimer.setText(String.valueOf(i));
+                txtTimer.setText("ارسال مجدد پیامک( " + String.valueOf(i) + " )");
                 if (i <= 1) {
-                    // btnConfirmCode.setEnabled(false);
-                    // btnConfirmPhone.setEnabled(true);
-                    //  sendMessageFScT("لطفا از صحت شماره همراه مطمعن شوید");
-                    txtTimer.setText("00");
-                    // isResponseForCode = false;
+                    txtTimer.setText("ارسال مجدد پیامک");
                 }
             }
         });
@@ -220,21 +216,6 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void confirmSmsCodeAndExistUser(int code) {
-        if (code == 2) {
-            dialogProgres.showProgresBar();
-            //************************************************************************
-            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
-            PresentUser presentUser = new PresentUser(this);
-            presentUser.getUser(Pref.getStringValue(PrefKey.phone, ""));
-        } else if (code == 3) {
-            dialogProgres.showProgresBar();
-            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
-            PresentTeacher presentTeacher = new PresentTeacher(this);
-            presentTeacher.getTeacher();
-        }
-    }
 
     @Override
     public void sendMessageFUT(String message) {
@@ -243,22 +224,47 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
     }
 
     @Override
-    public void confirmUser(boolean flag) {
+    public void LogOut(boolean flag) {
 
     }
 
     @Override
-    public void onReceiveUser(ArrayList<StUser> users) {
-
+    public void LogIn(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
-        Pref.saveBollValue(PrefKey.IsLogin, true);
-        Pref.saveStringValue(PrefKey.userName, users.get(0).name);
-        Pref.saveStringValue(PrefKey.userFamily, users.get(0).family);
-        Pref.saveStringValue(PrefKey.location, users.get(0).location);
-        Pref.saveIntegerValue(PrefKey.cityId, users.get(0).cityId);
-        Pref.saveIntegerValue(PrefKey.userTypeMode, users.get(0).type);
-        next();
+        if (res.code == 1) {
+            Pref.saveStringValue(PrefKey.userName, res.name);
+            Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
+            Pref.saveBollValue(PrefKey.IsLogin, true);
+            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
+            Pref.getIntegerValue(PrefKey.userTypeMode, 0);
+            next();
+        } else if (res.code == 3) {
+            showAlertDialog("خطا", "شما قبلا ثبت نام نداشته اید.", "ثبت نام", "");
+        } else if (res.code == 2) {
+            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.userName, res.name);
+            Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
+            PresentTeacher presentTeacher = new PresentTeacher(this);
+            presentTeacher.getTeacher();
+        }
     }
+
+    @Override
+    public void LogUp(ResponseOfServer res) {
+        dialogProgres.closeProgresBar();
+        if (res.code == 1) {
+            Pref.saveStringValue(PrefKey.userName, txtName.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
+            Pref.saveBollValue(PrefKey.IsLogin, true);
+            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
+            Pref.getIntegerValue(PrefKey.userTypeMode, 0);
+            next();
+        } else if (res.code == 2) {
+            showAlertDialog("خطا", "شما قبلا ثبت نام داشته اید.", "ورود", "");
+        }
+
+    }
+
 
     @Override
     public void sendMessageFTT(String message) {
@@ -275,17 +281,16 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
 
         dialogProgres.closeProgresBar();
         Pref.saveBollValue(PrefKey.IsLogin, true);
-        Pref.saveIntegerValue(PrefKey.cityId, teacher.get(0).cityId);
-        Pref.saveStringValue(PrefKey.location, teacher.get(0).location);
         Pref.saveStringValue(PrefKey.landPhone, teacher.get(0).landPhone);
         Pref.saveStringValue(PrefKey.subject, teacher.get(0).subject);
-        Pref.saveStringValue(PrefKey.address, teacher.get(0).address);
-        Pref.saveIntegerValue(PrefKey.madrak, teacher.get(0).madrak);
+        Pref.saveStringValue(PrefKey.lon, teacher.get(0).lg);
+        Pref.saveStringValue(PrefKey.lat, teacher.get(0).lt);
+        Pref.saveIntegerValue(PrefKey.madrak, teacher.get(0).m);
         Pref.saveIntegerValue(PrefKey.userTypeMode, teacher.get(0).type == 0 ? 1 : 2);
         next();
     }
 
-    private void showAlertDialog(String title, String message, String buttonTrue, String btnFalse) {
+    private void showAlertDialog(String title, String message, final String buttonTrue, final String btnFalse) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle(title);
         alertDialog.setMessage(message);
@@ -293,10 +298,25 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         alertDialog.setPositiveButton(buttonTrue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                isResponseForCode = false;
-                isBtnConfirmPhone = true;
-
-                checkPhone(txtPhone.getText().toString());
+                if (buttonTrue.equals("ثبت نام")) {
+                    btnConfirmPhone.setText("تایید شماره همراه");
+                    txtCode.setText("");
+                    btnConfirmCode.setEnabled(false);
+                    txtCode.setEnabled(false);
+                    llName.setVisibility(View.VISIBLE);
+                    isLogIn = false;
+                    txtSubject.setText("ثبت نام");
+                    dialog.cancel();
+                } else if (buttonTrue.equals("ورود")) {
+                    btnConfirmPhone.setText("تایید شماره همراه");
+                    txtCode.setEnabled(false);
+                    txtCode.setText("");
+                    btnConfirmCode.setEnabled(false);
+                    llName.setVisibility(View.GONE);
+                    txtSubject.setText("ورود");
+                    isLogIn = true;
+                    dialog.cancel();
+                }
                 dialog.cancel();
 
             }
@@ -304,33 +324,39 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         alertDialog.setNegativeButton(btnFalse, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 dialog.cancel();
             }
         });
         alertDialog.show();
     }
 
-    private void showDialogForName() {
+    private void startDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("مرحله آخر");
-        builder.setMessage("لطفا نام و نام خانوادگی خود را وارد کنید از آن برای ثبت نام شما در دوره انتخابی استفاده می شود.");
-        final EditText editText = new EditText(this);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        editText.setLayoutParams(layoutParams);
-        builder.setView(editText);
-        builder.setPositiveButton("قبول",
+        builder.setTitle("ورود یا ثبت نام");
+        builder.setMessage("آیا قبلا ثبت نام داشته اید؟");
+        //   final EditText editText = new EditText(this);
+        // LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        //  editText.setLayoutParams(layoutParams);
+        //  builder.setView(editText);
+        builder.setPositiveButton("بله",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        if (editText.getText().toString() != null && editText.getText().toString().trim().length() != 0) {
-                            Pref.saveStringValue(PrefKey.userName, editText.getText().toString().trim());
-                            dialog.cancel();
-
-                        } else {
-
-                        }
-
+                        llName.setVisibility(View.GONE);
+                        txtSubject.setText("ورود");
+                        isLogIn = true;
+                        dialog.cancel();
                     }
                 });
+        builder.setNegativeButton("خیر",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        isLogIn = false;
+                        txtSubject.setText("ثبت نام");
+                        dialog.cancel();
+                    }
+                });
+        builder.setCancelable(false);
         builder.setCancelable(false);
         builder.show();
     }
@@ -339,5 +365,28 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements PresentSm
         Intent intent = new Intent(this, ActivityProfile.class);
         startActivity(intent);
         this.finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.btnConfirmCodeConfirmPhone:
+                checkCode();
+                break;
+            case R.id.btnConfirmPhoneConfirmPhone:
+                if (btnConfirmPhone.getText().equals("تغیر شماره همراه")) {
+                    btnConfirmPhone.setText("تایید شماره همراه");
+                    txtPhone.setEnabled(true);
+                    txtCode.setEnabled(false);
+                    btnConfirmCode.setEnabled(false);
+                } else
+                    checkPhone(txtPhone.getText().toString());
+                break;
+            case R.id.txtTimerConfirmPhone:
+                if (txtTimer.getText().equals("ارسال مجدد کد"))
+                    sendPhoneForserver(txtPhone.getText().toString().trim());
+                break;
+        }
     }
 }

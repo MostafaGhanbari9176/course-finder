@@ -2,8 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
-import ir.mahoorsoft.app.cityneed.model.struct.StUser;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 
 /**
@@ -32,7 +31,7 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
     }
 
     @Override
-    public void onReceiveFlag(ArrayList<Response> res) {
+    public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
         if(res.get(0).code == 2){
             sendMessage("قبلا ثبت نام شده");
             return;

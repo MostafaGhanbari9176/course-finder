@@ -3,7 +3,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.tables.user.SmsCode;
 
 /**
@@ -23,31 +23,19 @@ public class PresentSmsCode implements SmsCode.OnSmsCodeListener {
         smsCode.createAndSaveSmsCode(phone);
     }
 
-    public void checkedSmsCode(String phone, int code) {
-        SmsCode smsCode = new SmsCode(this);
-        smsCode.checkedSmsCode(phone, code);
-    }
-
     public interface OnPresentSmsCodeListener {
 
         void confirmSmsCode(boolean flag);
 
         void sendMessageFScT(String message);
-
-        void confirmSmsCodeAndExistUser(int code);
-
     }
 
     @Override
-    public void onRecirveFlag(ArrayList<Response> response) {
-
-        if (response.get(0).code == 2) {
-            onPresentSmsCodeListener.confirmSmsCodeAndExistUser(2);
-        } else if (response.get(0).code == 3) {
-            onPresentSmsCodeListener.confirmSmsCodeAndExistUser(3);
-        } else {
-            onPresentSmsCodeListener.confirmSmsCode((response.get(0).code) == 0 ? false : true);
-        }
+    public void responseOfServer(ArrayList<ResponseOfServer> responseOfServer) {
+        if(responseOfServer.get(0).code == 0)
+            onPresentSmsCodeListener.confirmSmsCode(false);
+        else
+            onPresentSmsCodeListener.confirmSmsCode(true);
     }
 
     @Override

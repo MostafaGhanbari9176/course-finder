@@ -7,7 +7,7 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,15 +25,15 @@ public class Teacher {
     public void addTeacher(String landPhone, String subject, String tozihat, int type, String lat, String lon){
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> updateUser = api.addTeacher(Phone, landPhone, subject, tozihat, type, lat, lon);
-        updateUser.enqueue(new Callback<ArrayList<Response>>() {
+        Call<ArrayList<ResponseOfServer>> updateUser = api.addTeacher(Phone, landPhone, subject, tozihat, type, lat, lon);
+        updateUser.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
                 onTeacherListener.onReceiveFlag(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
                 onTeacherListener.sendMessage(Message.convertRetrofitMessage(t.toString()));
             }
         });
@@ -41,7 +41,7 @@ public class Teacher {
 
     public void getTeacher(){
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StTeacher>> getTeacher = api.getTeacher(Phone);
+        Call<ArrayList<StTeacher>> getTeacher = api.getTeacher(Pref.getStringValue(PrefKey.apiCode,""));
         getTeacher.enqueue(new Callback<ArrayList<StTeacher>>() {
             @Override
             public void onResponse(Call<ArrayList<StTeacher>> call, retrofit2.Response<ArrayList<StTeacher>> response) {
@@ -57,15 +57,15 @@ public class Teacher {
 
     public void updateTeacher(String landPhone, String subject, String address, int cityId, int madrak){
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> updateTracher = api.updateTeacher(Phone, landPhone, address, subject, cityId, madrak);
-        updateTracher.enqueue(new Callback<ArrayList<Response>>() {
+        Call<ArrayList<ResponseOfServer>> updateTracher = api.updateTeacher(Phone, landPhone, address, subject, cityId, madrak);
+        updateTracher.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
                 onTeacherListener.onReceiveFlag(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
                 onTeacherListener.sendMessage(t.getMessage());
             }
         });
@@ -73,7 +73,7 @@ public class Teacher {
 
     public  interface OnTeacherListener {
 
-        void onReceiveFlag(ArrayList<Response> res);
+        void onReceiveFlag(ArrayList<ResponseOfServer> res);
         void onReceiveData(ArrayList<StTeacher> data);
         void sendMessage(String message);
     }

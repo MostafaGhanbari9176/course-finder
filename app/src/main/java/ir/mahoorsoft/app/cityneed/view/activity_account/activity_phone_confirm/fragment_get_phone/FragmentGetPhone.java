@@ -109,10 +109,7 @@ public class FragmentGetPhone extends Fragment implements View.OnClickListener, 
         showMassage(message);
     }
 
-    @Override
-    public void confirmSmsCodeAndExistUser(int code) {
 
-    }
 
 
 }

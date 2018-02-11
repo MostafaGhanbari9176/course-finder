@@ -2,7 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.tables.teacher.Teacher;
 
@@ -33,7 +33,7 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         teacher.updateTeacher(landPhone, subject, address, cityId, madrak);
     }
     @Override
-    public void onReceiveFlag(ArrayList<Response> res) {
+    public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
         onPresentTeacherListener.confirmTeacher( res.get(0).code == 0 ? false : true);
     }
 

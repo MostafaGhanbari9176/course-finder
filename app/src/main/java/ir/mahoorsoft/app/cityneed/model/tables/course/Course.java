@@ -1,7 +1,7 @@
 package ir.mahoorsoft.app.cityneed.model.tables.course;
 
 import java.util.ArrayList;
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -16,7 +16,7 @@ import retrofit2.Callback;
 
 public class Course {
     public interface OnCourseLitener {
-        void onReceiveFlag(ArrayList<Response> res);
+        void onReceiveFlag(ArrayList<ResponseOfServer> res);
 
         void onReceiveData(ArrayList<StCourse> data);
 
@@ -32,15 +32,15 @@ public class Course {
     public void addtCource(String teacherId, String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int oldRange) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<Response>> methode = api.addCourse(teacherId, subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, oldRange);
-        methode.enqueue(new Callback<ArrayList<Response>>() {
+        Call<ArrayList<ResponseOfServer>> methode = api.addCourse(teacherId, subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, oldRange);
+        methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
                 onCourseLitener.onReceiveFlag(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
                 onCourseLitener.sendMessage(Message.convertRetrofitMessage(t.toString()));
             }
         });

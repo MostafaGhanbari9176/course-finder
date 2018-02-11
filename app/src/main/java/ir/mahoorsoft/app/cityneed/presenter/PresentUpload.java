@@ -2,7 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.uploadFile.Upload;
 
 /**
@@ -28,7 +28,7 @@ public class PresentUpload implements Upload.OnUploadListener {
     }
 
     @Override
-    public void onReceiveFlag(ArrayList<Response> res) {
+    public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
        if(res.get(0).code == 0)
            sendMessage("خطا");
         else if (res.get(0).code == 2)

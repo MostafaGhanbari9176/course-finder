@@ -19,6 +19,7 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
@@ -147,16 +148,7 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void confirmSmsCodeAndExistUser(int code) {
-        if(code==2) {
-            PresentUser presentUser = new PresentUser(this);
-          //  presentUser.getUser(Long.parseLong(Pref.getStringValue(PrefKey.fakePhone, "")));
-        }
-        else{
 
-        }
-        }
 
     @Override
     public void sendMessageFUT(String message) {
@@ -164,17 +156,20 @@ public class FragmentConfirmCode extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void confirmUser(boolean flag) {
+    public void LogOut(boolean flag) {
 
     }
 
     @Override
-    public void onReceiveUser(ArrayList<StUser> users) {
-        confirmSmsCode(true);
-        Pref.saveIntegerValue(PrefKey.cityId,users.get(0).cityId);
-        Pref.saveStringValue(PrefKey.location,users.get(0).location);
-        Pref.saveStringValue(PrefKey.userName,users.get(0).name);
-        Pref.saveStringValue(PrefKey.userFamily,users.get(0).family);
+    public void LogIn(ResponseOfServer res) {
 
     }
+
+    @Override
+    public void LogUp(ResponseOfServer res) {
+
+    }
+
+
+
 }

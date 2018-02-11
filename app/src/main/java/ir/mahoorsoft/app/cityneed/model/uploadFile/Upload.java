@@ -1,14 +1,11 @@
 package ir.mahoorsoft.app.cityneed.model.uploadFile;
 
-import android.util.Log;
-
 import java.io.File;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
-import ir.mahoorsoft.app.cityneed.model.struct.UploadRes;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -22,7 +19,7 @@ import retrofit2.Callback;
 public class Upload {
 
     public interface OnUploadListener{
-        void onReceiveFlag(ArrayList<Response> res);
+        void onReceiveFlag(ArrayList<ResponseOfServer> res);
         void sendMessage(String message);
     }
     OnUploadListener onUploadListener;
@@ -56,15 +53,15 @@ public class Upload {
                         okhttp3.MultipartBody.FORM, descriptionString);
 
         // finally, execute the request
-        Call<ArrayList<Response>> call = service.upload(description, body);
-        call.enqueue(new Callback<ArrayList<Response>>() {
+        Call<ArrayList<ResponseOfServer>> call = service.upload(description, body);
+        call.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
                 onUploadListener.onReceiveFlag(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
                 onUploadListener.sendMessage(t.getMessage());
             }
         });

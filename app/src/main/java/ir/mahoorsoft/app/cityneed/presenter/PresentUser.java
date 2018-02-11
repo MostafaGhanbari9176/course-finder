@@ -2,7 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
-import ir.mahoorsoft.app.cityneed.model.struct.Response;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.model.tables.user.User;
 
@@ -32,15 +32,39 @@ public class PresentUser implements User.OnUserLitener {
 
     }
 
+    public void logUp(String phone, String name, int code) {
+        User user = new User(this);
+        user.logUp(phone, name, code);
+
+    }
+
+    public void logIn(String phone, int code) {
+        User user = new User(this);
+        user.logIn(phone, code);
+
+    }
+
+
     @Override
-    public void onReceiveFlag(ArrayList<Response> res) {
-        onPresentUserLitener.confirmUser((res.get(0).code) == 0 ? false : true);
+    public void responseForLogIn(ArrayList<ResponseOfServer> res) {//0-->badCod  1-->okAndIsUser  2-->okAndIsTeacher  3--> badLogUp
+        if(res.get(0).code == 0)
+            sendMessage("کد وارد شده اشتباه است");
+        onPresentUserLitener.LogIn(res.get(0));
     }
 
     @Override
-    public void onReceiveData(ArrayList<StUser> data) {
+    public void responseForLogUp(ArrayList<ResponseOfServer> res) {//0-->badCod  1-->ok  2--> badLogin
+        if(res.get(0).code == 0)
+            sendMessage("کد وارد شده اشتباه است");
+        else
+            onPresentUserLitener.LogUp(res.get(0));
+    }
 
-        onPresentUserLitener.onReceiveUser(data);
+    @Override
+    public void responseForLogOut(ArrayList<ResponseOfServer> res) {
+        if(res.get(0).code == 0)
+            sendMessage("خطا!!!");
+        onPresentUserLitener.LogOut(true);
     }
 
     @Override
@@ -50,9 +74,8 @@ public class PresentUser implements User.OnUserLitener {
 
     public interface OnPresentUserLitener {
         void sendMessageFUT(String message);
-
-        void confirmUser(boolean flag);
-
-        void onReceiveUser(ArrayList<StUser> users);
+        void LogOut(boolean flag);
+        void LogIn(ResponseOfServer res);
+        void LogUp(ResponseOfServer res);
     }
 }

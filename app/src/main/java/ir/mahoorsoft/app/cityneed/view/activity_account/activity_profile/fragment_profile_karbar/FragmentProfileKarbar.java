@@ -23,6 +23,7 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
@@ -126,22 +127,24 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     }
 
     @Override
-    public void confirmUser(boolean flag) {
-        dialogProgres.closeProgresBar();
-        if (flag) {
+    public void LogOut(boolean flag) {
 
-            Pref.saveStringValue(PrefKey.userName, name);
-            txtName.setText(name);
-        } else {
-            Toast.makeText(G.context, "خطا,عملیات شکست خورد.", Toast.LENGTH_SHORT).show();
-        }
     }
-
 
     @Override
-    public void onReceiveUser(ArrayList<StUser> users) {
+    public void LogIn(ResponseOfServer res) {
 
     }
+
+    @Override
+    public void LogUp(ResponseOfServer res) {
+
+    }
+
+
+
+
+
 
     private void updateName(String name) {
         dialogProgres.showProgresBar();
