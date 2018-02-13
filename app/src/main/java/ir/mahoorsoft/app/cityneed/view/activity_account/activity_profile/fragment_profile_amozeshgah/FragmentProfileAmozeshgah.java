@@ -29,6 +29,7 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
@@ -41,7 +42,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
  * Created by MAHNAZ on 10/23/2017.
  */
 
-public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince.OnDialogPrvinceListener, View.OnClickListener, PresentTeacher.OnPresentTeacherListener, OnMapReadyCallback {
+public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCallback {
 
     GoogleMap mMap;
     SupportMapFragment supportMapFragment;
@@ -50,8 +51,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince
     TextView txtname;
     TextView txtSubject;
     DialogProgres dialogProgres;
-    int cityId = Pref.getIntegerValue(PrefKey.cityId, -1);
-    int madrak = Pref.getIntegerValue(PrefKey.madrak, 0);
     View view;
 
     @Nullable
@@ -89,45 +88,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements DialogPrvince
         txtPhone = (TextView) view.findViewById(R.id.txtPhoneProfileTeacher);
         txtLandPhone = (TextView) view.findViewById(R.id.txtLandPhoneProfileTeacher);
         txtSubject = (TextView) view.findViewById(R.id.txtSubjectProfileTeacher);
-    }
-
-    @Override
-    public void onClick(View view) {
-
-
-    }
-
-
-
-    public void startActivitys(Class aClass, boolean flag) {
-
-        Intent intent = new Intent(G.context, aClass);
-        startActivity(intent);
-        if (flag) {
-            getActivity().finish();
-        }
-    }
-
-    @Override
-    public void locationInformation(String location, int cityId) {
-        this.cityId = cityId;
-
-    }
-
-    @Override
-    public void sendMessageFTT(String message) {
-        dialogProgres.closeProgresBar();
-        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void confirmTeacher(boolean flag) {
-
-    }
-
-    @Override
-    public void onReceiveTeacher(ArrayList<StTeacher> users) {
-
     }
 
     @Override

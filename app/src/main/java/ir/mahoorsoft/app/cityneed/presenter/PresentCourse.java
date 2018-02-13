@@ -27,9 +27,9 @@ public class PresentCourse implements Course.OnCourseLitener {
         this.onPresentCourseLitener = onPresentCourseLitener;
     }
 
-    public void addCourse(String teacherId, String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int oldRange) {
+    public void addCourse(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, String minOld,String maxOld) {
         Course course = new Course(this);
-        course.addtCource(teacherId, subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, oldRange);
+        course.addtCource(subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
     }
 
     public void getAllCourse(){

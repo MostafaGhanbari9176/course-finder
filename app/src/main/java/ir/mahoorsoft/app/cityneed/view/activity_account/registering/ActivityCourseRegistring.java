@@ -1,10 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.registering;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,12 +18,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerController;
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 
 
-import com.mohamadamin.persianmaterialdatetimepicker.date.DayPickerView;
-import com.mohamadamin.persianmaterialdatetimepicker.date.MonthAdapter;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 
 import java.util.ArrayList;
@@ -35,6 +29,7 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
@@ -68,11 +63,9 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     Button btnEndDate;
     Button btnTime;
     Button btnTabaghe;
-
-    String teacherId = Pref.getStringValue(PrefKey.phone, "");
     DialogProgres dialogProgres;
-    CheckBox publik;
-    CheckBox privat;
+    CheckBox cbxPublic;
+    CheckBox cbxPrivate;
     String path;
     int id;
     int tabagheId;
@@ -85,6 +78,8 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         G.context = this;
         dialogProgres = new DialogProgres(this);
         pointers();
+        setFont();
+        checkTxtInput();
     }
 
     private void pointers() {
@@ -95,30 +90,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         txtSubject = (TextView) findViewById(R.id.txtSubjectRegisteryCourse);
         txtTozihat = (TextView) findViewById(R.id.txtTozihatRegisteryCourse);
         txtSharayet = (TextView) findViewById(R.id.txtsharayetRegisteryCourse);
-        Typeface typeface = Typeface.createFromAsset(this.getResources().getAssets(), "fonts/Far_Nazanin.ttf");
 
-        txtSharayet.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                   // txtSharayet.setTextKeepState();
-                    txtSharayet.setTextKeepState(CharCheck.faCheck(txtSharayet.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         btnEndDate = (Button) findViewById(R.id.btnEndDateRegisteryCourse);
         btnStartDate = (Button) findViewById(R.id.btnStartDateRegisteryCourse);
         btnSave = (Button) findViewById(R.id.btnSaveRegisteryRegisteryCourse);
@@ -133,9 +105,8 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         rb6 = (RadioButton) findViewById(R.id.rb5);
         rb7 = (RadioButton) findViewById(R.id.rbFriday);
 
-        publik = (CheckBox) findViewById(R.id.cbxPublicCurceRegisteryCourse);
-        privat = (CheckBox) findViewById(R.id.cbxSingleCurceRegisteryCourse);
-
+        cbxPublic = (CheckBox) findViewById(R.id.cbxPublicCurceRegisteryCourse);
+        cbxPrivate = (CheckBox) findViewById(R.id.cbxSingleCurceRegisteryCourse);
 
         btnTime.setOnClickListener(this);
         btnSave.setOnClickListener(this);
@@ -145,11 +116,106 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     }
 
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(this.getResources().getAssets(), "fonts/Far_Nazanin.ttf");
+        txtMaxRange.setTypeface(typeface);
+        txtMinRange.setTypeface(typeface);
+        txtSharayet.setTypeface(typeface);
+        txtCapacity.setTypeface(typeface);
+        txtTozihat.setTypeface(typeface);
+        txtMony.setTypeface(typeface);
+        txtSubject.setTypeface(typeface);
+    }
+
+    private void checkTxtInput(){
+        txtSharayet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUserChanged) {
+                    isUserChanged = false;
+                    // txtSharayet.setTextKeepState();
+                    txtSharayet.setTextKeepState(CharCheck.faCheck(txtSharayet.getText().toString()));
+
+                } else
+                    isUserChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txtSubject.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUserChanged) {
+                    isUserChanged = false;
+                    // txtSharayet.setTextKeepState();
+                    txtSubject.setTextKeepState(CharCheck.faCheck(txtSubject.getText().toString()));
+
+                } else
+                    isUserChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txtTozihat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUserChanged) {
+                    isUserChanged = false;
+                    // txtSharayet.setTextKeepState();
+                    txtTozihat.setTextKeepState(CharCheck.faCheck(txtTozihat.getText().toString()));
+
+                } else
+                    isUserChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.cbxPublicCurceRegisteryCourse:
+                if (cbxPublic.isChecked())
+                    cbxPrivate.setChecked(false);
+                else
+                    cbxPrivate.setChecked(true);
+                break;
 
-
+            case R.id.cbxSingleCurceRegisteryCourse:
+                if (cbxPrivate.isChecked())
+                    cbxPublic.setChecked(false);
+                else
+                    cbxPublic.setChecked(true);
+                break;
             case R.id.btnEndDateRegisteryCourse:
                 showDatePicker(false);
                 break;
@@ -223,7 +289,8 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                     txtMinRange.getText() != null && txtMinRange.getText().toString().trim().length() != 0 &&
                     txtMony.getText() != null && txtMony.getText().toString().trim().length() != 0 &&
                     txtMaxRange.getText() != null && txtMaxRange.getText().toString().trim().length() != 0 &&
-                    txtCapacity.getText() != null && txtCapacity.getText().toString().trim().length() != 0) {
+                    txtCapacity.getText() != null && txtCapacity.getText().toString().trim().length() != 0&&
+                    getDay().length()!=0) {
                 showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید", "بله", "بررسی");
             } else {
                 throw new Exception();
@@ -248,9 +315,9 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     private void sendDataForServer() {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.addCourse(teacherId,
+        presentCourse.addCourse(
                 txtSubject.getText().toString().trim(),
-                tabagheId, publik.isChecked() ? 0 : 1,
+                tabagheId, cbxPublic.isChecked() ? 0 : 1,
                 Integer.parseInt(txtCapacity.getText().toString().trim()),
                 Integer.parseInt(txtMony.getText().toString().trim()),
                 txtSharayet.getText().toString().trim(),
@@ -327,6 +394,11 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         this.finish();
     }
 
+    @Override
+    public void flagFromUpload(ResponseOfServer res) {
+
+    }
+
     private void showDialog(String title, String message, String btntrue, String btnFalse) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
@@ -347,7 +419,23 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         builder.show();
     }
 
-    private void getDay() {
+    private String getDay() {
+        String day = "";
+        if(rb1.isChecked())
+            day = "شنبه";
+        else if(rb2.isChecked())
+            day = "یکشنبه";
+        else if(rb3.isChecked())
+            day = "دوشنبه";
+        else if(rb4.isChecked())
+            day = "سه شنبه";
+        else if(rb5.isChecked())
+            day = "چهار شنبه";
+        else if(rb6.isChecked())
+            day = "پنجشنبه";
+        else if(rb7.isChecked())
+            day = "جمعه";
+        return day;
     }
 }
 

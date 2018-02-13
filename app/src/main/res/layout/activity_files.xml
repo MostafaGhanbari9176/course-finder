@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_green"
+    android:background="@color/light_eq"
     android:orientation="vertical"
     tools:context=".view.activityFiles.ActivityFiles">
 
@@ -126,14 +126,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
-                        app:cardBackgroundColor="@color/dark_green">
+                        app:cardBackgroundColor="@color/dark_eq">
 
                         <Button
                             android:id="@+id/btn_folder_list_back"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="4dp"
-                            android:background="@color/light_green"
+                            android:background="@color/light_eq"
                             android:text="برگشت به عقب"
                             android:textColor="@color/light"
                             android:textSize="@dimen/txt_size_smal"

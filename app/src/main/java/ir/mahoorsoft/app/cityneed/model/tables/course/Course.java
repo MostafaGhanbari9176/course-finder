@@ -1,6 +1,9 @@
 package ir.mahoorsoft.app.cityneed.model.tables.course;
 
 import java.util.ArrayList;
+
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
@@ -29,10 +32,10 @@ public class Course {
         this.onCourseLitener = onCourseLitener;
     }
 
-    public void addtCource(String teacherId, String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int oldRange) {
+    public void addtCource(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, String minOld, String maxOld) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> methode = api.addCourse(teacherId, subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, oldRange);
+        Call<ArrayList<ResponseOfServer>> methode = api.addCourse(Pref.getStringValue(PrefKey.apiCode,""), subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {

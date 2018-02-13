@@ -93,7 +93,12 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
                             surce.add(file);
                         }
                     } else {
-
+                        if (files[i].getName().toLowerCase().endsWith(".pdf")) {
+                            file.Image = R.drawable.file_orange_icon;
+                            file.path = files[i].getAbsolutePath();
+                            folderList.add(files[i]);
+                            surce.add(file);
+                        }
                     }
                 }
 

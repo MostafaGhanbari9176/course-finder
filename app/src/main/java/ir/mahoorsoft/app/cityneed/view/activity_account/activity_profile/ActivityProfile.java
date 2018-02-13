@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +20,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -34,14 +34,17 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
-import ir.mahoorsoft.app.cityneed.model.struct.StUser;
-import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
+import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
+import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
+import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -50,19 +53,19 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by MAHNAZ on 10/16/2017.
  */
 
-public class ActivityProfile extends AppCompatActivity implements View.OnClickListener, PresentUser.OnPresentUserLitener {
+public class ActivityProfile extends AppCompatActivity implements View.OnClickListener, PresentUser.OnPresentUserLitener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
     boolean mapIsShow = false;
     ImageView imgProfile;
     Button btnLogOut;
     Button btnAddCourse;
     Button btnListCourse;
     Button btnListAddCourse;
-    Button btnUpload;
     TextView txtUpload;
     RelativeLayout rlUpload;
     Button btnMap;
     Button btnTrendingUp;
     LinearLayout llAddCourse;
+    LinearLayout llMap;
     LinearLayout llListAddCourse;
     LinearLayout llTrendingUP;
     DialogProgres dialogProgres;
@@ -73,17 +76,10 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         G.activity = this;
         G.context = this;
         dialogProgres = new DialogProgres(this);
-        //checkedServer();
         setContentView(R.layout.activity_profile);
         pointer();
         checkUserType();
 
-    }
-
-    private void getInfFromServer(){
-        dialogProgres.showProgresBar();
-       // PresentCheckedServer presentCheckedServer = new PresentCheckedServer(this);
-       // presentCheckedServer.checkedServer();
     }
 
     private void pointer() {
@@ -100,6 +96,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         llAddCourse = (LinearLayout) findViewById(R.id.llAddCourseProfile);
         llListAddCourse = (LinearLayout) findViewById(R.id.llAddCourseListProfile);
         llTrendingUP = (LinearLayout) findViewById(R.id.llTrendingUpProfile);
+        llMap = (LinearLayout) findViewById(R.id.llMapProfil);
 
     }
 
@@ -155,12 +152,20 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void uploalMadrak(){
+    private void uploalMadrak() {
+        if (txtUpload.getText().equals("بارگذاری مدرک آموزشی")) {
+            Intent intent = new Intent(this, ActivityFiles.class);
+            intent.putExtra("isImage", false);
+            startActivityForResult(intent, 1);
 
+        }else if (txtUpload.getText().equals("مدرک شما در انتظار تایید است")) {
+
+        }else if (txtUpload.getText().equals("مدرک شما تایید شده")) {
+
+        }
     }
 
     private void queryForLogOut() {
-
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
         presentUser.logOut(Pref.getStringValue(PrefKey.phone, ""));
@@ -179,11 +184,11 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
     @Override
     public void LogOut(boolean flag) {
         dialogProgres.closeProgresBar();
         Pref.removeValue(PrefKey.phone);
+        Pref.removeValue(PrefKey.apiCode);
         Pref.removeValue(PrefKey.userName);
         Pref.removeValue(PrefKey.location);
         Pref.removeValue(PrefKey.cityId);
@@ -222,130 +227,47 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 rlUpload.setVisibility(View.GONE);
                 llListAddCourse.setVisibility(View.GONE);
                 llAddCourse.setVisibility(View.GONE);
-                setImageWithBack(R.drawable.user, imgProfile);
+                setImage(R.drawable.user, imgProfile);
                 replaceContentWith(new FragmentProfileKarbar());
                 break;
             case 1:
+                checkMadrak();
                 llTrendingUP.setVisibility(View.GONE);
-                setUrlWithBack(Pref.getStringValue(PrefKey.phone, ""), imgProfile);
+                llMap.setVisibility(View.GONE);
+                setImgUrl(Pref.getStringValue(PrefKey.phone, ""), imgProfile);
                 replaceContentWith(new FragmentProfileAmozeshgah());//4
                 break;
             case 2:
+                checkMadrak();
                 llTrendingUP.setVisibility(View.GONE);
-                setUrlWithBack(Pref.getStringValue(PrefKey.phone, ""), imgProfile);
+                llMap.setVisibility(View.GONE);
+                setImgUrl(Pref.getStringValue(PrefKey.phone, ""), imgProfile);
                 replaceContentWith(new FragmentProfileAmozeshgah());
                 break;
         }
     }
 
-    private void setUrlWithBack(String name, ImageView image) {
-        Bitmap theBitmap = null;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        try {
-            theBitmap =
-                    Glide.with(this)
-                            .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png")
-                            .asBitmap()
-                            .into(100, 100) // Width and height
-                            .get();
+    private void checkMadrak() {
+        dialogProgres.showProgresBar();
+        PresentTeacher presentTeacher = new PresentTeacher(this);
+        presentTeacher.getMs();
+    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //BlurBuilder.blur(this, DownloadImage(ApiClient.serverAddress + "/city_need/v1/uploads/" + name + ".png")).compress(Bitmap.CompressFormat.PNG, 100, stream);
+    private void setImgUrl(String name, ImageView image) {
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png")
                 .fitCenter()
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .error(R.drawable.user)
                 .into(image);
-
-
     }
 
-    private void setImageWithBack(int img, ImageView image) {
-
-        // ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        // BlurBuilder.blur(this, BitmapFactory.decodeResource(getResources(), img)).compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-
+    private void setImage(int img, ImageView image) {
         Glide.with(this)
                 .load(img)
                 .fitCenter()
                 .error(R.drawable.user)
                 .into(image);
-
-
-    }
-
-    protected Bitmap getBitmapFromUrl(final String src) {
-        final Bitmap[] bit = new Bitmap[1];
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(src);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    bit[0] = myBitmap;
-                } catch (Exception e) {
-
-                    bit[0] = null;
-                }
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
-        return bit[0];
-
-    }
-
-    private Bitmap DownloadImage(String URL) {
-//      System.out.println("image inside="+URL);
-        Bitmap bitmap = null;
-        InputStream in = null;
-        try {
-            in = OpenHttpConnection(URL.substring(0, URL.lastIndexOf('.')));
-            bitmap = BitmapFactory.decodeStream(in);
-            in.close();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-//        System.out.println("image last");
-        return bitmap;
-    }
-
-    private InputStream OpenHttpConnection(String urlString)
-            throws IOException {
-        InputStream in = null;
-        int response = -1;
-
-        URL url = new URL(urlString);
-        URLConnection conn = url.openConnection();
-
-        if (!(conn instanceof HttpURLConnection))
-            throw new IOException("Not an HTTP connection");
-
-        try {
-            HttpURLConnection httpConn = (HttpURLConnection) conn;
-            httpConn.setAllowUserInteraction(false);
-            httpConn.setInstanceFollowRedirects(true);
-            httpConn.setRequestMethod("GET");
-            httpConn.connect();
-
-            response = httpConn.getResponseCode();
-            if (response == HttpURLConnection.HTTP_OK) {
-                in = httpConn.getInputStream();
-            }
-        } catch (Exception ex) {
-            throw new IOException("Error connecting");
-        }
-        return in;
     }
 
     private void showAlertDialog(String title, String message, String buttonTrue, String btnFalse) {
@@ -369,15 +291,83 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         });
         alertDialog.show();
     }
-    /*public static void showDialog(DialogPrvince.OnDialogPrvinceListener onDialogPrvinceListener) {
-        if (dialogPrvince == null) {
-            dialogPrvince = new DialogPrvince(ActivityProfile.this, onDialogPrvinceListener);
-            dialogPrvince.showDialog();
-        }else{//4
-            dialogPrvince.showDialog();
-        }//5
+
+    @Override
+    public void sendMessageFTT(String message) {
+        sendMessageFUT(message);
     }
-*/
+
+    @Override
+    public void confirmTeacher(boolean flag) {
+        dialogProgres.closeProgresBar();
+        if(flag)
+            txtUpload.setText("مدرک شما در انتظار تایید است");
+        else
+            showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
+    }
+
+    @Override
+    public void onReceiveTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
+    public void responseForMadrak(ResponseOfServer res) {
+        dialogProgres.closeProgresBar();
+        if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("error")) {
+
+            replaceContentWith(new FragmentErrorServer());
+        } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {
+            txtUpload.setText("بارگذاری مدرک آموزشی");
+        } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("yesbarnotok")) {
+            txtUpload.setText("مدرک شما در انتظار تایید است");
+        } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("barok")) {
+            txtUpload.setText("مدرک شما تایید شده");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == 1 && resultCode == RESULT_OK) {
+                uploadFile(data.getStringExtra("path"));
+            }
+
+        } catch (Exception ex) {
+            Toast.makeText(ActivityProfile.this, ex.toString(),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void uploadFile(String path) {
+        dialogProgres = new DialogProgres(this, "درحال بارگذاری");
+        dialogProgres.showProgresBar();
+        PresentUpload presentUpload = new PresentUpload(this);
+        presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.phone, "") + ".pdf", path);
+
+    }
+
+    @Override
+    public void messageFromUpload(String message) {
+        sendMessageFTT(message);
+    }
+
+    @Override
+    public void flagFromUpload(ResponseOfServer res) {
+        dialogProgres.closeProgresBar();
+        if(res.code == 0){showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");}
+        else if(res.code == 1){
+            dialogProgres.showProgresBar();
+            PresentTeacher presentTeacher = new PresentTeacher(this);
+            presentTeacher.upMs();
+        }
+        else if(res.code == 2){
+            showAlertDialog("خطا", "حجم فایل باید بین یک تا پنج مگابایت باشد", "","قبول");
+        }
+    }
+
+
 }
 
 

@@ -290,6 +290,11 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnCl
         next();
     }
 
+    @Override
+    public void responseForMadrak(ResponseOfServer res) {
+
+    }
+
     private void showAlertDialog(String title, String message, final String buttonTrue, final String btnFalse) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle(title);

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,12 +27,14 @@ import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.UploadRes;
 import ir.mahoorsoft.app.cityneed.model.uploadFile.ProgressRequestBody;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
+import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -47,6 +51,7 @@ import retrofit2.Response;
 
 public class ActivityTeacherRegistering extends AppCompatActivity implements View.OnClickListener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
     boolean locationIsSet = false;
+    boolean isUserChanged = true;
     Button btnBack;
     Button btnSave;
     Button btnUploadImag;
@@ -88,6 +93,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         btnSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnLocation = (Button) findViewById(R.id.btnLocation);
 
+        inPutTVCheck();
 
         btnSave.setOnClickListener(this);
         cbxPrivate.setOnClickListener(this);
@@ -97,15 +103,59 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         btnUploadImag.setOnClickListener(this);
     }
 
+    private void inPutTVCheck() {
+        txtSubject.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUserChanged) {
+                    isUserChanged = false;
+                    // txtSharayet.setTextKeepState();
+                    txtSubject.setTextKeepState(CharCheck.faCheck(txtSubject.getText().toString()));
+
+                } else
+                    isUserChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txtTozihat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUserChanged) {
+                    isUserChanged = false;
+                    // txtSharayet.setTextKeepState();
+                    txtTozihat.setTextKeepState(CharCheck.faCheck(txtTozihat.getText().toString()));
+
+                } else
+                    isUserChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     private void starterActivitry(Class aClass) {
 
         Intent intent = new Intent(this, aClass);
         startActivity(intent);
         finish();
-
-    }
-
-    private void reqForData() {
 
     }
 
@@ -157,35 +207,35 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
 
 
         try {
-        if(Pref.getStringValue(PrefKey.lat,"").length() == 0)
-            throw new Exception("لطفا موقعیت مکانی خود را تعیین کنید.");
+            if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
+                throw new Exception("لطفا موقعیت مکانی خود را تعیین کنید.");
             Long.parseLong(txtPhone.getText().toString().trim());
             if (txtPhone.getText().toString().trim().length() != 11)
                 throw new Exception("لطفا شماره تماس خود را صحیح وارد کنید.");
 
-        if (txtSubject.getText().toString().trim().length() != 0 &&
-                //txtAddress.getText().toString().trim().length() != 0 &&
-                txtTozihat.getText().toString().trim().length() != 0 &&
-                btnLocation.getText().length() != 0) {
-            if (cbxPrivate.isChecked() || cbxPublic.isChecked()) {
-                showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید؟", "بله", "بررسی");
+            if (txtSubject.getText().toString().trim().length() != 0 &&
+                    //txtAddress.getText().toString().trim().length() != 0 &&
+                    txtTozihat.getText().toString().trim().length() != 0 &&
+                    btnLocation.getText().length() != 0) {
+                if (cbxPrivate.isChecked() || cbxPublic.isChecked()) {
+                    showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید؟", "بله", "بررسی");
                 } else {
-                showDialog("خطا", "لطفا نوع آموزش خود را مشخص کنید", "", "قبول");
+                    showDialog("خطا", "لطفا نوع آموزش خود را مشخص کنید", "", "قبول");
+
+                }
+            } else {
+                showDialog("خطا", "لطفا اطلاعات را کامل وصحیح وارد کنید...", "", "قبول");
 
             }
-        } else {
-            showDialog("خطا", "لطفا اطلاعات را کامل وصحیح وارد کنید...", "", "قبول");
-
-        }
         } catch (Exception e) {
             showDialog("خطا", e.getMessage(), "", "قبول");
         }
     }///barresi
 
-    private void sendDataForServer(){
+    private void sendDataForServer() {
         dialogProgres.showProgresBar();
         PresentTeacher presentTeacher = new PresentTeacher(this);
-        presentTeacher.addTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, Pref.getStringValue(PrefKey.lat,""), Pref.getStringValue(PrefKey.lon,""));
+        presentTeacher.addTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, Pref.getStringValue(PrefKey.lat, ""), Pref.getStringValue(PrefKey.lon, ""));
 
     }
 
@@ -248,9 +298,19 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     }
 
     @Override
+    public void responseForMadrak(ResponseOfServer res) {
+
+    }
+
+    @Override
     public void messageFromUpload(String message) {
         //dialogProgres.closeProgresBar();
         sendMessageFTT(message);
+    }
+
+    @Override
+    public void flagFromUpload(ResponseOfServer res) {
+
     }
 
     private void showDialog(String title, String message, String btntrue, String btnFalse) {

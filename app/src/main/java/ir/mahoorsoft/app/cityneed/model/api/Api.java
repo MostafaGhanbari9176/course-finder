@@ -71,9 +71,9 @@ public interface Api {
             @Path("code") int code
     );
 
-    @GET("addTeacher/{phone}/{landPhone}/{subject}/{tozihat}/{type}/{lat}/{lon}")
+    @GET("addTeacher/{ac}/{landPhone}/{subject}/{tozihat}/{type}/{lat}/{lon}")
     Call<ArrayList<ResponseOfServer>> addTeacher(
-            @Path("phone") String phone,
+            @Path("ac") String ApiCode,
             @Path("landPhone") String landPhone,
             @Path("subject") String subject,
             @Path("tozihat") String tozihat,
@@ -109,9 +109,9 @@ public interface Api {
             @Path("uperId") int uperId
     );
 
-    @GET("addCourse/{teacherId}/{subject}/{tabagheId}/{type}/{capacity}/{mony}/{sharayet}/{tozihat}/{startDate}/{endDate}/{day}/{hours}/{oldRange}")
+    @GET("addCourse/{ac}/{subject}/{tabagheId}/{type}/{capacity}/{mony}/{sharayet}/{tozihat}/{startDate}/{endDate}/{day}/{hours}/{minOld}/{maxOld}")
     Call<ArrayList<ResponseOfServer>> addCourse(
-            @Path("teacherId") String teacherId,
+            @Path("ac") String ac,
             @Path("subject") String subject,
             @Path("tabagheId") int tabagheId,
             @Path("type") int type,
@@ -123,7 +123,8 @@ public interface Api {
             @Path("endDate") String endDate,
             @Path("day") String day,
             @Path("hours") String hours,
-            @Path("oldRange") int oldRange
+            @Path("minOld") String minOld,
+            @Path("maxOld") String maxOld
     );
 
     @GET("getAllCourse")
@@ -152,6 +153,16 @@ public interface Api {
     @GET("getUserCourse/{id}")
     Call<ArrayList<StCourse>> getUserCourse(
             @Path("id") int id
+    );
+
+    @GET("getMs/{ac}")
+    Call<ArrayList<ResponseOfServer>> getMadrakState(
+            @Path("ac") String ac
+    );
+
+    @GET("upMs/{ac}")
+    Call<ArrayList<ResponseOfServer>> upMadrakState(
+            @Path("ac") String ac
     );
 
     @GET("remaining_credit/{tableName}/{phone}")

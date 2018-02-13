@@ -18,23 +18,39 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         this.onPresentTeacherListener = onPresentTeacherListener;
     }
 
-    public void addTeacher(String landPhone, String subject, String tozihat, int type, String lat, String lon){
+    public void addTeacher(String landPhone, String subject, String tozihat, int type, String lat, String lon) {
         Teacher teacher = new Teacher(this);
         teacher.addTeacher(landPhone, subject, tozihat, type, lat, lon);
     }
 
-    public void getTeacher(){
+    public void getTeacher() {
         Teacher teacher = new Teacher(this);
         teacher.getTeacher();
     }
 
-    public void updateTeacher(String landPhone, String subject, String address, int cityId, int madrak){
+    public void getMs() {
+        Teacher teacher = new Teacher(this);
+        teacher.getMadrakState();
+    }
+
+    public void upMs() {
+        Teacher teacher = new Teacher(this);
+        teacher.upMadrakState();
+    }
+
+    public void updateTeacher(String landPhone, String subject, String address, int cityId, int madrak) {
         Teacher teacher = new Teacher(this);
         teacher.updateTeacher(landPhone, subject, address, cityId, madrak);
     }
+
+    @Override
+    public void responseForMadrak(ResponseOfServer res) {
+        onPresentTeacherListener.responseForMadrak(res);
+    }
+
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        onPresentTeacherListener.confirmTeacher( res.get(0).code == 0 ? false : true);
+        onPresentTeacherListener.confirmTeacher(res.get(0).code == 0 ? false : true);
     }
 
     @Override
@@ -53,5 +69,7 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         void confirmTeacher(boolean flag);
 
         void onReceiveTeacher(ArrayList<StTeacher> users);
+
+        void responseForMadrak(ResponseOfServer res);
     }
 }

@@ -105,104 +105,129 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="136dp"
                     android:layout_marginRight="4dp"
-                    android:layout_marginTop="50dp"
+                    android:gravity="top"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="60dp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:rotation="-20">
 
-                        <Button
+                        <LinearLayout
+                            android:id="@+id/llAddCourseProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:rotation="20">
 
-                            android:id="@+id/btnLogOut"
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:background="@drawable/icon_power" />
+                            <Button
+                                android:id="@+id/btnAddCourseProfile"
+                                android:layout_width="@dimen/btn_nav"
+                                android:layout_height="@dimen/btn_nav"
+                                android:background="@drawable/icon_add" />
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:rotation="20">
+
+                            <Button
+                                android:id="@+id/btnCourseListProfile"
+                                android:layout_width="@dimen/btn_nav"
+                                android:layout_height="@dimen/btn_nav"
+                                android:background="@drawable/icon_list" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llMapProfil"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:rotation="20">
+
+                            <Button
+                                android:id="@+id/btnMapProfile"
+                                android:layout_width="@dimen/btn_nav"
+                                android:layout_height="@dimen/btn_nav"
+                                android:background="@drawable/icon_map" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="60dp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:rotation="20">
 
-                        <Button
-                            android:id="@+id/btnCourseListProfile"
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:background="@drawable/icon_list" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:rotation="-20">
 
-                    </LinearLayout>
+                            <Button
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                                android:id="@+id/btnLogOut"
+                                android:layout_width="@dimen/btn_nav"
+                                android:layout_height="@dimen/btn_nav"
+                                android:background="@drawable/icon_power" />
 
-                        <Button
-                            android:id="@+id/btnMapProfile"
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:background="@drawable/icon_map" />
+                        </LinearLayout>
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/llTrendingUpProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:rotation="-20">
 
-                    <LinearLayout
-                        android:id="@+id/llAddCourseProfile"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                            <Button
+                                android:id="@+id/btnTrendingUpProfile"
+                                android:layout_width="@dimen/btn_nav"
+                                android:layout_height="@dimen/btn_nav"
+                                android:background="@drawable/icon_trending_up" />
 
-                        <Button
-                            android:id="@+id/btnAddCourseProfile"
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:background="@drawable/icon_add" />
+                        </LinearLayout>
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/llAddCourseListProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:rotation="-20">
 
-                    <LinearLayout
-                        android:id="@+id/llTrendingUpProfile"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                            <Button
+                                android:id="@+id/btnSabtenamListProfile"
+                                android:layout_width="@dimen/btn_nav"
+                                android:layout_height="@dimen/btn_nav"
+                                android:background="@drawable/icon_list_sabtenam" />
 
-                        <Button
-                            android:id="@+id/btnTrendingUpProfile"
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:background="@drawable/icon_trending_up" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llAddCourseListProfile"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/btnSabtenamListProfile"
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:background="@drawable/icon_list_sabtenam" />
-
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>

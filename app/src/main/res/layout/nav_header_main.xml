@@ -3,7 +3,7 @@
     android:id="@+id/navHederMain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/back_grand_layout"
+    android:background="@color/light_eq"
     android:gravity="right|center"
     android:orientation="vertical"
     android:paddingTop="16dp">
@@ -28,8 +28,9 @@
                 android:layout_weight="1"
                 android:gravity="bottom|right|center"
                 android:text="کاربر مهمان"
-                android:textColor="@color/dark_green"
-                android:textSize="@dimen/txt_size_smal" />
+                android:textColor="@color/light"
+                android:textSize="@dimen/txt_size_smal"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtProfileButton_menu"
@@ -39,8 +40,9 @@
                 android:layout_weight="1"
                 android:gravity="top|right|center"
                 android:text="ثبت نام-ورود"
-                android:textColor="@color/dark_green"
-                android:textSize="@dimen/txt_size_smal" />
+                android:textColor="@color/light"
+                android:textSize="@dimen/txt_size_smal"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,8 +63,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/colorLine"
-        android:background="@color/line_item"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="@color/blue_eq"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
 
 </LinearLayout>

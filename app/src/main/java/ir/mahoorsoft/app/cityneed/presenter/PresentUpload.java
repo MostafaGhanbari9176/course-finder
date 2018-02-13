@@ -14,6 +14,8 @@ public class PresentUpload implements Upload.OnUploadListener {
     public interface OnPresentUploadListener {
 
         void messageFromUpload(String message);
+
+        void flagFromUpload(ResponseOfServer res);
     }
 
     OnPresentUploadListener onPresentUploadListener;
@@ -29,12 +31,7 @@ public class PresentUpload implements Upload.OnUploadListener {
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-       if(res.get(0).code == 0)
-           sendMessage("خطا");
-        else if (res.get(0).code == 2)
-           sendMessage("حجم فایل باید کمتر از پنج مگابایت باشد");
-        else
-           sendMessage("فایل بارگزاری شد");
+        onPresentUploadListener.flagFromUpload(res.get(0));
     }
 
     @Override
