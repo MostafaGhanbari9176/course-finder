@@ -23,12 +23,10 @@ import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
-import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
@@ -66,9 +64,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         pointer();
         setTextFont();
         settingUpVPager();
-        //settingUpList_one();
-        settingUpListThree();
-        //settingUpList_two();
+        settingUpListSelectedCourseList();
+        settingUpNewCourseList();
+        settingUpListFullCapacityCourseList();
 
 
     }
@@ -93,9 +91,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     }
 
-    private void settingUpList_one() {
+    private void settingUpListSelectedCourseList() {
 
-        list = (RecyclerView) view.findViewById(R.id.RV_one);
+        list = (RecyclerView) view.findViewById(R.id.RVSelectedCourseHome);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, true);
         adapterListView = new AdapterHomeLists(G.context, surce, this);
@@ -106,9 +104,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     }
 
-    private void settingUpList_two() {
+    private void settingUpListFullCapacityCourseList() {
 
-        list = (RecyclerView) view.findViewById(R.id.RV_two);
+        list = (RecyclerView) view.findViewById(R.id.RVFullCapacityCourseHome);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, true);
         adapterListView = new AdapterHomeLists(G.context, surce, this);
@@ -119,20 +117,44 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     }
 
-    private void settingUpListThree() {
+    private void settingUpNewCourseList() {
 
-        list = (RecyclerView) view.findViewById(R.id.RV_three);
+        list = (RecyclerView) view.findViewById(R.id.RVNewCourseHome);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, true);
         adapterListView = new AdapterHomeLists(G.context, surce, this);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapterListView);
         adapterListView.notifyDataSetChanged();
-        setSurceThree();
+        queryForNewCourseListData();
 
     }
 
-    private void setSurceThree() {
+    private void queryForNewCourseListData(){
+        dialogProgres.showProgresBar();
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.getNewCourse();
+    }
+
+    private void setSurceThree(ArrayList<StCourse> course) {
+        settingUpVPager();
+        surce = course;
+        list = (RecyclerView) view.findViewById(R.id.RVNewCourseHome);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                , LinearLayoutManager.HORIZONTAL, true);
+        adapterListView = new AdapterHomeLists(G.context, surce, this);
+        list.setLayoutManager(layoutManager);
+        list.setAdapter(adapterListView);
+        adapterListView.notifyDataSetChanged();
+    }
+
+    private void setSurceTwO(ArrayList<StCourse> course) {
+        dialogProgres.showProgresBar();
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.getAllCourse();
+    }
+
+    private void setSurceOne(ArrayList<StCourse> course) {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getAllCourse();
@@ -193,8 +215,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     private void initData() {
         pageViews = new ArrayList<>();
-        for (int i = 0 ;i < surce.size(); i++) {
-            pageViews.add(new Page(surce.get(i).id+"",ApiClient.serverAddress + "/city_need/v1/uploads/course/" + surce.get(i).id + ".png", this));
+        for (int i = 0; i < surce.size(); i++) {
+            pageViews.add(new Page(surce.get(i).id + "", ApiClient.serverAddress + "/city_need/v1/uploads/course/" + surce.get(i).id + ".png", this));
         }
     }
 
@@ -210,22 +232,20 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void onReceiveCourse(ArrayList<StCourse> course) {
+    public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
-        settingUpVPager();
-        surce = course;
-        list = (RecyclerView) view.findViewById(R.id.RV_three);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, true);
-        adapterListView = new AdapterHomeLists(G.context, surce, this);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapterListView);
-        adapterListView.notifyDataSetChanged();
+        if (listId == 1)
+            setSurceOne(course);
+        if (listId == 2)
+            setSurceTwO(course);
+        if (listId == 3)
+            setSurceThree(course);
+
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setSurceThree();
     }
 }

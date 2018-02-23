@@ -112,7 +112,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="60dp"
                         android:layout_weight="1"
@@ -145,7 +145,7 @@
                             android:rotation="20">
 
                             <Button
-                                android:id="@+id/btnCourseListProfile"
+                                android:id="@+id/btnSabtenamListProfile"
                                 android:layout_width="@dimen/btn_nav"
                                 android:layout_height="@dimen/btn_nav"
                                 android:background="@drawable/icon_list" />
@@ -171,7 +171,30 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="45dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnMessageBoxProfile"
+                                android:layout_width="@dimen/btn_nav"
+                                android:layout_height="@dimen/btn_nav"
+                                android:background="@drawable/icon_message_box" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="60dp"
                         android:layout_weight="1"
@@ -222,7 +245,7 @@
                             android:rotation="-20">
 
                             <Button
-                                android:id="@+id/btnSabtenamListProfile"
+                                android:id="@+id/btnCourseListProfile"
                                 android:layout_width="@dimen/btn_nav"
                                 android:layout_height="@dimen/btn_nav"
                                 android:background="@drawable/icon_list_sabtenam" />

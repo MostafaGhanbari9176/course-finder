@@ -64,7 +64,7 @@ public class FragmentSlide extends Fragment {
 
     private void sendImageId(){
 
-        Items items =new Items();
+        //Items items =new Items();
       //  items.image=imageUrl;
         //ActivityShowFeature.adverFeatures= items;
         Intent intent = new Intent(G.context,ActivityShowFeature.class);

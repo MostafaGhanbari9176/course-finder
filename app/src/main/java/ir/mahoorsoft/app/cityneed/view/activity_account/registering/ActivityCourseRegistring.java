@@ -37,12 +37,13 @@ import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityTabagheList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
 
 /**
  * Created by M-gh on 28-Jan-18.
  */
 
-public class ActivityCourseRegistring extends AppCompatActivity implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener {
+public class ActivityCourseRegistring extends AppCompatActivity implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener, DialogTabaghe.OnTabagheItemClick {
     RadioButton rb1;
     RadioButton rb2;
     RadioButton rb3;
@@ -66,7 +67,10 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     DialogProgres dialogProgres;
     CheckBox cbxPublic;
     CheckBox cbxPrivate;
-    String path;
+    String sD = "";
+    String eD = "";
+    String hours = "";
+    String tabaghe = "";
     int id;
     int tabagheId;
 
@@ -104,15 +108,19 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         rb5 = (RadioButton) findViewById(R.id.rb4);
         rb6 = (RadioButton) findViewById(R.id.rb5);
         rb7 = (RadioButton) findViewById(R.id.rbFriday);
+        rb1.setChecked(true);
 
         cbxPublic = (CheckBox) findViewById(R.id.cbxPublicCurceRegisteryCourse);
         cbxPrivate = (CheckBox) findViewById(R.id.cbxSingleCurceRegisteryCourse);
+        cbxPublic.setChecked(true);
 
         btnTime.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         btnStartDate.setOnClickListener(this);
         btnEndDate.setOnClickListener(this);
         btnTabaghe.setOnClickListener(this);
+        cbxPrivate.setOnClickListener(this);
+        cbxPublic.setOnClickListener(this);
 
     }
 
@@ -127,7 +135,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         txtSubject.setTypeface(typeface);
     }
 
-    private void checkTxtInput(){
+    private void checkTxtInput() {
         txtSharayet.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -229,9 +237,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                 showTimePicker();
                 break;
             case R.id.btnChoseTabaghe:
-                dialogProgres.showProgresBar();
-                Intent intent = new Intent(this, ActivityTabagheList.class);
-                startActivityForResult(intent, 1);
+                (new DialogTabaghe(this, this)).Show();
                 break;
 
         }
@@ -246,10 +252,14 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                      @Override
                      public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
-                         if (isStartDate)
-                             btnStartDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                         else
-                             btnEndDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                         if (isStartDate) {
+                             btnStartDate.setText("تاریخ شروع دوره(" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + ")");
+                             sD = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                         } else {
+                             eD = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                             btnEndDate.setText("تاریخ پایان دوره (" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + ")");
+
+                         }
                      }
                  }, now.getPersianYear(),
                         now.getPersianMonth(),
@@ -261,7 +271,6 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     private void showTimePicker() {
 
-
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
 
@@ -269,7 +278,9 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
 
-                        btnTime.setText(hourOfDay + ":" + minute);
+                        btnTime.setText("ساعت شروع (" + hourOfDay + ":" + minute + ")");
+                        hours = hourOfDay + ":" + minute;
+
                     }
                 }, 2, 2, true);
         timePickerDialog.show();
@@ -281,22 +292,30 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
             Integer.parseInt(txtCapacity.getText().toString().trim());
             Integer.parseInt(txtMinRange.getText().toString().trim());
             Integer.parseInt(txtMaxRange.getText().toString().trim());
-
-
+            if (tabaghe.length() == 0)
+                throw new Exception("لطفا دسته بندی دوره را انتخاب کنید");
+            if (sD.length() == 0 || eD.length() == 0)
+                throw new Exception("لطفا تاریخ شروع و پایان دوره را انتخاب کنید");
+            if (eD.compareTo(sD) == -1)
+                throw new Exception("لطفا تاریخ شروع و پایان دوره را صحیح انتخاب کنید");
+            if (hours.length() == 0)
+                throw new Exception("لطفا ساعت شروع دوره را انتخاب کنید");
+            if (Integer.parseInt(txtMaxRange.getText().toString().trim()) < Integer.parseInt(txtMinRange.getText().toString().trim()))
+                throw new Exception("رنج سنی صحیح نمی باشد");
             if (txtSharayet.getText() != null && txtSharayet.getText().toString().trim().length() != 0 &&
                     txtTozihat.getText() != null && txtTozihat.getText().toString().trim().length() != 0 &&
                     txtSubject.getText() != null && txtSubject.getText().toString().trim().length() != 0 &&
                     txtMinRange.getText() != null && txtMinRange.getText().toString().trim().length() != 0 &&
                     txtMony.getText() != null && txtMony.getText().toString().trim().length() != 0 &&
                     txtMaxRange.getText() != null && txtMaxRange.getText().toString().trim().length() != 0 &&
-                    txtCapacity.getText() != null && txtCapacity.getText().toString().trim().length() != 0&&
-                    getDay().length()!=0) {
+                    txtCapacity.getText() != null && txtCapacity.getText().toString().trim().length() != 0 &&
+                    getDay().length() != 0) {
                 showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید", "بله", "بررسی");
             } else {
-                throw new Exception();
+                throw new Exception("لطفا اطلاعات را صحیح وارد کنید");
             }
         } catch (Exception e) {
-            showDialog("خطا!", "لطفا اطلاعات را صحیح وارد کنید", "", "قبول");
+            showDialog("خطا!", e.getMessage(), "", "قبول");
         }
     }
 
@@ -304,10 +323,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         dialogProgres.closeProgresBar();
-        if (requestCode == 1) {
-            tabagheId = data.getIntExtra("id", -2);
-            btnTabaghe.setText(data.getStringExtra("name"));
-        } else if (requestCode == 2) {
+        if (requestCode == 2) {
             uploadImage(data.getStringExtra("path"));
         }
     }
@@ -315,19 +331,19 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     private void sendDataForServer() {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.addCourse(
-                txtSubject.getText().toString().trim(),
-                tabagheId, cbxPublic.isChecked() ? 0 : 1,
+        presentCourse.addCourse(txtSubject.getText().toString().trim(), tabagheId,
+                cbxPublic.isChecked() == true ? 0 : 1,
                 Integer.parseInt(txtCapacity.getText().toString().trim()),
                 Integer.parseInt(txtMony.getText().toString().trim()),
                 txtSharayet.getText().toString().trim(),
                 txtTozihat.getText().toString().trim(),
-                btnStartDate.getText().toString().trim(),
-                btnEndDate.getText().toString().trim(),
-                txtMaxRange.getText().toString().trim(),//////////////
-                btnTime.getText().toString().trim(),
-                Integer.parseInt(txtMaxRange.getText().toString().trim()));////////////////
-
+                sD,
+                eD,
+                getDay(),
+                hours,
+                Integer.parseInt(txtMinRange.getText().toString().trim()),
+                Integer.parseInt(txtMaxRange.getText().toString().trim())
+        );
     }
 
 
@@ -346,7 +362,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
 
     @Override
-    public void onReceiveCourse(ArrayList<StCourse> course) {
+    public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
 
     }
 
@@ -396,7 +412,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     @Override
     public void flagFromUpload(ResponseOfServer res) {
-
+        dialogProgres.closeProgresBar();
     }
 
     private void showDialog(String title, String message, String btntrue, String btnFalse) {
@@ -421,21 +437,28 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     private String getDay() {
         String day = "";
-        if(rb1.isChecked())
+        if (rb1.isChecked())
             day = "شنبه";
-        else if(rb2.isChecked())
+        else if (rb2.isChecked())
             day = "یکشنبه";
-        else if(rb3.isChecked())
+        else if (rb3.isChecked())
             day = "دوشنبه";
-        else if(rb4.isChecked())
+        else if (rb4.isChecked())
             day = "سه شنبه";
-        else if(rb5.isChecked())
+        else if (rb5.isChecked())
             day = "چهار شنبه";
-        else if(rb6.isChecked())
+        else if (rb6.isChecked())
             day = "پنجشنبه";
-        else if(rb7.isChecked())
+        else if (rb7.isChecked())
             day = "جمعه";
         return day;
+    }
+
+    @Override
+    public void tabagheInf(String name, int id) {
+        tabagheId = id;
+        tabaghe = name;
+        btnTabaghe.setText(name);
     }
 }
 

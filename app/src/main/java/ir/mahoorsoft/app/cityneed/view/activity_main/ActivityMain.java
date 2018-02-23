@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -31,9 +32,10 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentSelfC
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
 
 
-public class ActivityMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, PresentCheckedServer.OnPresentCheckServrer {
+public class ActivityMain extends AppCompatActivity implements View.OnClickListener, DialogTabaghe.OnTabagheItemClick, NavigationView.OnNavigationItemSelectedListener, PresentCheckedServer.OnPresentCheckServrer {
     public static Toolbar toolbar;
     TextView txtUserName;
     TextView txtProfileButton;
@@ -155,8 +157,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 flag = false;
                 break;
             case R.id.tabaghe:
-                Intent intent = new Intent(this, ActivityTabagheList.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, ActivityTabagheList.class);
+//                startActivity(intent);
+                new DialogTabaghe(this,this).Show();
                 flag = false;
                 break;
         }
@@ -229,5 +232,11 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
             toolbar.setVisibility(View.GONE);
             replaceContentWith(new FragmentErrorServer());
         }
+    }
+
+
+    @Override
+    public void tabagheInf(String name, int id) {
+        Toast.makeText(this, id+" ,,, "+name, Toast.LENGTH_SHORT).show();
     }
 }

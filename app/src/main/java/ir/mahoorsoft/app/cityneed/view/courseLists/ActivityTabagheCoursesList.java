@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_main;
+package ir.mahoorsoft.app.cityneed.view.courseLists;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,18 +25,20 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivityCoursesList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
+public class ActivityTabagheCoursesList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
 
-    String modeShow = "";
     AdapterCourseList adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
     DialogProgres dialogProgres;
+    TextView txt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        txt = (TextView) findViewById(R.id.txtToolbarList);
+        txt.setText("دوره های این دسته");
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
@@ -45,9 +48,6 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        if (getIntent().getExtras() != null)
-            modeShow = getIntent().getStringExtra("mode");
-
         setSource();
 
 
@@ -55,17 +55,8 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
 
     private void setSource() {
         dialogProgres.showProgresBar();
-        if (modeShow.equalsIgnoreCase("allCourse")) {
-            PresentCourse presentCourse = new PresentCourse(this);
-            presentCourse.getAllCourse();
-        } else if(modeShow.equalsIgnoreCase("byTeacherId")){
-            PresentCourse presentCourse = new PresentCourse(this);
-            presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.phone,""));
-        }else if(modeShow.equalsIgnoreCase("sabtenam")){
-            PresentCourse presentCourse = new PresentCourse(this);
-
-        }
-
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.getAllCourse();
     }
 
 
@@ -82,15 +73,16 @@ public class ActivityCoursesList extends AppCompatActivity implements AdapterCou
 
 
     @Override
-    public void onReceiveCourse(ArrayList<StCourse> course) {
+    public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
-        list = (RecyclerView) findViewById(R.id.RVList);
-        adapter = new AdapterCourseList(this, course, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
-                , LinearLayoutManager.VERTICAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        if (course.get(0).empoty == 1)
+            txt.setText("هیچ دوره ایی وجود ندارد");
+        else {
+
+            adapter = new AdapterCourseList(this, course, this);
+            list.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

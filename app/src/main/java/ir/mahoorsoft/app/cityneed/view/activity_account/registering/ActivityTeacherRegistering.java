@@ -92,7 +92,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         btnUploadImag = (Button) findViewById(R.id.btnUploadImg);
         btnSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnLocation = (Button) findViewById(R.id.btnLocation);
-
+        cbxPublic.setChecked(true);
         inPutTVCheck();
 
         btnSave.setOnClickListener(this);
@@ -304,13 +304,13 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
 
     @Override
     public void messageFromUpload(String message) {
-        //dialogProgres.closeProgresBar();
+        dialogProgres.closeProgresBar();
         sendMessageFTT(message);
     }
 
     @Override
     public void flagFromUpload(ResponseOfServer res) {
-
+        dialogProgres.closeProgresBar();
     }
 
     private void showDialog(String title, String message, String btntrue, String btnFalse) {

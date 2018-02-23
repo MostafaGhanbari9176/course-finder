@@ -50,10 +50,23 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".view.activity_main.ActivityCoursesList"
+            android:name=".view.courseLists.ActivityTabagheCoursesList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
+
+        <activity
+            android:name=".view.courseLists.ActivitySabtenamList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+
+        <activity
+            android:name=".view.courseLists.ActivityTeacherCoursesList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+
         <activity
             android:name=".view.activity_main.ActivityTabagheList"
             android:screenOrientation="portrait"

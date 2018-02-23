@@ -57,10 +57,7 @@ public class ActivityTabagheList extends AppCompatActivity implements AdapterTab
         presentTabaghe.getTabaghe(id);
     }
 
-    @Override
-    public void tabagheListItemClick(int position) {
-        setSource(surce.get(position).id);
-    }
+
 
     @Override
     public void tabagheNahaei() {
@@ -116,6 +113,11 @@ public class ActivityTabagheList extends AppCompatActivity implements AdapterTab
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void tabagheListItemClick(int position, int sourceNumber) {
+        setSource(surce.get(position).id);
     }
 }
 /*

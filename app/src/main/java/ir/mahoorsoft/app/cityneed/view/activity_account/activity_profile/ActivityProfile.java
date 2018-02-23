@@ -2,8 +2,6 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -20,11 +18,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
@@ -43,7 +36,8 @@ import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragmen
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
-import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
+import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
+import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -124,16 +118,14 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 starterActivity(ActivityCourseRegistring.class);
                 break;
             case R.id.btnCourseListProfile:
-                Intent intent = new Intent(this, ActivityCoursesList.class);
-                intent.putExtra("mode", "byTeacherId");
-                startActivity(intent);
+                starterActivity(ActivityTeacherCoursesList.class);
                 break;
             case R.id.btnTrendingUpProfile:
                 starterActivity(ActivityTeacherRegistering.class);
                 this.finish();
                 break;
             case R.id.btnSabtenamListProfile:
-                starterActivity(ActivityCoursesList.class);
+                starterActivity(ActivitySabtenamList.class);
                 break;
 
             case R.id.rlUploadMadrak:

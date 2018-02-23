@@ -123,21 +123,29 @@ public interface Api {
             @Path("endDate") String endDate,
             @Path("day") String day,
             @Path("hours") String hours,
-            @Path("minOld") String minOld,
-            @Path("maxOld") String maxOld
+            @Path("minOld") int minOld,
+            @Path("maxOld") int maxOld
     );
 
     @GET("getAllCourse")
     Call<ArrayList<StCourse>> getAllCourse();
+
+    @GET("getNewCourse")
+    Call<ArrayList<StCourse>> getNewCourse();
 
     @GET("getCourseById/{id}")
     Call<ArrayList<StCourse>> getCourseById(
             @Path("id") int id
     );
 
-    @GET("getCourseByTeacherId/{id}")
+    @GET("getCourseByTeacherId/{ac}")
     Call<ArrayList<StCourse>> getCourseByTeacherId(
-            @Path("id") String id
+            @Path("ac") String ac
+    );
+
+    @GET("getUserCourse/{ac}")
+    Call<ArrayList<StCourse>> getUserCourse(
+            @Path("ac") String ac
     );
 
     @GET("checkedServer")
@@ -148,11 +156,6 @@ public interface Api {
             @Path("idCourse") int idCourse,
             @Path("idTeacher") String idTeacher,
             @Path("idUser") String idUser
-    );
-
-    @GET("getUserCourse/{id}")
-    Call<ArrayList<StCourse>> getUserCourse(
-            @Path("id") int id
     );
 
     @GET("getMs/{ac}")

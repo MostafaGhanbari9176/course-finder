@@ -17,7 +17,7 @@ public class PresentCourse implements Course.OnCourseLitener {
 
         void confirmCourse(int id);
 
-        void onReceiveCourse(ArrayList<StCourse> course);
+        void onReceiveCourse(ArrayList<StCourse> course, int listId);
 
     }
 
@@ -27,7 +27,7 @@ public class PresentCourse implements Course.OnCourseLitener {
         this.onPresentCourseLitener = onPresentCourseLitener;
     }
 
-    public void addCourse(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, String minOld,String maxOld) {
+    public void addCourse(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int minOld,int maxOld) {
         Course course = new Course(this);
         course.addtCource(subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
     }
@@ -37,28 +37,39 @@ public class PresentCourse implements Course.OnCourseLitener {
         course.getAllCourse();
     }
 
+    public void getNewCourse(){
+        Course course = new Course(this);
+        course.getNewCourse();
+    }
+
+    public void getUserCourse(){
+        Course course = new Course(this);
+        course.getUserCourse();
+    }
+
     public void getCourseById(int id) {
         Course course = new Course(this);
         course.getCourseById(id);
     }
 
-    public void getCourseByTeacherId(String id) {
+    public void getCourseByTeacherId() {
         Course course = new Course(this);
-        course.getCourseByTeacherId(id);
+        course.getCourseByTeacherId();
 
     }
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
         if(res.get(0).code == 0)
-            sendMessage("error");
+            sendMessage("خطا باارز پوزش لطفا بعدا امتحان کنید");
       else
           onPresentCourseLitener.confirmCourse(res.get(0).code);
     }
 
     @Override
-    public void onReceiveData(ArrayList<StCourse> data) {
-        onPresentCourseLitener.onReceiveCourse(data);
+    public void onReceiveData(ArrayList<StCourse> data ,int listId) {
+
+        onPresentCourseLitener.onReceiveCourse(data, listId);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class Course {
     public interface OnCourseLitener {
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
 
-        void onReceiveData(ArrayList<StCourse> data);
+        void onReceiveData(ArrayList<StCourse> data, int listId);
 
         void sendMessage(String message);
     }
@@ -32,10 +32,10 @@ public class Course {
         this.onCourseLitener = onCourseLitener;
     }
 
-    public void addtCource(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, String minOld, String maxOld) {
+    public void addtCource(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int minOld, int maxOld) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> methode = api.addCourse(Pref.getStringValue(PrefKey.apiCode,""), subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
+        Call<ArrayList<ResponseOfServer>> methode = api.addCourse(Pref.getStringValue(PrefKey.apiCode, ""), subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
@@ -55,7 +55,23 @@ public class Course {
         getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body());
+                onCourseLitener.onReceiveData(response.body(),-1);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StCourse>> call, Throwable t) {
+                onCourseLitener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void getNewCourse() {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StCourse>> getAllCourse = api.getNewCourse();
+        getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
+                onCourseLitener.onReceiveData(response.body(),3);
             }
 
             @Override
@@ -71,7 +87,7 @@ public class Course {
         getCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body());
+                onCourseLitener.onReceiveData(response.body(),-1);
             }
 
             @Override
@@ -81,13 +97,30 @@ public class Course {
         });
     }
 
-    public void getCourseByTeacherId(String id) {
+    public void getCourseByTeacherId() {
+
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StCourse>> getCourse = api.getCourseByTeacherId(id);
+        Call<ArrayList<StCourse>> getAllCourse = api.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
+        getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
+                onCourseLitener.onReceiveData(response.body(),-1);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StCourse>> call, Throwable t) {
+                onCourseLitener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void getUserCourse() {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StCourse>> getCourse = api.getUserCourse(Pref.getStringValue(PrefKey.apiCode, ""));
         getCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body());
+                onCourseLitener.onReceiveData(response.body(),-1);
             }
 
             @Override

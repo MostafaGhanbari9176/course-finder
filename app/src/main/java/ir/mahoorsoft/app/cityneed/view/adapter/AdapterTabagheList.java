@@ -14,10 +14,8 @@ import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 
-import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
 
 /**
@@ -27,7 +25,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
 public class AdapterTabagheList extends RecyclerView.Adapter<AdapterTabagheList.Holder> {
 
     public interface OnClickItemTabagheList {
-        void tabagheListItemClick(int position);
+        void tabagheListItemClick(int position, int sourceNumber);
     }
 
     private OnClickItemTabagheList onClickItemTabagheList;
@@ -44,30 +42,20 @@ public class AdapterTabagheList extends RecyclerView.Adapter<AdapterTabagheList.
 
     public class Holder extends RecyclerView.ViewHolder {
         ImageView imgItem;
-        TextView txtMasterName;
-        TextView txtUnusable;
-        TextView txtstartDate;
-        TextView txtCourseName;
-        LinearLayout llName;
-        LinearLayout llStartDate;
+        TextView txtTabagheName;
         LinearLayout item;
 
         public Holder(View itemView) {
             super(itemView);
-            imgItem = (ImageView) itemView.findViewById(R.id.imgItemCourseList);
-            txtMasterName = (TextView) itemView.findViewById(R.id.txtMasterNameItem);
-            txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItem);
-            txtstartDate = (TextView) itemView.findViewById(R.id.txtStartDateItem);
-            txtUnusable = (TextView) itemView.findViewById(R.id.txtUnusable);
-            llName = (LinearLayout) itemView.findViewById(R.id.llNameCourseList);
-            llStartDate = (LinearLayout) itemView.findViewById(R.id.llStartDateCourseList);
-            item = (LinearLayout) itemView.findViewById(R.id.itemCourseList);
+            imgItem = (ImageView) itemView.findViewById(R.id.imgItemTabaghe);
+            txtTabagheName = (TextView) itemView.findViewById(R.id.txtTabagheNameItem);
+            item = (LinearLayout) itemView.findViewById(R.id.itemTabaghe);
         }
     }
 
     @Override
     public AdapterTabagheList.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_course_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_tabaghe, parent, false);
         Holder holder = new Holder(view);
 
         return holder;
@@ -75,13 +63,8 @@ public class AdapterTabagheList extends RecyclerView.Adapter<AdapterTabagheList.
 
     @Override
     public void onBindViewHolder(AdapterTabagheList.Holder holder, final int position) {
-        StTabaghe items = surce.get(position);
-
-        holder.llStartDate.setVisibility(View.GONE);
-        holder.llName.setVisibility(View.GONE);
-        holder.txtUnusable.setVisibility(View.GONE);
-
-        holder.txtMasterName.setText(items.subject);
+        final StTabaghe items = surce.get(position);
+        holder.txtTabagheName.setText(items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
                 .error(R.drawable.user)
@@ -91,7 +74,7 @@ public class AdapterTabagheList extends RecyclerView.Adapter<AdapterTabagheList.
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemTabagheList.tabagheListItemClick(position);
+                onClickItemTabagheList.tabagheListItemClick(position, items.sourceNumber);
             }
         });
     }

@@ -144,7 +144,7 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
 
 
     @Override
-    public void onReceiveCourse(ArrayList<StCourse> course) {
+    public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
         idTeacher = course.get(0).idTeacher;
         txtMony.setText(course.get(0).mony + "");

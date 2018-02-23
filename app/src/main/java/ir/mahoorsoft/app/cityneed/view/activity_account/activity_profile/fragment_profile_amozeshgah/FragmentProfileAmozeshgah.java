@@ -1,19 +1,15 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,20 +19,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
-import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
-import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
-import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
-import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
-import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityCoursesList;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
 
 /**
  * Created by MAHNAZ on 10/23/2017.

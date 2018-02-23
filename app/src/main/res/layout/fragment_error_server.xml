@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_eq"
+    android:background="@color/light"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -20,7 +20,7 @@
             android:layout_margin="64dp"
             android:gravity="center"
             android:text="ارتباط با سرور امکان پذیر نیست لطفا اتصال اینترنت خود را چک کرده و دوباره تلاش کنید."
-            android:textColor="@color/light"
+            android:textColor="@color/dark_eq"
             android:textSize="@dimen/txt_size_smal"
             android:textStyle="bold" />
     </LinearLayout>
@@ -41,7 +41,7 @@
                 android:id="@+id/btnReCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_eq"
+                android:background="@drawable/btn_special"
                 android:padding="16dp"
                 android:text="تلاش مجدد"
                 android:textColor="@color/light"

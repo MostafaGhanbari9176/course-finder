@@ -22,7 +22,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Holder> {
+public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourseListTeacher.Holder> {
 
     public interface OnClickItemCourseList {
         void courseListItemClick(int id);
@@ -33,7 +33,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
     private ArrayList<StCourse> surce = new ArrayList<>();
 
 
-    public AdapterCourseList(Context context, ArrayList<StCourse> surce, OnClickItemCourseList onClickItemCourseList) {
+    public AdapterCourseListTeacher(Context context, ArrayList<StCourse> surce, OnClickItemCourseList onClickItemCourseList) {
         this.context = context;
         this.surce = surce;
         this.onClickItemCourseList = onClickItemCourseList;
@@ -42,24 +42,22 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
 
     public class Holder extends RecyclerView.ViewHolder {
         ImageView imgItem;
-        TextView txtMasterName;
-        TextView txtstartDate;
+        TextView txtCapacity;
         TextView txtCourseName;
         LinearLayout item;
 
         public Holder(View itemView) {
             super(itemView);
-            imgItem = (ImageView) itemView.findViewById(R.id.imgItemCourseList);
-            txtMasterName = (TextView) itemView.findViewById(R.id.txtMasterNameItem);
-            txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItem);
-            txtstartDate = (TextView) itemView.findViewById(R.id.txtStartDateItem);
-            item = (LinearLayout) itemView.findViewById(R.id.itemCourseList);
+            imgItem = (ImageView) itemView.findViewById(R.id.imgItemCourseListTeacher);
+            txtCapacity = (TextView) itemView.findViewById(R.id.txtCapacityItem);
+            txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemTeacher);
+            item = (LinearLayout) itemView.findViewById(R.id.itemCourseListTeacher);
         }
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_course_list_user, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_course_list_teacher, parent, false);
         Holder holder = new Holder(view);
 
         return holder;
@@ -70,8 +68,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         final StCourse items = surce.get(position);
 
         holder.txtCourseName.setText(items.CourseName);
-        holder.txtstartDate.setText(items.startDate );
-        holder.txtMasterName.setText(items.MasterName);
+        holder.txtCapacity.setText(items.capacity+"");
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
                 .error(R.drawable.user)
