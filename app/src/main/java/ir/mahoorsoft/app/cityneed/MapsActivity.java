@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -145,7 +146,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             else
                 location = new LatLng(Double.parseDouble(Pref.getStringValue(PrefKey.lat, "")), Double.parseDouble(Pref.getStringValue(PrefKey.lon, "")));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             showDialog("خطا!", "لطفا مجددا تلاش کنید.", "", "قبول");
         }
 
@@ -170,6 +171,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapClick(LatLng latLng) {
+
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(
+                latLng).zoom(mMap.getCameraPosition().zoom).build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         marker.setPosition(latLng);
     }
 }

@@ -71,7 +71,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             txtMasterName.setTypeface(tf);
             txtCourseName.setTypeface(tf);
             txtCourseName.setText(items.CourseName);
-            txtMasterName.setText(items.MasterName);
+            txtMasterName.setText("آموزشگاه "+items.MasterName);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -173,7 +173,6 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
                 break;
 
             case R.id.btnLocation:
-
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivityForResult(intent, 2);
                 break;
@@ -311,6 +310,34 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     @Override
     public void flagFromUpload(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
+        if (res.code == 0) {
+            showAlertDialog("خطا", "خطا در بارگذاری تصویر لطفا بعدا امتحان کنید.", "", "قبول");
+        } else if (res.code == 1) {
+            showAlertDialog("عملیات موفق", "تصویر بارگذاری شد", "", "قبول");
+        } else if (res.code == 2) {
+            showAlertDialog("خطا", "حجم تصویر باید بین یک تا پنج مگابایت باشد", "", "قبول");
+        }
+    }
+
+    private void showAlertDialog(String title, String message, String buttonTrue, String btnFalse) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+
+        alertDialog.setPositiveButton(buttonTrue, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+
+            }
+        });
+        alertDialog.setNegativeButton(btnFalse, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     private void showDialog(String title, String message, String btntrue, String btnFalse) {

@@ -12,11 +12,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
-import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
-import ir.mahoorsoft.app.cityneed.presenter.PresentTabaghe;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
+import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
+import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -24,13 +21,13 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/30/2018.
  */
 
-public class ActivityTabagheList extends AppCompatActivity implements AdapterTabagheList.OnClickItemTabagheList, PresentTabaghe.OnPresentTabagheListener {
+public class ActivityTabagheList extends AppCompatActivity implements AdapterTabagheList.OnClickItemTabagheList, PresentGrouping.OnPresentTabagheListener {
     Stack<Integer> id = new Stack<>();
     int oldId = -1;
     int newId = -1;
     AdapterTabagheList adapter;
     RecyclerView list;
-    ArrayList<StTabaghe> surce;
+    ArrayList<StGrouping> surce;
     DialogProgres dialogProgres;
 
     @Override
@@ -53,8 +50,8 @@ public class ActivityTabagheList extends AppCompatActivity implements AdapterTab
 
         newId = id;
         dialogProgres.showProgresBar();
-        PresentTabaghe presentTabaghe = new PresentTabaghe(this);
-        presentTabaghe.getTabaghe(id);
+        PresentGrouping presentGrouping = new PresentGrouping(this);
+        presentGrouping.getTabaghe(id);
     }
 
 
@@ -100,7 +97,7 @@ public class ActivityTabagheList extends AppCompatActivity implements AdapterTab
     }
 
     @Override
-    public void onResiveTabaghe(ArrayList<StTabaghe> data) {
+    public void onResiveTabaghe(ArrayList<StGrouping> data) {
         this.id.push(oldId);
         oldId = newId;
         surce = data;
@@ -116,7 +113,7 @@ public class ActivityTabagheList extends AppCompatActivity implements AdapterTab
     }
 
     @Override
-    public void tabagheListItemClick(int position, int sourceNumber) {
+    public void tabagheListItemClick(int position, int sourceNumber, int groupId) {
         setSource(surce.get(position).id);
     }
 }

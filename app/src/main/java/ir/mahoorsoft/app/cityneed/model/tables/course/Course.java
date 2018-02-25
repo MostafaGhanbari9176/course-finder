@@ -9,8 +9,10 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -22,6 +24,8 @@ public class Course {
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
 
         void onReceiveData(ArrayList<StCourse> data, int listId);
+
+        void DataForHomeLists(ArrayList<StHomeListItems> data);
 
         void sendMessage(String message);
     }
@@ -49,13 +53,30 @@ public class Course {
         });
     }
 
+    public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StCourse>> getAllCourse = api.getCourseByFilter(minOld, maxOld, startDate, endDate, groupId, days);
+        getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
+                onCourseLitener.onReceiveData(response.body(), -1);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StCourse>> call, Throwable t) {
+                onCourseLitener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
     public void getAllCourse() {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StCourse>> getAllCourse = api.getAllCourse();
         getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body(),-1);
+                onCourseLitener.onReceiveData(response.body(), -1);
             }
 
             @Override
@@ -71,7 +92,7 @@ public class Course {
         getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body(),3);
+                onCourseLitener.onReceiveData(response.body(), 3);
             }
 
             @Override
@@ -87,7 +108,7 @@ public class Course {
         getCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body(),-1);
+                onCourseLitener.onReceiveData(response.body(), -1);
             }
 
             @Override
@@ -97,14 +118,30 @@ public class Course {
         });
     }
 
-    public void getCourseByTeacherId() {
+    public void getCourseByGroupingId(int id) {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StHomeListItems>> get = api.getCourseByGroupingId(id);
+        get.enqueue(new Callback<ArrayList<StHomeListItems>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StHomeListItems>> call, Response<ArrayList<StHomeListItems>> response) {
+                onCourseLitener.DataForHomeLists(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StHomeListItems>> call, Throwable t) {
+                onCourseLitener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void getCourseByTeacherId(String apiCode) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StCourse>> getAllCourse = api.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
+        Call<ArrayList<StCourse>> getAllCourse = api.getCourseByTeacherId(apiCode);
         getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body(),-1);
+                onCourseLitener.onReceiveData(response.body(), -1);
             }
 
             @Override
@@ -120,7 +157,7 @@ public class Course {
         getCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body(),-1);
+                onCourseLitener.onReceiveData(response.body(), -1);
             }
 
             @Override

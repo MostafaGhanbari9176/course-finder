@@ -2,74 +2,368 @@ package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
+
+import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
 
 /**
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentSearch extends Fragment implements View.OnClickListener {
+public class FragmentSearch extends Fragment implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, AdapterCourseList.OnClickItemCourseList, DialogTabaghe.OnTabagheItemClick, DialogDayWeek.ReturnDay {
 
     View view;
-    Button btnFilter;
+    LinearLayout btnFilter;
+    CardView btnDeleteFilter;
+    RadioButton rbCourseName;
+    RadioButton rbTeacherName;
+    RecyclerView list;
+    ArrayList<StCourse> source = new ArrayList<>();
+    AdapterCourseList adapter;
+    DialogProgres dialogProgres;
+    TextView txtSearch;
+    LinearLayout empty;
 
-
+    private View dialogView;
+    private Dialog dialog;
+    private Button btnStartDate;
+    private Button btnEndDate;
+    private Button btnDay;
+    private Button btnGroup;
+    private Button btnConfirm;
+    TextView txtMinOld;
+    TextView txtMaxOld;
+    String sD = "";
+    String eD = "";
+    String day = "";
+    String groupName = "";
+    int groupId;
+    int minOld;
+    int maxOld;
+    boolean isFilterRes = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
-
         init();
         return view;
     }
 
     private void init() {
-
+        dialogProgres = new DialogProgres(G.context);
         pointers();
+        getDataFromServer();
+        runTxtSerachListener();
+    }
 
+    private void runTxtSerachListener() {
+        txtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length() == 0)
+                    onReceiveCourse(source, -1);
+                else {
+                    if (rbTeacherName.isChecked())
+                        searchTeacherName(s.toString());
+                    else
+                        searchCourseName(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void getDataFromServer() {
+        dialogProgres.showProgresBar();
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.getAllCourse();
     }
 
     @Override
     public void onClick(View view) {
-
-        switch(view.getId()){
-
-            case R.id.btnFilter :
+        switch (view.getId()) {
+            case R.id.llbtnFilter:
                 showDialog();
+                break;
+            case R.id.rbBaseOnCourseNameSearch:
+                searchCourseName(txtSearch.getText().toString());
+                break;
+            case R.id.rbBaseOnTeacherNameSearch:
+                searchTeacherName(txtSearch.getText().toString());
+                break;
+            case R.id.btnConfirmFilter:
+                confirmFilter();
+                break;
+            case R.id.btnSelectDayFilter:
+                (new DialogDayWeek(G.context, this)).Show();
+                break;
+            case R.id.btnEndDateFilter:
+                showDatePicker(false);
+                break;
+            case R.id.btnStartDateFilter:
+                showDatePicker(true);
+                break;
+            case R.id.btnSelectGroupFilter:
+                (new DialogTabaghe(G.context, this)).Show();
+                break;
+            case R.id.llDeleteFilter:
+                btnDeleteFilter.setVisibility(View.GONE);
+                getDataFromServer();
                 break;
         }
 
     }
 
-    private void pointers(){
+    private void confirmFilter() {
 
-        btnFilter = (Button) view.findViewById(R.id.btnFilter);
-        btnFilter.setOnClickListener(this);
+        try {
+            try {
+                minOld = Integer.parseInt(txtMinOld.getText().toString().trim());
+                maxOld = Integer.parseInt(txtMaxOld.getText().toString().trim());
+            }catch (Exception e){
+                throw new Exception("لطفا رنج سنی را صحیح وارد کنید");
+            }
+
+            if (maxOld < minOld)
+                throw new Exception("لطفا رنج سنی را صحیح وارد کنید");
+            if (sD.length() == 0 || eD.length() == 0)
+                throw new Exception("لطفا تاریخ شروع و پایان دوره را انتخاب کنید");
+            if (eD.compareTo(sD) == -1)
+                throw new Exception("لطفا تاریخ شروع و پایان دوره را صحیح انتخاب کنید");
+            sendFilterForServer();
+        } catch (Exception e) {
+            sendMessageFCT(e.getMessage());
+        }
     }
 
-    private void showDialog(){
+    private void sendFilterForServer() {
+        dialogProgres.showProgresBar();
+        isFilterRes = true;
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.getCourseByFilter(minOld, maxOld, sD, eD, groupId == 0 ? -1 : groupId, day.length() == 0 ? "-1" : day);
+    }
 
-       final Dialog dialog = new Dialog(getContext());
-       final LayoutInflater lI = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-       final View v = lI.inflate(R.layout.dialog_filter,null);
-       // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(v);
+    private void showDatePicker(final boolean isStartDate) {
+
+        PersianCalendar now = new PersianCalendar();
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance
+                (new DatePickerDialog.OnDateSetListener() {
+                     @Override
+                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+
+                         if (isStartDate) {
+                             sD = year + "-" + (((monthOfYear+1)+"").length() == 1 ? "0"+(monthOfYear+1) : (monthOfYear+1)+"") + "-" + ((dayOfMonth+"").length() == 1 ? "0"+dayOfMonth : dayOfMonth+"");
+                             btnStartDate.setText(sD);
+                         } else {
+                             eD = year + "-" + (((monthOfYear+1)+"").length() == 1 ? "0"+(monthOfYear+1) : (monthOfYear+1)+"") + "-" + ((dayOfMonth+"").length() == 1 ? "0"+dayOfMonth : dayOfMonth+"");
+                             btnEndDate.setText(eD);
+                         }
+                     }
+                 }, now.getPersianYear(),
+                        now.getPersianMonth(),
+                        now.getPersianDay());
+        datePickerDialog.setThemeDark(true);
+        datePickerDialog.show(G.activity.getFragmentManager(), "tpd");
+
+    }
+
+    private void searchCourseName(String searchFlag) {
+        if (searchFlag.length() == 0) {
+            onReceiveCourse(source, -1);
+            return;
+        }
+        ArrayList<StCourse> serachSource = new ArrayList<>();
+        for (int i = 0; i < source.size(); i++) {
+            if ((source.get(i).CourseName).contains(searchFlag))
+                serachSource.add(source.get(i));
+        }
+        if (serachSource.size() == 0) {
+            txtSearch.setBackgroundResource(R.drawable.txt_search_errore);
+            txtSearch.setTextColor(getResources().getColor(R.color.light));
+        } else {
+            txtSearch.setBackgroundResource(R.drawable.txt_search);
+            txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
+        }
+        adapter = new AdapterCourseList(G.context, serachSource, this);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void searchTeacherName(String searchFlag) {
+        if (searchFlag.length() == 0) {
+            onReceiveCourse(source, -1);
+            return;
+        }
+        ArrayList<StCourse> serachSource = new ArrayList<>();
+        for (int i = 0; i < source.size(); i++) {
+            try {
+                if ((source.get(i).MasterName).contains(searchFlag))
+                    serachSource.add(source.get(i));
+            } catch (Exception e) {
+                e.getMessage();
+            }
+        }
+        if (serachSource.size() == 0) {
+            txtSearch.setBackgroundResource(R.drawable.txt_search_errore);
+            txtSearch.setTextColor(getResources().getColor(R.color.light));
+        } else {
+            txtSearch.setBackgroundResource(R.drawable.txt_search);
+            txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
+        }
+        adapter = new AdapterCourseList(G.context, serachSource, this);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void pointers() {
+        dialog = new Dialog(G.context);
+        txtSearch = (TextView) view.findViewById(R.id.txtSearch);
+        rbCourseName = (RadioButton) view.findViewById(R.id.rbBaseOnCourseNameSearch);
+        rbTeacherName = (RadioButton) view.findViewById(R.id.rbBaseOnTeacherNameSearch);
+        btnFilter = (LinearLayout) view.findViewById(R.id.llbtnFilter);
+        btnDeleteFilter = (CardView) view.findViewById(R.id.llDeleteFilter);
+        empty = (LinearLayout) view.findViewById(R.id.llTxtEmptyListSearch);
+
+        btnDeleteFilter.setVisibility(View.GONE);
+        empty.setVisibility(View.GONE);
+
+        list = (RecyclerView) view.findViewById(R.id.RVSerarch);
+        rbCourseName.setChecked(true);
+        btnFilter.setOnClickListener(this);
+        rbCourseName.setOnClickListener(this);
+        rbTeacherName.setOnClickListener(this);
+        btnDeleteFilter.setOnClickListener(this);
+    }
+
+    private void showDialog() {
+
+        LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        dialogView = li.inflate(R.layout.dialog_filter, null, false);
+        btnConfirm = (Button) dialogView.findViewById(R.id.btnConfirmFilter);
+        btnDay = (Button) dialogView.findViewById(R.id.btnSelectDayFilter);
+        btnStartDate = (Button) dialogView.findViewById(R.id.btnStartDateFilter);
+        btnEndDate = (Button) dialogView.findViewById(R.id.btnEndDateFilter);
+        btnGroup = (Button) dialogView.findViewById(R.id.btnSelectGroupFilter);
+        txtMinOld = (TextView) dialogView.findViewById(R.id.txtminOldFilter);
+        txtMaxOld = (TextView) dialogView.findViewById(R.id.txtMaxOldFilter);
+
+        btnGroup.setOnClickListener(this);
+        btnEndDate.setOnClickListener(this);
+        btnStartDate.setOnClickListener(this);
+        btnConfirm.setOnClickListener(this);
+        btnDay.setOnClickListener(this);
+
+
+        dialog.setContentView(dialogView);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
+    }
 
+    @Override
+    public void sendMessageFCT(String message) {
+        dialogProgres.closeProgresBar();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void confirmCourse(int id) {
 
+    }
+
+    @Override
+    public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
+        dialogProgres.closeProgresBar();
+        dialog.cancel();
+        adapter = new AdapterCourseList(G.context, source, this);
+        txtSearch.setBackgroundResource(R.drawable.txt_search);
+        txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
+        if (isFilterRes) {
+            btnDeleteFilter.setVisibility(View.VISIBLE);
+            isFilterRes = false;
+        }
+        if (course.size() == 0 || course.get(0).empty == 1) {
+            empty.setVisibility(View.VISIBLE);
+            source.clear();
+            adapter.notifyDataSetChanged();
+            return;
+        } else
+            empty.setVisibility(View.GONE);
+        if (source != course) {
+            source.clear();
+            source.addAll(course);
+        }
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                , LinearLayoutManager.VERTICAL, false);
+        list.setLayoutManager(layoutManager);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
+
+    }
+
+    @Override
+    public void courseListItemClick(int id) {
+
+    }
+
+    @Override
+    public void days(String days) {
+        day = days;
+        btnDay.setText("تعیین شده");
+        Toast.makeText(G.context, days, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void tabagheInf(String name, int id) {
+        groupId = id;
+        groupName = name;
+        btnGroup.setText(name);
     }
 }
 

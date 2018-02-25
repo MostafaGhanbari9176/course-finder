@@ -7,12 +7,15 @@
     android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/llSV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:orientation="vertical">
 
             <LinearLayout
@@ -33,6 +36,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
+                        android:background="@mipmap/backgrand"
                         app:indicator_type="indicator_anim_circle">
 
                     </cn.lightsky.infiniteindicator.InfiniteIndicator>
@@ -42,138 +46,65 @@
             </LinearLayout>
 
             <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/RVGroupingItemsHome"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/btnDeletGroupingHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="2dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_delete_red" />
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTxtEmptyListHome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/llSelectedCourse"
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_margin="2dp">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
+                        android:background="@color/dark_eq"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="هیچ دوره ایی موجود نیست"
+                        android:textColor="@color/light" />
+                </android.support.v7.widget.CardView>
 
-                        <TextView
-                            android:id="@+id/txtOne"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:text="@string/list_text_one"
-                            android:textColor="@color/text_home"
-                            android:textSize="@dimen/txt_size_big" />
-                    </LinearLayout>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/RVSelectedCourseHome"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/line_item"
-                            android:orientation="vertical"></LinearLayout>
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llFullCapacityCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtTwo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:text="@string/list_text_two"
-                            android:textColor="@color/text_home"
-                            android:textSize="@dimen/txt_size_big" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/RVFullCapacityCourseHome"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </LinearLayout>
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/line_item"
-                            android:orientation="vertical"></LinearLayout>
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llNewCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtThree"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="2dp"
-                            android:gravity="right|center"
-                            android:text="@string/list_text_three"
-                            android:textColor="@color/text_home"
-                            android:textSize="@dimen/txt_size_big" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/RVNewCourseHome"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </LinearLayout>
-
-                </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llItemsHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
 
         </LinearLayout>
     </ScrollView>

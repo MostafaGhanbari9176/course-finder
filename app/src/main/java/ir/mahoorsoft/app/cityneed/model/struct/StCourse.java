@@ -6,21 +6,22 @@ package ir.mahoorsoft.app.cityneed.model.struct;
 
 public class StCourse {
     public int id;
-    public int empoty ;
+    public int empty;
     public int idTabaghe;
-    public String CourseName;
+    public String CourseName = "";
     public int type;
     public int capacity;
     public int mony;
-    public int range;
-    public String idTeacher;
-    public String tabaghe;
-    public String startDate;
-    public String sharayet;
-    public String tozihat;
-    public String endDate;
-    public String day;
-    public String hours;
-    public String MasterName;
+    public int minOld;
+    public int maxOld;
+    public String idTeacher = "";
+    public String tabaghe = "";
+    public String startDate = "";
+    public String sharayet = "";
+    public String tozihat = "";
+    public String endDate = "";
+    public String day = "";
+    public String hours = "";
+    public String MasterName = "";
 
 }

@@ -12,7 +12,7 @@
     <color name="dark_green">#1a4d3a</color>
     <color name="light">#ffffff</color>
     <color name="light_green">#16815a</color>
-    <color name="light_green2">#66cca6</color>
+    <color name="light_green2">#0dbf16</color>
     <color name="light_orange">#ff6600</color>
     <color name="dark_blue">#34495e</color>
     <color name="line_item">#1e5843</color>
@@ -24,7 +24,7 @@
     <color name="back_grand_button">#85d9bb</color>
     <color name="back_grand_layout">#E8F5E9</color>
     <color name="toolbar_elements1">#fff</color>
-    <color name="error">#F06292</color>
+    <color name="error">#cf2760</color>
     <!--color primary group  == eq -->
     <color name="blue_eq">#41cdb0</color>
     <color name="dark_eq">#263238</color>

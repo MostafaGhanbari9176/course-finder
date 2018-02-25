@@ -31,11 +31,14 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityTabagheList;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
 
@@ -43,14 +46,14 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
  * Created by M-gh on 28-Jan-18.
  */
 
-public class ActivityCourseRegistring extends AppCompatActivity implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener, DialogTabaghe.OnTabagheItemClick {
-    RadioButton rb1;
-    RadioButton rb2;
-    RadioButton rb3;
-    RadioButton rb4;
-    RadioButton rb5;
-    RadioButton rb6;
-    RadioButton rb7;
+public class ActivityCourseRegistring extends AppCompatActivity implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener, DialogTabaghe.OnTabagheItemClick, DialogDayWeek.ReturnDay {
+    /*    RadioButton rb1;
+        RadioButton rb2;
+        RadioButton rb3;
+        RadioButton rb4;
+        RadioButton rb5;
+        RadioButton rb6;
+        RadioButton rb7;*/
     TextView txtSubject;
     boolean isUserChanged = true;
     TextView txtTozihat;
@@ -62,6 +65,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     Button btnSave;
     Button btnStartDate;
     Button btnEndDate;
+    Button btnDays;
     Button btnTime;
     Button btnTabaghe;
     DialogProgres dialogProgres;
@@ -73,6 +77,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     String tabaghe = "";
     int id;
     int tabagheId;
+    String days = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,19 +101,20 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         txtSharayet = (TextView) findViewById(R.id.txtsharayetRegisteryCourse);
 
         btnEndDate = (Button) findViewById(R.id.btnEndDateRegisteryCourse);
+        btnDays = (Button) findViewById(R.id.btnDaysRejistery);
         btnStartDate = (Button) findViewById(R.id.btnStartDateRegisteryCourse);
         btnSave = (Button) findViewById(R.id.btnSaveRegisteryRegisteryCourse);
         btnTime = (Button) findViewById(R.id.btnChooseTimeRegisteryCourse);
         btnTabaghe = (Button) findViewById(R.id.btnChoseTabaghe);
 
-        rb1 = (RadioButton) findViewById(R.id.rbSaturday);
+/*        rb1 = (RadioButton) findViewById(R.id.rbSaturday);
         rb2 = (RadioButton) findViewById(R.id.rbSunday);
         rb3 = (RadioButton) findViewById(R.id.rbMonday);
         rb4 = (RadioButton) findViewById(R.id.rb3);
         rb5 = (RadioButton) findViewById(R.id.rb4);
         rb6 = (RadioButton) findViewById(R.id.rb5);
         rb7 = (RadioButton) findViewById(R.id.rbFriday);
-        rb1.setChecked(true);
+        rb1.setChecked(true);*/
 
         cbxPublic = (CheckBox) findViewById(R.id.cbxPublicCurceRegisteryCourse);
         cbxPrivate = (CheckBox) findViewById(R.id.cbxSingleCurceRegisteryCourse);
@@ -121,6 +127,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         btnTabaghe.setOnClickListener(this);
         cbxPrivate.setOnClickListener(this);
         cbxPublic.setOnClickListener(this);
+        btnDays.setOnClickListener(this);
 
     }
 
@@ -239,6 +246,9 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
             case R.id.btnChoseTabaghe:
                 (new DialogTabaghe(this, this)).Show();
                 break;
+            case R.id.btnDaysRejistery:
+                (new DialogDayWeek(this, this)).Show();
+                break;
 
         }
 
@@ -309,7 +319,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                     txtMony.getText() != null && txtMony.getText().toString().trim().length() != 0 &&
                     txtMaxRange.getText() != null && txtMaxRange.getText().toString().trim().length() != 0 &&
                     txtCapacity.getText() != null && txtCapacity.getText().toString().trim().length() != 0 &&
-                    getDay().length() != 0) {
+                    days.length() != 0) {
                 showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید", "بله", "بررسی");
             } else {
                 throw new Exception("لطفا اطلاعات را صحیح وارد کنید");
@@ -339,7 +349,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                 txtTozihat.getText().toString().trim(),
                 sD,
                 eD,
-                getDay(),
+                days,
                 hours,
                 Integer.parseInt(txtMinRange.getText().toString().trim()),
                 Integer.parseInt(txtMaxRange.getText().toString().trim())
@@ -363,6 +373,11 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
+
+    }
+
+    @Override
+    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
 
     }
 
@@ -413,6 +428,14 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     @Override
     public void flagFromUpload(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
+        if (res.code == 0) {
+            sendMessageFCT("خطا در بارگذاری لطفا بعدا امتحان کنید.");
+        } else if (res.code == 1) {
+
+        } else if (res.code == 2) {
+            sendMessageFCT("حجم فایل باید بین یک تا پنج مگابایت باشد");
+        }
+        this.finish();
     }
 
     private void showDialog(String title, String message, String btntrue, String btnFalse) {
@@ -435,8 +458,8 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         builder.show();
     }
 
-    private String getDay() {
-        String day = "";
+/*    private String getDay() {
+*//*        String day = "";
         if (rb1.isChecked())
             day = "شنبه";
         else if (rb2.isChecked())
@@ -451,14 +474,21 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
             day = "پنجشنبه";
         else if (rb7.isChecked())
             day = "جمعه";
-        return day;
-    }
+        return day;*//*
+    }*/
 
     @Override
     public void tabagheInf(String name, int id) {
         tabagheId = id;
         tabaghe = name;
         btnTabaghe.setText(name);
+    }
+
+    @Override
+    public void days(String days) {
+        this.days = days;
+        btnDays.setText(days);
+        sendMessageFCT(days);
     }
 }
 

@@ -20,6 +20,7 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
@@ -149,7 +150,7 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         idTeacher = course.get(0).idTeacher;
         txtMony.setText(course.get(0).mony + "");
         txtCapacity.setText(course.get(0).capacity + "");
-        txtRange.setText(course.get(0).range + "");
+        txtRange.setText("از("+course.get(0).minOld+")تا("+course.get(0).maxOld+")سال");
         txtStartDate.setText(course.get(0).startDate);
         txtEndDate.setText(course.get(0).endDate);
         txtType.setText(course.get(0).type == 0 ? "عمومی" : "خصوصی");
@@ -160,6 +161,11 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         txtTabaghe.setText(course.get(0).tabaghe);
         txtsharayet.setText(course.get(0).sharayet);
         setImage();
+
+    }
+
+    @Override
+    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
 
     }
 

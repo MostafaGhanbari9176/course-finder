@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
@@ -30,11 +32,13 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
     RecyclerView list;
     ArrayList<StCourse> surce;
     DialogProgres dialogProgres;
-
+    TextView txt;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        txt = (TextView) findViewById(R.id.txtToolbarList);
+        txt.setText("دوره های ثبت نام شده");
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
@@ -79,6 +83,11 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
+
     }
 
     @Override

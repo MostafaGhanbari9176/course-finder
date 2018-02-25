@@ -21,7 +21,7 @@
                 android:icon="@drawable/icon_profile"
                 android:title="@string/menu_text_five" />
             <item
-                android:id="@+id/tabaghe"
+                android:id="@+id/grouping"
                 android:icon="@drawable/icon_list"
                 android:title="دسته بندی" />
 

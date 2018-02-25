@@ -58,6 +58,22 @@ public class Teacher {
         });
     }
 
+    public void getAllTeacher() {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StTeacher>> getTeacher = api.getAllTeacher();
+        getTeacher.enqueue(new Callback<ArrayList<StTeacher>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StTeacher>> call, retrofit2.Response<ArrayList<StTeacher>> response) {
+                onTeacherListener.onReceiveData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StTeacher>> call, Throwable t) {
+                onTeacherListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
     public void updateTeacher(String landPhone, String subject, String address, int cityId, int madrak) {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<ResponseOfServer>> updateTracher = api.updateTeacher(Phone, landPhone, address, subject, cityId, madrak);

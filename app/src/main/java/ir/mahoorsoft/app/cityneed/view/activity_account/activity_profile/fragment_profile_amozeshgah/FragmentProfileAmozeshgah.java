@@ -87,6 +87,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         markerOptions.position(location);
         markerOptions.title("مکان شما");
 
+
         CameraPosition cameraPosition = new CameraPosition.Builder().target(
                 location).zoom(16).build();
 

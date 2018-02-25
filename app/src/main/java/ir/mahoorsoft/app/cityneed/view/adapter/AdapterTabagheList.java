@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
+import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 
 /**
  * Created by RCC1 on 1/30/2018.
@@ -25,15 +25,15 @@ import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
 public class AdapterTabagheList extends RecyclerView.Adapter<AdapterTabagheList.Holder> {
 
     public interface OnClickItemTabagheList {
-        void tabagheListItemClick(int position, int sourceNumber);
+        void tabagheListItemClick(int position, int sourceNumber, int groupId);
     }
 
     private OnClickItemTabagheList onClickItemTabagheList;
     private Context context;
-    private ArrayList<StTabaghe> surce = new ArrayList<>();
+    private ArrayList<StGrouping> surce = new ArrayList<>();
 
 
-    public AdapterTabagheList(Context context, ArrayList<StTabaghe> surce, OnClickItemTabagheList onClickItemTabagheList) {
+    public AdapterTabagheList(Context context, ArrayList<StGrouping> surce, OnClickItemTabagheList onClickItemTabagheList) {
         this.context = context;
         this.surce = surce;
         this.onClickItemTabagheList = onClickItemTabagheList;
@@ -63,7 +63,7 @@ public class AdapterTabagheList extends RecyclerView.Adapter<AdapterTabagheList.
 
     @Override
     public void onBindViewHolder(AdapterTabagheList.Holder holder, final int position) {
-        final StTabaghe items = surce.get(position);
+        final StGrouping items = surce.get(position);
         holder.txtTabagheName.setText(items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
@@ -74,7 +74,7 @@ public class AdapterTabagheList extends RecyclerView.Adapter<AdapterTabagheList.
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemTabagheList.tabagheListItemClick(position, items.sourceNumber);
+                onClickItemTabagheList.tabagheListItemClick(position, items.sourceNumber, items.id);
             }
         });
     }

@@ -28,6 +28,11 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         teacher.getTeacher();
     }
 
+    public void getAllTeacher() {
+        Teacher teacher = new Teacher(this);
+        teacher.getAllTeacher();
+    }
+
     public void getMs() {
         Teacher teacher = new Teacher(this);
         teacher.getMadrakState();

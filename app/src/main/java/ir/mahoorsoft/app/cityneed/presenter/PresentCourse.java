@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.model.tables.course.Course;
 
 /**
@@ -18,6 +19,8 @@ public class PresentCourse implements Course.OnCourseLitener {
         void confirmCourse(int id);
 
         void onReceiveCourse(ArrayList<StCourse> course, int listId);
+
+        void onReceiveCourseForListHome(ArrayList<StHomeListItems> items);
 
     }
 
@@ -42,6 +45,16 @@ public class PresentCourse implements Course.OnCourseLitener {
         course.getNewCourse();
     }
 
+    public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days){
+        Course course = new Course(this);
+        course.getCourseByFilter(minOld, maxOld, startDate, endDate, groupId, days);
+    }
+
+    public void getCourseByGroupingId(int id){
+        Course course = new Course(this);
+        course.getCourseByGroupingId(id);
+    }
+
     public void getUserCourse(){
         Course course = new Course(this);
         course.getUserCourse();
@@ -52,16 +65,16 @@ public class PresentCourse implements Course.OnCourseLitener {
         course.getCourseById(id);
     }
 
-    public void getCourseByTeacherId() {
+    public void getCourseByTeacherId(String apiCode) {
         Course course = new Course(this);
-        course.getCourseByTeacherId();
+        course.getCourseByTeacherId(apiCode);
 
     }
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
         if(res.get(0).code == 0)
-            sendMessage("خطا باارز پوزش لطفا بعدا امتحان کنید");
+            sendMessage("خطا, باارز پوزش لطفا بعدا امتحان کنید");
       else
           onPresentCourseLitener.confirmCourse(res.get(0).code);
     }
@@ -70,6 +83,11 @@ public class PresentCourse implements Course.OnCourseLitener {
     public void onReceiveData(ArrayList<StCourse> data ,int listId) {
 
         onPresentCourseLitener.onReceiveCourse(data, listId);
+    }
+
+    @Override
+    public void DataForHomeLists(ArrayList<StHomeListItems> data) {
+        onPresentCourseLitener.onReceiveCourseForListHome(data);
     }
 
     @Override

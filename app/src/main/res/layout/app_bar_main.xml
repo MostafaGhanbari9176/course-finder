@@ -39,7 +39,6 @@
                         android:layout_height="wrap_content"
                         android:text="سایر آموزشگاها"
                         android:textColor="@color/light"
-                        android:textSize="@dimen/txt_size_vsmal"
                         android:textStyle="bold" />
 
                     <RadioButton
@@ -53,7 +52,6 @@
                         android:layout_height="wrap_content"
                         android:text="خودم"
                         android:textColor="@color/light"
-                        android:textSize="@dimen/txt_size_vsmal"
                         android:textStyle="bold" />
 
                     <RadioButton
@@ -68,7 +66,6 @@
                         android:layout_height="wrap_content"
                         android:text="دوره های"
                         android:textColor="@color/light"
-                        android:textSize="@dimen/txt_size_vsmal"
                         android:textStyle="bold" />
                 </RadioGroup>
 

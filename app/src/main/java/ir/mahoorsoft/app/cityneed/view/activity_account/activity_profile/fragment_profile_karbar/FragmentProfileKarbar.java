@@ -76,12 +76,12 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
         dialogProgres = new DialogProgres(G.context);
         txtName = (TextView) view.findViewById(R.id.txtNAme_karbar);
         txtPhone = (TextView) view.findViewById(R.id.txtPhone_Karbar);
-        txtName.setOnClickListener(new View.OnClickListener() {
+/*        txtName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
             }
-        });
+        });*/
 
 
     }

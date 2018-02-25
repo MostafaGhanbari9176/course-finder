@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,10 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
@@ -44,6 +48,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     }
 
     private void init() {
+        ((Toolbar) view.findViewById(R.id.tbList)).setVisibility(View.GONE);
         dialogProgres = new DialogProgres(G.context);
         surce = new ArrayList<>();
         list = (RecyclerView) view.findViewById(R.id.RVList);
@@ -59,7 +64,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     private void setSource() {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getCourseByTeacherId();
+        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode,""));
     }
 
 
@@ -85,6 +90,11 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
+
     }
 
     @Override

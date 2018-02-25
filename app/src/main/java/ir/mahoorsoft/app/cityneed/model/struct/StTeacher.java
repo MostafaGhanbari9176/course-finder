@@ -6,6 +6,7 @@ package ir.mahoorsoft.app.cityneed.model.struct;
 
 public class StTeacher {
     public String landPhone;
+    public String ac;
     public String phone;
     public int type;//0-->college && 1-->privateEducation
     public String address;

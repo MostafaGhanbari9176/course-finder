@@ -3,6 +3,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_main;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,11 +20,14 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedServer;
+import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityPhoneConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
@@ -50,6 +54,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     FrameLayout contentMain;
     public DialogProgres dialogProgres;
     boolean flag = true;
+    private FragmentHome fhome = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         pointers();
         profileCheck();
         setSupportActionBar(toolbar);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -80,6 +86,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         PresentCheckedServer presentCheckedServer = new PresentCheckedServer(this);
         presentCheckedServer.checkedServer();
     }
+
 
     private void pointers() {
 
@@ -118,11 +125,18 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+
     private void showCourseMode() {
-        if (rbSelf.isChecked())
+        if (rbSelf.isChecked()){
+            fhome = null;
             replaceContentWith(new FragmentSelfCourse());
-        else
-            replaceContentWith(new FragmentHome());
+        }
+        else{
+            fhome = new FragmentHome();
+            replaceContentWith(fhome);
+        }
+
     }
 
     public static void replaceContentWith(Fragment fragment) {
@@ -145,21 +159,27 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
 
             case R.id.btnHome_Menu:
-                replaceContentWith(new FragmentHome());
+                toolbar.setVisibility(View.VISIBLE);
+                fhome = new FragmentHome();
+                replaceContentWith(fhome);
                 flag = true;
                 break;
             case R.id.btnMap_Menu:
+                fhome = null;
+                toolbar.setVisibility(View.GONE);
                 replaceContentWith(new FragmentMap());
                 flag = false;
                 break;
             case R.id.btnSearch_Menu:
+                fhome = null;
+                toolbar.setVisibility(View.GONE);
                 replaceContentWith(new FragmentSearch());
                 flag = false;
                 break;
-            case R.id.tabaghe:
+            case R.id.grouping:
 //                Intent intent = new Intent(this, ActivityTabagheList.class);
 //                startActivity(intent);
-                new DialogTabaghe(this,this).Show();
+                new DialogTabaghe(this, this).Show();
                 flag = false;
                 break;
         }
@@ -174,8 +194,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (!flag) {
-
-            replaceContentWith(new FragmentHome());
+            toolbar.setVisibility(View.VISIBLE);
+            fhome = new FragmentHome();
+            replaceContentWith(fhome);
 
         } else {
 
@@ -201,7 +222,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         }
         if (Pref.getBollValue(PrefKey.IsLogin, false)) {
 
-            if (Pref.getStringValue(PrefKey.userName, "").length() != 0 ) {
+            if (Pref.getStringValue(PrefKey.userName, "").length() != 0) {
                 txtUserName.setText(Pref.getStringValue(PrefKey.userName, ""));
                 txtProfileButton.setText("پروفایل");
             } else {
@@ -226,9 +247,12 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     public void serverChecked(boolean online) {
         dialogProgres.closeProgresBar();
         if (online) {
-            replaceContentWith(new FragmentHome());
+            toolbar.setVisibility(View.VISIBLE);
+            rbOther.setChecked(true);
+            fhome = new FragmentHome();
+            replaceContentWith(fhome);
         } else {
-
+            fhome = null;
             toolbar.setVisibility(View.GONE);
             replaceContentWith(new FragmentErrorServer());
         }
@@ -237,6 +261,13 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void tabagheInf(String name, int id) {
-        Toast.makeText(this, id+" ,,, "+name, Toast.LENGTH_SHORT).show();
+        if (fhome != null) {
+            fhome.queryForCourses(id);
+        } else {
+            toolbar.setVisibility(View.VISIBLE);
+            fhome = new FragmentHome();
+            replaceContentWith(fhome);
+            fhome.queryForCourses(id);
+        }
     }
 }

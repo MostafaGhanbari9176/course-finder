@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -63,6 +64,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     LinearLayout llListAddCourse;
     LinearLayout llTrendingUP;
     DialogProgres dialogProgres;
+    int flagMadrak = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,7 +117,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 showAlertDialog("خروج از حساب", "آیا می خواهید از حساب کاربری خود خارج شوید", "بله", "خیر");
                 break;
             case R.id.btnAddCourseProfile:
-                starterActivity(ActivityCourseRegistring.class);
+                addCourse();
                 break;
             case R.id.btnCourseListProfile:
                 starterActivity(ActivityTeacherCoursesList.class);
@@ -144,16 +146,24 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void addCourse() {
+        if (flagMadrak == 0)
+            showDialogForMadrakState("مدرک یا مجوز آموزشی", "برای ثبت دوره مدرک شما باید تایید شده باشد", "بارگذاری مدرک", "متوجه شدم", "");
+        else if (flagMadrak == 1)
+            showDialogForMadrakState("مدرک یا مجوز آموزشی", "مدرک شما در انتظار تایید است,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
+        else
+            starterActivity(ActivityCourseRegistring.class);
+    }
+
     private void uploalMadrak() {
         if (txtUpload.getText().equals("بارگذاری مدرک آموزشی")) {
             Intent intent = new Intent(this, ActivityFiles.class);
             intent.putExtra("isImage", false);
             startActivityForResult(intent, 1);
-
-        }else if (txtUpload.getText().equals("مدرک شما در انتظار تایید است")) {
-
-        }else if (txtUpload.getText().equals("مدرک شما تایید شده")) {
-
+        } else if (txtUpload.getText().equals("مدرک شما در انتظار تایید است")) {
+            showDialogForMadrakState("مدرک یا مجوز آموزشی", "مدرک شما در انتظار تایید است,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
+        } else if (txtUpload.getText().equals("مدرک شما تایید شده")) {
+            sendMessageFTT(txtUpload.getText().toString());
         }
     }
 
@@ -292,9 +302,10 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     @Override
     public void confirmTeacher(boolean flag) {
         dialogProgres.closeProgresBar();
-        if(flag)
+        if (flag) {
             txtUpload.setText("مدرک شما در انتظار تایید است");
-        else
+            flagMadrak = 1;
+        } else
             showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
     }
 
@@ -307,14 +318,16 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     public void responseForMadrak(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
         if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("error")) {
-
             replaceContentWith(new FragmentErrorServer());
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {
             txtUpload.setText("بارگذاری مدرک آموزشی");
+            flagMadrak = 0;
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("yesbarnotok")) {
             txtUpload.setText("مدرک شما در انتظار تایید است");
+            flagMadrak = 1;
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("barok")) {
             txtUpload.setText("مدرک شما تایید شده");
+            flagMadrak = 2;
         }
     }
 
@@ -348,17 +361,56 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     @Override
     public void flagFromUpload(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
-        if(res.code == 0){showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");}
-        else if(res.code == 1){
+        if (res.code == 0) {
+            showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
+        } else if (res.code == 1) {
             dialogProgres.showProgresBar();
             PresentTeacher presentTeacher = new PresentTeacher(this);
             presentTeacher.upMs();
-        }
-        else if(res.code == 2){
-            showAlertDialog("خطا", "حجم فایل باید بین یک تا پنج مگابایت باشد", "","قبول");
+        } else if (res.code == 2) {
+            showAlertDialog("خطا", "حجم فایل باید بین یک تا پنج مگابایت باشد", "", "قبول");
         }
     }
 
+    private void showDialogForMadrakState(String title, String message, String buttonTrue, String btnFalse, String btnNeutral) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+
+        alertDialog.setPositiveButton(buttonTrue, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                uploalMadrak();
+                dialog.cancel();
+
+            }
+        });
+        alertDialog.setNegativeButton(btnFalse, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertDialog.setNeutralButton(btnNeutral, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                callUs();
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
+    }
+
+    private void callUs() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:05431132499"));
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(ActivityProfile.this, "خطا!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }
 

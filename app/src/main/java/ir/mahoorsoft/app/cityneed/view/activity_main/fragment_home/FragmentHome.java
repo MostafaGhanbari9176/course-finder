@@ -1,16 +1,20 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,30 +29,32 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener {
-
+public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterTabagheList.OnClickItemTabagheList {
+    LinearLayout scrollView;
+    LinearLayout llitems;
+    CardView btnDelete;
     private ArrayList<Page> pageViews;
     private InfiniteIndicator mAnimCircleIndicator;
-    TextView txtOne;
-    TextView txtTwo;
-    TextView txtThree;
     View view;
     RecyclerView list;
-    AdapterHomeLists adapterListView;
-    ArrayList<StCourse> surce = new ArrayList<>();
     DialogProgres dialogProgres;
-    ViewPager vPager;
+    LinearLayout txtEmpty;
+
 
     @Nullable
     @Override
@@ -62,15 +68,18 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     private void init() {
         dialogProgres = new DialogProgres(G.context);
         pointer();
-        setTextFont();
         settingUpVPager();
-        settingUpListSelectedCourseList();
-        settingUpNewCourseList();
-        settingUpListFullCapacityCourseList();
+        queeyForGroupingListData();
+        dialogProgres.showProgresBar();
+        queryForCourses(-1);
 
 
     }
 
+    private void queeyForGroupingListData() {
+        PresentGrouping presentGrouping = new PresentGrouping(this);
+        presentGrouping.getTabaghe(-1);
+    }
 
     private void settingUpVPager() {
 
@@ -91,90 +100,30 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     }
 
-    private void settingUpListSelectedCourseList() {
-
-        list = (RecyclerView) view.findViewById(R.id.RVSelectedCourseHome);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, true);
-        adapterListView = new AdapterHomeLists(G.context, surce, this);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapterListView);
-        adapterListView.notifyDataSetChanged();
-
-
-    }
-
-    private void settingUpListFullCapacityCourseList() {
-
-        list = (RecyclerView) view.findViewById(R.id.RVFullCapacityCourseHome);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, true);
-        adapterListView = new AdapterHomeLists(G.context, surce, this);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapterListView);
-        adapterListView.notifyDataSetChanged();
-
-
-    }
-
-    private void settingUpNewCourseList() {
-
-        list = (RecyclerView) view.findViewById(R.id.RVNewCourseHome);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, true);
-        adapterListView = new AdapterHomeLists(G.context, surce, this);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapterListView);
-        adapterListView.notifyDataSetChanged();
-        queryForNewCourseListData();
-
-    }
-
-    private void queryForNewCourseListData(){
-        dialogProgres.showProgresBar();
+    public void queryForCourses(int groupId) {
+        if(groupId == -1)
+            btnDelete.setVisibility(View.GONE);
+        else
+            btnDelete.setVisibility(View.VISIBLE);
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getNewCourse();
-    }
-
-    private void setSurceThree(ArrayList<StCourse> course) {
-        settingUpVPager();
-        surce = course;
-        list = (RecyclerView) view.findViewById(R.id.RVNewCourseHome);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, true);
-        adapterListView = new AdapterHomeLists(G.context, surce, this);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapterListView);
-        adapterListView.notifyDataSetChanged();
-    }
-
-    private void setSurceTwO(ArrayList<StCourse> course) {
-        dialogProgres.showProgresBar();
-        PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getAllCourse();
-    }
-
-    private void setSurceOne(ArrayList<StCourse> course) {
-        dialogProgres.showProgresBar();
-        PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getAllCourse();
+        presentCourse.getCourseByGroupingId(groupId);
     }
 
     private void pointer() {
+        btnDelete = (CardView) view.findViewById(R.id.btnDeletGroupingHome);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                queryForCourses(-1);
+            }
+        });
+        btnDelete.setVisibility(View.GONE);
+        txtEmpty = (LinearLayout) view.findViewById(R.id.llTxtEmptyListHome);
+        txtEmpty.setVisibility(View.GONE);
+        list = (RecyclerView) view.findViewById(R.id.RVGroupingItemsHome);
+        scrollView = (LinearLayout) view.findViewById(R.id.llSV);
+        llitems = (LinearLayout) view.findViewById(R.id.llItemsHome);
 
-        txtOne = (TextView) view.findViewById(R.id.txtOne);
-        txtTwo = (TextView) view.findViewById(R.id.txtTwo);
-        txtThree = (TextView) view.findViewById(R.id.txtThree);
-
-    }
-
-    private void setTextFont() {
-
-        Typeface typeface = Typeface.createFromAsset(G.context.getResources().getAssets(),
-                "fonts/Far_Homa.ttf");
-        txtOne.setTypeface(typeface);
-        txtTwo.setTypeface(typeface);
-        txtThree.setTypeface(typeface);
     }
 
     @Override
@@ -203,7 +152,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void onPageClick(int position, Page page) {
         Intent intent = new Intent(G.context, ActivityShowFeature.class);
-        intent.putExtra("id", surce.get(position).id);
         startActivity(intent);
     }
 
@@ -215,8 +163,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     private void initData() {
         pageViews = new ArrayList<>();
-        for (int i = 0; i < surce.size(); i++) {
-            pageViews.add(new Page(surce.get(i).id + "", ApiClient.serverAddress + "/city_need/v1/uploads/course/" + surce.get(i).id + ".png", this));
+        for (int i = 0; i < 3; i++) {
+            pageViews.add(new Page(i + "", ApiClient.serverAddress + "/city_need/v1/uploads/course/" + i + ".png", this));
         }
     }
 
@@ -233,19 +181,102 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
+
+    }
+
+    @Override
+    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
         dialogProgres.closeProgresBar();
-        if (listId == 1)
-            setSurceOne(course);
-        if (listId == 2)
-            setSurceTwO(course);
-        if (listId == 3)
-            setSurceThree(course);
+        creatLists(items);
+    }
+
+    private void creatLists(ArrayList<StHomeListItems> items) {
+        if (items.size() == 0)
+            txtEmpty.setVisibility(View.VISIBLE);
+        else
+            txtEmpty.setVisibility(View.GONE);
+        if (((LinearLayout) llitems).getChildCount() > 0)
+            ((LinearLayout) llitems).removeAllViews();
+
+        for (int i = 0; i < items.size(); i++) {
+            LinearLayout masterLayout = new LinearLayout(G.context);
+            masterLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            masterLayout.setLayoutParams(params);
+            masterLayout.setGravity(Gravity.RIGHT);
+
+            LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lineParams.setMargins(8, 50, 25, 25);
+            LinearLayout line = new LinearLayout(G.context);
+            line.setOrientation(LinearLayout.HORIZONTAL);
+            line.setLayoutParams(lineParams);
+            line.setGravity(Gravity.CENTER);
+
+            CardView cardView = new CardView(G.context);
+            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(0, 4, 1);
+            cardView.setLayoutParams(cardParam);
+           try {
+               cardView.setCardBackgroundColor(getResources().getColor(R.color.blue_eq));
+           }catch (Exception e) {
+
+           }
+            cardParam.setMargins(2, 2, 16, 2);
+            line.addView(cardView, cardParam);
+
+            TextView textView = new TextView(G.context);
+            textView.setText(items.get(i).GroupingSubject);
+            textView.setGravity(Gravity.RIGHT);
+            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
+            line.addView(textView, textParams);
+
+            masterLayout.addView(line);
+
+            RecyclerView list = new RecyclerView(G.context);
+            AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                    , LinearLayoutManager.HORIZONTAL, true);
+            list.setLayoutManager(layoutManager);
+            list.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            masterLayout.addView(list);
+
+            llitems.addView(masterLayout);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onResiveTabaghe(ArrayList<StGrouping> data) {
+        AdapterTabagheList adapter = new AdapterTabagheList(G.context, data, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                , LinearLayoutManager.HORIZONTAL, true);
+        list.setLayoutManager(layoutManager);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void tabagheNahaei() {
+        dialogProgres.closeProgresBar();
+    }
+
+    @Override
+    public void sendMessageFTabagheT(String message) {
+        dialogProgres.closeProgresBar();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void tabagheListItemClick(int position, int sourceNumber, int groupId) {
+        dialogProgres.showProgresBar();
+        queryForCourses(groupId);
     }
 }

@@ -35,5 +35,19 @@ public class G extends Application {
 
     }
 
+    public static String myTrim(String string, char subString) {
+        int count = string.length();
+        int len = count;
+        int st = 0;
+
+        while ((st < len) && (string.charAt(st) <= subString)) {
+            st++;
+        }
+        while ((st < len) && (string.charAt(len - 1) <= subString)) {
+            len--;
+        }
+        return ((st > 0) || (len < count)) ? string.substring(st, len) : string;
+    }
+
 
 }

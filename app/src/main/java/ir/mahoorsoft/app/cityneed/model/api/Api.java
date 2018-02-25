@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
-import ir.mahoorsoft.app.cityneed.model.struct.StTabaghe;
+import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import okhttp3.MultipartBody;
@@ -94,6 +95,9 @@ public interface Api {
             @Path("phone") String phone
     );
 
+    @GET("getAllTeacher")
+    Call<ArrayList<StTeacher>> getAllTeacher();
+
     @GET("updateTeacher/{phone}/{landPhone}/{address}/{subject}/{cityId}/{m}")
     Call<ArrayList<ResponseOfServer>> updateTeacher(
             @Path("phone") String phone,
@@ -105,7 +109,7 @@ public interface Api {
             );
 
     @GET("getTabaghe/{uperId}")
-    Call<ArrayList<StTabaghe>> getTabaghe(
+    Call<ArrayList<StGrouping>> getTabaghe(
             @Path("uperId") int uperId
     );
 
@@ -130,11 +134,26 @@ public interface Api {
     @GET("getAllCourse")
     Call<ArrayList<StCourse>> getAllCourse();
 
+    @GET("getCourseByFilter/{minOld}/{maxOld}/{startDate}/{endDate}/{Grouping}/{days}")
+    Call<ArrayList<StCourse>> getCourseByFilter(
+            @Path("minOld") int minOld,
+            @Path("maxOld") int maxOld,
+            @Path("startDate") String startDate,
+            @Path("endDate") String endDate,
+            @Path("Grouping") int groupId,
+            @Path("days") String days
+    );
+
     @GET("getNewCourse")
     Call<ArrayList<StCourse>> getNewCourse();
 
     @GET("getCourseById/{id}")
     Call<ArrayList<StCourse>> getCourseById(
+            @Path("id") int id
+    );
+
+    @GET("getCourseByGroupingId/{id}")
+    Call<ArrayList<StHomeListItems>> getCourseByGroupingId(
             @Path("id") int id
     );
 
