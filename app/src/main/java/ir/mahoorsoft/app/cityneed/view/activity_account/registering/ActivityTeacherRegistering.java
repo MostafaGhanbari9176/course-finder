@@ -313,7 +313,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         if (res.code == 0) {
             showAlertDialog("خطا", "خطا در بارگذاری تصویر لطفا بعدا امتحان کنید.", "", "قبول");
         } else if (res.code == 1) {
-            showAlertDialog("عملیات موفق", "تصویر بارگذاری شد", "", "قبول");
+            showAlertDialog("عملیات موفق", "تصویر بارگذاری شد", "", "خب");
         } else if (res.code == 2) {
             showAlertDialog("خطا", "حجم تصویر باید بین یک تا پنج مگابایت باشد", "", "قبول");
         }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="@dimen/img_item_file"
+                android:layout_height="@dimen/img_item_file"
+                android:layout_margin="4dp"
+                android:background="@drawable/icon_delete_red" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="@dimen/img_item_file"
+                android:layout_height="@dimen/img_item_file"
+                android:layout_margin="4dp"
+                android:background="@drawable/icon_message_box" />
+
+            <TextView
+                android:id="@+id/txtItemStudentName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/dark_eq"
+                android:textSize="@dimen/txt_size_smal" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

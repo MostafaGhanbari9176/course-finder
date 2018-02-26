@@ -45,6 +45,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
+            android:name=".view.activity_account.activity_profile.ActivityStudentNameList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+        <activity
             android:name=".view.activity_main.activity_show_feature.ActivityShowFeature"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -83,7 +88,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".view.activity_account.activity_phone_confirm.ActivityPhoneConfirm"
+            android:name=".view.activity_account.activity_phone_confirm.ActivityAcountConfirm"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />

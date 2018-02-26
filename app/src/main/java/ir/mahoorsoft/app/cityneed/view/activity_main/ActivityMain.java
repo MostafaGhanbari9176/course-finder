@@ -11,15 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 
 import ir.mahoorsoft.app.cityneed.G;
@@ -27,9 +24,8 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedServer;
-import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityPhoneConfirm;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentSelfCourse;
@@ -209,7 +205,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
             startActivity(ActivityProfile.class);
 
         } else {
-            startActivity(ActivityPhoneConfirm.class);
+            startActivity(ActivityAcountConfirm.class);
         }
     }
 

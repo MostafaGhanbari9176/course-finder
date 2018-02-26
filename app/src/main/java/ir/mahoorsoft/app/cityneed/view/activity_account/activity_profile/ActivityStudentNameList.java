@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.courseLists;
+package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,43 +13,47 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
-import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSdudentNameList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivitySabtenamList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
+public class ActivityStudentNameList extends AppCompatActivity implements AdapterSdudentNameList.OnClickItemSdutentNameList, PresentUser.OnPresentUserLitener {
 
-    AdapterCourseList adapter;
+    AdapterSdudentNameList adapter;
     RecyclerView list;
-    ArrayList<StCourse> surce;
+    ArrayList<StUser> surce;
     DialogProgres dialogProgres;
     TextView txt;
+    int courseId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        if (getIntent().getExtras() != null)
+            courseId = getIntent().getIntExtra("id", 0);
         txt = (TextView) findViewById(R.id.txtToolbarList);
-        txt.setText("دوره های ثبت نام شده");
+        txt.setText("دوره های این آموزشگاه");
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
-        adapter = new AdapterCourseList(this, surce, this);
+        adapter = new AdapterSdudentNameList(this, surce, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
                 , LinearLayoutManager.VERTICAL, false);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
         setSource();
 
 
@@ -57,46 +61,48 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
 
     private void setSource() {
         dialogProgres.showProgresBar();
-        PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getUserCourse();
+        PresentUser presentUser = new PresentUser(this);
+        presentUser.getRegistrationsName(courseId);
+    }
+
+
+    @Override
+    public void tabagheListItemClick(int position, int sourceNumber, int groupId) {
 
     }
 
     @Override
-    public void sendMessageFCT(String message) {
+    public void sendMessageFUT(String message) {
         dialogProgres.closeProgresBar();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void confirmCourse(int id) {
+    public void LogOut(boolean flag) {
 
     }
 
+    @Override
+    public void LogIn(ResponseOfServer res) {
+
+    }
 
     @Override
-    public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
+    public void LogUp(ResponseOfServer res) {
+
+    }
+
+    @Override
+    public void onReceiveUser(ArrayList<StUser> students) {
         dialogProgres.closeProgresBar();
-        if (course.get(0).empty == 1)
+        if (students.get(0).empty == 1)
             txt.setText("هیچ دوره ایی وجود ندارد");
         else {
 
-            surce = course;
-            adapter = new AdapterCourseList(this, surce, this);
+            surce = students;
+            adapter = new AdapterSdudentNameList(this, surce, this);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
-
-    }
-
-    @Override
-    public void courseListItemClick(int id) {
-        Intent intent = new Intent(G.context, ActivityShowFeature.class);
-        intent.putExtra("id", id);
-        startActivity(intent);
     }
 }

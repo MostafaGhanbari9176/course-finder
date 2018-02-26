@@ -26,6 +26,11 @@ public class PresentUser implements User.OnUserLitener {
         user.getUser(phone);
     }
 
+    public void getRegistrationsName(int courseId) {
+        User user = new User(this);
+        user.getRegistrationsName(courseId);
+    }
+
     public void logOut(String phone) {
         User user = new User(this);
         user.logOut(phone);
@@ -68,6 +73,11 @@ public class PresentUser implements User.OnUserLitener {
     }
 
     @Override
+    public void onReceiveUser(ArrayList<StUser> students) {
+        onPresentUserLitener.onReceiveUser(students);
+    }
+
+    @Override
     public void sendMessage(String message) {
         onPresentUserLitener.sendMessageFUT(message);
     }
@@ -77,5 +87,6 @@ public class PresentUser implements User.OnUserLitener {
         void LogOut(boolean flag);
         void LogIn(ResponseOfServer res);
         void LogUp(ResponseOfServer res);
+        void onReceiveUser(ArrayList<StUser> students);
     }
 }

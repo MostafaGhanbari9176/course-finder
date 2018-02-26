@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +28,7 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
+import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
@@ -36,7 +40,8 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by MAHNAZ on 10/22/2017.
  */
 
-public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnClickListener, PresentSmsCode.OnPresentSmsCodeListener, PresentUser.OnPresentUserLitener, PresentTeacher.OnPresentTeacherListener {
+public class FragmentPhoneConfirm extends Fragment implements View.OnClickListener, PresentSmsCode.OnPresentSmsCodeListener, PresentUser.OnPresentUserLitener, PresentTeacher.OnPresentTeacherListener {
+    View view;
     boolean isUserChanged = true;
     int timer = 120;
     Toolbar tlb;
@@ -52,17 +57,21 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnCl
     Handler handler = new Handler();
     boolean isLogIn;
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        G.activity = this;
-        G.context = this;
-        setContentView(R.layout.activity_phone_confirm);
-        dialogProgres = new DialogProgres(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container
+            , @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_phone_confirm, container, false);
+        init();
+        return view;
+    }
+
+    private void init(){
+        dialogProgres = new DialogProgres(G.context);
         pointers();
         setFont();
         startDialog();
-
     }
 
     private void setFont() {
@@ -77,17 +86,17 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnCl
 
     private void pointers() {
         // btnBack = (Button) findViewById(R.id.btnBackPhoneConfirm);
-        tlb = (Toolbar) findViewById(R.id.tlbPhoneConfirm);
-        txtCode = (TextView) findViewById(R.id.txtSmsCodeConfirmPhone);
+        tlb = (Toolbar) view.findViewById(R.id.tlbPhoneConfirm);
+        txtCode = (TextView) view.findViewById(R.id.txtSmsCodeConfirmPhone);
         txtCode.setEnabled(false);
-        txtSubject = (TextView) findViewById(R.id.txtSubjectPhoneConfirm);
-        txtName = (TextView) findViewById(R.id.txtNamePhoneConfirm);
-        txtTimer = (TextView) findViewById(R.id.txtTimerConfirmPhone);
+        txtSubject = (TextView) view.findViewById(R.id.txtSubjectPhoneConfirm);
+        txtName = (TextView) view.findViewById(R.id.txtNamePhoneConfirm);
+        txtTimer = (TextView) view.findViewById(R.id.txtTimerConfirmPhone);
         txtTimer.setVisibility(View.GONE);
-        txtPhone = (TextView) findViewById(R.id.txtPhoneConfirmPhone);
-        btnConfirmPhone = (Button) findViewById(R.id.btnConfirmPhoneConfirmPhone);
-        btnConfirmCode = (Button) findViewById(R.id.btnConfirmCodeConfirmPhone);
-        llName = (LinearLayout) findViewById(R.id.llNamePhoneConfirm);
+        txtPhone = (TextView) view.findViewById(R.id.txtPhoneConfirmPhone);
+        btnConfirmPhone = (Button) view.findViewById(R.id.btnConfirmPhoneConfirmPhone);
+        btnConfirmCode = (Button) view.findViewById(R.id.btnConfirmCodeConfirmPhone);
+        llName = (LinearLayout) view.findViewById(R.id.llNamePhoneConfirm);
         txtPhone.setText("");
         txtCode.setText("");
         txtName.addTextChangedListener(new TextWatcher() {
@@ -213,14 +222,14 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnCl
     @Override
     public void sendMessageFScT(String message) {
         dialogProgres.closeProgresBar();
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void sendMessageFUT(String message) {
         dialogProgres.closeProgresBar();
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -265,6 +274,11 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnCl
 
     }
 
+    @Override
+    public void onReceiveUser(ArrayList<StUser> students) {
+
+    }
+
 
     @Override
     public void sendMessageFTT(String message) {
@@ -296,7 +310,7 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnCl
     }
 
     private void showAlertDialog(String title, String message, final String buttonTrue, final String btnFalse) {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(G.context);
         alertDialog.setTitle(title);
         alertDialog.setMessage(message);
 
@@ -337,7 +351,7 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnCl
     }
 
     private void startDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
         builder.setTitle("ورود یا ثبت نام");
         builder.setMessage("آیا قبلا ثبت نام داشته اید؟");
         //   final EditText editText = new EditText(this);
@@ -367,9 +381,9 @@ public class ActivityPhoneConfirm extends AppCompatActivity implements View.OnCl
     }
 
     private void next() {
-        Intent intent = new Intent(this, ActivityProfile.class);
+        Intent intent = new Intent(G.context, ActivityProfile.class);
         startActivity(intent);
-        this.finish();
+        G.activity.finish();
     }
 
     @Override

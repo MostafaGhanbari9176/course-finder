@@ -29,6 +29,7 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
+import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
@@ -212,6 +213,11 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void LogUp(ResponseOfServer res) {
+
+    }
+
+    @Override
+    public void onReceiveUser(ArrayList<StUser> students) {
 
     }
 

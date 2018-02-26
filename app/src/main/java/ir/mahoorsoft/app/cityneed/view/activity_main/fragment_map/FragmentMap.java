@@ -122,7 +122,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
 
     @Override
     public void sendMessageFTT(String message) {
-        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+        dialogProgres.closeProgresBar();
+        //Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

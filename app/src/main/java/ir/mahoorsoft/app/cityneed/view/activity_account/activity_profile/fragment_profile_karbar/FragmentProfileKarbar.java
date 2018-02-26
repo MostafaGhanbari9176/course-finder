@@ -141,9 +141,10 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
 
     }
 
+    @Override
+    public void onReceiveUser(ArrayList<StUser> students) {
 
-
-
+    }
 
 
     private void updateName(String name) {

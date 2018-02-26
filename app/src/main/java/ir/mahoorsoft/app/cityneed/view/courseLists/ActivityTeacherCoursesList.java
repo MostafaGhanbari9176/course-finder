@@ -18,6 +18,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityStudentNameList;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -93,7 +94,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
 
     @Override
     public void courseListItemClick(int id) {
-        Intent intent = new Intent(G.context, ActivityShowFeature.class);
+        Intent intent = new Intent(G.context, ActivityStudentNameList.class);
         intent.putExtra("id", id);
         startActivity(intent);
     }

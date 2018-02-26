@@ -177,6 +177,12 @@ public interface Api {
             @Path("idUser") String idUser
     );
 
+    @GET("getRegistrationsName/{idCourse}/{idTeacher}")
+    Call<ArrayList<StUser>> getRegistrationsName(
+            @Path("idCourse") int idCourse,
+            @Path("idTeacher") String ac
+    );
+
     @GET("getMs/{ac}")
     Call<ArrayList<ResponseOfServer>> getMadrakState(
             @Path("ac") String ac

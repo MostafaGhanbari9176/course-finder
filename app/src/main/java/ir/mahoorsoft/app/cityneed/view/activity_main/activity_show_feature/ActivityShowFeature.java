@@ -51,7 +51,7 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     Button btnRegister;
     int courseId;
     String idTeacher;
-    String idUser = Pref.getStringValue(PrefKey.phone,"");
+    String idUser = Pref.getStringValue(PrefKey.apiCode,"");
     DialogProgres dialogProgres;
 
     @Override

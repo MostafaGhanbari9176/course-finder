@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import retrofit2.Call;
@@ -47,6 +49,23 @@ public class User {
             @Override
             public void onResponse(Call<ArrayList<StUser>> call, retrofit2.Response<ArrayList<StUser>> response) {
       //          onUserLitener.onReceiveData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StUser>> call, Throwable t) {
+                onUserLitener.sendMessage(Message.convertRetrofitMessage(t.toString()));
+            }
+        });
+
+    }
+
+    public void getRegistrationsName(int courseId){
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StUser>> getUser = api.getRegistrationsName(courseId, Pref.getStringValue(PrefKey.apiCode,""));
+        getUser.enqueue(new Callback<ArrayList<StUser>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StUser>> call, retrofit2.Response<ArrayList<StUser>> response) {
+                onUserLitener.onReceiveUser(response.body());
             }
 
             @Override
@@ -109,6 +128,7 @@ public class User {
         void responseForLogIn(ArrayList<ResponseOfServer> res);
         void responseForLogUp(ArrayList<ResponseOfServer> res);
         void responseForLogOut(ArrayList<ResponseOfServer> res);
+        void onReceiveUser(ArrayList<StUser> students);
         void sendMessage(String message);
     }
 }
