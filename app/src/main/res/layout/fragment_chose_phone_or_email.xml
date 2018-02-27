@@ -17,11 +17,12 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="ثبت نام یا ورود با"
             android:textColor="@color/light"
-            android:textSize="@dimen/txt_size_smal" />
+            android:textSize="@dimen/txt_size_big" />
     </LinearLayout>
 
     <LinearLayout
@@ -31,21 +32,62 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
 
-            <Button
-                android:id="@+id/btnEmailAcountConfirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_special"
-                android:padding="8dp"
-                android:text="ایمیل"
-                android:textColor="@color/light"
-                android:textSize="@dimen/txt_size_smal" />
-        </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:clipChildren="false">
+
+                <Button
+                    android:id="@+id/btnPhoneAcountConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_special"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="شماره همراه"
+                    android:textColor="@color/light"
+                    android:textSize="@dimen/txt_size_big" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btnEmailAcountConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_special"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="ایمیل"
+                    android:textColor="@color/light"
+                    android:textSize="@dimen/txt_size_big" />
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
 
     </LinearLayout>
 
@@ -55,23 +97,6 @@
         android:layout_weight="1"
         android:gravity="top|center"
         android:orientation="horizontal">
-
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:clipChildren="false">
-
-            <Button
-                android:id="@+id/btnPhoneAcountConfirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_special"
-                android:padding="8dp"
-                android:text="شماره همراه"
-                android:textColor="@color/light"
-                android:textSize="@dimen/txt_size_smal" />
-        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 </LinearLayout>

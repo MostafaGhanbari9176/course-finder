@@ -17,6 +17,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -42,7 +43,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 public class FragmentMap extends Fragment implements OnMapReadyCallback, PresentTeacher.OnPresentTeacherListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
     LatLng location;
-    private Marker mSelectedMarker;
+    Marker selectedMarker = null;
     GoogleMap mMap;
     SupportMapFragment supportMapFragment;
     View view;
@@ -50,7 +51,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     boolean dataSaved = false;
     boolean mapReady = false;
     ArrayList<StTeacher> source = new ArrayList<>();
-    int selectedId;
+    int selectedId = -1;
 
     @Nullable
     @Override
@@ -98,7 +99,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setRotateGesturesEnabled(true);
-        mMap.getUiSettings().setAllGesturesEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setOnMapClickListener(this);
         mMap.setOnMarkerClickListener(this);
         mapReady = true;
@@ -111,13 +112,15 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
             LatLng location = new LatLng(Double.parseDouble(source.get(i).lt), Double.parseDouble(source.get(i).lg));
             addMarker(location, source.get(i).subject);
         }
+
     }
 
     private void addMarker(LatLng location, String title) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(location);
-        markerOptions.title(title);
-        mMap.addMarker(markerOptions);
+        markerOptions.title("آموزشگاه : " + title);
+        Marker m = mMap.addMarker(markerOptions);
+//        m.showInfoWindow();
     }
 
     @Override
@@ -154,9 +157,27 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        selectedId = Integer.parseInt(G.myTrim(marker.getId(),'m'));
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        showDialog("آموزشگاه : "+ marker.getTitle(),"نمایش دوره های این آموزشگاه؟", "بله", "خیر");
+
+        try {
+
+            if (Integer.parseInt(G.myTrim(marker.getId(), 'm')) != Integer.parseInt(G.myTrim(selectedMarker.getId(), 'm'))) {
+                selectedId = Integer.parseInt(G.myTrim(marker.getId(), 'm'));
+                selectedMarker = marker;
+                selectedMarker.showInfoWindow();
+                selectedMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+            } else
+                showDialog("آموزشگاه : " + marker.getTitle(), "نمایش دوره های این آموزشگاه؟", "بله", "خیر");
+
+        } catch (Exception e) {
+            e.getMessage();
+            if (selectedMarker == null) {
+                selectedId = Integer.parseInt(G.myTrim(marker.getId(), 'm'));
+                selectedMarker = marker;
+                selectedMarker.showInfoWindow();
+                selectedMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+            }
+        }
+
         return true;
     }
 
@@ -167,6 +188,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
         builder.setPositiveButton(btntrue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                selectedMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 showCourseList();
                 dialog.cancel();
             }
@@ -180,9 +202,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
         builder.show();
     }
 
-    private void showCourseList(){
+    private void showCourseList() {
         Intent intent = new Intent(G.context, ActivityCoursesListByTeacherId.class);
-        intent.putExtra("apiCode",source.get(selectedId).ac);
+        intent.putExtra("apiCode", source.get(selectedId).ac);
         startActivity(intent);
 
     }

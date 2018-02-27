@@ -9,6 +9,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
+import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import okhttp3.MultipartBody;
@@ -193,6 +194,29 @@ public interface Api {
             @Path("ac") String ac
     );
 
+    @GET("saveSms/{text}/{tsId}/{rsId}/{courseId}/{howSending}")
+    Call<ArrayList<ResponseOfServer>> saveSms(
+            @Path("text") String smsText,
+            @Path("tsId") String tsId,
+            @Path("rsId") String rsId,
+            @Path("courseId") int courseId,
+            @Path("howSending") int howSending
+    );
+
+    @GET("getRsSms/{rsId}")
+    Call<ArrayList<StSmsBox>> getRsSms(
+            @Path("rsId") String rsId
+    );
+
+    @GET("getTsSms/{tsId}")
+    Call<ArrayList<StSmsBox>> getTsSms(
+            @Path("tsId") String rsId
+    );
+
+    @GET("upDateSeen/{id}")
+    Call<ArrayList<ResponseOfServer>> upDateSeen(
+            @Path("id") int smsId
+    );
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(
             @Path("tableName") String tableName,

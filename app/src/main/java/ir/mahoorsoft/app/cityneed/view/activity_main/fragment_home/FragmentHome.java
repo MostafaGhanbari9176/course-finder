@@ -49,9 +49,10 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     LinearLayout llitems;
     CardView btnDelete;
     private ArrayList<Page> pageViews;
+    AdapterTabagheList adapterGrouping;
     private InfiniteIndicator mAnimCircleIndicator;
     View view;
-    RecyclerView list;
+    RecyclerView groupingList;
     DialogProgres dialogProgres;
     LinearLayout txtEmpty;
 
@@ -101,7 +102,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     public void queryForCourses(int groupId) {
-        if(groupId == -1)
+        if (groupId == -1)
             btnDelete.setVisibility(View.GONE);
         else
             btnDelete.setVisibility(View.VISIBLE);
@@ -120,7 +121,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         btnDelete.setVisibility(View.GONE);
         txtEmpty = (LinearLayout) view.findViewById(R.id.llTxtEmptyListHome);
         txtEmpty.setVisibility(View.GONE);
-        list = (RecyclerView) view.findViewById(R.id.RVGroupingItemsHome);
+        groupingList = (RecyclerView) view.findViewById(R.id.RVGroupingItemsHome);
         scrollView = (LinearLayout) view.findViewById(R.id.llSV);
         llitems = (LinearLayout) view.findViewById(R.id.llItemsHome);
 
@@ -215,11 +216,11 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             CardView cardView = new CardView(G.context);
             LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(0, 4, 1);
             cardView.setLayoutParams(cardParam);
-           try {
-               cardView.setCardBackgroundColor(getResources().getColor(R.color.blue_eq));
-           }catch (Exception e) {
+            try {
+                cardView.setCardBackgroundColor(getResources().getColor(R.color.blue_eq));
+            } catch (Exception e) {
 
-           }
+            }
             cardParam.setMargins(2, 2, 16, 2);
             line.addView(cardView, cardParam);
 
@@ -254,12 +255,13 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onResiveTabaghe(ArrayList<StGrouping> data) {
-        AdapterTabagheList adapter = new AdapterTabagheList(G.context, data, this);
+        adapterGrouping = new AdapterTabagheList(G.context, data, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, true);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        groupingList.setLayoutManager(layoutManager);
+        groupingList.setAdapter(adapterGrouping);
+        adapterGrouping.notifyDataSetChanged();
+
     }
 
     @Override

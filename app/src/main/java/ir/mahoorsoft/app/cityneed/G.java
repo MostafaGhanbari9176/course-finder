@@ -40,12 +40,14 @@ public class G extends Application {
         int len = count;
         int st = 0;
 
-        while ((st < len) && (string.charAt(st) <= subString)) {
+        while ((st < len) && (string.charAt(st) == subString)) {
+            char s = string.charAt(st);
             st++;
         }
-        while ((st < len) && (string.charAt(len - 1) <= subString)) {
+        while ((st < len) && (string.charAt(len - 1) == subString)) {
             len--;
         }
+        String k = ((st > 0) || (len < count)) ? string.substring(st, len) : string;
         return ((st > 0) || (len < count)) ? string.substring(st, len) : string;
     }
 

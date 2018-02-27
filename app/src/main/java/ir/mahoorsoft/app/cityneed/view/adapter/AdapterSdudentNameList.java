@@ -53,7 +53,7 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
 
     @Override
     public AdapterSdudentNameList.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_tabaghe, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_student_name, parent, false);
         Holder holder = new Holder(view);
 
         return holder;
