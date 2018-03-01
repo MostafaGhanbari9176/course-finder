@@ -17,23 +17,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Holder> implements View.OnClickListener{
+public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Holder>{
 
-    int position;
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnDeleteItemIn:
-                itemSmsList.deleteMessage(position);
-                break;
-            case R.id.btnSeenItemIn:
-                itemSmsList.seenMessage(position);
-                break;
-            case R.id.btnSendSmsItemIn:
-                itemSmsList.sendSms(position);
-                break;
-        }
-    }
 
     public interface OnClickItemSmsList {
         void seenMessage(int position);
@@ -84,13 +69,28 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
         final StSmsBox items = surce.get(position);
-        this.position = position;
+
         holder.txtCourseName.setText(items.courseName);
         holder.txtTsName.setText(items.tsName );
         holder.txtDate.setText(items.date);
-        holder.btnSendSms.setOnClickListener(this);
-        holder.btnSeen.setOnClickListener(this);
-        holder.btnDelete.setOnClickListener(this);
+        holder.btnSendSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemSmsList.sendSms(position);
+            }
+        });
+        holder.btnSeen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemSmsList.seenMessage(position);
+            }
+        });
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemSmsList.deleteMessage(position);
+            }
+        });
 
     }
 

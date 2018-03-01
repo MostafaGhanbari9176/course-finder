@@ -38,6 +38,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragmen
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
 import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
+import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
@@ -56,10 +57,11 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     Button btnAddCourse;
     Button btnListCourse;
     Button btnListAddCourse;
-    TextView txtUpload;
-    RelativeLayout rlUpload;
+    Button btnSmsBox;
     Button btnMap;
     Button btnTrendingUp;
+    TextView txtUpload;
+    RelativeLayout rlUpload;
     LinearLayout llAddCourse;
     LinearLayout llMap;
     LinearLayout llListAddCourse;
@@ -89,6 +91,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         (btnTrendingUp = (Button) findViewById(R.id.btnTrendingUpProfile)).setOnClickListener(this);
         (btnMap = (Button) findViewById(R.id.btnMapProfile)).setOnClickListener(this);
         (btnListCourse = (Button) findViewById(R.id.btnCourseListProfile)).setOnClickListener(this);
+        (btnSmsBox = (Button) findViewById(R.id.btnMessageBoxProfile)).setOnClickListener(this);
         txtUpload = (TextView) findViewById(R.id.txtUploadMadrak);
         llAddCourse = (LinearLayout) findViewById(R.id.llAddCourseProfile);
         llListAddCourse = (LinearLayout) findViewById(R.id.llAddCourseListProfile);
@@ -129,6 +132,10 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btnSabtenamListProfile:
                 starterActivity(ActivitySabtenamList.class);
+                break;
+            case R.id.btnMessageBoxProfile:
+
+                starterActivity(ActivitySmsBox.class);
                 break;
 
             case R.id.rlUploadMadrak:

@@ -9,4 +9,5 @@ import java.util.ArrayList;
 public class StHomeListItems {
     public String GroupingSubject;
     public ArrayList<StCourse> courses;
+    public int empty;
 }

@@ -217,6 +217,13 @@ public interface Api {
     Call<ArrayList<ResponseOfServer>> upDateSeen(
             @Path("id") int smsId
     );
+
+    @GET("deleteSms/{id}")
+    Call<ArrayList<ResponseOfServer>> deleteSms(
+            @Path("id") int smsId
+    );
+
+
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(
             @Path("tableName") String tableName,

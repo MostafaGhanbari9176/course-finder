@@ -192,12 +192,15 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void creatLists(ArrayList<StHomeListItems> items) {
-        if (items.size() == 0)
-            txtEmpty.setVisibility(View.VISIBLE);
-        else
-            txtEmpty.setVisibility(View.GONE);
+
         if (((LinearLayout) llitems).getChildCount() > 0)
             ((LinearLayout) llitems).removeAllViews();
+
+        if (items.size() == 0 || items.get(0).empty == 1) {
+            txtEmpty.setVisibility(View.VISIBLE);
+            return;
+        } else
+            txtEmpty.setVisibility(View.GONE);
 
         for (int i = 0; i < items.size(); i++) {
             LinearLayout masterLayout = new LinearLayout(G.context);

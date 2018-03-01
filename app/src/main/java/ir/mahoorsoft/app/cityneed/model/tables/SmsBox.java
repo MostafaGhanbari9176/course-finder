@@ -21,6 +21,10 @@ public class SmsBox {
 
         void resiveFlag(ResponseOfServer res);
 
+        void deleteSmsFlag(ResponseOfServer res);
+
+        void upDateSmsFlag(ResponseOfServer res);
+
         void sendMessage(String message);
     }
 
@@ -86,7 +90,23 @@ public class SmsBox {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onSmsBoxResponseListener.resiveFlag(response.body().get(0));
+                onSmsBoxResponseListener.upDateSmsFlag(response.body().get(0));
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onSmsBoxResponseListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void deleteSms(int smsId) {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> save = api.deleteSms(smsId);
+        save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
+                onSmsBoxResponseListener.deleteSmsFlag(response.body().get(0));
             }
 
             @Override

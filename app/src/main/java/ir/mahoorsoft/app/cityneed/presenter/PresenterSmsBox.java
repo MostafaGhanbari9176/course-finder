@@ -16,7 +16,9 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener{
 
     public interface OnPresentSmsBoxListener{
         void onResiveSms(ArrayList<StSmsBox> sms);
-        void onResiveFlagFromSmsBox(ResponseOfServer res);
+        void onResiveFlagFromSmsBox(boolean flag);
+        void smsDeleteFlag(boolean flag);
+        void smsUpdateSeen(boolean flag);
         void messageFromSmsBox(String message);
     }
     OnPresentSmsBoxListener onPresentSmsBoxListener;
@@ -44,6 +46,11 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener{
         smsBox.upDateSeen(smsId);
     }
 
+    public void deleteMessage(int smsId){
+        SmsBox smsBox = new SmsBox(this);
+        smsBox.deleteSms(smsId);
+    }
+
     @Override
     public void resiveSms(ArrayList<StSmsBox> sms) {
         onPresentSmsBoxListener.onResiveSms(sms);
@@ -51,7 +58,17 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener{
 
     @Override
     public void resiveFlag(ResponseOfServer res) {
-        onPresentSmsBoxListener.onResiveFlagFromSmsBox(res);
+        onPresentSmsBoxListener.onResiveFlagFromSmsBox(res.code == 0 ? false : true);
+    }
+
+    @Override
+    public void deleteSmsFlag(ResponseOfServer res) {
+        onPresentSmsBoxListener.smsDeleteFlag(res.code == 0 ? false : true);
+    }
+
+    @Override
+    public void upDateSmsFlag(ResponseOfServer res) {
+        onPresentSmsBoxListener.smsUpdateSeen(res.code == 0 ? false : true);
     }
 
     @Override
