@@ -7,6 +7,7 @@ package ir.mahoorsoft.app.cityneed.model.struct;
 public class StSmsBox {
 
     public int id;
+    public int seen;
     public int empty;
     public int courseId;
     public String text;

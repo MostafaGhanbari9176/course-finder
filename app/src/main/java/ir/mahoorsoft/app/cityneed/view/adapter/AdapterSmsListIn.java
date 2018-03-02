@@ -1,6 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +19,14 @@ import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Holder>{
+public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Holder> {
 
 
     public interface OnClickItemSmsList {
         void seenMessage(int position);
+
         void deleteMessage(int position);
+
         void sendSms(int position);
     }
 
@@ -42,15 +46,28 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
         TextView txtTsName;
         TextView txtCourseName;
         TextView txtDate;
+        ImageView imgSeenSms;
+        /*
+        TextView txtTsName2;
+        TextView txtCourseName2;
+        TextView txtDate2;
+*/
         ImageView btnDelete;
         ImageView btnSendSms;
         ImageView btnSeen;
+        CardView item;
 
         public Holder(View itemView) {
             super(itemView);
+            item = (CardView) itemView.findViewById(R.id.cvItemSmsIn);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemIn);
             txtTsName = (TextView) itemView.findViewById(R.id.txtTsNameItemIn);
             txtDate = (TextView) itemView.findViewById(R.id.txtDateItemIn);
+            imgSeenSms = (ImageView) itemView.findViewById(R.id.imgSeenSms);
+/*            txtCourseName2 = (TextView) itemView.findViewById(R.id.txtCourseNameItemIn2);
+            txtTsName2 = (TextView) itemView.findViewById(R.id.txtTsNameItemIn2);
+            txtDate2 = (TextView) itemView.findViewById(R.id.txtDateItemIn2);*/
+
             btnDelete = (ImageView) itemView.findViewById(R.id.btnDeleteItemIn);
             btnSeen = (ImageView) itemView.findViewById(R.id.btnSeenItemIn);
             btnSendSms = (ImageView) itemView.findViewById(R.id.btnSendSmsItemIn);
@@ -67,11 +84,17 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, final int position) {
+    public void onBindViewHolder(final Holder holder, final int position) {
         final StSmsBox items = surce.get(position);
-
+        if (items.seen == 0) {
+/*            holder.item.setCardBackgroundColor(Color.rgb(38, 50, 56));
+            holder.txtCourseName.setTextColor(Color.WHITE);
+            holder.txtTsName.setTextColor(Color.WHITE);
+            holder.txtDate.setTextColor(Color.WHITE);*/
+            holder.imgSeenSms.setVisibility(View.GONE);
+        }
         holder.txtCourseName.setText(items.courseName);
-        holder.txtTsName.setText(items.tsName );
+        holder.txtTsName.setText(items.tsName);
         holder.txtDate.setText(items.date);
         holder.btnSendSms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +105,14 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
         holder.btnSeen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+/*                holder.item.setCardBackgroundColor(Color.WHITE);
+                holder.txtCourseName.setTextColor(Color.rgb(38, 50, 56));
+                holder.txtCourseName2.setTextColor(Color.rgb(38, 50, 56));
+                holder.txtTsName.setTextColor(Color.rgb(38, 50, 56));
+                holder.txtTsName2.setTextColor(Color.rgb(38, 50, 56));
+                holder.txtDate.setTextColor(Color.rgb(38, 50, 56));
+                holder.txtDate2.setTextColor(Color.rgb(38, 50, 56));*/
+                holder.imgSeenSms.setVisibility(View.VISIBLE);
                 itemSmsList.seenMessage(position);
             }
         });

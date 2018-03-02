@@ -5,18 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 
 /**
@@ -26,7 +21,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentNameList.Holder> {
 
     public interface OnClickItemSdutentNameList {
-        void tabagheListItemClick(int position, int sourceNumber, int groupId);
+        void sendSms(int position);
     }
 
     private OnClickItemSdutentNameList onClickItemSdutentNameList;
@@ -43,10 +38,12 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
     public class Holder extends RecyclerView.ViewHolder {
         TextView txtName;
         LinearLayout item;
+        Button btnSendSms;
 
         public Holder(View itemView) {
             super(itemView);
             txtName = (TextView) itemView.findViewById(R.id.txtItemStudentName);
+            btnSendSms = (Button) itemView.findViewById(R.id.btnSendSmsStudentListName);
 
         }
     }
@@ -63,6 +60,12 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
     public void onBindViewHolder(AdapterSdudentNameList.Holder holder, final int position) {
         final StUser items = surce.get(position);
         holder.txtName.setText(items.name);
+        holder.btnSendSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             onClickItemSdutentNameList.sendSms(position);
+            }
+        });
     }
 
     @Override

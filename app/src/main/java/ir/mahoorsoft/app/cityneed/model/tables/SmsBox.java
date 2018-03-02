@@ -23,7 +23,7 @@ public class SmsBox {
 
         void deleteSmsFlag(ResponseOfServer res);
 
-        void upDateSmsFlag(ResponseOfServer res);
+        void sendingMessageFlag(ResponseOfServer res);
 
         void sendMessage(String message);
     }
@@ -40,7 +40,7 @@ public class SmsBox {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onSmsBoxResponseListener.resiveFlag(response.body().get(0));
+                onSmsBoxResponseListener.sendingMessageFlag(response.body().get(0));
             }
 
             @Override
@@ -85,12 +85,13 @@ public class SmsBox {
     }
 
     public void upDateSeen(int smsId) {
+
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<ResponseOfServer>> save = api.upDateSeen(smsId);
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onSmsBoxResponseListener.upDateSmsFlag(response.body().get(0));
+                onSmsBoxResponseListener.resiveFlag(response.body().get(0));
             }
 
             @Override

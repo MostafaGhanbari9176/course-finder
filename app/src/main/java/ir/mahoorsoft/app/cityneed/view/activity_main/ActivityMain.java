@@ -36,6 +36,10 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
 
 
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener, DialogTabaghe.OnTabagheItemClick, NavigationView.OnNavigationItemSelectedListener, PresentCheckedServer.OnPresentCheckServrer {
+
+    boolean selfChecked = false;
+    boolean publicChecked = true;
+
     public static Toolbar toolbar;
     TextView txtUserName;
     TextView txtProfileButton;
@@ -111,10 +115,19 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 acountCheck();
                 break;
             case R.id.rbOtherMain:
-                showCourseMode();
+                if(!publicChecked){
+                    publicChecked = true;
+                    selfChecked = false;
+                    showCourseMode();
+                }
+
                 break;
             case R.id.rbSelfMain:
-                showCourseMode();
+                if(!selfChecked){
+                    selfChecked = true;
+                    publicChecked = false;
+                    showCourseMode();
+                }
                 break;
 
         }

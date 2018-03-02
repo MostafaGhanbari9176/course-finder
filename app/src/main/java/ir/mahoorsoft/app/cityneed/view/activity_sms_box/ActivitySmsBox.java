@@ -20,6 +20,8 @@ public class ActivitySmsBox extends AppCompatActivity implements View.OnClickLis
     RadioButton rbInBox;
     RadioButton rbOutBox;
     Toolbar tb;
+    boolean rbin = true;
+    boolean rbout = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class ActivitySmsBox extends AppCompatActivity implements View.OnClickLis
         G.activity = this ;
         G.context = this;
         pointer();
+        replaceContentWith(new FragmentSmsBoxIn());
     }
 
     private void pointer() {
@@ -43,10 +46,18 @@ public class ActivitySmsBox extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rbInBoxSmsBox:
-                replaceContentWith(new FragmentSmsBoxIn());
+                if(!rbin){
+                    rbin = true;
+                    rbout = false;
+                    replaceContentWith(new FragmentSmsBoxIn());
+                }
                 break;
             case R.id.rbOutBoxSmsBox:
-//                replaceContentWith(new FS);
+                if(!rbout){
+                    rbin = false;
+                    rbout = true;
+                    replaceContentWith(new FragmentSmsBoxOut());
+                }
                 break;
         }
     }

@@ -17,28 +17,13 @@ import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Holder> implements View.OnClickListener{
+public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Holder> {
 
     int position;
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnDeleteItemIn:
-                itemSmsList.deleteMessage(position);
-                break;
-            case R.id.btnSeenItemIn:
-                itemSmsList.seenMessage(position);
-                break;
-            case R.id.btnSendSmsItemIn:
-                itemSmsList.sendSms(position);
-                break;
-        }
-    }
 
     public interface OnClickItemSmsList {
         void seenMessage(int position);
         void deleteMessage(int position);
-        void sendSms(int position);
     }
 
     private OnClickItemSmsList itemSmsList;
@@ -54,21 +39,21 @@ public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Ho
     }
 
     class Holder extends RecyclerView.ViewHolder {
-        TextView txtTsName;
+        TextView txtRsName;
         TextView txtCourseName;
         TextView txtDate;
         ImageView btnDelete;
-        ImageView btnSendSms;
+        ImageView imgSeenSms;
         ImageView btnSeen;
 
         public Holder(View itemView) {
             super(itemView);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemOut);
-            txtTsName = (TextView) itemView.findViewById(R.id.txtTsNameItemOut);
+            txtRsName = (TextView) itemView.findViewById(R.id.txtRsNameItemOut);
             txtDate = (TextView) itemView.findViewById(R.id.txtDateItemOut);
             btnDelete = (ImageView) itemView.findViewById(R.id.btnDeleteItemOut);
             btnSeen = (ImageView) itemView.findViewById(R.id.btnSeenItemOut);
-            btnSendSms = (ImageView) itemView.findViewById(R.id.btnSendSmsItemOut);
+            imgSeenSms = (ImageView) itemView.findViewById(R.id.imgSeenSmsOut);
 
         }
     }
@@ -85,12 +70,24 @@ public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Ho
     public void onBindViewHolder(Holder holder, final int position) {
         final StSmsBox items = surce.get(position);
         this.position = position;
+        if(items.seen == 0){
+            holder.imgSeenSms.setVisibility(View.GONE);
+        }
         holder.txtCourseName.setText(items.courseName);
-        holder.txtTsName.setText(items.tsName );
+        holder.txtRsName.setText(items.rsName );
         holder.txtDate.setText(items.date);
-        holder.btnSendSms.setOnClickListener(this);
-        holder.btnSeen.setOnClickListener(this);
-        holder.btnDelete.setOnClickListener(this);
+        holder.btnSeen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemSmsList.seenMessage(position);
+            }
+        });
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemSmsList.deleteMessage(position);
+            }
+        });
 
     }
 
