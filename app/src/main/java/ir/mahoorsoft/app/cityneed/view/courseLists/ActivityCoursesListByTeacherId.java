@@ -98,4 +98,9 @@ public class ActivityCoursesListByTeacherId extends AppCompatActivity implements
         intent.putExtra("id", id);
         startActivity(intent);
     }
+
+    @Override
+    public void courseDeletedClick(int position) {
+
+    }
 }

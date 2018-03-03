@@ -22,6 +22,7 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
 
     public interface OnClickItemSdutentNameList {
         void sendSms(int position);
+        void deleteSabtenam (int position);
     }
 
     private OnClickItemSdutentNameList onClickItemSdutentNameList;
@@ -39,11 +40,13 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
         TextView txtName;
         LinearLayout item;
         Button btnSendSms;
+        Button btnDeleteSabtenam;
 
         public Holder(View itemView) {
             super(itemView);
             txtName = (TextView) itemView.findViewById(R.id.txtItemStudentName);
             btnSendSms = (Button) itemView.findViewById(R.id.btnSendSmsStudentListName);
+            btnDeleteSabtenam = (Button) itemView.findViewById(R.id.btnDeleteSabtenamStudentListName);
 
         }
     }
@@ -64,6 +67,13 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
             @Override
             public void onClick(View v) {
              onClickItemSdutentNameList.sendSms(position);
+            }
+        });
+
+        holder.btnDeleteSabtenam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickItemSdutentNameList.deleteSabtenam(position);
             }
         });
     }

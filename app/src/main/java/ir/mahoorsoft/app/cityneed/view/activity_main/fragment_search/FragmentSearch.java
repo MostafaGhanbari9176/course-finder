@@ -353,6 +353,11 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     @Override
+    public void courseDeletedClick(int position) {
+
+    }
+
+    @Override
     public void days(String days) {
         day = days;
         btnDay.setText("تعیین شده");

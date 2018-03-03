@@ -15,7 +15,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnDeleteSabtenamStudentListName"
                 android:layout_width="@dimen/img_item_file"
                 android:layout_height="@dimen/img_item_file"
                 android:layout_margin="4dp"

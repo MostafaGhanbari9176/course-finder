@@ -24,7 +24,10 @@
     <color name="back_grand_button">#85d9bb</color>
     <color name="back_grand_layout">#E8F5E9</color>
     <color name="toolbar_elements1">#fff</color>
-    <color name="error">#cf2760</color>
+    <color name="error">#F44336</color>
+    <color name="red">#FF1744</color>
+    <color name="light_red">#FF5252</color>
+    <color name="dark_red">#D50000</color>
     <!--color primary group  == eq -->
     <color name="blue_eq">#41cdb0</color>
     <color name="dark_eq">#263238</color>

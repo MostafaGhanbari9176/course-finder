@@ -27,6 +27,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
@@ -39,7 +40,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivityStudentNameList extends AppCompatActivity implements AdapterSdudentNameList.OnClickItemSdutentNameList, PresentUser.OnPresentUserLitener, PresenterSmsBox.OnPresentSmsBoxListener {
+public class ActivityStudentNameList extends AppCompatActivity implements AdapterSdudentNameList.OnClickItemSdutentNameList, PresentUser.OnPresentUserLitener, PresenterSmsBox.OnPresentSmsBoxListener, PresentSabtenam.OnPresentSabtenamListaener {
     boolean isUserChanged = true;
     AdapterSdudentNameList adapter;
     RecyclerView list;
@@ -47,15 +48,18 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     DialogProgres dialogProgres;
     TextView txt;
     int courseId;
+    String courseName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        if (getIntent().getExtras() != null)
+        if (getIntent().getExtras() != null) {
             courseId = getIntent().getIntExtra("id", 0);
+            courseName = getIntent().getStringExtra("name");
+        }
         txt = (TextView) findViewById(R.id.txtToolbarList);
-        txt.setText("دوره های این آموزشگاه");
+        txt.setText("ثبت نام های دوره " + courseName);
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
@@ -102,7 +106,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     public void onReceiveUser(ArrayList<StUser> students) {
         dialogProgres.closeProgresBar();
         if (students.get(0).empty == 1)
-            txt.setText("هیچ دوره ایی وجود ندارد");
+            txt.setText("هیچ ثبت نامی موجود نیست");
         else {
 
             surce.addAll(students);
@@ -115,6 +119,11 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     @Override
     public void sendSms(int position) {
         getTextMessage(position);
+    }
+
+    @Override
+    public void deleteSabtenam(int position) {
+        answerForDelete(position);
     }
 
     private void getTextMessage(final int position) {
@@ -164,6 +173,33 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         builder.show();
     }
 
+    private void answerForDelete(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("لغو ثبت نام " + surce.get(position).name);
+        builder.setMessage("آیا از ادامه این کار مطمعن هستید؟؟");
+        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("لغو ثبت نام", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                queryForDelete(position);
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void queryForDelete(int position) {
+        dialogProgres.showProgresBar();
+        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+        presentSabtenam.updateCanceledFlag(surce.get(position).sabtenamId, 1);
+    }
+
     private void sendMessage(int position, String text) {
         dialogProgres.showProgresBar();
         int type;
@@ -203,5 +239,19 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     public void messageFromSmsBox(String message) {
         dialogProgres.closeProgresBar();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void sendMessageFST(String message) {
+
+    }
+
+    @Override
+    public void confirmSabtenam(boolean flag) {
+        dialogProgres.closeProgresBar();
+        if (flag)
+            sendMessageFUT("ثبت نام کاربر لغو شد");
+        else
+            sendMessageFUT("خطا!!!");
     }
 }

@@ -18,6 +18,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
@@ -27,13 +28,15 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivitySabtenamList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
+public class ActivitySabtenamList extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener {
 
     AdapterCourseList adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
     DialogProgres dialogProgres;
     TextView txt;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +73,11 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
 
     @Override
     public void confirmCourse(int id) {
-
+//        if (id == 1) {
+//            surce.remove(clickedPosition);
+//            adapter.notifyItemRemoved(clickedPosition);
+//            adapter.notifyItemRangeChanged(clickedPosition, adapter.getItemCount());
+//        }
     }
 
 
@@ -98,5 +105,37 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
         Intent intent = new Intent(G.context, ActivityShowFeature.class);
         intent.putExtra("id", id);
         startActivity(intent);
+    }
+
+    @Override
+    public void courseDeletedClick(int position) {
+        if(surce.get(position).isDeleted == 1)
+        queryForUpdateDeletedFlag(surce.get(position).id);
+        if(surce.get(position).isCanceled == 1)
+            queryForUpdateCanceledFlag(surce.get(position).sabtenamId);
+        surce.remove(position);
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+    }
+
+    private void queryForUpdateDeletedFlag(int id) {
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.updateDeletedFlag(id, 2);
+    }
+
+    private void queryForUpdateCanceledFlag(int id) {
+        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+        presentSabtenam.updateCanceledFlag(id,2);
+
+    }
+
+    @Override
+    public void sendMessageFST(String message) {
+
+    }
+
+    @Override
+    public void confirmSabtenam(boolean flag) {
+
     }
 }

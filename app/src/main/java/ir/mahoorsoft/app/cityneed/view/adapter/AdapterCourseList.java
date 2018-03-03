@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +27,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
 
     public interface OnClickItemCourseList {
         void courseListItemClick(int id);
+        void courseDeletedClick(int position);
     }
 
     private OnClickItemCourseList onClickItemCourseList;
@@ -45,7 +47,9 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         TextView txtMasterName;
         TextView txtstartDate;
         TextView txtCourseName;
+        TextView txtDeleted;
         LinearLayout item;
+        RelativeLayout rlDeletedMessage;
 
         public Holder(View itemView) {
             super(itemView);
@@ -53,7 +57,9 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
             txtMasterName = (TextView) itemView.findViewById(R.id.txtMasterNameItem);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItem);
             txtstartDate = (TextView) itemView.findViewById(R.id.txtStartDateItem);
+            txtDeleted = (TextView) itemView.findViewById(R.id.txtDeletedCourseMessage);
             item = (LinearLayout) itemView.findViewById(R.id.itemCourseList);
+            rlDeletedMessage = (RelativeLayout) itemView.findViewById(R.id.rlDeletedCourseMessage);
         }
     }
 
@@ -68,9 +74,14 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
         final StCourse items = surce.get(position);
+        if(items.isDeleted == 1 || items.isCanceled == 1){
+            holder.rlDeletedMessage.setVisibility(View.VISIBLE);
+            if(items.isCanceled == 1)
+                holder.txtDeleted.setText("دوره مورد نظر از سمت مدرس لغو ثبت نام شده است");
+        }
 
         holder.txtCourseName.setText(items.CourseName);
-        holder.txtstartDate.setText(items.startDate );
+        holder.txtstartDate.setText(items.startDate);
         holder.txtMasterName.setText(items.MasterName);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
@@ -81,7 +92,10 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCourseList.courseListItemClick(items.id);
+                if (items.isDeleted == 1 || items.isCanceled == 1)
+                    onClickItemCourseList.courseDeletedClick(position);
+                else
+                    onClickItemCourseList.courseListItemClick(items.id);
             }
         });
     }

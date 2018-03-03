@@ -223,6 +223,18 @@ public interface Api {
             @Path("id") int smsId
     );
 
+    @GET("updateDeletedFlag/{courseId}/{code}")
+    Call<ArrayList<ResponseOfServer>> updateDeletedFlag(
+            @Path("courseId") int courseId,
+            @Path("courseId") int code
+    );
+
+    @GET("updateCanceledFlag/{sabtenamId}/{code}")
+    Call<ArrayList<ResponseOfServer>> updateCanceledFlag(
+            @Path("sabtenamId") int sabtenamId,
+            @Path("code") int code
+    );
+
 
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(

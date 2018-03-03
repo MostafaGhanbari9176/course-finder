@@ -1,6 +1,9 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -14,6 +17,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -24,6 +28,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -51,7 +56,7 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     Button btnRegister;
     int courseId;
     String idTeacher;
-    String idUser = Pref.getStringValue(PrefKey.apiCode,"");
+    String idUser = Pref.getStringValue(PrefKey.apiCode, "");
     DialogProgres dialogProgres;
 
     @Override
@@ -113,20 +118,48 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     }
 
     private void registerHe() {
-        dialogProgres.showProgresBar();
-        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.add(courseId, idTeacher, idUser);
+        if (Pref.getBollValue(PrefKey.IsLogin, false)) {
+            dialogProgres.showProgresBar();
+            PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+            presentSabtenam.add(courseId, idTeacher, idUser);
+        } else
+            showDialog();
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("ثبت نام");
+        builder.setMessage("ابتدا باید وارد حساب خود شوید یا یک حساب جدید ایجاد کنید.");
+        builder.setPositiveButton("بعدا", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("ورود یا ایجاد حساب", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(ActivityShowFeature.this, ActivityAcountConfirm.class);
+                startActivity(intent);
+                ActivityShowFeature.this.finish();
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     private void setImage() {
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
+
                 .centerCrop()
+                .error(R.drawable.user)
                 .clone()
                 .into(img);
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
                 .centerCrop()
+                .error(R.drawable.user)
                 .clone()
                 .into(backImage);
     }
@@ -150,7 +183,7 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         idTeacher = course.get(0).idTeacher;
         txtMony.setText(course.get(0).mony + "");
         txtCapacity.setText(course.get(0).capacity + "");
-        txtRange.setText("از("+course.get(0).minOld+")تا("+course.get(0).maxOld+")سال");
+        txtRange.setText("از(" + course.get(0).minOld + ")تا(" + course.get(0).maxOld + ")سال");
         txtStartDate.setText(course.get(0).startDate);
         txtEndDate.setText(course.get(0).endDate);
         txtType.setText(course.get(0).type == 0 ? "عمومی" : "خصوصی");
@@ -177,10 +210,9 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     @Override
     public void confirmSabtenam(boolean flag) {
         dialogProgres.closeProgresBar();
-        if(flag){
+        if (flag) {
             sendMessageFCT("انجام شد");
-        }
-        else
+        } else
             sendMessageFCT("خطا");
     }
 }

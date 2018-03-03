@@ -14,6 +14,7 @@ public class StUser {
     public String apiCode = "";
     public String location = "";
     public int empty;
+    public int sabtenamId;
 
     public StUser(String phone, String name, String family) {
         this.phone = phone;

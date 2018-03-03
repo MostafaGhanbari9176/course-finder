@@ -23,5 +23,8 @@ public class StCourse {
     public String day = "";
     public String hours = "";
     public String MasterName = "";
+    public int isDeleted;//1-->true  0-->false  2-->seen
+    public int isCanceled;//1-->true  0-->false   2-->seen
+    public int sabtenamId;
 
 }

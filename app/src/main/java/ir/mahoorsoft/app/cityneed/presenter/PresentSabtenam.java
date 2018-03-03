@@ -30,6 +30,11 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
         sabtenam.add(idCourse, idTeacher, iduser);
     }
 
+    public void updateCanceledFlag(int sabtenamId, int code){
+        Sabtenam sabtenam = new Sabtenam(this);
+        sabtenam.updateCanceledFlag(sabtenamId, code);
+    }
+
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
         if(res.get(0).code == 2){

@@ -79,8 +79,8 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
         if (course.get(0).empty == 1)
             txt.setText("هیچ دوره ایی وجود ندارد");
         else {
-
-            surce = course;
+            surce.clear();
+            surce.addAll( course);
             adapter = new AdapterCourseListTeacher(this, surce, this);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -93,9 +93,10 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     }
 
     @Override
-    public void courseListItemClick(int id) {
+    public void courseListItemClick(int position) {
         Intent intent = new Intent(G.context, ActivityStudentNameList.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", surce.get(position).id);
+        intent.putExtra("name",surce.get(position).CourseName);
         startActivity(intent);
     }
 }

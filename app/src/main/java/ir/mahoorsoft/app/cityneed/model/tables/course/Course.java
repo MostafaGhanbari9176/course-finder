@@ -53,6 +53,25 @@ public class Course {
         });
     }
 
+    public void updateDeletedFlag(int courseId, int code) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> methode = api.updateDeletedFlag(courseId, code);
+        methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
+                onCourseLitener.onReceiveFlag(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onCourseLitener.sendMessage(Message.convertRetrofitMessage(t.toString()));
+            }
+        });
+    }
+
+
+
     public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days) {
 
         Api api = ApiClient.getClient().create(Api.class);

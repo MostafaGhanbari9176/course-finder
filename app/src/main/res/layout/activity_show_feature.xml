@@ -39,6 +39,7 @@
                             android:id="@+id/imgFeature"
                             android:layout_width="@dimen/img_fragment_karbar"
                             android:layout_height="@dimen/img_fragment_karbar" />
+
                     </android.support.v7.widget.CardView>
                 </RelativeLayout>
 
