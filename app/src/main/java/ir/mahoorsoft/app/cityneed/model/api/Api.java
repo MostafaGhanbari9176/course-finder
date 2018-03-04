@@ -178,6 +178,12 @@ public interface Api {
             @Path("idUser") String idUser
     );
 
+    @GET("checkSabtenam/{idCourse}/{idUser}")
+    Call<ArrayList<ResponseOfServer>> checkSabtenam(
+            @Path("idCourse") int idCourse,
+            @Path("idUser") String idUser
+    );
+
     @GET("getRegistrationsName/{idCourse}/{idTeacher}")
     Call<ArrayList<StUser>> getRegistrationsName(
             @Path("idCourse") int idCourse,

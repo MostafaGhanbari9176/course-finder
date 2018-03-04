@@ -4,7 +4,7 @@
     <dimen name="colorLine">2dp</dimen>
     <dimen name="txt_submit_iformation">20dp</dimen>
     <dimen name="txt_size_smal">18dp</dimen>
-    <dimen name="txt_size_vsmal">12dp</dimen>
+    <dimen name="txt_size_vsmal">16dp</dimen>
     <dimen name="txt_size_big">24dp</dimen>
     <dimen name="txt_size_vbig">32dp</dimen>
     <dimen name="txt_dialog">12dp</dimen>

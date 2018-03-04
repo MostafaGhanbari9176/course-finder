@@ -6,9 +6,9 @@
         <item name="colorPrimary">@color/dark_eq</item>
         <item name="android:textColor">@color/dark_eq</item>
         <item name="android:textSize">@dimen/txt_size_smal</item>
-        <item name="android:textColorHint">@color/blue_eq</item>
+        <item name="android:textColorHint">@color/yellow_ios</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/blue_eq</item>
+        <item name="colorAccent">@color/yellow_ios</item>
 
 
     </style>

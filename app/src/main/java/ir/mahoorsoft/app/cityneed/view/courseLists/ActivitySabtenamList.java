@@ -138,4 +138,11 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
     public void confirmSabtenam(boolean flag) {
 
     }
+
+    @Override
+    public void checkSabtenam(int ratBarValue) {
+
+    }
+
+
 }

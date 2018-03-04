@@ -32,5 +32,15 @@
     <color name="blue_eq">#41cdb0</color>
     <color name="dark_eq">#263238</color>
     <color name="light_eq">#384248</color>
+    <!--apple ios color  == eq -->
+    <color name="red_ios">#ff3b30</color>
+    <color name="blue_ios">#007aff</color>
+    <color name="orange_ios">#ff9500</color>
+    <color name="yellow_ios">#ffcc00</color>
+    <color name="green_ios">#4fd964</color>
+    <color name="pink_ios">#ff2d55</color>
+    <color name="purple_ios">#5856d6</color>
+    <color name="tealblue_ios">#5ac8fa</color>
+
 
 </resources>

@@ -16,6 +16,8 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
 
         void confirmSabtenam(boolean flag);
 
+        void checkSabtenam(int ratBarValue);
+
 
     }
 
@@ -30,22 +32,28 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
         sabtenam.add(idCourse, idTeacher, iduser);
     }
 
-    public void updateCanceledFlag(int sabtenamId, int code){
+    public void checkSabtenam(int idCourse, String iduser) {
+        Sabtenam sabtenam = new Sabtenam(this);
+        sabtenam.checkSabtenam(idCourse, iduser);
+    }
+
+    public void updateCanceledFlag(int sabtenamId, int code) {
         Sabtenam sabtenam = new Sabtenam(this);
         sabtenam.updateCanceledFlag(sabtenamId, code);
     }
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        if(res.get(0).code == 2){
-            sendMessage("قبلا ثبت نام شده");
-            return;
-        }
         onPresentSabtenamListaener.confirmSabtenam(res.get(0).code == 0 ? false : true);
     }
 
     @Override
     public void sendMessage(String message) {
         onPresentSabtenamListaener.sendMessageFST(message);
+    }
+
+    @Override
+    public void checkSabtenam(ArrayList<ResponseOfServer> res) {
+        onPresentSabtenamListaener.checkSabtenam(res.get(0).code);
     }
 }

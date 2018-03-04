@@ -254,4 +254,11 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         else
             sendMessageFUT("خطا!!!");
     }
+
+    @Override
+    public void checkSabtenam(int ratBarValue) {
+
+    }
+
+
 }

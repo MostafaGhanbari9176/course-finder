@@ -34,6 +34,7 @@ dependencies {
     compile('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient"
     }
+    compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'

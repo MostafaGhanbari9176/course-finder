@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
@@ -36,9 +39,9 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityShowFeature extends AppCompatActivity implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener {
-
+    DecimalFormat formatter;
     ImageView img;
-    ImageView backImage;
+    ImageView imgDrop;
     TextView txtName;
     TextView txtMasterName;
     TextView txtTabaghe;
@@ -51,13 +54,14 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     TextView txtCapacity;
     TextView txtsharayet;
     TextView txtRange;
-    CardView moreDetails;
+    LinearLayout moreDetails;
     LinearLayout btnMoreDetails;
     Button btnRegister;
     int courseId;
     String idTeacher;
     String idUser = Pref.getStringValue(PrefKey.apiCode, "");
     DialogProgres dialogProgres;
+    RatingBar ratBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,19 +73,43 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     private void init() {
         dialogProgres = new DialogProgres(this);
         dialogProgres.showProgresBar();
+        formatter = new DecimalFormat("#,###,###");
         pointers();
+        setFont();
         if (getIntent().getExtras() != null)
             courseId = getIntent().getIntExtra("id", -1);
+        checkedSabtenamCourse();
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseById(courseId);
+    }
 
+    private void checkedSabtenamCourse() {
+        dialogProgres.showProgresBar();
+        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+        presentSabtenam.checkSabtenam(courseId, idUser);
+    }
+
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
+        txtName.setTypeface(typeface);
+        txtsharayet.setTypeface(typeface);
+        txtTabaghe.setTypeface(typeface);
+        txtDay.setTypeface(typeface);
+        txtHours.setTypeface(typeface);
+        txtType.setTypeface(typeface);
+        txtCapacity.setTypeface(typeface);
+        txtEndDate.setTypeface(typeface);
+        txtStartDate.setTypeface(typeface);
+        txtRange.setTypeface(typeface);
+        txtMasterName.setTypeface(typeface);
+        txtMony.setTypeface(typeface);
 
     }
 
     private void pointers() {
 
         img = (ImageView) this.findViewById(R.id.imgFeature);
-        backImage = (ImageView) this.findViewById(R.id.imgBackFeatutre);
+        imgDrop = (ImageView) this.findViewById(R.id.imgDropShowFeature);
         txtName = (TextView) this.findViewById(R.id.txtNAmeFeature);
         txtMasterName = (TextView) this.findViewById(R.id.txtMasterNameFeature);
         txtDay = (TextView) this.findViewById(R.id.txtDayFeature);
@@ -93,8 +121,9 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         txtStartDate = (TextView) this.findViewById(R.id.txtStartDateFeature);
         txtRange = (TextView) this.findViewById(R.id.txtRangeFeature);
         txtMony = (TextView) this.findViewById(R.id.txtMonyFeature);
+        ratBar = (RatingBar) findViewById(R.id.ratBarShowFeature);
         txtCapacity = (TextView) this.findViewById(R.id.txtCapacityFeature);
-        moreDetails = (CardView) this.findViewById(R.id.MoreDetailsShowFeature);
+        moreDetails = (LinearLayout) this.findViewById(R.id.MoreDetailsShowFeature);
         btnMoreDetails = (LinearLayout) this.findViewById(R.id.btnMoreDetailsShowFeature);
         btnRegister = (Button) this.findViewById(R.id.btnRegisterShowFeature);
         moreDetails.setVisibility(View.GONE);
@@ -108,10 +137,13 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         btnMoreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (moreDetails.getVisibility() == View.GONE)
+                if (moreDetails.getVisibility() == View.GONE) {
                     moreDetails.setVisibility(View.VISIBLE);
-                else
+                    imgDrop.setImageResource(R.drawable.icon_drop_up);
+                } else {
                     moreDetails.setVisibility(View.GONE);
+                    imgDrop.setImageResource(R.drawable.icon_drop_down);
+                }
             }
         });
 
@@ -151,17 +183,11 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     private void setImage() {
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
-
                 .centerCrop()
                 .error(R.drawable.user)
                 .clone()
                 .into(img);
-        Glide.with(this)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
-                .centerCrop()
-                .error(R.drawable.user)
-                .clone()
-                .into(backImage);
+
     }
 
 
@@ -181,9 +207,9 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
         idTeacher = course.get(0).idTeacher;
-        txtMony.setText(course.get(0).mony + "");
-        txtCapacity.setText(course.get(0).capacity + "");
-        txtRange.setText("از(" + course.get(0).minOld + ")تا(" + course.get(0).maxOld + ")سال");
+        txtMony.setText(formatter.format(course.get(0).mony) + " تومان");
+        txtCapacity.setText(course.get(0).capacity + " نفر");
+        txtRange.setText("از " + course.get(0).minOld + " تا " + course.get(0).maxOld + " سال");
         txtStartDate.setText(course.get(0).startDate);
         txtEndDate.setText(course.get(0).endDate);
         txtType.setText(course.get(0).type == 0 ? "عمومی" : "خصوصی");
@@ -211,8 +237,23 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     public void confirmSabtenam(boolean flag) {
         dialogProgres.closeProgresBar();
         if (flag) {
+//            registeredBefore();
             sendMessageFCT("انجام شد");
         } else
             sendMessageFCT("خطا");
     }
+
+    @Override
+    public void checkSabtenam(int ratBarValue) {
+
+
+    }
+
+//    @Override
+//    public void registeredBefore() {
+//        sendMessageFCT("قبلا ثبت نام شده");
+//        btnRegister.setVisibility(View.GONE);
+//        ratBar.setVisibility(View.VISIBLE);
+//        Pref.saveStringValue(PrefKey.sabTenamCorseId, G.myTrim(courseId + "-" + (Pref.getStringValue(PrefKey.sabTenamCorseId, "")), '-'));
+//    }
 }

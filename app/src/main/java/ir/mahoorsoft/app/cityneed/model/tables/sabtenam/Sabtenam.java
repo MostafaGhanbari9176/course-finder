@@ -19,6 +19,8 @@ public class Sabtenam {
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
 
         void sendMessage(String message);
+
+        void checkSabtenam(ArrayList<ResponseOfServer> res);
     }
 
     OnSabtenamListener onSabtenamListener;
@@ -34,6 +36,22 @@ public class Sabtenam {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
                 onSabtenamListener.onReceiveFlag(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onSabtenamListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void checkSabtenam(int idCourse, String idUser) {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> add = api.checkSabtenam(idCourse, idUser);
+        add.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
+                onSabtenamListener.checkSabtenam(response.body());
             }
 
             @Override
