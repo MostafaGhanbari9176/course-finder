@@ -23,9 +23,9 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         teacher.addTeacher(landPhone, subject, tozihat, type, lat, lon);
     }
 
-    public void getTeacher() {
+    public void getTeacher(String teacherId) {
         Teacher teacher = new Teacher(this);
-        teacher.getTeacher();
+        teacher.getTeacher(teacherId);
     }
 
     public void getAllTeacher() {

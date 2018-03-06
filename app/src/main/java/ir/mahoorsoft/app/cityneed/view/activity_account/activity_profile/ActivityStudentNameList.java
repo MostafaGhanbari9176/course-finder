@@ -1,7 +1,6 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -17,22 +16,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
-import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
-import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
-import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSdudentNameList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -256,7 +249,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     }
 
     @Override
-    public void checkSabtenam(int ratBarValue) {
+    public void checkSabtenam(float ratBarValue) {
 
     }
 

@@ -11,10 +11,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
+import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 
 /**
  * Created by MAHNAZ on 10/9/2017.
@@ -66,8 +65,8 @@ public class FragmentSlide extends Fragment {
 
         //Items items =new Items();
       //  items.image=imageUrl;
-        //ActivityShowFeature.adverFeatures= items;
-        Intent intent = new Intent(G.context,ActivityShowFeature.class);
+        //ActivityOptionalCourse.adverFeatures= items;
+        Intent intent = new Intent(G.context,ActivityOptionalCourse.class);
         startActivity(intent);
 
     }

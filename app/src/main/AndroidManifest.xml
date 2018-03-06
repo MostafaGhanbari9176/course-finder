@@ -50,7 +50,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".view.activity_main.activity_show_feature.ActivityShowFeature"
+            android:name=".view.activity_show_feature.ActivityOptionalCourse"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />

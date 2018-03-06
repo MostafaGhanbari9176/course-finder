@@ -1,8 +1,6 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,7 +34,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
-import ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature.ActivityShowFeature;
+import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -55,6 +53,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     RecyclerView groupingList;
     DialogProgres dialogProgres;
     LinearLayout txtEmpty;
+
 
 
     @Nullable
@@ -128,9 +127,10 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void itemClick(int id) {
-        Intent intent = new Intent(G.context, ActivityShowFeature.class);
+    public void itemClick(int id, String teacherId) {
+        Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", id);
+        intent.putExtra("teacherId",teacherId);
         startActivity(intent);
 
     }
@@ -152,7 +152,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onPageClick(int position, Page page) {
-        Intent intent = new Intent(G.context, ActivityShowFeature.class);
+        Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         startActivity(intent);
     }
 

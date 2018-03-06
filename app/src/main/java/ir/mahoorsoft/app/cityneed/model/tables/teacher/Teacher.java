@@ -42,9 +42,9 @@ public class Teacher {
         });
     }
 
-    public void getTeacher() {
+    public void getTeacher(String teacherId) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StTeacher>> getTeacher = api.getTeacher(Pref.getStringValue(PrefKey.apiCode, ""));
+        Call<ArrayList<StTeacher>> getTeacher = api.getTeacher(teacherId);
         getTeacher.enqueue(new Callback<ArrayList<StTeacher>>() {
             @Override
             public void onResponse(Call<ArrayList<StTeacher>> call, retrofit2.Response<ArrayList<StTeacher>> response) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
+import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
@@ -241,6 +242,31 @@ public interface Api {
             @Path("code") int code
     );
 
+    @GET("saveComment/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}/{courseRat}")
+    Call<ArrayList<ResponseOfServer>> saveComment(
+            @Path("commentText") String commentText,
+            @Path("userId") String userId,
+            @Path("courseId") int courseId,
+            @Path("teacherId") String teacherId,
+            @Path("teacherRat") float teacherRat,
+            @Path("courseRat") float courseRat
+    );
+
+    @GET("updateComment/{id}/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}/{courseRat}")
+    Call<ArrayList<ResponseOfServer>> upDateComment(
+            @Path("id") int id,
+            @Path("commentText") String commentText,
+            @Path("userId") String userId,
+            @Path("courseId") int courseId,
+            @Path("teacherId") String teacherId,
+            @Path("teacherRat") float teacherRat,
+            @Path("courseRat") float courseRat
+    );
+
+    @GET("getCommentByTeacherId/{teacherId}")
+    Call<ArrayList<StComment>> getCommentByTeacherId(
+            @Path("teacherId") String teacherId
+    );
 
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(

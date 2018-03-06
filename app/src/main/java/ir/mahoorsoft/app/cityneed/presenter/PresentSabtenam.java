@@ -16,7 +16,7 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
 
         void confirmSabtenam(boolean flag);
 
-        void checkSabtenam(int ratBarValue);
+        void checkSabtenam(float ratBarValue);
 
 
     }

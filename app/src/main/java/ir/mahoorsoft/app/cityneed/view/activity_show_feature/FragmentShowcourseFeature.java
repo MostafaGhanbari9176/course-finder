@@ -1,16 +1,19 @@
-package ir.mahoorsoft.app.cityneed.view.activity_main.activity_show_feature;
+package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 
+import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,24 +24,25 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
-import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
-import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
+import ir.mahoorsoft.app.cityneed.presenter.PresenterComment;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
- * Created by MAHNAZ on 10/15/2017.
+ * Created by RCC1 on 3/5/2018.
  */
 
-public class ActivityShowFeature extends AppCompatActivity implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener {
+public class FragmentShowcourseFeature extends Fragment implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterComment.OnPresentCommentListener {
+    View view;
     DecimalFormat formatter;
     ImageView img;
     ImageView imgDrop;
@@ -56,28 +60,31 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     TextView txtRange;
     LinearLayout moreDetails;
     LinearLayout btnMoreDetails;
+    float rat;
+    LinearLayout llRatBar;
+    RatingBar ratBar;
+    ProgressBar pbRatBar;
+
     Button btnRegister;
-    int courseId;
+    int courseId = ActivityOptionalCourse.courseId;
     String idTeacher;
     String idUser = Pref.getStringValue(PrefKey.apiCode, "");
     DialogProgres dialogProgres;
-    RatingBar ratBar;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_feature);
-        init();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_show_course_feture, container, false);
+        inite();
+        return view;
     }
 
-    private void init() {
-        dialogProgres = new DialogProgres(this);
+    private void inite() {
+        dialogProgres = new DialogProgres(G.context);
         dialogProgres.showProgresBar();
         formatter = new DecimalFormat("#,###,###");
         pointers();
         setFont();
-        if (getIntent().getExtras() != null)
-            courseId = getIntent().getIntExtra("id", -1);
         checkedSabtenamCourse();
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseById(courseId);
@@ -107,25 +114,27 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     }
 
     private void pointers() {
+        llRatBar = (LinearLayout) view.findViewById(R.id.llRatBar);
+        ratBar = (RatingBar) view.findViewById(R.id.ratBarShowCourseFeature);
+        pbRatBar = (ProgressBar) view.findViewById(R.id.pbRatBarCourseFeature);
 
-        img = (ImageView) this.findViewById(R.id.imgFeature);
-        imgDrop = (ImageView) this.findViewById(R.id.imgDropShowFeature);
-        txtName = (TextView) this.findViewById(R.id.txtNAmeFeature);
-        txtMasterName = (TextView) this.findViewById(R.id.txtMasterNameFeature);
-        txtDay = (TextView) this.findViewById(R.id.txtDayFeature);
-        txtEndDate = (TextView) this.findViewById(R.id.txtEndDateFeature);
-        txtHours = (TextView) this.findViewById(R.id.txtHoursFeature);
-        txtType = (TextView) this.findViewById(R.id.txtTypeFeature);
-        txtTabaghe = (TextView) this.findViewById(R.id.txtTabagheFeature);
-        txtsharayet = (TextView) this.findViewById(R.id.txtsharayetFeature);
-        txtStartDate = (TextView) this.findViewById(R.id.txtStartDateFeature);
-        txtRange = (TextView) this.findViewById(R.id.txtRangeFeature);
-        txtMony = (TextView) this.findViewById(R.id.txtMonyFeature);
-        ratBar = (RatingBar) findViewById(R.id.ratBarShowFeature);
-        txtCapacity = (TextView) this.findViewById(R.id.txtCapacityFeature);
-        moreDetails = (LinearLayout) this.findViewById(R.id.MoreDetailsShowFeature);
-        btnMoreDetails = (LinearLayout) this.findViewById(R.id.btnMoreDetailsShowFeature);
-        btnRegister = (Button) this.findViewById(R.id.btnRegisterShowFeature);
+        img = (ImageView) view.findViewById(R.id.imgFeature);
+        imgDrop = (ImageView) view.findViewById(R.id.imgDropShowFeature);
+        txtName = (TextView) view.findViewById(R.id.txtNAmeFeature);
+        txtMasterName = (TextView) view.findViewById(R.id.txtMasterNameFeature);
+        txtDay = (TextView) view.findViewById(R.id.txtDayFeature);
+        txtEndDate = (TextView) view.findViewById(R.id.txtEndDateFeature);
+        txtHours = (TextView) view.findViewById(R.id.txtHoursFeature);
+        txtType = (TextView) view.findViewById(R.id.txtTypeFeature);
+        txtTabaghe = (TextView) view.findViewById(R.id.txtTabagheFeature);
+        txtsharayet = (TextView) view.findViewById(R.id.txtsharayetFeature);
+        txtStartDate = (TextView) view.findViewById(R.id.txtStartDateFeature);
+        txtRange = (TextView) view.findViewById(R.id.txtRangeFeature);
+        txtMony = (TextView) view.findViewById(R.id.txtMonyFeature);
+        txtCapacity = (TextView) view.findViewById(R.id.txtCapacityFeature);
+        moreDetails = (LinearLayout) view.findViewById(R.id.MoreDetailsShowFeature);
+        btnMoreDetails = (LinearLayout) view.findViewById(R.id.btnMoreDetailsShowFeature);
+        btnRegister = (Button) view.findViewById(R.id.btnRegisterShowFeature);
         moreDetails.setVisibility(View.GONE);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +168,7 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     }
 
     private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
         builder.setTitle("ثبت نام");
         builder.setMessage("ابتدا باید وارد حساب خود شوید یا یک حساب جدید ایجاد کنید.");
         builder.setPositiveButton("بعدا", new DialogInterface.OnClickListener() {
@@ -171,9 +180,9 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         builder.setNegativeButton("ورود یا ایجاد حساب", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(ActivityShowFeature.this, ActivityAcountConfirm.class);
+                Intent intent = new Intent(G.context, ActivityAcountConfirm.class);
                 startActivity(intent);
-                ActivityShowFeature.this.finish();
+                G.activity.finish();
                 dialog.cancel();
             }
         });
@@ -194,7 +203,8 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
     @Override
     public void sendMessageFCT(String message) {
         dialogProgres.closeProgresBar();
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        pbRatBar.setVisibility(View.GONE);
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -239,21 +249,68 @@ public class ActivityShowFeature extends AppCompatActivity implements PresentCou
         if (flag) {
 //            registeredBefore();
             sendMessageFCT("انجام شد");
+            llRatBar.setVisibility(View.VISIBLE);
+            btnRegister.setVisibility(View.GONE);
         } else
             sendMessageFCT("خطا");
     }
 
     @Override
-    public void checkSabtenam(int ratBarValue) {
-
+    public void checkSabtenam(float ratBarValue) {
+        if (ratBarValue == -1) {
+            llRatBar.setVisibility(View.GONE);
+        } else {
+            rat = ratBarValue;
+            btnRegister.setVisibility(View.GONE);
+            ratBar.setRating(ratBarValue);
+            setUpRatBar();
+        }
 
     }
 
-//    @Override
-//    public void registeredBefore() {
-//        sendMessageFCT("قبلا ثبت نام شده");
-//        btnRegister.setVisibility(View.GONE);
-//        ratBar.setVisibility(View.VISIBLE);
-//        Pref.saveStringValue(PrefKey.sabTenamCorseId, G.myTrim(courseId + "-" + (Pref.getStringValue(PrefKey.sabTenamCorseId, "")), '-'));
-//    }
+    private void setUpRatBar() {
+        ratBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if (rat == 0) {
+                    saveRat(rating);
+                } else if (rat != rating) {
+                    upDateRat(rating);
+                }
+            }
+        });
+    }
+
+    private void saveRat(float rat) {
+        pbRatBar.setVisibility(View.VISIBLE);
+        PresenterComment presenterComment = new PresenterComment(this);
+        presenterComment.saveComment("not", Pref.getStringValue(PrefKey.apiCode, ""), courseId, idTeacher, 0, rat);
+    }
+
+    private void upDateRat(float rat) {
+        pbRatBar.setVisibility(View.VISIBLE);
+        PresenterComment presenterComment = new PresenterComment(this);
+        presenterComment.saveComment("not", idUser, courseId, idTeacher, rat, rat);
+    }
+
+    @Override
+    public void onResiveComment(ArrayList<StComment> comment) {
+
+    }
+
+    @Override
+    public void onResiveFlagFromComment(boolean flag) {
+
+        if (flag)
+            sendMessageFCT("امتیاز شما ثبت شد");
+        else {
+            sendMessageFCT("خطا,امتیاز شما ثبت نشد");
+
+        }
+    }
+
+    @Override
+    public void messageFromComment(String message) {
+        sendMessageFCT(message);
+    }
 }

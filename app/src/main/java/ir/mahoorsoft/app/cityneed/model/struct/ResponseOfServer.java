@@ -7,7 +7,7 @@ import android.util.Base64;
  */
 
 public class ResponseOfServer {
-    public int code;
+    public float code;
     public String name;
     public String apiCode;
     public String ms;

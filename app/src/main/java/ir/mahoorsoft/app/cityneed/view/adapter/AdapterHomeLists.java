@@ -29,7 +29,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
 
     public interface setOnClickItem {
 
-        void itemClick(int id);
+        void itemClick(int id, String teacherId);
 
     }
 
@@ -75,7 +75,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    setOnClickItem.itemClick(items.id);
+                    setOnClickItem.itemClick(items.id, items.idTeacher);
                 }
             });
             item.setOnLongClickListener(new View.OnLongClickListener() {

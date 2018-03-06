@@ -81,7 +81,7 @@ public class PresentCourse implements Course.OnCourseLitener {
         if(res.get(0).code == 0)
             sendMessage("خطا, باارز پوزش لطفا بعدا امتحان کنید");
       else
-          onPresentCourseLitener.confirmCourse(res.get(0).code);
+          onPresentCourseLitener.confirmCourse((int)res.get(0).code);
     }
 
     @Override

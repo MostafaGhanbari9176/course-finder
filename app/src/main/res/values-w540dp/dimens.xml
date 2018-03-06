@@ -6,6 +6,7 @@
     <dimen name="txt_size_vsmal">22dp</dimen>
     <dimen name="txt_size_big">36dp</dimen>
     <dimen name="txt_size_vbig">48dp</dimen>
+    <dimen name="ll_scroll_view_bias">135dp</dimen>
 
 
 </resources>
