@@ -99,7 +99,6 @@
 
                                     <RatingBar
                                         android:id="@+id/ratBarProfile"
-                                        style="@style/?android:attr/ratingBarStyleSmall"
                                         android:layout_width="@dimen/img_fragment_karbar"
                                         android:layout_height="wrap_content"
                                         android:numStars="5" />

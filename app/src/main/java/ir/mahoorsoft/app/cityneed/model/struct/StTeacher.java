@@ -22,6 +22,7 @@ public class StTeacher {
     public String lt;
     public String lg;
     public float teacherRat;
+    public int empty;
 
     public StTeacher() {
     }

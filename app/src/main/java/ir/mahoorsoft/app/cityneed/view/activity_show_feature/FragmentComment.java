@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 
 import java.util.ArrayList;
@@ -81,12 +83,26 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     private void getCommentData() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(G.context);
         alertDialog.setTitle("ثبت نظر");
+
         final RatingBar ratingBar = new RatingBar(G.context);
+        ratingBar.setNumStars(5);
+
+
         final EditText editText = new EditText(G.context);
         editText.setHint("نظر خود را وارد کنید");
         editText.setPadding(60, 60, 60, 60);
-        alertDialog.setView(ratingBar);
-        alertDialog.setView(editText);
+
+        LinearLayout masterLayout = new LinearLayout(G.context);
+        masterLayout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        masterLayout.setLayoutParams(params);
+        masterLayout.setGravity(Gravity.CENTER);
+
+        masterLayout.addView(ratingBar);
+        masterLayout.addView(editText);
+
+
+       alertDialog.setView(masterLayout);
 
         alertDialog.setPositiveButton("ثبت نظر", new DialogInterface.OnClickListener() {
             @Override
