@@ -10,7 +10,7 @@
     <color name="text_dialog">#000</color>
     <color name="dark">#000</color>
     <color name="dark_green">#1a4d3a</color>
-    <color name="light">#ffffff</color>
+
     <color name="light_green">#16815a</color>
     <color name="light_green2">#0dbf16</color>
     <color name="light_orange">#ff6600</color>
@@ -32,7 +32,7 @@
     <color name="blue_eq">#41cdb0</color>
     <color name="dark_eq">#263238</color>
     <color name="light_eq">#384248</color>
-    <!--apple ios color  == eq -->
+    <!--apple ios color  -->
     <color name="red_ios">#ff3b30</color>
     <color name="blue_ios">#007aff</color>
     <color name="orange_ios">#ff9500</color>
@@ -41,6 +41,17 @@
     <color name="pink_ios">#ff2d55</color>
     <color name="purple_ios">#5856d6</color>
     <color name="tealblue_ios">#5ac8fa</color>
-
+    <!--color red group  == google -->
+    <color name="red_one">#EF5350</color>
+    <color name="red_two">#F44336</color>
+    <color name="red_three">#ff3b30</color>
+    <!--color green group  == google -->
+    <color name="green_one">#93d79d</color>
+    <color name="green_two">#7fda8d</color>
+    <color name="green_three">#4fd964</color>
+    <!--color green group  == google -->
+    <color name="light_one">#F5F5F5</color>
+    <color name="light_two">#FAFAFA</color>
+    <color name="light">#ffffff</color>
 
 </resources>

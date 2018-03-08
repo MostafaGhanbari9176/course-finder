@@ -31,9 +31,9 @@ public class Comment {
         this.onCommentResponseListener = onCommentResponseListener;
     }
 
-    public void saveComment(String commentText, String userId, int courseId, String teacherId, float teacherRat, float courseRat) {
+    public void saveComment(String commentText, String userId, int courseId, String teacherId, float teacherRat ) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> save = api.saveComment(commentText, userId, courseId, teacherId, teacherRat, courseRat);
+        Call<ArrayList<ResponseOfServer>> save = api.saveComment(commentText, userId, courseId, teacherId, teacherRat);
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
@@ -46,6 +46,26 @@ public class Comment {
             }
         });
     }
+
+
+    public void saveCourseRat(String userId, int courseId, String teacherId, float courseRat) {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> save = api.saveCourseRat(userId, courseId, teacherId, courseRat);
+        save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
+                onCommentResponseListener.resiveFlag(response.body().get(0));
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onCommentResponseListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+
+
 
     public void upDateComment(int id, String commentText, String userId, int courseId, String teacherId, float teacherRat, float courseRat) {
         Api api = ApiClient.getClient().create(Api.class);

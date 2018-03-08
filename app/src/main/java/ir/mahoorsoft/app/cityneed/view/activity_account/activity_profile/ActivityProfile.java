@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 public class ActivityProfile extends AppCompatActivity implements View.OnClickListener, PresentUser.OnPresentUserLitener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
     boolean mapIsShow = false;
+    RatingBar ratBar;
     ImageView imgProfile;
     Button btnLogOut;
     Button btnAddCourse;
@@ -242,6 +244,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 rlUpload.setVisibility(View.GONE);
                 llListAddCourse.setVisibility(View.GONE);
                 llAddCourse.setVisibility(View.GONE);
+                ratBar.setVisibility(View.GONE);
                 setImage(R.drawable.user, imgProfile);
                 replaceContentWith(new FragmentProfileKarbar());
                 break;
@@ -265,7 +268,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     private void checkMadrak() {
         dialogProgres.showProgresBar();
         PresentTeacher presentTeacher = new PresentTeacher(this);
-        presentTeacher.getMs();
+        presentTeacher.getMadrakStateAndRat();
     }
 
     private void setImgUrl(String name, ImageView image) {
@@ -330,6 +333,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     @Override
     public void responseForMadrak(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
+        ratBar.setRating(res.code);
         if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("error")) {
             replaceContentWith(new FragmentErrorServer());
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {

@@ -90,9 +90,9 @@ public class Teacher {
         });
     }
 
-    public void getMadrakState() {
+    public void getMadrakStateAndRat() {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> getMs = api.getMadrakState(Pref.getStringValue(PrefKey.apiCode, ""));
+        Call<ArrayList<ResponseOfServer>> getMs = api.getMadrakStateAndRat(Pref.getStringValue(PrefKey.apiCode, ""));
         getMs.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {

@@ -24,9 +24,14 @@ public class PresenterComment implements Comment.OnCommentResponseListener{
         this.onPresentCommentListener = onPresentCommentListener;
     }
 
-    public void saveComment(String commentText, String userId, int courseId, String teacherId, float teacherRat, float courseRat){
+    public void saveComment(String commentText, String userId, int courseId, String teacherId, float teacherRat){
         Comment comment = new Comment(this);
-        comment.saveComment(commentText, userId, courseId, teacherId, teacherRat, courseRat);
+        comment.saveComment(commentText, userId, courseId, teacherId, teacherRat);
+    }
+
+    public void saveCourseRat(String userId, int courseId, String teacherId, float courseRat){
+        Comment comment = new Comment(this);
+        comment.saveCourseRat(userId, courseId, teacherId, courseRat);
     }
 
     public void upDateComment(int id, String commentText, String userId, int courseId, String teacherId, float teacherRat, float courseRat){

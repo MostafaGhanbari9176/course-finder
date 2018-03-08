@@ -191,8 +191,8 @@ public interface Api {
             @Path("idTeacher") String ac
     );
 
-    @GET("getMs/{ac}")
-    Call<ArrayList<ResponseOfServer>> getMadrakState(
+    @GET("getMsAndRat/{ac}")
+    Call<ArrayList<ResponseOfServer>> getMadrakStateAndRat(
             @Path("ac") String ac
     );
 
@@ -242,13 +242,20 @@ public interface Api {
             @Path("code") int code
     );
 
-    @GET("saveComment/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}/{courseRat}")
+    @GET("saveComment/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}")
     Call<ArrayList<ResponseOfServer>> saveComment(
             @Path("commentText") String commentText,
             @Path("userId") String userId,
             @Path("courseId") int courseId,
             @Path("teacherId") String teacherId,
-            @Path("teacherRat") float teacherRat,
+            @Path("teacherRat") float teacherRat
+    );
+
+    @GET("saveCourseRat/{userId}/{courseId}/{teacherId}/{courseRat}")
+    Call<ArrayList<ResponseOfServer>> saveCourseRat(
+            @Path("userId") String userId,
+            @Path("courseId") int courseId,
+            @Path("teacherId") String teacherId,
             @Path("courseRat") float courseRat
     );
 

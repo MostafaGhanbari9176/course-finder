@@ -33,9 +33,9 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         teacher.getAllTeacher();
     }
 
-    public void getMs() {
+    public void getMadrakStateAndRat() {
         Teacher teacher = new Teacher(this);
-        teacher.getMadrakState();
+        teacher.getMadrakStateAndRat();
     }
 
     public void upMs() {

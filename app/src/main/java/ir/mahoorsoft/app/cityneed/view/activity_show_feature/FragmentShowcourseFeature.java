@@ -37,12 +37,10 @@ import ir.mahoorsoft.app.cityneed.presenter.PresenterComment;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
-/**
- * Created by RCC1 on 3/5/2018.
- */
 
 public class FragmentShowcourseFeature extends Fragment implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterComment.OnPresentCommentListener {
     View view;
+    public static boolean issabtenamed = false;
     DecimalFormat formatter;
     ImageView img;
     ImageView imgDrop;
@@ -60,7 +58,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     TextView txtRange;
     LinearLayout moreDetails;
     LinearLayout btnMoreDetails;
-    float rat;
     LinearLayout llRatBar;
     RatingBar ratBar;
     ProgressBar pbRatBar;
@@ -81,14 +78,18 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     private void inite() {
         dialogProgres = new DialogProgres(G.context);
-        dialogProgres.showProgresBar();
         formatter = new DecimalFormat("#,###,###");
         pointers();
         setFont();
+        getCourseInf();
         checkedSabtenamCourse();
-        PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getCourseById(courseId);
+
     }
+
+    private void getCourseInf(){
+        dialogProgres.showProgresBar();
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.getCourseById(courseId);}
 
     private void checkedSabtenamCourse() {
         dialogProgres.showProgresBar();
@@ -203,7 +204,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     @Override
     public void sendMessageFCT(String message) {
         dialogProgres.closeProgresBar();
-        pbRatBar.setVisibility(View.GONE);
+
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -248,6 +249,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         dialogProgres.closeProgresBar();
         if (flag) {
 //            registeredBefore();
+            issabtenamed = true;
             sendMessageFCT("انجام شد");
             llRatBar.setVisibility(View.VISIBLE);
             btnRegister.setVisibility(View.GONE);
@@ -260,7 +262,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         if (ratBarValue == -1) {
             llRatBar.setVisibility(View.GONE);
         } else {
-            rat = ratBarValue;
+            issabtenamed = true;
             btnRegister.setVisibility(View.GONE);
             ratBar.setRating(ratBarValue);
             setUpRatBar();
@@ -272,11 +274,9 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         ratBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if (rat == 0) {
-                    saveRat(rating);
-                } else if (rat != rating) {
-                    upDateRat(rating);
-                }
+
+                saveRat(rating);
+
             }
         });
     }
@@ -284,13 +284,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     private void saveRat(float rat) {
         pbRatBar.setVisibility(View.VISIBLE);
         PresenterComment presenterComment = new PresenterComment(this);
-        presenterComment.saveComment("not", Pref.getStringValue(PrefKey.apiCode, ""), courseId, idTeacher, 0, rat);
-    }
-
-    private void upDateRat(float rat) {
-        pbRatBar.setVisibility(View.VISIBLE);
-        PresenterComment presenterComment = new PresenterComment(this);
-        presenterComment.saveComment("not", idUser, courseId, idTeacher, rat, rat);
+        presenterComment.saveCourseRat(idUser, courseId, idTeacher, rat);
     }
 
     @Override
@@ -302,15 +296,17 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     public void onResiveFlagFromComment(boolean flag) {
 
         if (flag)
-            sendMessageFCT("امتیاز شما ثبت شد");
+            messageFromComment("امتیاز شما ثبت شد");
         else {
-            sendMessageFCT("خطا,امتیاز شما ثبت نشد");
+            messageFromComment("خطا,امتیاز شما ثبت نشد");
 
         }
     }
 
     @Override
     public void messageFromComment(String message) {
-        sendMessageFCT(message);
+
+        pbRatBar.setVisibility(View.GONE);
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 }

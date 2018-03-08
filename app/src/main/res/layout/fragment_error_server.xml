@@ -41,7 +41,7 @@
                 android:id="@+id/btnReCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_special"
+                android:background="@drawable/btn_dark_eq"
                 android:padding="16dp"
                 android:text="تلاش مجدد"
                 android:textColor="@color/light"

@@ -10,10 +10,14 @@ public class StComment {
     public int courseId;
     public String userId;
     public String teacherId;
+    public String courseName;
+    public String userName;
     public String commentText;
     public float courseRat;
     public float teacherRat;
+    public float totalRat;
     public String date;
+    public String startDate;
     int empty;
 
 }

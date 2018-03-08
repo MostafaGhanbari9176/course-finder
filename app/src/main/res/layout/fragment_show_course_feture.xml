@@ -391,7 +391,7 @@
                     android:id="@+id/btnMoreDetailsShowFeature"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/btn_special"
+                    android:background="@drawable/btn_dark_eq"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -708,7 +708,7 @@
                         android:id="@+id/btnRegisterShowFeature"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/btn_special"
+                        android:background="@drawable/btn_dark_eq"
                         android:text="ثبت نام"
                         android:textColor="@color/light"
                         android:textSize="@dimen/txt_size_smal" />

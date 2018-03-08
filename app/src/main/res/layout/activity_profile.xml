@@ -92,11 +92,26 @@
                                 android:layout_height="match_parent"
                                 android:layout_margin="4dp">
 
-                                <ImageView
-                                    android:id="@+id/imgProfile"
-                                    android:layout_width="@dimen/img_fragment_karbar"
-                                    android:layout_height="@dimen/img_fragment_karbar" />
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center">
+
+                                    <RatingBar
+                                        android:id="@+id/ratBarProfile"
+                                        style="@style/?android:attr/ratingBarStyleSmall"
+                                        android:layout_width="@dimen/img_fragment_karbar"
+                                        android:layout_height="wrap_content"
+                                        android:numStars="5" />
+
+                                    <ImageView
+                                        android:id="@+id/imgProfile"
+                                        android:layout_width="@dimen/img_fragment_karbar"
+                                        android:layout_height="@dimen/img_fragment_karbar" />
+                                </RelativeLayout>
+
                             </android.support.v7.widget.CardView>
+
                         </android.support.v7.widget.CardView>
 
                     </LinearLayout>
