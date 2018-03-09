@@ -37,8 +37,8 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
-import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityCourseRegistring;
-import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
+import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
+import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
@@ -85,6 +85,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
     private void pointer() {
 
+        ratBar = (RatingBar) findViewById(R.id.ratBarProfile);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         (btnLogOut = (Button) findViewById(R.id.btnLogOut)).setOnClickListener(this);
         (rlUpload = (RelativeLayout) findViewById(R.id.rlUploadMadrak)).setOnClickListener(this);

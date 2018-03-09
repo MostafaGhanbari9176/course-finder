@@ -52,7 +52,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     View view;
     RecyclerView groupingList;
     DialogProgres dialogProgres;
-    LinearLayout txtEmpty;
+    TextView txtEmpty;
 
 
 
@@ -118,8 +118,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             }
         });
         btnDelete.setVisibility(View.GONE);
-        txtEmpty = (LinearLayout) view.findViewById(R.id.llTxtEmptyListHome);
-        txtEmpty.setVisibility(View.GONE);
+        txtEmpty = (TextView) view.findViewById(R.id.txtEmptyHome);
         groupingList = (RecyclerView) view.findViewById(R.id.RVGroupingItemsHome);
         scrollView = (LinearLayout) view.findViewById(R.id.llSV);
         llitems = (LinearLayout) view.findViewById(R.id.llItemsHome);

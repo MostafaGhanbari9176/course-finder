@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -53,7 +52,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     AdapterCourseList adapter;
     DialogProgres dialogProgres;
     TextView txtSearch;
-    LinearLayout empty;
+    TextView txtEmpty;
 
     private View dialogView;
     private Dialog dialog;
@@ -264,11 +263,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         rbTeacherName = (RadioButton) view.findViewById(R.id.rbBaseOnTeacherNameSearch);
         btnFilter = (LinearLayout) view.findViewById(R.id.llbtnFilter);
         btnDeleteFilter = (CardView) view.findViewById(R.id.llDeleteFilter);
-        empty = (LinearLayout) view.findViewById(R.id.llTxtEmptyListSearch);
-
+        txtEmpty = (TextView) view.findViewById(R.id.txtEmptySearch);
         btnDeleteFilter.setVisibility(View.GONE);
-        empty.setVisibility(View.GONE);
-
         list = (RecyclerView) view.findViewById(R.id.RVSerarch);
         rbCourseName.setChecked(true);
         btnFilter.setOnClickListener(this);
@@ -324,12 +320,12 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             isFilterRes = false;
         }
         if (course.size() == 0 || course.get(0).empty == 1) {
-            empty.setVisibility(View.VISIBLE);
+            txtEmpty.setVisibility(View.VISIBLE);
             source.clear();
             adapter.notifyDataSetChanged();
             return;
         } else
-            empty.setVisibility(View.GONE);
+            txtEmpty.setVisibility(View.GONE);
         if (source != course) {
             source.clear();
             source.addAll(course);

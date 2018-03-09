@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 
 import ir.mahoorsoft.app.cityneed.G;
+
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
@@ -115,7 +116,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 acountCheck();
                 break;
             case R.id.rbOtherMain:
-                if(!publicChecked){
+                if (!publicChecked) {
                     publicChecked = true;
                     selfChecked = false;
                     showCourseMode();
@@ -123,7 +124,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.rbSelfMain:
-                if(!selfChecked){
+                if (!selfChecked) {
                     selfChecked = true;
                     publicChecked = false;
                     showCourseMode();
@@ -135,13 +136,11 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     private void showCourseMode() {
-        if (rbSelf.isChecked()){
+        if (rbSelf.isChecked()) {
             fhome = null;
             replaceContentWith(new FragmentSelfCourse());
-        }
-        else{
+        } else {
             fhome = new FragmentHome();
             replaceContentWith(fhome);
         }
@@ -186,8 +185,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 flag = false;
                 break;
             case R.id.grouping:
-//                Intent intent = new Intent(this, ActivityTabagheList.class);
-//                startActivity(intent);
+
                 new DialogTabaghe(this, this).Show();
                 flag = false;
                 break;

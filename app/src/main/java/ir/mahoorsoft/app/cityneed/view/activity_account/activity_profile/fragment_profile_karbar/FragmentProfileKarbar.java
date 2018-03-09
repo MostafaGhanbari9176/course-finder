@@ -2,18 +2,15 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragme
 
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +24,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
-import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
-import ir.mahoorsoft.app.cityneed.view.dialog.ActivityDialogAnswer;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogPrvince;
-
-import static android.app.Activity.RESULT_OK;
 
 
 /**

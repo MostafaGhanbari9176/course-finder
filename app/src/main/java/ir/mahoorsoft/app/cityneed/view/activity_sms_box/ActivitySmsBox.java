@@ -1,73 +1,53 @@
 package ir.mahoorsoft.app.cityneed.view.activity_sms_box;
 
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.RadioButton;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
 
 /**
  * Created by M-gh on 27-Feb-18.
  */
 
-public class ActivitySmsBox extends AppCompatActivity implements View.OnClickListener {
-
-    RadioButton rbInBox;
-    RadioButton rbOutBox;
-    Toolbar tb;
-    boolean rbin = true;
-    boolean rbout = false;
+public class ActivitySmsBox extends AppCompatActivity {
+    ViewPager viewPager;
+    Toolbar tlb;
+    TabLayout tabLayout;
+    AdapterViewPager adapterViewPager;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_box);
-        G.activity = this ;
+        G.activity = this;
         G.context = this;
-        pointer();
-        replaceContentWith(new FragmentSmsBoxIn());
+        pointers();
+        setSupportActionBar(tlb);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tabLayout.setupWithViewPager(viewPager);
+        settingUpViewPager();
     }
 
-    private void pointer() {
-        rbInBox = (RadioButton) findViewById(R.id.rbInBoxSmsBox);
-        rbInBox.setChecked(true);
-        rbOutBox = (RadioButton) findViewById(R.id.rbOutBoxSmsBox);
-        tb = (Toolbar) findViewById(R.id.tbSmsBox);
-        rbInBox.setOnClickListener(this);
-        rbOutBox.setOnClickListener(this);
+    private void pointers() {
+        viewPager = (ViewPager) findViewById(R.id.vpSmsBox);
+        tlb = (Toolbar) findViewById(R.id.tbSmsBox);
+        tabLayout = (TabLayout) findViewById(R.id.tabLSmsBox);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.rbInBoxSmsBox:
-                if(!rbin){
-                    rbin = true;
-                    rbout = false;
-                    replaceContentWith(new FragmentSmsBoxIn());
-                }
-                break;
-            case R.id.rbOutBoxSmsBox:
-                if(!rbout){
-                    rbin = false;
-                    rbout = true;
-                    replaceContentWith(new FragmentSmsBoxOut());
-                }
-                break;
-        }
+    private void settingUpViewPager() {
+        adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
+        adapterViewPager.add(new FragmentSmsBoxOut(), "صندوق خروجی");
+        adapterViewPager.add(new FragmentSmsBoxIn(), "صندوق ورودی");
+        viewPager.setAdapter(adapterViewPager);
+        viewPager.setCurrentItem(1);
     }
-
-
-    public static void replaceContentWith(Fragment fragment) {
-
-        G.activity.getSupportFragmentManager()
-                .beginTransaction().replace(R.id.contentSmsBox, fragment)
-                .commit();
-    }
-
 }
+

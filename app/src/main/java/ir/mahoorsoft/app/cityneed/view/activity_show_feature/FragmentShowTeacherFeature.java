@@ -51,7 +51,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     String teacherId = ActivityOptionalCourse.teacherId;
     Marker marker;
     StTeacher teacher;
-    RatingBar ratingBar;
+
 
     @Nullable
     @Override
@@ -98,7 +98,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         txtPhone = (TextView) view.findViewById(R.id.txtPhoneTeacherFeature);
         txtSubject = (TextView) view.findViewById(R.id.txtTeacherSubgectTeacherFeature);
         img = (ImageView) view.findViewById(R.id.imgTeacherFeature);
-        ratingBar = (RatingBar) view.findViewById(R.id.ratBarTeacherFeature);
+
     }
 
     @Override
@@ -124,7 +124,6 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         txtSubject.setText(users.get(0).subject);
         txtPhone.setText(users.get(0).phone);
         txtLandPhone.setText(users.get(0).landPhone);
-        ratingBar.setRating(2);
         setImg();
         setTeacherLocation();
     }

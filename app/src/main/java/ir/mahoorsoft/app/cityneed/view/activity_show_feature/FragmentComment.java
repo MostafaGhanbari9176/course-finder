@@ -4,8 +4,11 @@ import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,20 +28,24 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterComment;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCommentList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by RCC1 on 3/5/2018.
  */
 
-public class FragmentComment extends Fragment implements PresenterComment.OnPresentCommentListener {
+public class FragmentComment extends Fragment implements PresenterComment.OnPresentCommentListener, AdapterCommentList.OnClickItemCommentList {
     View view;
     DialogProgres dialogProgres;
     RatingBar totalRat;
-    Button btnAddComment;
+    FloatingActionButton btnAddComment;
+    TextView txtEmptyComment;
     String teacherId = ActivityOptionalCourse.teacherId;
     int courseId = ActivityOptionalCourse.courseId;
     ArrayList<StComment> source = new ArrayList<>();
+    AdapterCommentList adapterCommentList;
+    RecyclerView commentList;
 
     @Nullable
     @Override
@@ -56,19 +65,21 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     private void getCommentList() {
         dialogProgres.showProgresBar();
         PresenterComment presenterComment = new PresenterComment(this);
-        presenterComment.getCommentByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
+        presenterComment.getCommentByTeacherId(teacherId);
 
     }
 
     private void setFont() {
         Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
-        btnAddComment.setTypeface(typeface);
+//        btnAddComment.setTypeface(typeface);
     }
 
     private void pointers() {
-        totalRat = (RatingBar) view.findViewById(R.id.ratBarTeacherFeature);
-        btnAddComment = (Button) view.findViewById(R.id.btnAddComment);
-
+        totalRat = (RatingBar) view.findViewById(R.id.totalRatTeacherComment);
+        txtEmptyComment = (TextView) view.findViewById(R.id.txtEmptyComment);
+        btnAddComment = (FloatingActionButton) view.findViewById(R.id.btnAddComment);
+        totalRat.setEnabled(false);
+        commentList = (RecyclerView) view.findViewById(R.id.RVCommentList);
         btnAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +97,8 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
 
         final RatingBar ratingBar = new RatingBar(G.context);
         ratingBar.setNumStars(5);
-
+        LinearLayout.LayoutParams ratingBarParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        ratingBar.setLayoutParams(ratingBarParams);
 
         final EditText editText = new EditText(G.context);
         editText.setHint("نظر خود را وارد کنید");
@@ -102,7 +114,7 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
         masterLayout.addView(editText);
 
 
-       alertDialog.setView(masterLayout);
+        alertDialog.setView(masterLayout);
 
         alertDialog.setPositiveButton("ثبت نظر", new DialogInterface.OnClickListener() {
             @Override
@@ -133,7 +145,18 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     @Override
     public void onResiveComment(ArrayList<StComment> comment) {
         dialogProgres.closeProgresBar();
+        if (comment.get(0).empty == 1) {
+            txtEmptyComment.setVisibility(View.VISIBLE);
+            return;
+        }
+        source.clear();
         source.addAll(comment);
+        totalRat.setRating(comment.get(0).totalRat);
+        adapterCommentList = new AdapterCommentList(G.context, source, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context, LinearLayoutManager.VERTICAL, false);
+        commentList.setLayoutManager(layoutManager);
+        commentList.setAdapter(adapterCommentList);
+        adapterCommentList.notifyDataSetChanged();
 
     }
 
@@ -144,6 +167,22 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
 
     @Override
     public void messageFromComment(String message) {
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
         dialogProgres.closeProgresBar();
+    }
+
+    @Override
+    public void likePresed(int position) {
+
+    }
+
+    @Override
+    public void disLikePresed(int position) {
+
+    }
+
+    @Override
+    public void feedBAckPresed(int position) {
+
     }
 }

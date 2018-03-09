@@ -69,22 +69,28 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/txtSubjectRegisteryCourse"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center_vertical"
-                            android:hint="عنوان دوره "
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/txtSubjectRegisteryCourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:gravity="right|center_vertical"
+                                android:hint="عنوان دوره "
+                                android:inputType="textPersonName"
+                                android:maxLines="1"
+                                android:paddingRight="48dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
@@ -101,21 +107,27 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/txtsharayetRegisteryCourse"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center"
-                            android:hint="شرایط و پیش نیاز ها "
-                            android:inputType="textMultiLine"
-                            android:maxLength="110"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/txtsharayetRegisteryCourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:gravity="right|center"
+                                android:hint="شرایط و پیش نیاز ها "
+                                android:inputType="textMultiLine"
+                                android:maxLength="110"
+                                android:paddingRight="48dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
@@ -131,6 +143,29 @@
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/txtMonyRegisteryCourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:gravity="right|center_vertical"
+                                android:hint="شهریه(تومان)"
+                                android:inputType="number"
+                                android:maxLength="9"
+                                android:maxLines="1"
+                                android:paddingRight="48dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
@@ -139,23 +174,6 @@
                             android:layout_centerVertical="true"
                             app:srcCompat="@drawable/icon_mony" />
 
-                        <EditText
-                            android:id="@+id/txtMonyRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center_vertical"
-                            android:hint="شهریه(تومان)"
-                            android:inputType="number"
-                            android:maxLength="9"
-                            android:maxLines="1"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -164,23 +182,29 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/txtMinRange"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center_vertical"
-                            android:hint="کمترین سن"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:maxLines="1"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/txtMinRange"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:gravity="right|center_vertical"
+                                android:hint="کمترین سن"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:maxLines="1"
+                                android:paddingRight="48dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
@@ -197,23 +221,29 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/txtMaxRange"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center_vertical"
-                            android:hint="بیشترین سن"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:maxLines="1"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/txtMaxRange"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:gravity="right|center_vertical"
+                                android:hint="بیشترین سن"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:maxLines="1"
+                                android:paddingRight="48dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
@@ -230,23 +260,29 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/txtCapacityRegisteryCourse"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center_vertical"
-                            android:hint="ظرفیت(نفر)"
-                            android:inputType="number"
-                            android:maxLength="9"
-                            android:maxLines="1"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/txtCapacityRegisteryCourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:gravity="right|center_vertical"
+                                android:hint="ظرفیت(نفر)"
+                                android:inputType="number"
+                                android:maxLength="9"
+                                android:maxLines="1"
+                                android:paddingRight="48dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
@@ -262,6 +298,28 @@
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/txtTozihatRegisteryCourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:gravity="right|center_vertical"
+                                android:hint="توضیحات "
+                                android:inputType="textMultiLine"
+                                android:maxLength="110"
+                                android:paddingRight="48dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
@@ -269,22 +327,6 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             app:srcCompat="@drawable/icon_txtshort" />
-
-                        <EditText
-                            android:id="@+id/txtTozihatRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="right|center_vertical"
-                            android:hint="توضیحات "
-                            android:inputType="textMultiLine"
-                            android:maxLength="110"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
 
                     </RelativeLayout>
 

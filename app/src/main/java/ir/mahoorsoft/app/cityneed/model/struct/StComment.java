@@ -18,6 +18,6 @@ public class StComment {
     public float totalRat;
     public String date;
     public String startDate;
-    int empty;
+    public int empty;
 
 }

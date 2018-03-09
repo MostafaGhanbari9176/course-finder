@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:baselineAligned="false"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -88,6 +89,7 @@
 
                     <RatingBar
                         android:id="@+id/ratBarItemComment"
+                        style="@style/Base.Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -197,7 +199,7 @@
                     android:layout_marginEnd="6dp"
                     android:layout_marginStart="6dp"
                     android:layout_marginTop="2dp"
-                    android:background="@color/light_one"
+                    android:background="@color/light_two"
                     android:gravity="end"
                     android:text="TextView" />
             </LinearLayout>
@@ -205,6 +207,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -215,17 +218,11 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.CardView
+                    <ImageView
+                        android:id="@+id/btnFeedBackItemComment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp">
-
-                        <ImageView
-                            android:id="@+id/btnFeedBackItemComment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_feedback" />
-                    </android.support.v7.widget.CardView>
+                        android:src="@drawable/icon_feedback" />
 
                 </LinearLayout>
 
@@ -236,17 +233,23 @@
                     android:gravity="center|end"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.CardView
+                    <ImageView
+                        android:id="@+id/btnDisLikeItemComment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp">
+                        android:src="@drawable/icon_dislike" />
 
-                        <ImageView
-                            android:id="@+id/btnDisLikeItemComment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_dislike" />
-                    </android.support.v7.widget.CardView>
+                    <TextView
+                        android:id="@+id/txtDisLikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingEnd="2dp"
+                        android:paddingStart="2dp"
+                        android:text="5"
+                        android:textColor="@color/pink_ios"
+                        android:textSize="@dimen/txt_size_vsmal"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -257,17 +260,23 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.CardView
+                    <ImageView
+                        android:id="@+id/btnLikeItemComment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp">
+                        android:src="@drawable/icon_like" />
 
-                        <ImageView
-                            android:id="@+id/btnLikeItemComment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_like" />
-                    </android.support.v7.widget.CardView>
+                    <TextView
+                        android:id="@+id/txtLikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingEnd="2dp"
+                        android:paddingStart="2dp"
+                        android:text="55"
+                        android:textColor="@color/green_ios"
+                        android:textSize="@dimen/txt_size_vsmal"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </LinearLayout>

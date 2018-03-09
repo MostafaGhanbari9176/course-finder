@@ -15,8 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
+
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
@@ -39,7 +42,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     RecyclerView list;
     AdapterSmsListIn adapter;
     ArrayList<StSmsBox> source = new ArrayList<>();
-    LinearLayout llEmpty;
+    TextView txtEmpty;
 
     @Nullable
     @Override
@@ -51,7 +54,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
 
     private void init() {
         dialogProgres = new DialogProgres(G.context);
-        llEmpty = (LinearLayout) view.findViewById(R.id.llTxtEmptyListSmsin);
+        txtEmpty = (TextView) view.findViewById(R.id.txtEmptyInSms);
         list = (RecyclerView) view.findViewById(R.id.RVSmsIn);
 
         getData();
@@ -67,8 +70,8 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     @Override
     public void onResiveSms(ArrayList<StSmsBox> sms) {
         dialogProgres.closeProgresBar();
-        if(sms.get(0).empty == 1){
-            llEmpty.setVisibility(View.VISIBLE);
+        if (sms.get(0).empty == 1) {
+            txtEmpty.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -191,7 +194,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
         builder.setTitle("ارسالی به " + source.get(position).tsName);
         final EditText editText = new EditText(G.context);
-        editText.setPadding(60,60,60,60);
+        editText.setPadding(60, 60, 60, 60);
         editText.setGravity(Gravity.RIGHT);
         editText.setHint("متن پیام خود را وارد کنید");
         editText.addTextChangedListener(new TextWatcher() {
@@ -242,6 +245,6 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         else
             type = 0;
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
-        presenterSmsBox.saveSms(text,Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).tsId,  source.get(position).courseId, type);
+        presenterSmsBox.saveSms(text, Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).tsId, source.get(position).courseId, type);
     }
 }

@@ -10,8 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSmsListIn;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSmsListOut;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -37,7 +36,7 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
     RecyclerView list;
     AdapterSmsListOut adapter;
     ArrayList<StSmsBox> source = new ArrayList<>();
-    LinearLayout llEmpty;
+    TextView txtEmpty;
 
     @Nullable
     @Override
@@ -50,7 +49,7 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
     private void init() {
         dialogProgres = new DialogProgres(G.context);
         list = (RecyclerView) view.findViewById(R.id.RVSmsOut);
-        llEmpty = (LinearLayout) view.findViewById(R.id.llTxtEmptyListSmsOut);
+        txtEmpty = (TextView) view.findViewById(R.id.txtEmptyOutSms);
         getData();
     }
 
@@ -64,7 +63,7 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
     public void onResiveSms(ArrayList<StSmsBox> sms) {
         dialogProgres.closeProgresBar();
         if(sms.get(0).empty == 1){
-            llEmpty.setVisibility(View.VISIBLE);
+            txtEmpty.setVisibility(View.VISIBLE);
             return;
         }
 

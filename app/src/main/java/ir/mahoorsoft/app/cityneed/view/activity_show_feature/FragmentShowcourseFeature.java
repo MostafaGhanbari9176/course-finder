@@ -72,6 +72,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_show_course_feture, container, false);
+        issabtenamed = false;
         inite();
         return view;
     }
@@ -82,16 +83,19 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         pointers();
         setFont();
         getCourseInf();
-        checkedSabtenamCourse();
+        if (Pref.getBollValue(PrefKey.IsLogin, false))
+            checkedSabtenamCourse();
 
     }
 
-    private void getCourseInf(){
+    private void getCourseInf() {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getCourseById(courseId);}
+        presentCourse.getCourseById(courseId);
+    }
 
     private void checkedSabtenamCourse() {
+
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.checkSabtenam(courseId, idUser);
@@ -248,8 +252,8 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     public void confirmSabtenam(boolean flag) {
         dialogProgres.closeProgresBar();
         if (flag) {
-//            registeredBefore();
             issabtenamed = true;
+            setUpRatBar();
             sendMessageFCT("انجام شد");
             llRatBar.setVisibility(View.VISIBLE);
             btnRegister.setVisibility(View.GONE);
@@ -264,6 +268,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         } else {
             issabtenamed = true;
             btnRegister.setVisibility(View.GONE);
+            llRatBar.setVisibility(View.VISIBLE);
             ratBar.setRating(ratBarValue);
             setUpRatBar();
         }

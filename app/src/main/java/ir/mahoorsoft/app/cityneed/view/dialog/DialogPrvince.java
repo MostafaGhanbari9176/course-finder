@@ -18,7 +18,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCity;
 import ir.mahoorsoft.app.cityneed.presenter.PresentOstan;
-import ir.mahoorsoft.app.cityneed.view.activity_account.registering.ActivityTeacherRegistering;
+import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterChosePrvince;
 
 /**

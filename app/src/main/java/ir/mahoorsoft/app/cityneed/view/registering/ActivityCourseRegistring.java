@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.registering;
+package ir.mahoorsoft.app.cityneed.view.registering;
 
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -9,11 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,17 +27,13 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
-import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
-import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
-import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityTabagheList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
@@ -107,15 +103,6 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         btnTime = (Button) findViewById(R.id.btnChooseTimeRegisteryCourse);
         btnTabaghe = (Button) findViewById(R.id.btnChoseTabaghe);
 
-/*        rb1 = (RadioButton) findViewById(R.id.rbSaturday);
-        rb2 = (RadioButton) findViewById(R.id.rbSunday);
-        rb3 = (RadioButton) findViewById(R.id.rbMonday);
-        rb4 = (RadioButton) findViewById(R.id.rb3);
-        rb5 = (RadioButton) findViewById(R.id.rb4);
-        rb6 = (RadioButton) findViewById(R.id.rb5);
-        rb7 = (RadioButton) findViewById(R.id.rbFriday);
-        rb1.setChecked(true);*/
-
         cbxPublic = (CheckBox) findViewById(R.id.cbxPublicCurceRegisteryCourse);
         cbxPrivate = (CheckBox) findViewById(R.id.cbxSingleCurceRegisteryCourse);
         cbxPublic.setChecked(true);
@@ -153,7 +140,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (isUserChanged) {
                     isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
+
                     txtSharayet.setTextKeepState(CharCheck.faCheck(txtSharayet.getText().toString()));
 
                 } else
@@ -297,35 +284,44 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     }
 
     private void checkData() {
-        try {
-            Long.parseLong(txtMony.getText().toString().trim());
-            Integer.parseInt(txtCapacity.getText().toString().trim());
-            Integer.parseInt(txtMinRange.getText().toString().trim());
-            Integer.parseInt(txtMaxRange.getText().toString().trim());
-            if (tabaghe.length() == 0)
-                throw new Exception("لطفا دسته بندی دوره را انتخاب کنید");
-            if (sD.length() == 0 || eD.length() == 0)
-                throw new Exception("لطفا تاریخ شروع و پایان دوره را انتخاب کنید");
-            if (eD.compareTo(sD) == -1)
-                throw new Exception("لطفا تاریخ شروع و پایان دوره را صحیح انتخاب کنید");
-            if (hours.length() == 0)
-                throw new Exception("لطفا ساعت شروع دوره را انتخاب کنید");
-            if (Integer.parseInt(txtMaxRange.getText().toString().trim()) < Integer.parseInt(txtMinRange.getText().toString().trim()))
-                throw new Exception("رنج سنی صحیح نمی باشد");
-            if (txtSharayet.getText() != null && txtSharayet.getText().toString().trim().length() != 0 &&
-                    txtTozihat.getText() != null && txtTozihat.getText().toString().trim().length() != 0 &&
-                    txtSubject.getText() != null && txtSubject.getText().toString().trim().length() != 0 &&
-                    txtMinRange.getText() != null && txtMinRange.getText().toString().trim().length() != 0 &&
-                    txtMony.getText() != null && txtMony.getText().toString().trim().length() != 0 &&
-                    txtMaxRange.getText() != null && txtMaxRange.getText().toString().trim().length() != 0 &&
-                    txtCapacity.getText() != null && txtCapacity.getText().toString().trim().length() != 0 &&
-                    days.length() != 0) {
+
+        if (TextUtils.isEmpty(txtSubject.getText().toString())) {
+            txtSubject.setError("لطفا تکمیل کنید");
+            txtSubject.requestFocus();
+        } else if (TextUtils.isEmpty(txtSharayet.getText().toString())) {
+            txtSharayet.setError("لطفا تکمیل کنید");
+            txtSharayet.requestFocus();
+        } else if (TextUtils.isEmpty(txtMony.getText().toString())) {
+            txtMony.setError("لطفا تکمیل کنید");
+            txtMony.requestFocus();
+        } else if (TextUtils.isEmpty(txtMaxRange.getText().toString())) {
+            txtMaxRange.setError("لطفا تکمیل کنید");
+            txtMaxRange.requestFocus();
+        } else if (TextUtils.isEmpty(txtMinRange.getText().toString())) {
+            txtMinRange.setError("لطفا تکمیل کنید");
+            txtMinRange.requestFocus();
+        } else if (TextUtils.isEmpty(txtCapacity.getText().toString())) {
+            txtCapacity.setError("لطفا تکمیل کنید");
+            txtCapacity.requestFocus();
+        } else if (TextUtils.isEmpty(txtTozihat.getText().toString())) {
+            txtTozihat.setError("لطفا تکمیل کنید");
+            txtTozihat.requestFocus();
+        } else {
+            try {
+                if (tabaghe.length() == 0)
+                    throw new Exception("لطفا دسته بندی دوره را انتخاب کنید");
+                if (sD.length() == 0 || eD.length() == 0)
+                    throw new Exception("لطفا تاریخ شروع و پایان دوره را انتخاب کنید");
+                if (eD.compareTo(sD) == -1)
+                    throw new Exception("لطفا تاریخ شروع و پایان دوره را صحیح انتخاب کنید");
+                if (hours.length() == 0)
+                    throw new Exception("لطفا ساعت شروع دوره را انتخاب کنید");
+                if (Integer.parseInt(txtMaxRange.getText().toString().trim()) < Integer.parseInt(txtMinRange.getText().toString().trim()))
+                    throw new Exception("رنج سنی صحیح نمی باشد");
                 showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید", "بله", "بررسی");
-            } else {
-                throw new Exception("لطفا اطلاعات را صحیح وارد کنید");
+            } catch (Exception e) {
+                showDialog("خطا!", e.getMessage(), "", "قبول");
             }
-        } catch (Exception e) {
-            showDialog("خطا!", e.getMessage(), "", "قبول");
         }
     }
 

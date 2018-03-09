@@ -40,18 +40,18 @@ public class ActivityOptionalCourse extends AppCompatActivity {
         pointer();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        settingUpViewPager();
         tabLayout.setupWithViewPager(viewPager);
+        settingUpViewPager();
+
     }
 
     private void settingUpViewPager() {
-
-        viewPager = (ViewPager) findViewById(R.id.vpOptionalCourse);
         adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
-        adapterViewPager.add(new FragmentShowcourseFeature(), "مشخصات");
-        adapterViewPager.add(new FragmentShowTeacherFeature(), "آموزشگاه");
         adapterViewPager.add(new FragmentComment(), "نظرات و امتیازات");
+        adapterViewPager.add(new FragmentShowTeacherFeature(), "آموزشگاه");
+        adapterViewPager.add(new FragmentShowcourseFeature(), "مشخصات");
         viewPager.setAdapter(adapterViewPager);
+        viewPager.setCurrentItem(2);
     }
 
     private void pointer() {
