@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_eq"
     android:orientation="vertical"
+    android:layoutDirection="rtl"
     tools:context=".view.activityFiles.ActivityFiles">
 
 
@@ -74,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.35"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:orientation="horizontal">
 
                 </LinearLayout>
@@ -83,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.35"
-                    android:gravity="right"
+                    android:gravity="right|end"
                     android:orientation="horizontal">
 
                 </LinearLayout>
@@ -134,6 +135,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="4dp"
                             android:background="@color/light_eq"
+                            android:gravity="center"
                             android:text="برگشت به عقب"
                             android:textColor="@color/light"
                             android:textSize="@dimen/txt_size_smal"

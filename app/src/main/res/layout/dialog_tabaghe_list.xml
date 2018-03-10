@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
 
 
@@ -24,22 +25,13 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
-                android:paddingRight="12dp"
+                android:paddingEnd="12dp"
                 android:theme="?attr/actionBarTheme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center">
-
-                    <ProgressBar
-                        android:id="@+id/pbTabaghe"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="@dimen/progresbar"
-                        android:layout_height="@dimen/progresbar"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="8dp" />
 
                     <TextView
                         android:id="@+id/txtToolbarTabaghe"
@@ -52,6 +44,17 @@
                         android:text="دسته بندی خود را انتخاب کنید"
                         android:textColor="@color/light"
                         android:textSize="@dimen/txt_size_smal" />
+
+                    <ProgressBar
+                        android:id="@+id/pbTabaghe"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="@dimen/progresbar"
+                        android:layout_height="@dimen/progresbar"
+                        android:layout_alignParentTop="false"
+                        android:layout_centerHorizontal="false"
+                        android:layout_centerInParent="false"
+                        android:layout_margin="8dp" />
+
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
 
@@ -63,15 +66,17 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/RVDialogTanaghe2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right" />
+                    android:layout_gravity="end"
+                    android:layout_weight="1" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/RVDialogTanaghe"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right" />
+                    android:layout_gravity="end"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout

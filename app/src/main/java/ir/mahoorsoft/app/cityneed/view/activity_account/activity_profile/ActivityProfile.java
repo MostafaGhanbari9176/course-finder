@@ -2,13 +2,16 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +22,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
+import com.takusemba.spotlight.OnSpotlightEndedListener;
+import com.takusemba.spotlight.OnSpotlightStartedListener;
+import com.takusemba.spotlight.SimpleTarget;
+import com.takusemba.spotlight.Spotlight;
 
 import java.util.ArrayList;
 
@@ -81,6 +88,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         pointer();
         checkUserType();
 
+
     }
 
     private void pointer() {
@@ -100,6 +108,36 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         llListAddCourse = (LinearLayout) findViewById(R.id.llAddCourseListProfile);
         llTrendingUP = (LinearLayout) findViewById(R.id.llTrendingUpProfile);
         llMap = (LinearLayout) findViewById(R.id.llMapProfil);
+        runHelper();
+    }
+
+    private void runHelper(){
+        SimpleTarget firstTarget = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.txtUploadMadrak))
+                .setRadius(100f)
+                .setTitle("first title")
+                .setDescription("first description")
+                .build();
+
+        Spotlight.with(ActivityProfile.this)
+                .setOverlayColor(ContextCompat.getColor(ActivityProfile.this, R.color.background))
+                .setDuration(1000L)
+                .setAnimation(new DecelerateInterpolator(2f))
+                .setTargets(firstTarget)
+                .setClosedOnTouchedOutside(true)
+                .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
+                    @Override
+                    public void onStarted() {
+                        Toast.makeText(ActivityProfile.this, "spotlight is started", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                })
+                .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
+                    @Override
+                    public void onEnded() {
+                        Toast.makeText(ActivityProfile.this, "spotlight is ended", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .start();
 
     }
 

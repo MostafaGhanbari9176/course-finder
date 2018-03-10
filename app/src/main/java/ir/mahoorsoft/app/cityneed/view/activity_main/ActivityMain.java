@@ -172,6 +172,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 replaceContentWith(fhome);
                 flag = true;
                 break;
+            case R.id.secorityPass:
+                checkPass();
+                break;
             case R.id.btnMap_Menu:
                 fhome = null;
                 toolbar.setVisibility(View.GONE);
@@ -194,6 +197,12 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void checkPass(){
+//        if(Pref.saveStringValue(PrefKey.secorityPass,""))
+    }
+
+    private void showPassDialog(){}
 
     @Override
     public void onBackPressed() {

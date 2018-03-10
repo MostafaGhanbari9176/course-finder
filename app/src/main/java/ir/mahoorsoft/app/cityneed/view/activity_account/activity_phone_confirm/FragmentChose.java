@@ -67,19 +67,5 @@ public class FragmentChose extends Fragment {
     private void pointers() {
         btnPhone = (Button) view.findViewById(R.id.btnPhoneAcountConfirm);
         btnEmail = (Button) view.findViewById(R.id.btnEmailAcountConfirm);
-
-        btnEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityAcountConfirm.replaceContentWith(new FragmentEmailConfirm());
-            }
-        });
-
-        btnPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityAcountConfirm.replaceContentWith(new FragmentPhoneConfirm());
-            }
-        });
     }
 }

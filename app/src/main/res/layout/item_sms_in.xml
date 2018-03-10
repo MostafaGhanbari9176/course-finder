@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -10,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp">
 
         <RelativeLayout
@@ -37,15 +38,13 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/btnSeenItemIn"
+                    <TextView
+                        android:id="@+id/txtTsNameItemIn2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/icon_seen" />
+                        android:layout_margin="4dp"
+                        android:gravity="center"
+                        android:text="دریافت شده از : " />
 
                     <TextView
                         android:id="@+id/txtTsNameItemIn"
@@ -53,15 +52,17 @@
                         android:layout_height="match_parent"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:gravity="right|center" />
+                        android:gravity="center|start" />
 
-                    <TextView
-                        android:id="@+id/txtTsNameItemIn2"
+                    <ImageView
+                        android:id="@+id/btnSeenItemIn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:gravity="right|center"
-                        android:text="دریافت شده از : " />
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/icon_seen" />
 
                 </LinearLayout>
 
@@ -71,24 +72,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/btnSendSmsItemIn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/icon_message_box" />
-
-                    <TextView
-                        android:id="@+id/txtCourseNameItemIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:gravity="right|center" />
 
                     <TextView
                         android:id="@+id/txtCourseNameItemIn2"
@@ -97,6 +80,25 @@
                         android:layout_margin="4dp"
                         android:gravity="right|center"
                         android:text="بابت دوره : " />
+
+                    <TextView
+                        android:id="@+id/txtCourseNameItemIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start" />
+
+                    <ImageView
+                        android:id="@+id/btnSendSmsItemIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/icon_message_box" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -106,24 +108,6 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/btnDeleteItemIn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/icon_delete_red" />
-
-                    <TextView
-                        android:id="@+id/txtDateItemIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:gravity="right|center" />
-
                     <TextView
                         android:id="@+id/txtDateItemIn2"
                         android:layout_width="wrap_content"
@@ -131,6 +115,25 @@
                         android:layout_margin="4dp"
                         android:gravity="right|center"
                         android:text="در تاریخ : " />
+
+                    <TextView
+                        android:id="@+id/txtDateItemIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start" />
+
+                    <ImageView
+                        android:id="@+id/btnDeleteItemIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/icon_delete_red" />
+
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

@@ -215,6 +215,15 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             line.setLayoutParams(lineParams);
             line.setGravity(Gravity.CENTER);
 
+            TextView textView = new TextView(G.context);
+            textView.setText(items.get(i).GroupingSubject);
+            textView.setGravity(Gravity.RIGHT);
+            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+            line.addView(textView, textParams);
+
             CardView cardView = new CardView(G.context);
             LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(0, 4, 1);
             cardView.setLayoutParams(cardParam);
@@ -226,21 +235,14 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             cardParam.setMargins(2, 2, 16, 2);
             line.addView(cardView, cardParam);
 
-            TextView textView = new TextView(G.context);
-            textView.setText(items.get(i).GroupingSubject);
-            textView.setGravity(Gravity.RIGHT);
-            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-
-            line.addView(textView, textParams);
 
             masterLayout.addView(line);
 
             RecyclerView list = new RecyclerView(G.context);
             AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                    , LinearLayoutManager.HORIZONTAL, true);
+                    , LinearLayoutManager.HORIZONTAL, false);
             list.setLayoutManager(layoutManager);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -259,7 +261,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     public void onResiveTabaghe(ArrayList<StGrouping> data) {
         adapterGrouping = new AdapterTabagheList(G.context, data, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, true);
+                , LinearLayoutManager.HORIZONTAL, false);
         groupingList.setLayoutManager(layoutManager);
         groupingList.setAdapter(adapterGrouping);
         adapterGrouping.notifyDataSetChanged();

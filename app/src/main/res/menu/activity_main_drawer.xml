@@ -16,13 +16,18 @@
             android:title="@string/menu_text_eight" />
     </group>
 
-            <item
-                android:id="@+id/new_course"
-                android:icon="@drawable/icon_profile"
-                android:title="@string/menu_text_five" />
-            <item
-                android:id="@+id/grouping"
-                android:icon="@drawable/icon_list"
-                android:title="دسته بندی" />
+    <item
+        android:id="@+id/new_course"
+        android:icon="@drawable/icon_profile"
+        android:title="@string/menu_text_five" />
+    <item
+        android:id="@+id/grouping"
+        android:icon="@drawable/icon_list"
+        android:title="دسته بندی" />
+
+    <item
+        android:id="@+id/secorityPass"
+        android:icon="@drawable/icon_list"
+        android:title="رمز ورود,برنامه" />
 
 </menu>

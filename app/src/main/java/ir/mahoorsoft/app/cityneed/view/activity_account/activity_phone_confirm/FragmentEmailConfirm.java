@@ -44,7 +44,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     View view;
     boolean isUserChanged = true;
-    Toolbar tlb;
+
     LinearLayout llName;
     Button btnConfirmEmail;
     Button btnConfirmCode;
@@ -85,7 +85,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     private void pointers() {
         // btnBack = (Button) findViewById(R.id.btnBackPhoneConfirm);
-        tlb = (Toolbar) view.findViewById(R.id.tlbPhoneConfirmEmail);
+
         txtCode = (TextView) view.findViewById(R.id.txtSmsCodeConfirmEmail);
         txtCode.setEnabled(false);
         txtSubject = (TextView) view.findViewById(R.id.txtSubjectEmailConfirm);

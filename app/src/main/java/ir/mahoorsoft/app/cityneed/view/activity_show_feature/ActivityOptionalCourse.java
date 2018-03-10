@@ -29,7 +29,7 @@ public class ActivityOptionalCourse extends AppCompatActivity {
         setContentView(R.layout.activity_optional_course);
         G.context = this;
         G.activity = this;
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             courseId = getIntent().getIntExtra("id", -1);
             teacherId = getIntent().getStringExtra("teacherId");
         }
@@ -47,11 +47,11 @@ public class ActivityOptionalCourse extends AppCompatActivity {
 
     private void settingUpViewPager() {
         adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
-        adapterViewPager.add(new FragmentComment(), "نظرات و امتیازات");
-        adapterViewPager.add(new FragmentShowTeacherFeature(), "آموزشگاه");
         adapterViewPager.add(new FragmentShowcourseFeature(), "مشخصات");
+        adapterViewPager.add(new FragmentShowTeacherFeature(), "آموزشگاه");
+        adapterViewPager.add(new FragmentComment(), "نظرات و امتیازات");
         viewPager.setAdapter(adapterViewPager);
-        viewPager.setCurrentItem(2);
+
     }
 
     private void pointer() {

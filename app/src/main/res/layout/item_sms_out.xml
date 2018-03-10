@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -36,6 +37,22 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:gravity="right|center"
+                        android:text="ارسال شده به : " />
+
+                    <TextView
+                        android:id="@+id/txtRsNameItemOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:gravity="right|start" />
+
                     <ImageView
                         android:id="@+id/btnSeenItemOut"
                         android:layout_width="wrap_content"
@@ -46,22 +63,6 @@
                         android:layout_marginTop="4dp"
                         android:src="@drawable/icon_seen" />
 
-                    <TextView
-                        android:id="@+id/txtRsNameItemOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:gravity="right|center" />
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:gravity="right|center"
-                        android:text="ارسال شده به : " />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -70,14 +71,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txtCourseNameItemOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:gravity="right|center" />
 
                     <TextView
                         android:id="@+id/textView16"
@@ -86,6 +79,15 @@
                         android:layout_margin="4dp"
                         android:gravity="right|center"
                         android:text="بابت دوره : " />
+
+                    <TextView
+                        android:id="@+id/txtCourseNameItemOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -94,6 +96,22 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:gravity="right|center"
+                        android:text="در تاریخ : " />
+
+                    <TextView
+                        android:id="@+id/txtDateItemOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start" />
 
                     <ImageView
                         android:id="@+id/btnDeleteItemOut"
@@ -105,21 +123,6 @@
                         android:layout_marginTop="4dp"
                         android:src="@drawable/icon_delete_red" />
 
-                    <TextView
-                        android:id="@+id/txtDateItemOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:gravity="right|center" />
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:gravity="right|center"
-                        android:text="در تاریخ : " />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

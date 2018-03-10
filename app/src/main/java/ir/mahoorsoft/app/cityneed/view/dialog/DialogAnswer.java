@@ -36,26 +36,26 @@ public class DialogAnswer {
     }
 
     public void showDialog() {
-        LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = li.inflate(R.layout.dialog_answer, null, false);
-        ((TextView) view.findViewById(R.id.txtDialogAnswer)).setText(text);
-        ((Button) view.findViewById(R.id.btnYesDialogAnswer)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                onClickDialogAnswerListener.answer(true);
-            }
-        });
-        ((Button) view.findViewById(R.id.btnNoDialogAnswer)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                onClickDialogAnswerListener.answer(false);
-            }
-        });
-        dialog.setContentView(view);
-       // dialog.getWindow().set
-        dialog.show();
-        dialog.setCancelable(false);
+//        LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View view = li.inflate(R.layout.dialog_answer, null, false);
+//        ((TextView) view.findViewById(R.id.txtDialogAnswer)).setText(text);
+//        ((Button) view.findViewById(R.id.btnYesDialogAnswer)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.cancel();
+//                onClickDialogAnswerListener.answer(true);
+//            }
+//        });
+//        ((Button) view.findViewById(R.id.btnNoDialogAnswer)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.cancel();
+//                onClickDialogAnswerListener.answer(false);
+//            }
+//        });
+//        dialog.setContentView(view);
+//       // dialog.getWindow().set
+//        dialog.show();
+//        dialog.setCancelable(false);
     }
 }

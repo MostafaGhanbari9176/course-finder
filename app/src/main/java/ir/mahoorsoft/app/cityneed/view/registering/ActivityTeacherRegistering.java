@@ -73,7 +73,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         txtPhone = (TextView) findViewById(R.id.txtPhoneRegistery);
         //txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtSubject = (TextView) findViewById(R.id.txtSubject);
-        btnBack = (Button) findViewById(R.id.btnBackRegistery);
+
         btnUploadImag = (Button) findViewById(R.id.btnUploadImg);
         btnSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnLocation = (Button) findViewById(R.id.btnLocation);
@@ -153,9 +153,9 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.btnBackRegistery:
+/*            case R.id.btnBackRegistery:
                 starterActivitry(ActivityProfile.class);
-                break;
+                break;*/
 
             case R.id.btnLocation:
                 Intent intent = new Intent(this, MapsActivity.class);

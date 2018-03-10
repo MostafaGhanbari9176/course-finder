@@ -6,33 +6,23 @@
     android:layout_height="match_parent"
     android:background="@color/light"
     android:gravity="center"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/dark_eq"
-        android:gravity="right|center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:gravity="right|center"
-            android:text="لطفا اطلاعات زیر را تکمیل کنید"
-            android:textColor="@color/toolbar_elements1"
-            android:textSize="@dimen/txt_toolbar" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tlbTeacherRegistery"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <Button
-            android:id="@+id/btnBackRegistery"
-            android:layout_width="@dimen/btn_nav"
-            android:layout_height="@dimen/btn_nav"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/icon_back" />
-
-    </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -67,7 +57,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
                             android:ems="10"
-                            android:gravity="right"
+                            android:gravity="start"
                             android:hint="عنوان آموزش "
                             android:inputType="textPersonName"
                             android:maxLines="1"
@@ -77,9 +67,10 @@
                             android:textSize="@dimen/txt_submit_iformation" />
 
                         <ImageView
+                            android:id="@+id/imageView3"
                             android:layout_width="@dimen/btn_nav"
                             android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentEnd="false"
                             android:layout_centerVertical="true"
                             app:srcCompat="@drawable/icon_txtshort" />
 
@@ -95,7 +86,8 @@
                             android:id="@+id/txtPhoneRegistery"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="right"
+                            android:layout_alignParentStart="false"
+                            android:gravity="start"
                             android:hint="تلفن ثابت همراه با پیش شماره"
                             android:inputType="phone"
                             android:maxLength="11"
@@ -108,7 +100,7 @@
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
                             android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentEnd="false"
                             android:layout_centerVertical="true"
                             app:srcCompat="@drawable/icon_landphone" />
 
@@ -124,10 +116,10 @@
                             android:id="@+id/txtTozihat"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_alignParentStart="false"
                             android:layout_alignParentTop="true"
                             android:ems="10"
-                            android:gravity="right"
+                            android:gravity="start"
                             android:hint="توضیحات "
                             android:inputType="textImeMultiLine"
                             android:maxLength="110"
@@ -139,7 +131,7 @@
                         <ImageView
                             android:layout_width="@dimen/btn_nav"
                             android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentEnd="false"
                             android:layout_centerVertical="true"
                             app:srcCompat="@drawable/icon_txtshort" />
 
@@ -151,8 +143,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="right|center"
-                android:gravity="right|center"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.CardView
@@ -184,7 +176,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right|center"
+                android:gravity="center|start"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -194,13 +186,12 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:gravity="right|center"
+                    android:gravity="right"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right|center"
                         android:text="انتخاب نوع آموزش : "
                         android:textColor="@color/text_home"
                         android:textSize="@dimen/txt_size_smal" />
@@ -209,7 +200,7 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right">
+                    android:gravity="start">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -219,6 +210,13 @@
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/cbxPublicCurce"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -229,12 +227,6 @@
                             android:textColor="@color/dark"
                             android:textSize="@dimen/txt_size_smal" />
 
-                        <CheckBox
-                            android:id="@+id/cbxPublicCurce"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -246,6 +238,13 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
+                        <CheckBox
+                            android:id="@+id/cbxSingleCurce"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -255,12 +254,6 @@
                             android:textColor="@color/dark"
                             android:textSize="@dimen/txt_size_smal" />
 
-                        <CheckBox
-                            android:id="@+id/cbxSingleCurce"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="" />
                     </LinearLayout>
                 </RadioGroup>
             </LinearLayout>
@@ -268,7 +261,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right|center"
+                android:gravity="center|end"
                 android:orientation="vertical">
 
                 <LinearLayout

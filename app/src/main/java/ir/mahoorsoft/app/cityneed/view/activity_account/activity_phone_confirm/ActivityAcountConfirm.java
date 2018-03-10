@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +33,10 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
+import ir.mahoorsoft.app.cityneed.view.activity_show_feature.FragmentComment;
+import ir.mahoorsoft.app.cityneed.view.activity_show_feature.FragmentShowTeacherFeature;
+import ir.mahoorsoft.app.cityneed.view.activity_show_feature.FragmentShowcourseFeature;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -38,21 +44,40 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityAcountConfirm extends AppCompatActivity {
-
+    Toolbar tlb;
+    TabLayout tabLayout;
+    AdapterViewPager adapterViewPager;
+    ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         G.activity = this;
         G.context = this;
         setContentView(R.layout.activity_acount_confirm);
-        replaceContentWith(new FragmentChose());
+        init();
     }
 
-    public static void replaceContentWith(Fragment fragment) {
+    private void init() {
+        pointer();
+        setSupportActionBar(tlb);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tabLayout.setupWithViewPager(viewPager);
+        settingUpViewPager();
 
-        G.activity.getSupportFragmentManager()
-                .beginTransaction().replace(R.id.contentAcountConfirm, fragment)
-                .commit();
+    }
+
+    private void settingUpViewPager() {
+        adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
+        adapterViewPager.add(new FragmentEmailConfirm(), "ثبت نام یا ورود با ایمیل");
+        adapterViewPager.add(new FragmentPhoneConfirm(), "ثبت نام یا ورود با شماره همراه");
+        viewPager.setAdapter(adapterViewPager);
+
+    }
+
+    private void pointer() {
+        viewPager = (ViewPager) findViewById(R.id.vpAcountConfirm);
+        tlb = (Toolbar) findViewById(R.id.tlbAcountConfirm);
+        tabLayout = (TabLayout) findViewById(R.id.tabsAcountConfirm);
     }
 
 }

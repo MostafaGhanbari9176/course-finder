@@ -44,10 +44,10 @@ public class ActivitySmsBox extends AppCompatActivity {
 
     private void settingUpViewPager() {
         adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
-        adapterViewPager.add(new FragmentSmsBoxOut(), "صندوق خروجی");
         adapterViewPager.add(new FragmentSmsBoxIn(), "صندوق ورودی");
+        adapterViewPager.add(new FragmentSmsBoxOut(), "صندوق خروجی");
         viewPager.setAdapter(adapterViewPager);
-        viewPager.setCurrentItem(1);
+
     }
 }
 
