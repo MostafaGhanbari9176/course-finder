@@ -19,5 +19,7 @@ public class StComment {
     public String date;
     public String startDate;
     public int empty;
+    public int likeNum;
+    public int disLikeNum;
 
 }

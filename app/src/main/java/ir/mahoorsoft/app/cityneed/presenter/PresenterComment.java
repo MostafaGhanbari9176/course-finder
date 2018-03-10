@@ -34,6 +34,11 @@ public class PresenterComment implements Comment.OnCommentResponseListener{
         comment.saveCourseRat(userId, courseId, teacherId, courseRat);
     }
 
+    public void commentFeedBack(String userId, int commentId, int isLicked){
+        Comment comment = new Comment(this);
+        comment.commentFeedBack(userId, commentId, isLicked);
+    }
+
     public void upDateComment(int id, String commentText, String userId, int courseId, String teacherId, float teacherRat, float courseRat){
         Comment comment = new Comment(this);
         comment.upDateComment(id, commentText, userId, courseId, teacherId, teacherRat, courseRat);

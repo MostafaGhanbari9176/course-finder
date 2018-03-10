@@ -54,7 +54,7 @@ public interface Api {
             @Path("phone") String phone
     );
 
-  //  @GET()
+    //  @GET()
 
     @GET("createAndSaveSmsCode/{phone}")
     Call<ArrayList<ResponseOfServer>> createSmsCode(
@@ -106,9 +106,9 @@ public interface Api {
             @Path("landPhone") String landPhone,
             @Path("address") String address,
             @Path("subject") String subject,
-            @Path("cityId") int cityId ,
+            @Path("cityId") int cityId,
             @Path("m") int madrak
-            );
+    );
 
     @GET("getTabaghe/{uperId}")
     Call<ArrayList<StGrouping>> getTabaghe(
@@ -257,6 +257,13 @@ public interface Api {
             @Path("courseId") int courseId,
             @Path("teacherId") String teacherId,
             @Path("courseRat") float courseRat
+    );
+
+    @GET("commentFeedBack/{userId}/{commentId}/{isLicked}")
+    Call<ArrayList<ResponseOfServer>> commentFeedBack(
+            @Path("userId") String userId,
+            @Path("commentId") int commentId,
+            @Path("isLicked") int isLicked
     );
 
     @GET("updateComment/{id}/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}/{courseRat}")

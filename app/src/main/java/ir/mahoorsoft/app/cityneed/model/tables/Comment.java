@@ -64,7 +64,21 @@ public class Comment {
         });
     }
 
+    public void commentFeedBack(String userId, int commentId, int isLicked) {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> save = api.commentFeedBack(userId, commentId, isLicked);
+        save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
+                onCommentResponseListener.resiveFlag(response.body().get(0));
+            }
 
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onCommentResponseListener.sendMessage(t.getMessage());
+            }
+        });
+    }
 
 
     public void upDateComment(int id, String commentText, String userId, int courseId, String teacherId, float teacherRat, float courseRat) {

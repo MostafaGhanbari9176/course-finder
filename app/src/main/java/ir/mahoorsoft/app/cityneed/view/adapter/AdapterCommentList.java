@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
@@ -28,13 +29,18 @@ public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.
 
     public interface OnClickItemCommentList {
         void likePresed(int position);
+
         void disLikePresed(int position);
+
         void feedBAckPresed(int position);
     }
 
     private OnClickItemCommentList onClickItemCommentList;
     private Context context;
     private ArrayList<StComment> surce = new ArrayList<>();
+    private boolean licked = false;
+    private boolean disLicked = false;
+    private int lickedPosition = -1;
 
 
     public AdapterCommentList(Context context, ArrayList<StComment> surce, OnClickItemCommentList onClickItemCommentList) {
@@ -49,6 +55,8 @@ public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.
         ImageView btnDisLike;
         ImageView btnFeedBack;
         TextView txtCommentText;
+        TextView txtDisLikeNum;
+        TextView txtLikeNum;
         TextView txtUserName;
         TextView txtCommentDate;
         TextView txtCourseName;
@@ -67,6 +75,8 @@ public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.
             txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemComment);
             txtStartDate = (TextView) itemView.findViewById(R.id.txtStartDateItemComment);
             txtUserName = (TextView) itemView.findViewById(R.id.txtUserNameItemComment);
+            txtDisLikeNum = (TextView) itemView.findViewById(R.id.txtDisLikeNum);
+            txtLikeNum = (TextView) itemView.findViewById(R.id.txtLikeNum);
             /*item = (LinearLayout) itemView.findViewById(R.id.itemTabaghe);*/
         }
     }
@@ -80,10 +90,12 @@ public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.
     }
 
     @Override
-    public void onBindViewHolder(AdapterCommentList.Holder holder, final int position) {
+    public void onBindViewHolder(final AdapterCommentList.Holder holder, final int position) {
         final StComment items = surce.get(position);
         holder.txtUserName.setText(items.userName);
         holder.txtStartDate.setText(items.startDate);
+        holder.txtLikeNum.setText(items.likeNum + "");
+        holder.txtDisLikeNum.setText(items.disLikeNum + "");
         holder.txtCourseName.setText(items.courseName);
         holder.txtCommentDate.setText(items.date);
         holder.txtCommentText.setText(items.commentText);
@@ -98,14 +110,48 @@ public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCommentList.likePresed(position);
+               if(lickedPosition != position){
+                   licked = false;
+                   disLicked = false;
+                   lickedPosition = position;
+               }
+                if (!licked) {
+                    onClickItemCommentList.likePresed(position);
+                    items.likeNum += 1;
+                    holder.txtLikeNum.setText(items.likeNum + "");
+                    if (disLicked) {
+                        items.disLikeNum -= 1;
+                        holder.txtDisLikeNum.setText(items.disLikeNum + "");
+                    }
+                    licked = true;
+                    disLicked = false;
+                    surce.set(position, items);
+                }
+
             }
         });
 
         holder.btnDisLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCommentList.disLikePresed(position);
+                if(lickedPosition != position){
+                    licked = false;
+                    disLicked = false;
+                    lickedPosition = position;
+                }
+                if (!disLicked) {
+                    onClickItemCommentList.disLikePresed(position);
+                    items.disLikeNum += 1;
+                    holder.txtDisLikeNum.setText(items.disLikeNum + "");
+                    if (licked) {
+                        items.likeNum -= 1;
+                        holder.txtLikeNum.setText(items.likeNum + "");
+                    }
+                    licked = false;
+                    disLicked = true;
+                    surce.set(position, items);
+                }
+
             }
         });
 

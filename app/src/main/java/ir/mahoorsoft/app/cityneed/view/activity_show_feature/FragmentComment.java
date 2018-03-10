@@ -37,6 +37,8 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 public class FragmentComment extends Fragment implements PresenterComment.OnPresentCommentListener, AdapterCommentList.OnClickItemCommentList {
     View view;
+    boolean licked = false;
+    boolean disLicked = false;
     DialogProgres dialogProgres;
     RatingBar totalRat;
     FloatingActionButton btnAddComment;
@@ -174,11 +176,15 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     @Override
     public void likePresed(int position) {
 
+            PresenterComment presenterComment = new PresenterComment(this);
+            presenterComment.commentFeedBack(Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).id, 1);
+
     }
 
     @Override
     public void disLikePresed(int position) {
-
+        PresenterComment presenterComment = new PresenterComment(this);
+        presenterComment.commentFeedBack(Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).id, 0);
     }
 
     @Override
