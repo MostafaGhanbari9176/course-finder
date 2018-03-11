@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,9 +46,11 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
         TextView txtCapacity;
         TextView txtCourseName;
         LinearLayout item;
+        RelativeLayout relativeLayout;
 
         public Holder(View itemView) {
             super(itemView);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rlUnValidCourse);
             imgItem = (ImageView) itemView.findViewById(R.id.imgItemCourseListTeacher);
             txtCapacity = (TextView) itemView.findViewById(R.id.txtCapacityItem);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemTeacher);
@@ -66,7 +69,10 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
         final StCourse items = surce.get(position);
-
+        if(items.vaziat == 0)
+            holder.relativeLayout.setVisibility(View.VISIBLE);
+        else
+            holder.relativeLayout.setVisibility(View.GONE);
         holder.txtCourseName.setText(items.CourseName);
         holder.txtCapacity.setText(items.capacity+"");
         Glide.with(context)
@@ -78,6 +84,7 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(items.vaziat == 1)
                 onClickItemCourseList.courseListItemClick(position);
             }
         });

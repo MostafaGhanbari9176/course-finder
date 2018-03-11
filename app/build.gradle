@@ -55,6 +55,7 @@ dependencies {
 *   loading
 * */
 ////////////////////zarinPal
+    compile 'com.zarinpal:purchase:0.0.3-beta'
 
 
 }

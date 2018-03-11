@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -32,6 +33,12 @@ public class ActivitySmsBox extends AppCompatActivity {
         pointers();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
         settingUpViewPager();
     }
@@ -48,6 +55,12 @@ public class ActivitySmsBox extends AppCompatActivity {
         adapterViewPager.add(new FragmentSmsBoxOut(), "صندوق خروجی");
         viewPager.setAdapter(adapterViewPager);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
     }
 }
 

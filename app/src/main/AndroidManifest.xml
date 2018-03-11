@@ -45,12 +45,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".view.activity_account.activity_profile.ActivityProfile"
+            android:name=".view.activity_profile.ActivityProfile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".view.activity_account.activity_profile.ActivityStudentNameList"
+            android:name=".view.activity_profile.ActivityStudentNameList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
@@ -90,10 +90,25 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".view.activity_account.activity_phone_confirm.ActivityAcountConfirm"
+            android:name=".view.activity_account.activity_acount_confirm.ActivityAcountConfirm"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
+
+        <activity
+            android:name=".view.purchase.ActivityPurchase"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="yourapp"/>
+            </intent-filter>
+        </activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

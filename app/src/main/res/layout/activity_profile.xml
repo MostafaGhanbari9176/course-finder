@@ -183,7 +183,7 @@
                             android:rotation="-20">
 
                             <Button
-                                android:id="@+id/btnCourseListProfile"
+                                android:id="@+id/btnAddListProfile"
                                 android:layout_width="@dimen/btn_nav"
                                 android:layout_height="@dimen/btn_nav"
                                 android:background="@drawable/icon_list_sabtenam" />

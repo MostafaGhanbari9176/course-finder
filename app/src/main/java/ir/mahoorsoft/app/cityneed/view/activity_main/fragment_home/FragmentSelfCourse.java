@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,8 +32,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 public class FragmentSelfCourse extends Fragment implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
     View view;
-    String id;
-    String modeShow = "";
+    TextView txt;
     AdapterCourseListTeacher adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
@@ -47,7 +47,8 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     }
 
     private void init() {
-        ((Toolbar) view.findViewById(R.id.tbList)).setVisibility(View.GONE);
+        ((Toolbar) view.findViewById(R.id.tlbList)).setVisibility(View.GONE);
+        txt = (TextView) view.findViewById(R.id.txtEmptyCourseList);
         dialogProgres = new DialogProgres(G.context);
         surce = new ArrayList<>();
         list = (RecyclerView) view.findViewById(R.id.RVList);
@@ -63,7 +64,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     private void setSource() {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode,""));
+        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
 
@@ -82,13 +83,18 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
-        list = (RecyclerView) view.findViewById(R.id.RVList);
-        adapter = new AdapterCourseListTeacher(G.context, course, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.VERTICAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        if(course.get(0).empty == 1)
+            txt.setVisibility(View.VISIBLE);
+        else {
+            txt.setVisibility(View.GONE);
+            list = (RecyclerView) view.findViewById(R.id.RVList);
+            adapter = new AdapterCourseListTeacher(G.context, course, this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                    , LinearLayoutManager.VERTICAL, false);
+            list.setLayoutManager(layoutManager);
+            list.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

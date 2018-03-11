@@ -25,8 +25,8 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedServer;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityAcountConfirm;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentSelfCourse;
@@ -34,6 +34,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
+import ir.mahoorsoft.app.cityneed.view.purchase.ActivityPurchase;
 
 
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener, DialogTabaghe.OnTabagheItemClick, NavigationView.OnNavigationItemSelectedListener, PresentCheckedServer.OnPresentCheckServrer {
@@ -173,7 +174,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 flag = true;
                 break;
             case R.id.secorityPass:
-                checkPass();
+                startActivity(ActivityPurchase.class);
                 break;
             case R.id.btnMap_Menu:
                 fhome = null;

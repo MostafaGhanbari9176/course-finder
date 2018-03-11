@@ -312,7 +312,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
         dialog.cancel();
-        adapter = new AdapterCourseList(G.context, source, this);
         txtSearch.setBackgroundResource(R.drawable.txt_search);
         txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
         if (isFilterRes) {
@@ -322,6 +321,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         if (course.size() == 0 || course.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);
             source.clear();
+
+            adapter = new AdapterCourseList(G.context, source, this);
             adapter.notifyDataSetChanged();
             return;
         } else
@@ -330,7 +331,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             source.clear();
             source.addAll(course);
         }
-
+        adapter = new AdapterCourseList(G.context, source, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.VERTICAL, false);
         list.setLayoutManager(layoutManager);

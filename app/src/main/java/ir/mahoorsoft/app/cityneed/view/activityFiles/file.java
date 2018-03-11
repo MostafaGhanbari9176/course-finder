@@ -5,7 +5,7 @@ package ir.mahoorsoft.app.cityneed.view.activityFiles;
  */
 
 public class file {
-
+    public long size;
     public String fileName;
     public String path;
     public int Image;

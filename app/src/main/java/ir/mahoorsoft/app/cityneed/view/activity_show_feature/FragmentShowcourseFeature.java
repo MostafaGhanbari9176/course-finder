@@ -34,7 +34,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterComment;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm.ActivityAcountConfirm;
+import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 

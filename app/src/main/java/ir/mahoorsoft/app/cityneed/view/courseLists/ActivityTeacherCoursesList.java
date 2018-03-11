@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityStudentNameList;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityStudentNameList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -33,15 +35,23 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     ArrayList<StCourse> surce;
     DialogProgres dialogProgres;
     TextView txt;
+    Toolbar tlb;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-        txt = (TextView) findViewById(R.id.txtToolbarList);
-        txt.setText("دوره های ثبت شده توسط شما");
-
+        txt = (TextView) findViewById(R.id.txtEmptyCourseList);
+        tlb = (Toolbar) findViewById(R.id.tlbList);
+        setSupportActionBar(tlb);
+        getSupportActionBar().setTitle("دوره های ثبت شده توسط شما");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
@@ -57,7 +67,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     private void getData() {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode,""));
+        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
     @Override
@@ -76,10 +86,11 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
         if (course.get(0).empty == 1)
-            txt.setText("هیچ دوره ایی وجود ندارد");
+            txt.setVisibility(View.VISIBLE);
         else {
+            txt.setVisibility(View.GONE);
             surce.clear();
-            surce.addAll( course);
+            surce.addAll(course);
             adapter = new AdapterCourseListTeacher(this, surce, this);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -95,7 +106,13 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     public void courseListItemClick(int position) {
         Intent intent = new Intent(G.context, ActivityStudentNameList.class);
         intent.putExtra("id", surce.get(position).id);
-        intent.putExtra("name",surce.get(position).CourseName);
+        intent.putExtra("name", surce.get(position).CourseName);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 }

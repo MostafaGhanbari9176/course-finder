@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah;
+package ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah;
 
 
 import android.os.Bundle;

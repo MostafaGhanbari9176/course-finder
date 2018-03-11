@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,14 +34,23 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
     ArrayList<StCourse> surce;
     DialogProgres dialogProgres;
     TextView txt;
-
+    Toolbar tlb;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        txt = (TextView) findViewById(R.id.txtToolbarList);
-        txt.setText("دوره های ثبت نام شده");
+        txt = (TextView) findViewById(R.id.txtEmptyCourseList);
+        tlb = (Toolbar) findViewById(R.id.tlbList);
+        setSupportActionBar(tlb);
+        getSupportActionBar().setTitle("دوره های ثبت نام شده توسط شما");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
@@ -82,9 +93,9 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
         if (course.get(0).empty == 1)
-            txt.setText("هیچ دوره ایی وجود ندارد");
+            txt.setVisibility(View.VISIBLE);
         else {
-
+            txt.setVisibility(View.GONE);
             surce = course;
             adapter = new AdapterCourseList(this, surce, this);
             list.setAdapter(adapter);
@@ -106,9 +117,9 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
 
     @Override
     public void courseDeletedClick(int position) {
-        if(surce.get(position).isDeleted == 1)
-        queryForUpdateDeletedFlag(surce.get(position).id);
-        if(surce.get(position).isCanceled == 1)
+        if (surce.get(position).isDeleted == 1)
+            queryForUpdateDeletedFlag(surce.get(position).id);
+        if (surce.get(position).isCanceled == 1)
             queryForUpdateCanceledFlag(surce.get(position).sabtenamId);
         surce.remove(position);
         adapter.notifyItemRemoved(position);
@@ -122,7 +133,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
 
     private void queryForUpdateCanceledFlag(int id) {
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.updateCanceledFlag(id,2);
+        presentSabtenam.updateCanceledFlag(id, 2);
 
     }
 
@@ -141,5 +152,9 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterCo
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 }

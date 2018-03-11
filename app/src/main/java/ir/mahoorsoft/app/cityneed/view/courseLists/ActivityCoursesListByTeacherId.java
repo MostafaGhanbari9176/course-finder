@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,15 +34,24 @@ public class ActivityCoursesListByTeacherId extends AppCompatActivity implements
     DialogProgres dialogProgres;
     TextView txt;
     String apiCode;
-
+    Toolbar tlb;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         if(getIntent().getExtras() != null)
             apiCode = getIntent().getStringExtra("apiCode");
-        txt = (TextView) findViewById(R.id.txtToolbarList);
-        txt.setText("دوره های این آموزشگاه");
+        txt = (TextView) findViewById(R.id.txtEmptyCourseList);
+        tlb = (Toolbar) findViewById(R.id.tlbList);
+        setSupportActionBar(tlb);
+        getSupportActionBar().setTitle("دوره های این آموزشگاه");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
@@ -78,9 +89,9 @@ public class ActivityCoursesListByTeacherId extends AppCompatActivity implements
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
         if (course.get(0).empty == 1)
-            txt.setText("هیچ دوره ایی وجود ندارد");
+            txt.setVisibility(View.VISIBLE);
         else {
-
+            txt.setVisibility(View.GONE);
             adapter = new AdapterCourseList(this, course, this);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -102,5 +113,11 @@ public class ActivityCoursesListByTeacherId extends AppCompatActivity implements
     @Override
     public void courseDeletedClick(int position) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 }

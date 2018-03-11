@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
+package ir.mahoorsoft.app.cityneed.view.activity_profile;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -7,9 +7,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +44,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     TextView txt;
     int courseId;
     String courseName;
-
+    Toolbar tlb;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +53,17 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
             courseId = getIntent().getIntExtra("id", 0);
             courseName = getIntent().getStringExtra("name");
         }
-        txt = (TextView) findViewById(R.id.txtToolbarList);
-        txt.setText("ثبت نام های دوره " + courseName);
+        txt = (TextView) findViewById(R.id.txtEmptyCourseList);
+        tlb = (Toolbar) findViewById(R.id.tlbList);
+        setSupportActionBar(tlb);
+        getSupportActionBar().setTitle("محصلین این دوره");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
@@ -98,10 +109,12 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     @Override
     public void onReceiveUser(ArrayList<StUser> students) {
         dialogProgres.closeProgresBar();
-        if (students.get(0).empty == 1)
-            txt.setText("هیچ ثبت نامی موجود نیست");
+        if (students.get(0).empty == 1) {
+            txt.setVisibility(View.VISIBLE);
+            txt.setText("هیچ محصلی موجود نیست");
+        }
         else {
-
+            txt.setVisibility(View.GONE);
             surce.addAll(students);
             adapter = new AdapterSdudentNameList(this, surce, this);
             list.setAdapter(adapter);
@@ -253,5 +266,9 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 }

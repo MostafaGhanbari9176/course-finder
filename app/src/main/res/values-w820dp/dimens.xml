@@ -5,6 +5,7 @@
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <dimen name="txt_toolbar">26dp</dimen>
     <dimen name="txt_size_vsmal">36dp</dimen>
+    <dimen name="txt_size_xvsmal">32dp</dimen>
     <dimen name="ll_scroll_view_bias">190dp</dimen>
 
 </resources>

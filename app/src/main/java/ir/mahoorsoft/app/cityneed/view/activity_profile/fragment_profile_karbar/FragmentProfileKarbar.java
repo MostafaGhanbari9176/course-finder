@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar;
+package ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar;
 
 
 import android.content.DialogInterface;

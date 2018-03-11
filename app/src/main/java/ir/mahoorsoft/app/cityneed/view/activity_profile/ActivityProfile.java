@@ -1,8 +1,7 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile;
+package ir.mahoorsoft.app.cityneed.view.activity_profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -42,8 +41,8 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
@@ -86,7 +85,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         dialogProgres = new DialogProgres(this);
         setContentView(R.layout.activity_profile);
         pointer();
-        checkUserType();
+        //     checkUserType();
 
 
     }
@@ -101,43 +100,13 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         (btnListAddCourse = (Button) findViewById(R.id.btnSabtenamListProfile)).setOnClickListener(this);
         (btnTrendingUp = (Button) findViewById(R.id.btnTrendingUpProfile)).setOnClickListener(this);
         (btnMap = (Button) findViewById(R.id.btnMapProfile)).setOnClickListener(this);
-        (btnListCourse = (Button) findViewById(R.id.btnCourseListProfile)).setOnClickListener(this);
+        (btnListCourse = (Button) findViewById(R.id.btnAddListProfile)).setOnClickListener(this);
         (btnSmsBox = (Button) findViewById(R.id.btnMessageBoxProfile)).setOnClickListener(this);
         txtUpload = (TextView) findViewById(R.id.txtUploadMadrak);
         llAddCourse = (LinearLayout) findViewById(R.id.llAddCourseProfile);
         llListAddCourse = (LinearLayout) findViewById(R.id.llAddCourseListProfile);
         llTrendingUP = (LinearLayout) findViewById(R.id.llTrendingUpProfile);
         llMap = (LinearLayout) findViewById(R.id.llMapProfil);
-        runHelper();
-    }
-
-    private void runHelper(){
-        SimpleTarget firstTarget = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.txtUploadMadrak))
-                .setRadius(100f)
-                .setTitle("first title")
-                .setDescription("first description")
-                .build();
-
-        Spotlight.with(ActivityProfile.this)
-                .setOverlayColor(ContextCompat.getColor(ActivityProfile.this, R.color.background))
-                .setDuration(1000L)
-                .setAnimation(new DecelerateInterpolator(2f))
-                .setTargets(firstTarget)
-                .setClosedOnTouchedOutside(true)
-                .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
-                    @Override
-                    public void onStarted() {
-                        Toast.makeText(ActivityProfile.this, "spotlight is started", Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                })
-                .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
-                    @Override
-                    public void onEnded() {
-                        Toast.makeText(ActivityProfile.this, "spotlight is ended", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .start();
 
     }
 
@@ -164,18 +133,16 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             case R.id.btnAddCourseProfile:
                 addCourse();
                 break;
-            case R.id.btnCourseListProfile:
+            case R.id.btnAddListProfile:
                 starterActivity(ActivityTeacherCoursesList.class);
                 break;
             case R.id.btnTrendingUpProfile:
                 starterActivity(ActivityTeacherRegistering.class);
-                this.finish();
                 break;
             case R.id.btnSabtenamListProfile:
                 starterActivity(ActivitySabtenamList.class);
                 break;
             case R.id.btnMessageBoxProfile:
-
                 starterActivity(ActivitySmsBox.class);
                 break;
 
@@ -273,6 +240,8 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     protected void onResume() {
         G.activity = this;
         G.context = this;
+//        pointer();
+        checkUserType();
         super.onResume();
     }
 
@@ -286,20 +255,18 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 ratBar.setVisibility(View.GONE);
                 setImage(R.drawable.user, imgProfile);
                 replaceContentWith(new FragmentProfileKarbar());
+                if (Pref.getBollValue(PrefKey.profileUserPage, true))
+                    showDialogForHelper("بله", "");
                 break;
             case 1:
-                checkMadrak();
-                llTrendingUP.setVisibility(View.GONE);
-                llMap.setVisibility(View.GONE);
-                setImgUrl(Pref.getStringValue(PrefKey.phone, ""), imgProfile);
-                replaceContentWith(new FragmentProfileAmozeshgah());//4
-                break;
             case 2:
                 checkMadrak();
                 llTrendingUP.setVisibility(View.GONE);
                 llMap.setVisibility(View.GONE);
-                setImgUrl(Pref.getStringValue(PrefKey.phone, ""), imgProfile);
+                setImgUrl(Pref.getStringValue(PrefKey.apiCode, ""), imgProfile);
                 replaceContentWith(new FragmentProfileAmozeshgah());
+                if (Pref.getBollValue(PrefKey.profileTeacherPage, true))
+                    showDialogForHelper("", "بله");
                 break;
         }
     }
@@ -466,6 +433,143 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         } catch (Exception e) {
             Toast.makeText(ActivityProfile.this, "خطا!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showDialogForHelper(String user, String teacher) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("راهنما");
+        builder.setMessage("آیا مایل به مشاهده راهنما هستید؟");
+        builder.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setPositiveButton(user, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                runHelperForUser();
+            }
+        });
+        builder.setNeutralButton(teacher, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                runHelperForTeacher();
+            }
+        });
+        builder.show();
+    }
+
+    private void runHelperForUser() {
+        SimpleTarget map = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnMapProfile))
+                .setRadius(100f)
+                .setTitle("نقشه")
+                .setDescription("نقشه حاوی موقعیت مکانی آموزشگاهای ثبت شده می باشد")
+                .build();
+        SimpleTarget sabtenam = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnSabtenamListProfile))
+                .setRadius(100f)
+                .setTitle("لیست")
+                .setDescription("لیست دوره های ثبتنام شده")
+                .build();
+        SimpleTarget sms = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnMessageBoxProfile))
+                .setRadius(100f)
+                .setTitle("صندوق پیام")
+                .setDescription("پیام های ارسالی و دریافتی برای شما")
+                .build();
+        SimpleTarget trend = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnTrendingUpProfile))
+                .setRadius(100f)
+                .setTitle("مدرس")
+                .setDescription("ارتقا کاربری به مدرس")
+                .build();
+        SimpleTarget logout = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnLogOut))
+                .setRadius(100f)
+                .setTitle("خروج")
+                .setDescription("خروج از حساب کاربری")
+                .build();
+
+
+        Spotlight.with(ActivityProfile.this)
+                .setOverlayColor(ContextCompat.getColor(ActivityProfile.this, R.color.blue_ios))
+
+                .setDuration(500L)
+                .setAnimation(new DecelerateInterpolator(4f))
+                .setTargets(map, sabtenam, sms, trend, logout)
+                .setClosedOnTouchedOutside(true)
+                .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
+                    @Override
+                    public void onStarted() {
+                        Toast.makeText(ActivityProfile.this, "شروع شد", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                })
+                .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
+                    @Override
+                    public void onEnded() {
+                        Toast.makeText(ActivityProfile.this, "پایان", Toast.LENGTH_SHORT).show();
+                        Pref.saveBollValue(PrefKey.profileUserPage, false);
+                    }
+                })
+                .start();
+    }
+
+
+    private void runHelperForTeacher() {
+        SimpleTarget sabtenam = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnSabtenamListProfile))
+                .setRadius(100f)
+                .setTitle("لیست")
+                .setDescription("لیست دوره های ثبتنام شده")
+                .build();
+        SimpleTarget add = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnAddCourseProfile))
+                .setRadius(100f)
+                .setTitle("دوره")
+                .setDescription("اضافه کردن دوره")
+                .build();
+        SimpleTarget sms = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnMessageBoxProfile))
+                .setRadius(100f)
+                .setTitle("صندوق پیام")
+                .setDescription("پیام های ارسالی و دریافتی برای شما")
+                .build();
+        SimpleTarget madrak = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.txtUploadMadrak))
+                .setRadius(300f)
+                .setTitle("مدرک یا مجوز آموزشی")
+                .setDescription("جهت بارگزاری مدرک از این قسمت اقدام کنید")
+                .build();
+        SimpleTarget addList = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnAddListProfile))
+                .setRadius(100f)
+                .setTitle("لیست دوره")
+                .setDescription("لیست دوره های اضافه شده توسط شما")
+                .build();
+        SimpleTarget logout = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnLogOut))
+                .setRadius(100f)
+                .setTitle("خروج")
+                .setDescription("خروج از حساب کاربری")
+                .build();
+
+
+        Spotlight.with(ActivityProfile.this)
+                .setOverlayColor(ContextCompat.getColor(ActivityProfile.this, R.color.blue))
+                .setDuration(500L)
+                .setAnimation(new DecelerateInterpolator(4f))
+                .setTargets(sabtenam, add, sms, madrak, addList, logout)
+                .setClosedOnTouchedOutside(true)
+                .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
+                    @Override
+                    public void onStarted() {
+                        Toast.makeText(ActivityProfile.this, "شروع شد", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                })
+                .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
+                    @Override
+                    public void onEnded() {
+                        Toast.makeText(ActivityProfile.this, "پایان", Toast.LENGTH_SHORT).show();
+                        Pref.saveBollValue(PrefKey.profileTeacherPage, false);
+                    }
+                })
+                .start();
     }
 
 }

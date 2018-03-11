@@ -1,14 +1,12 @@
-package ir.mahoorsoft.app.cityneed.view.activity_account.activity_phone_confirm;
+package ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -33,7 +30,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -27,7 +28,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
-import ir.mahoorsoft.app.cityneed.view.activity_account.activity_profile.ActivityProfile;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -37,26 +38,32 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 public class ActivityTeacherRegistering extends AppCompatActivity implements View.OnClickListener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
     boolean locationIsSet = false;
     boolean isUserChanged = true;
-    Button btnBack;
+    Toolbar tlb;
     Button btnSave;
     Button btnUploadImag;
     Button btnLocation;
     TextView txtPhone;
     TextView txtSubject;
-    //TextView txtAddress;
     TextView txtTozihat;
     CheckBox cbxPublic;
     CheckBox cbxPrivate;
-
     DialogProgres dialogProgres;
-    int cityId;
-    Handler handler = new Handler();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registering);
         pointers();
+        setSupportActionBar(tlb);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         dialogProgres = new DialogProgres(this);
     }
 
@@ -67,23 +74,20 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     }
 
     private void pointers() {
+        tlb = (Toolbar) findViewById(R.id.tlbTeacherRegistery);
         cbxPrivate = (CheckBox) findViewById(R.id.cbxSingleCurce);
         cbxPublic = (CheckBox) findViewById(R.id.cbxPublicCurce);
         txtTozihat = (TextView) findViewById(R.id.txtTozihat);
         txtPhone = (TextView) findViewById(R.id.txtPhoneRegistery);
-        //txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtSubject = (TextView) findViewById(R.id.txtSubject);
-
         btnUploadImag = (Button) findViewById(R.id.btnUploadImg);
         btnSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnLocation = (Button) findViewById(R.id.btnLocation);
         cbxPublic.setChecked(true);
         inPutTVCheck();
-
         btnSave.setOnClickListener(this);
         cbxPrivate.setOnClickListener(this);
         cbxPublic.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
         btnLocation.setOnClickListener(this);
         btnUploadImag.setOnClickListener(this);
     }
@@ -256,11 +260,9 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     public void confirmTeacher(boolean flag) {
         dialogProgres.closeProgresBar();
         if (flag) {
-            Pref.saveIntegerValue(PrefKey.cityId, cityId);
             Pref.saveStringValue(PrefKey.location, btnLocation.getText().toString().trim());
             Pref.saveStringValue(PrefKey.landPhone, txtPhone.getText().toString().trim());
             Pref.saveStringValue(PrefKey.subject, txtSubject.getText().toString().trim());
-            //  Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
             Pref.saveIntegerValue(PrefKey.madrak, 0);
             Pref.saveIntegerValue(PrefKey.userTypeMode, cbxPublic.isChecked() ? 1 : 2);
             starterActivitry(ActivityProfile.class);
@@ -272,8 +274,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         dialogProgres = new DialogProgres(this, "درحال بارگذاری");
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("teacher", Pref.getStringValue(PrefKey.phone, "") + ".png", path);
-
+        presentUpload.uploadFile("teacher", Pref.getStringValue(PrefKey.apiCode, "") + ".png", path);
     }
 
     @Override
