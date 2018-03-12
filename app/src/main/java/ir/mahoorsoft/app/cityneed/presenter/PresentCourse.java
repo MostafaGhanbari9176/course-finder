@@ -55,6 +55,11 @@ public class PresentCourse implements Course.OnCourseLitener {
         course.getCourseByFilter(minOld, maxOld, startDate, endDate, groupId, days);
     }
 
+    public void getCourseForListHome(int id){
+        Course course = new Course(this);
+        course.getCourseForListHome(id);
+    }
+
     public void getCourseByGroupingId(int id){
         Course course = new Course(this);
         course.getCourseByGroupingId(id);

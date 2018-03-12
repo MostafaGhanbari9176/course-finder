@@ -137,9 +137,9 @@ public class Course {
         });
     }
 
-    public void getCourseByGroupingId(int id) {
+    public void getCourseForListHome(int id) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StHomeListItems>> get = api.getCourseByGroupingId(id);
+        Call<ArrayList<StHomeListItems>> get = api.getCourseForListHome(id);
         get.enqueue(new Callback<ArrayList<StHomeListItems>>() {
             @Override
             public void onResponse(Call<ArrayList<StHomeListItems>> call, Response<ArrayList<StHomeListItems>> response) {
@@ -148,6 +148,22 @@ public class Course {
 
             @Override
             public void onFailure(Call<ArrayList<StHomeListItems>> call, Throwable t) {
+                onCourseLitener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void getCourseByGroupingId(int id) {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StCourse>> get = api.getCourseByGroupingId(id);
+        get.enqueue(new Callback<ArrayList<StCourse>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StCourse>> call, Response<ArrayList<StCourse>> response) {
+                onCourseLitener.onReceiveData(response.body(),-1);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StCourse>> call, Throwable t) {
                 onCourseLitener.sendMessage(t.getMessage());
             }
         });

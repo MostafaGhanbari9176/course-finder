@@ -493,7 +493,6 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
         Spotlight.with(ActivityProfile.this)
                 .setOverlayColor(ContextCompat.getColor(ActivityProfile.this, R.color.blue_ios))
-
                 .setDuration(500L)
                 .setAnimation(new DecelerateInterpolator(4f))
                 .setTargets(map, sabtenam, sms, trend, logout)
@@ -514,7 +513,6 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 })
                 .start();
     }
-
 
     private void runHelperForTeacher() {
         SimpleTarget sabtenam = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnSabtenamListProfile))

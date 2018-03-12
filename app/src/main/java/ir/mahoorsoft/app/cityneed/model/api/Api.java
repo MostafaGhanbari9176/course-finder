@@ -154,8 +154,13 @@ public interface Api {
             @Path("id") int id
     );
 
+    @GET("getCourseForListHome/{id}")
+    Call<ArrayList<StHomeListItems>> getCourseForListHome(
+            @Path("id") int id
+    );
+
     @GET("getCourseByGroupingId/{id}")
-    Call<ArrayList<StHomeListItems>> getCourseByGroupingId(
+    Call<ArrayList<StCourse>> getCourseByGroupingId(
             @Path("id") int id
     );
 

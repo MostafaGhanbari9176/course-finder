@@ -18,33 +18,33 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
-import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivitySabtenamList extends AppCompatActivity implements AdapterSabtenamList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener {
+public class ActivityCoursesListByGroupingId extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
 
-    AdapterSabtenamList adapter;
+    AdapterCourseList adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
     DialogProgres dialogProgres;
     TextView txt;
+    int groupingId;
     Toolbar tlb;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        if(getIntent().getExtras() != null)
+            groupingId = getIntent().getIntExtra("groupingId",-1);
         txt = (TextView) findViewById(R.id.txtEmptyCourseList);
         tlb = (Toolbar) findViewById(R.id.tlbList);
         setSupportActionBar(tlb);
-        getSupportActionBar().setTitle("دوره های ثبت نام شده توسط شما");
+        getSupportActionBar().setTitle("دوره های بیشتر");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,13 +55,12 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
         dialogProgres = new DialogProgres(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
-        adapter = new AdapterSabtenamList(this, surce, this);
+        adapter = new AdapterCourseList(this, surce, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
                 , LinearLayoutManager.VERTICAL, false);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
         setSource();
 
 
@@ -70,9 +69,9 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
     private void setSource() {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getUserCourse();
-
+        presentCourse.getCourseByGroupingId(groupingId);
     }
+
 
     @Override
     public void sendMessageFCT(String message) {
@@ -82,11 +81,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     @Override
     public void confirmCourse(int id) {
-//        if (id == 1) {
-//            surce.remove(clickedPosition);
-//            adapter.notifyItemRemoved(clickedPosition);
-//            adapter.notifyItemRangeChanged(clickedPosition, adapter.getItemCount());
-//        }
+
     }
 
 
@@ -97,8 +92,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
             txt.setVisibility(View.VISIBLE);
         else {
             txt.setVisibility(View.GONE);
-            surce = course;
-            adapter = new AdapterSabtenamList(this, surce, this);
+            adapter = new AdapterCourseList(this, course, this);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -118,43 +112,6 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     @Override
     public void courseDeletedClick(int position) {
-        if (surce.get(position).isDeleted == 1)
-            queryForUpdateDeletedFlag(surce.get(position).id);
-        if (surce.get(position).isCanceled == 1)
-            queryForUpdateCanceledFlag(surce.get(position).sabtenamId);
-        surce.remove(position);
-        adapter.notifyItemRemoved(position);
-        adapter.notifyItemRangeChanged(position, adapter.getItemCount());
-    }
-
-    @Override
-    public void sendSmsButtonPresed(int position) {
-
-    }
-
-    private void queryForUpdateDeletedFlag(int id) {
-        PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.updateDeletedFlag(id, 2);
-    }
-
-    private void queryForUpdateCanceledFlag(int id) {
-        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.updateCanceledFlag(id, 2);
-
-    }
-
-    @Override
-    public void sendMessageFST(String message) {
-
-    }
-
-    @Override
-    public void confirmSabtenam(boolean flag) {
-
-    }
-
-    @Override
-    public void checkSabtenam(float ratBarValue) {
 
     }
 

@@ -1,6 +1,6 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="txt_item">12dp</dimen>
+    <dimen name="txt_item_home">10dp</dimen>
     <dimen name="colorLine">2dp</dimen>
     <dimen name="txt_submit_iformation">20dp</dimen>
     <dimen name="txt_size_smal">18dp</dimen>
@@ -14,7 +14,7 @@
     <dimen name="btn_toolbar">44dp</dimen>
     <dimen name="img_view_pager_width">330dp</dimen>
     <dimen name="img_view_pager_height">160dp</dimen>
-    <dimen name="img_item_file">44dp</dimen>
+    <dimen name="img_item_file">32dp</dimen>
     <dimen name="img_item_height">44dp</dimen>
     <dimen name="img_fragment_karbar">128dp</dimen>
     <dimen name="img_item">90dp</dimen>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/moreDelete"
+        android:title="حذف چندین نفر" />
+    <item
+        android:id="@+id/moreSms"
+        android:title="ارسال پیام به چنذین نفر" />
+    <item
+        android:id="@+id/moreConfirm"
+        android:title="تایید چند نفر" />
+
+</menu>

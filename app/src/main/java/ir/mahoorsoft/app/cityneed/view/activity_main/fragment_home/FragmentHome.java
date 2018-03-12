@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +37,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
+import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByGroupingId;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -53,7 +55,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     RecyclerView groupingList;
     DialogProgres dialogProgres;
     TextView txtEmpty;
-
 
 
     @Nullable
@@ -106,7 +107,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         else
             btnDelete.setVisibility(View.VISIBLE);
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getCourseByGroupingId(groupId);
+        presentCourse.getCourseForListHome(groupId);
     }
 
     private void pointer() {
@@ -129,9 +130,16 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     public void itemClick(int id, String teacherId) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", id);
-        intent.putExtra("teacherId",teacherId);
+        intent.putExtra("teacherId", teacherId);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void moreCourse(int groupingId) {
+        Intent intent = new Intent(G.context, ActivityCoursesListByGroupingId.class);
+        intent.putExtra("groupingId", groupingId);
+        startActivity(intent);
     }
 
     @Override
@@ -228,13 +236,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(0, 4, 1);
             cardView.setLayoutParams(cardParam);
             try {
-                cardView.setCardBackgroundColor(getResources().getColor(R.color.blue_eq));
+                cardView.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_eq));
             } catch (Exception e) {
 
             }
             cardParam.setMargins(2, 2, 16, 2);
             line.addView(cardView, cardParam);
-
 
 
             masterLayout.addView(line);
