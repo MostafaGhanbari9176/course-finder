@@ -12,39 +12,43 @@ import ir.mahoorsoft.app.cityneed.model.tables.SmsBox;
  * Created by M-gh on 27-Feb-18.
  */
 
-public class PresenterComment implements Comment.OnCommentResponseListener{
+public class PresenterComment implements Comment.OnCommentResponseListener {
 
-    public interface OnPresentCommentListener{
+    public interface OnPresentCommentListener {
         void onResiveComment(ArrayList<StComment> comment);
+
         void onResiveFlagFromComment(boolean flag);
+
         void messageFromComment(String message);
     }
+
     OnPresentCommentListener onPresentCommentListener;
-    public PresenterComment(OnPresentCommentListener onPresentCommentListener){
+
+    public PresenterComment(OnPresentCommentListener onPresentCommentListener) {
         this.onPresentCommentListener = onPresentCommentListener;
     }
 
-    public void saveComment(String commentText, String userId, int courseId, String teacherId, float teacherRat){
+    public void saveComment(String commentText, String userId, int courseId, String teacherId, float teacherRat) {
         Comment comment = new Comment(this);
         comment.saveComment(commentText, userId, courseId, teacherId, teacherRat);
     }
 
-    public void saveCourseRat(String userId, int courseId, String teacherId, float courseRat){
+    public void saveCourseRat(String userId, int courseId, String teacherId, float courseRat) {
         Comment comment = new Comment(this);
         comment.saveCourseRat(userId, courseId, teacherId, courseRat);
     }
 
-    public void commentFeedBack(String userId, int commentId, int isLicked){
+    public void commentFeedBack(String userId, int commentId, int isLicked) {
         Comment comment = new Comment(this);
         comment.commentFeedBack(userId, commentId, isLicked);
     }
 
-    public void upDateComment(int id, String commentText, String userId, int courseId, String teacherId, float teacherRat, float courseRat){
+    public void upDateComment(int id, String commentText, String userId, int courseId, String teacherId, float teacherRat, float courseRat) {
         Comment comment = new Comment(this);
         comment.upDateComment(id, commentText, userId, courseId, teacherId, teacherRat, courseRat);
     }
 
-    public void getCommentByTeacherId(String teacherId){
+    public void getCommentByTeacherId(String teacherId) {
         Comment comment = new Comment(this);
         comment.getCommentByTeacherId(teacherId);
     }
@@ -56,8 +60,11 @@ public class PresenterComment implements Comment.OnCommentResponseListener{
     }
 
     @Override
-    public void resiveFlag(ResponseOfServer res) {
-        onPresentCommentListener.onResiveFlagFromComment(res.code == 0 ? false : true);
+    public void resiveFlag(ArrayList<ResponseOfServer> res) {
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentCommentListener.onResiveFlagFromComment(res.get(0).code == 0 ? false : true);
     }
 
     @Override

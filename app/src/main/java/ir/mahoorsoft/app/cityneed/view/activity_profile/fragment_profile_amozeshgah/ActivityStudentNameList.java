@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -59,6 +60,9 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     boolean confirmMore = false;
     boolean smallFltbIsShow = false;
     private Stack<Integer> checkedUser = new Stack<>();
+    private CardView cardView;
+    private int position = -1;
+    boolean queryForDelete = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -221,6 +225,60 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         answerForDelete(position);
     }
 
+    @Override
+    public void confirmStudent(int position, CardView cardView) {
+        this.cardView = cardView;
+        qustionForConfirm(position);
+    }
+
+    private void qustionForConfirm(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("تایید " + surce.get(position).name);
+        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("تایید", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ActivityStudentNameList.this.position = position;
+                queryForConfirm(position);
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void qustionForMoreConfirm() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("تایید چندین محصل");
+        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("تایید", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                confirmMoreStudent();
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void queryForConfirm(int position) {
+        queryForDelete = false;
+        dialogProgres.showProgresBar();
+        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+        presentSabtenam.confirmStudent(surce.get(position).sabtenamId, Pref.getStringValue(PrefKey.apiCode, ""), courseId);
+    }
+
     private void getTextMessage(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ارسالی به " + surce.get(position).name);
@@ -329,6 +387,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         builder.setNegativeButton("لغو ثبت نام", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                ActivityStudentNameList.this.position = position;
                 queryForDelete(position);
                 dialog.cancel();
             }
@@ -336,7 +395,38 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         builder.show();
     }
 
+    private void answerForMoreDelete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("حذف ثبت نام ");
+        builder.setMessage("آیا از ادامه این کار مطمعن هستید؟؟");
+        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("لغو ثبت نام", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteMore();
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void deleteMore() {
+        checkedUser.clear();
+        checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        int size = AdapterSdudentNameList.checkedUser.size();
+        for (int i = 0; i < size; i++) {
+            queryForDelete(checkedUser.pop());
+        }
+    }
+
     private void queryForDelete(int position) {
+        queryForDelete = true;
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.updateCanceledFlag(surce.get(position).sabtenamId, 1);
@@ -374,7 +464,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         if (flag)
             messageFromSmsBox("پیام ارسال شد");
         else
-            messageFromSmsBox("پیام ارسال نشد");
+            messageFromSmsBox("خطا,پیام ارسال نشد");
     }
 
     @Override
@@ -385,16 +475,52 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     @Override
     public void sendMessageFST(String message) {
-
+        dialogProgres.closeProgresBar();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void confirmSabtenam(boolean flag) {
+
         dialogProgres.closeProgresBar();
-        if (flag)
-            sendMessageFUT("ثبت نام کاربر لغو شد");
-        else
+        if (flag) {
+            if (queryForDelete)
+                deleteItems();
+            else
+                changeClorItems();
+            sendMessageFUT("انجام شد");
+        } else
             sendMessageFUT("خطا!!!");
+        position = -1;
+    }
+
+    private void deleteItems() {
+        checkedUser.clear();
+        checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        int size = AdapterSdudentNameList.checkedUser.size();
+        if (size == 0 && position != -1) {
+            surce.remove(position);
+            adapter.notifyItemRemoved(position);
+            adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+        } else if (size != 0) {
+            for (int i = 0; i < size; i++) {
+                int position = checkedUser.pop();
+                surce.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+            }
+        }
+    }
+
+    private void changeClorItems() {
+        int size = AdapterSdudentNameList.selectedItems.size();
+        if (size == 0 && cardView != null) {
+            cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
+        } else if (size != 0) {
+            for (int i = 0; i < size; i++) {
+                (AdapterSdudentNameList.selectedItems.pop()).setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
+            }
+        }
     }
 
     @Override
@@ -441,6 +567,8 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     private void removeCheckBox() {
         adapter = new AdapterSdudentNameList(this, surce, this, false);
+        confirmMore = deleteMore = smsMore = false;
+        smallFltbIsShow = false;
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -449,7 +577,9 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         if (smsMore) {
             getTextMessageForMoreUser();
         } else if (deleteMore) {
+            answerForMoreDelete();
         } else if (confirmMore) {
+            qustionForMoreConfirm();
         }
     }
 
@@ -459,6 +589,15 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         int size = AdapterSdudentNameList.checkedUser.size();
         for (int i = 0; i < size; i++) {
             sendMessage(checkedUser.pop(), message);
+        }
+    }
+
+    private void confirmMoreStudent() {
+        checkedUser.clear();
+        checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        int size = AdapterSdudentNameList.checkedUser.size();
+        for (int i = 0; i < size; i++) {
+            queryForConfirm(checkedUser.pop());
         }
     }
 }

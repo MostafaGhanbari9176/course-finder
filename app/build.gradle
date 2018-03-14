@@ -55,7 +55,7 @@ dependencies {
 *   loading
 * */
 ////////////////////zarinPal
-    compile 'com.zarinpal:purchase:0.0.3-beta'
-
+//    compile 'com.zarinpal:purchase:0.0.3-beta'
+    compile 'com.karumi:dexter:4.2.0'
 
 }

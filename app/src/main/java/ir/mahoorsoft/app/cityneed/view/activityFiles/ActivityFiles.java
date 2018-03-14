@@ -1,20 +1,30 @@
 package ir.mahoorsoft.app.cityneed.view.activityFiles;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.resource.bitmap.ImageHeaderParser;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import ir.mahoorsoft.app.cityneed.R;
@@ -29,7 +39,8 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
     Stack<String> saveAddress = new Stack<>();
     Button btnBack;
     boolean flag = false;
-
+    String root = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+    Toolbar tlb;
     public ActivityFiles() {
     }
 
@@ -38,6 +49,15 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_files);
         btnBack = (Button) findViewById(R.id.btn_folder_list_back);
+        tlb = (Toolbar) findViewById(R.id.tlbActivityFile);
+        setSupportActionBar(tlb);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityFiles.this.finish();
+            }
+        });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,8 +71,8 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         list.setLayoutManager(manager);
         list.setAdapter(adapter);
-        String root = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
-        setSurce(root);
+
+        requestStoragePermission();
 
     }
 
@@ -111,6 +131,42 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
 
     }
 
+    private void requestStoragePermission() {
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        // check if all permissions are granted
+                        if (report.areAllPermissionsGranted()) {
+                            setSurce(root);
+
+                        }
+
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            // next();
+                            // show alert dialog navigating to Settings
+                            // showSettingsDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).
+                withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError error) {
+                        Toast.makeText(getApplicationContext(), "خطا در دسترسی به حافظه!لطفا دسترسی به حافظه را چک کنید ", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onSameThread()
+                .check();
+    }
 
     @Override
     public void selectItem(int position) {
@@ -121,7 +177,7 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
 
     @Override
     public void onBackPressed() {
-        if (saveAddress.size() != 1) {
+        if (saveAddress.size()  > 1) {
             saveAddress.pop();
             setSurce(saveAddress.pop());
         } else {

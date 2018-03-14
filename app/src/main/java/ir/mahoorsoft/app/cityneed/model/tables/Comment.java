@@ -20,7 +20,7 @@ public class Comment {
     public interface OnCommentResponseListener {
         void resiveComment(ArrayList<StComment> comment);
 
-        void resiveFlag(ResponseOfServer res);
+        void resiveFlag(ArrayList<ResponseOfServer> res);
 
         void sendMessage(String message);
     }
@@ -37,7 +37,7 @@ public class Comment {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onCommentResponseListener.resiveFlag(response.body().get(0));
+                onCommentResponseListener.resiveFlag(response.body());
             }
 
             @Override
@@ -54,7 +54,7 @@ public class Comment {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onCommentResponseListener.resiveFlag(response.body().get(0));
+                onCommentResponseListener.resiveFlag(response.body());
             }
 
             @Override
@@ -70,7 +70,7 @@ public class Comment {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onCommentResponseListener.resiveFlag(response.body().get(0));
+                onCommentResponseListener.resiveFlag(response.body());
             }
 
             @Override
@@ -87,7 +87,7 @@ public class Comment {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onCommentResponseListener.resiveFlag(response.body().get(0));
+                onCommentResponseListener.resiveFlag(response.body());
             }
 
             @Override

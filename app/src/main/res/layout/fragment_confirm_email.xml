@@ -15,16 +15,45 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/txtSubjectEmailConfirm"
+            android:id="@+id/textView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:enabled="@bool/default_circle_indicator_snap"
+            android:layout_margin="4dp"
+            android:text="انتخاب کنید : "
+            android:textColor="@color/light" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="ورود یا ثبت نام"
-            android:textColor="@color/light"
-            android:textSize="@dimen/txt_size_smal"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbLogInWithEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="ورود"
+                android:textColor="@color/light" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="یا"
+                android:textColor="@color/light" />
+
+            <RadioButton
+                android:id="@+id/rbLogUpWithEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:checked="true"
+                android:text="ثبت نام"
+                android:textColor="@color/light" />
+        </RadioGroup>
+
     </LinearLayout>
 
     <LinearLayout
@@ -67,7 +96,7 @@
             android:gravity="center"
             android:hint="آدرس ایمیل"
             android:inputType="textWebEmailAddress"
-            android:maxLength="11"
+            android:maxLength="50"
             android:maxLines="1"
             android:textColor="@color/light"
             android:textSize="@dimen/txt_size_smal"

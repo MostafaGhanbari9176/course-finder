@@ -27,7 +27,7 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
 
         void deleteMessage(int position);
 
-        void sendSms(int position);
+        void reportSms(int position);
     }
 
     private OnClickItemSmsList itemSmsList;
@@ -53,7 +53,7 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
         TextView txtDate2;
 */
         ImageView btnDelete;
-        ImageView btnSendSms;
+        ImageView btnReportSms;
         ImageView btnSeen;
         CardView item;
 
@@ -70,7 +70,7 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
 
             btnDelete = (ImageView) itemView.findViewById(R.id.btnDeleteItemIn);
             btnSeen = (ImageView) itemView.findViewById(R.id.btnSeenItemIn);
-            btnSendSms = (ImageView) itemView.findViewById(R.id.btnSendSmsItemIn);
+            btnReportSms = (ImageView) itemView.findViewById(R.id.btnReportItemSms);
 
         }
     }
@@ -86,32 +86,21 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
     @Override
     public void onBindViewHolder(final Holder holder, final int position) {
         final StSmsBox items = surce.get(position);
-        if (items.seen == 0) {
-/*            holder.item.setCardBackgroundColor(Color.rgb(38, 50, 56));
-            holder.txtCourseName.setTextColor(Color.WHITE);
-            holder.txtTsName.setTextColor(Color.WHITE);
-            holder.txtDate.setTextColor(Color.WHITE);*/
+        if (items.seen == 0)
             holder.imgSeenSms.setVisibility(View.GONE);
-        }
+
         holder.txtCourseName.setText(items.courseName);
         holder.txtTsName.setText(items.tsName);
         holder.txtDate.setText(items.date);
-        holder.btnSendSms.setOnClickListener(new View.OnClickListener() {
+        holder.btnReportSms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemSmsList.sendSms(position);
+                itemSmsList.reportSms(position);
             }
         });
         holder.btnSeen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*                holder.item.setCardBackgroundColor(Color.WHITE);
-                holder.txtCourseName.setTextColor(Color.rgb(38, 50, 56));
-                holder.txtCourseName2.setTextColor(Color.rgb(38, 50, 56));
-                holder.txtTsName.setTextColor(Color.rgb(38, 50, 56));
-                holder.txtTsName2.setTextColor(Color.rgb(38, 50, 56));
-                holder.txtDate.setTextColor(Color.rgb(38, 50, 56));
-                holder.txtDate2.setTextColor(Color.rgb(38, 50, 56));*/
                 holder.imgSeenSms.setVisibility(View.VISIBLE);
                 itemSmsList.seenMessage(position);
             }

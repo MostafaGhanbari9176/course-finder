@@ -21,6 +21,7 @@ public class StTeacher {
     public String location;
     public String lt;
     public String lg;
+    public String pictureId;
     public float teacherRat;
     public int empty;
 

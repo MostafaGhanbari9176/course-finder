@@ -49,25 +49,33 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/txtSubject"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="start"
-                            android:hint="عنوان آموزش "
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/text_home"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
+                            android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher"
+                            android:textColorHint="@color/dark_eq">
+
+                            <EditText
+                                android:id="@+id/txtSubject"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:ems="10"
+                                android:gravity="start"
+                                android:hint="عنوان آموزش "
+                                android:inputType="textPersonName"
+                                android:maxLines="1"
+                                android:paddingStart="8dp"
+                                android:textColor="@color/text_home"
+                                android:textColorHint="@color/blue_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
-                            android:id="@+id/imageView3"
+                            android:id="@+id/imgSubjectRegisteryTeacher"
                             android:layout_width="@dimen/btn_nav"
                             android:layout_height="@dimen/btn_nav"
                             android:layout_alignParentEnd="false"
@@ -82,22 +90,31 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/txtPhoneRegistery"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="false"
-                            android:gravity="start"
-                            android:hint="تلفن ثابت همراه با پیش شماره"
-                            android:inputType="phone"
-                            android:maxLength="11"
-                            android:maxLines="1"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/text_home"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@+id/imgPhoneRegisteryTeacher"
+                            android:textColorHint="@color/dark_eq">
+
+                            <EditText
+                                android:id="@+id/txtPhoneRegistery"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="false"
+                                android:gravity="start"
+                                android:hint="تلفن ثابت با پیش شماره"
+                                android:inputType="phone"
+                                android:maxLength="11"
+                                android:maxLines="1"
+                                android:paddingStart="8dp"
+                                android:textColor="@color/text_home"
+                                android:textColorHint="@color/blue_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
+                            android:id="@+id/imgPhoneRegisteryTeacher"
                             android:layout_width="@dimen/btn_nav"
                             android:layout_height="@dimen/btn_nav"
                             android:layout_alignParentEnd="false"
@@ -112,26 +129,38 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/txtTozihat"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="false"
-                            android:layout_alignParentTop="true"
-                            android:ems="10"
-                            android:gravity="start"
-                            android:hint="توضیحات "
-                            android:inputType="textImeMultiLine"
-                            android:maxLength="110"
-                            android:paddingRight="48dp"
-                            android:textColor="@color/text_home"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
+                            android:layout_centerInParent="false"
+                            android:layout_toEndOf="@+id/imgTozihatRegisteryTeacher"
+                            android:textColorHint="@color/dark_eq">
+
+                            <EditText
+                                android:id="@+id/txtTozihat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="false"
+                                android:layout_alignParentTop="false"
+                                android:gravity="start"
+                                android:hint="توضیحات "
+                                android:inputType="textMultiLine"
+                                android:maxLength="110"
+                                android:paddingStart="8dp"
+                                android:textColor="@color/text_home"
+                                android:textColorHint="@color/blue_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
+                            android:id="@+id/imgTozihatRegisteryTeacher"
                             android:layout_width="@dimen/btn_nav"
                             android:layout_height="@dimen/btn_nav"
                             android:layout_alignParentEnd="false"
+                            android:layout_alignParentStart="false"
+                            android:layout_centerInParent="false"
                             android:layout_centerVertical="true"
                             app:srcCompat="@drawable/icon_txtshort" />
 

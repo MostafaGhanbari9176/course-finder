@@ -8,16 +8,21 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -41,17 +46,17 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     View view;
     boolean isUserChanged = true;
-
     LinearLayout llName;
     Button btnConfirmEmail;
     Button btnConfirmCode;
     Button btnResend;
     TextView txtEmail;
     TextView txtName;
-    TextView txtSubject;
     TextView txtCode;
     DialogProgres dialogProgres;
     boolean isLogIn;
+    RadioButton rbLogIn;
+    RadioButton rbLogUp;
 
     @Nullable
     @Override
@@ -65,7 +70,6 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         dialogProgres = new DialogProgres(G.context);
         pointers();
         setFont();
-        startDialog();
     }
 
     private void setFont() {
@@ -74,18 +78,29 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         btnResend.setTypeface(typeface);
         btnConfirmCode.setTypeface(typeface);
         btnConfirmEmail.setTypeface(typeface);
-        txtCode.setTypeface(typeface);
-        txtEmail.setTypeface(typeface);
-        txtSubject.setTypeface(typeface);
-
     }
 
     private void pointers() {
-        // btnBack = (Button) findViewById(R.id.btnBackPhoneConfirm);
-
         txtCode = (TextView) view.findViewById(R.id.txtSmsCodeConfirmEmail);
         txtCode.setEnabled(false);
-        txtSubject = (TextView) view.findViewById(R.id.txtSubjectEmailConfirm);
+        (rbLogIn = (RadioButton) view.findViewById(R.id.rbLogInWithEmail)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    llName.setVisibility(View.GONE);
+                    isLogIn = true;
+                }
+            }
+        });
+        (rbLogUp = (RadioButton) view.findViewById(R.id.rbLogUpWithEmail)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    llName.setVisibility(View.VISIBLE);
+                    isLogIn = false;
+                }
+            }
+        });
         txtName = (TextView) view.findViewById(R.id.txtNameConfirmEmail);
         txtEmail = (TextView) view.findViewById(R.id.txtEmailConfirmٍEmail);
         btnConfirmEmail = (Button) view.findViewById(R.id.btnConfirmEmailConfirmEmail);
@@ -104,7 +119,6 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (isUserChanged) {
                     isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
                     txtName.setTextKeepState(CharCheck.faCheck(txtName.getText().toString()));
 
                 } else
@@ -122,28 +136,34 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     }
 
-    private void checkeMAIL(String phone) {
+    private void checkeInData(String mail) {
         if (!isLogIn && txtName.getText().length() == 0) {
-            showAlertDialog("خطا", "لطفا نام خود را صحیح وارد کنید", "", "قبول");
+            txtName.setError("کامل کنید");
+            txtName.requestFocus();
             return;
         }
-        try {
-            Long.parseLong(phone.trim());
-            if (phone.trim().length() != 11) {
-                showAlertDialog("خطا", "لطفا شماره همراه را صحیح وارد کنید", "", "قبول");
-            } else {
-                sendEmailForserver(phone);
-            }
-        } catch (Exception e) {
-            showAlertDialog("خطا", "لطفا شماره همراه را صحیح وارد کنید", "", "قبول");
+        if (TextUtils.isEmpty(mail)) {
+            txtEmail.setError("کامل کنید");
+            txtEmail.requestFocus();
+        } else if (!isEmailValid(mail)) {
+            txtEmail.requestFocus();
+            txtEmail.setError("صحیح وارد کنید کنید");
+        } else {
+            sendEmailForserver(mail);
         }
+    }
 
-
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     private void checkCode() {
         if (!isLogIn && txtName.getText().length() == 0) {
-            showAlertDialog("خطا", "لطفا نام خود را صحیح وارد کنید", "", "قبول");
+            txtName.setError("کامل کنید");
+            txtName.requestFocus();
             return;
         }
         try {
@@ -165,23 +185,20 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         p.createAndSaveSmsCode(phone);
     }
 
-
     @Override
     public void confirmSmsCode(boolean flag) {
         dialogProgres.closeProgresBar();
         if (!flag)
-            showAlertDialog("با ارز پوزش", "تعداد دفعات ارسال پیام به شما از حد مجاز گذشته لطفا تا فردا منتظر بمانید", "", "قبول");
+            showAlertDialog("با ارز پوزش", "خطایی رخ داده لطفا دوباره تلاش کنید", "", "خب");
 
         if (flag) {
-            btnConfirmEmail.setText("تغیر شماره همراه");
+            sendMessageFScT("ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد");
+            btnConfirmEmail.setText("تغیر آدرس ایمیل");
             txtEmail.setEnabled(false);
             txtCode.setEnabled(true);
             btnConfirmCode.setEnabled(true);
-
         }
-
     }
-
 
     @Override
     public void sendMessageFScT(String message) {
@@ -218,7 +235,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             Pref.saveStringValue(PrefKey.userName, res.name);
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
             PresentTeacher presentTeacher = new PresentTeacher(this);
-            presentTeacher.getTeacher(Pref.getStringValue(PrefKey.apiCode,""));
+            presentTeacher.getTeacher(Pref.getStringValue(PrefKey.apiCode, ""));
         }
     }
 
@@ -263,6 +280,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         Pref.saveStringValue(PrefKey.subject, teacher.get(0).subject);
         Pref.saveStringValue(PrefKey.lon, teacher.get(0).lg);
         Pref.saveStringValue(PrefKey.lat, teacher.get(0).lt);
+        Pref.saveStringValue(PrefKey.pictureId, teacher.get(0).pictureId);
         Pref.saveIntegerValue(PrefKey.madrak, teacher.get(0).m);
         Pref.saveIntegerValue(PrefKey.userTypeMode, teacher.get(0).type == 0 ? 1 : 2);
         next();
@@ -281,23 +299,18 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         alertDialog.setPositiveButton(buttonTrue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                btnConfirmEmail.setText("تایید ایمیل");
+                txtEmail.setEnabled(true);
+                txtName.setEnabled(true);
+                txtCode.setEnabled(false);
+                txtCode.setText("");
+                btnConfirmCode.setEnabled(false);
+                btnResend.setEnabled(false);
                 if (buttonTrue.equals("ثبت نام")) {
-                    btnConfirmEmail.setText("تایید شماره همراه");
-                    txtCode.setText("");
-                    btnConfirmCode.setEnabled(false);
-                    txtCode.setEnabled(false);
-                    llName.setVisibility(View.VISIBLE);
-                    isLogIn = false;
-                    txtSubject.setText("ثبت نام");
+                    rbLogUp.setChecked(true);
                     dialog.cancel();
                 } else if (buttonTrue.equals("ورود")) {
-                    btnConfirmEmail.setText("تایید شماره همراه");
-                    txtCode.setEnabled(false);
-                    txtCode.setText("");
-                    btnConfirmCode.setEnabled(false);
-                    llName.setVisibility(View.GONE);
-                    txtSubject.setText("ورود");
-                    isLogIn = true;
+                    rbLogIn.setChecked(true);
                     dialog.cancel();
                 }
                 dialog.cancel();
@@ -314,36 +327,6 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         alertDialog.show();
     }
 
-    private void startDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
-        builder.setTitle("ورود یا ثبت نام");
-        builder.setMessage("آیا قبلا ثبت نام داشته اید؟");
-        //   final EditText editText = new EditText(this);
-        // LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        //  editText.setLayoutParams(layoutParams);
-        //  builder.setView(editText);
-        builder.setPositiveButton("بله",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        llName.setVisibility(View.GONE);
-                        txtSubject.setText("ورود");
-                        isLogIn = true;
-                        dialog.cancel();
-                    }
-                });
-        builder.setNegativeButton("خیر",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        isLogIn = false;
-                        txtSubject.setText("ثبت نام");
-                        dialog.cancel();
-                    }
-                });
-        builder.setCancelable(false);
-        builder.setCancelable(false);
-        builder.show();
-    }
-
     private void next() {
         Intent intent = new Intent(G.context, ActivityProfile.class);
         startActivity(intent);
@@ -354,20 +337,20 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.btnConfirmCodeConfirmPhone:
+            case R.id.btnConfirmCodeConfirmEmail:
                 checkCode();
                 break;
-            case R.id.btnConfirmPhoneConfirmPhone:
-                if (btnConfirmEmail.getText().equals("تغیر شماره همراه")) {
-                    btnConfirmEmail.setText("تایید شماره همراه");
+            case R.id.btnConfirmEmailConfirmEmail:
+                if (btnConfirmEmail.getText().equals("تغیر آدرس ایمیل")) {
+                    btnConfirmEmail.setText("تایید ایمیل");
                     txtEmail.setEnabled(true);
                     txtCode.setEnabled(false);
                     btnConfirmCode.setEnabled(false);
                 } else
-                    checkeMAIL(txtEmail.getText().toString());
+                    checkeInData(txtEmail.getText().toString());
                 break;
             case R.id.btnResendEmail:
-                sendEmailForserver(txtEmail.getText().toString().trim());
+                checkeInData(txtEmail.getText().toString());
                 break;
         }
     }

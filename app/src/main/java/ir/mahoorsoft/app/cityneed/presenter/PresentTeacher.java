@@ -28,6 +28,11 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         teacher.getTeacher(teacherId);
     }
 
+    public void getSelectedTeacher() {
+        Teacher teacher = new Teacher(this);
+        teacher.getSelectedTeacher();
+    }
+
     public void getAllTeacher() {
         Teacher teacher = new Teacher(this);
         teacher.getAllTeacher();
@@ -49,8 +54,11 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
     }
 
     @Override
-    public void responseForMadrak(ResponseOfServer res) {
-        onPresentTeacherListener.responseForMadrak(res);
+    public void responseForMadrak(ArrayList<ResponseOfServer> res) {
+        if (res == null || res.size() == 0)
+            sendMessage("خطا,پیش بینی نشده!!!");
+        else
+            onPresentTeacherListener.responseForMadrak(res.get(0));
     }
 
     @Override

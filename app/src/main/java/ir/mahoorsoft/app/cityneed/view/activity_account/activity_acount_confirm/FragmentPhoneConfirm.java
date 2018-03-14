@@ -43,7 +43,6 @@ public class FragmentPhoneConfirm extends Fragment implements View.OnClickListen
     View view;
     boolean isUserChanged = true;
     int timer = 120;
-
     LinearLayout llName;
     Button btnConfirmPhone;
     Button btnConfirmCode;
@@ -70,7 +69,7 @@ public class FragmentPhoneConfirm extends Fragment implements View.OnClickListen
         dialogProgres = new DialogProgres(G.context);
         pointers();
         setFont();
-        startDialog();
+       // startDialog();
     }
 
     private void setFont() {

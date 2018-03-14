@@ -3,25 +3,14 @@ package ir.mahoorsoft.app.cityneed.view.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Stack;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
-import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
 
 /**
  * Created by M_gh on 12/10/2017.

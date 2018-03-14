@@ -22,6 +22,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.view.RandomColor;
 
 /**
  * Created by M-gh on 07-Oct-17.
@@ -70,7 +71,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             if (items.endOfList == 0) {
                 Glide.with(context)
                         .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
-                        .error(R.drawable.user)
+                        .error(R.drawable.defult)
                         .centerCrop()
                         .into(imgItem);
 
@@ -88,7 +89,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                 });
             } else {
                 endOfList.setVisibility(View.VISIBLE);
-                endOfList.setBackgroundColor(randomColor());
+                endOfList.setBackgroundColor(RandomColor.randomColor(context));
             }
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,30 +104,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
         }
     }
 
-    private int randomColor() {
-        int color = (new Random()).nextInt(8);
-        switch (color) {
-            case 0:
-                return ContextCompat.getColor(context, R.color.blue_ios);
-            case 1:
-                return ContextCompat.getColor(context, R.color.green_ios);
-            case 2:
-                return ContextCompat.getColor(context, R.color.orange_ios);
-            case 3:
-                return ContextCompat.getColor(context, R.color.pink_ios);
-            case 4:
-                return ContextCompat.getColor(context, R.color.purple_ios);
-            case 5:
-                return ContextCompat.getColor(context, R.color.tealblue_ios);
-            case 6:
-                return ContextCompat.getColor(context, R.color.red_ios);
-            case 7:
-                return ContextCompat.getColor(context, R.color.yellow_ios);
-            default:
-                return ContextCompat.getColor(context, R.color.dark_eq);
-        }
 
-    }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {

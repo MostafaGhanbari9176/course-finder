@@ -42,9 +42,17 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
         sabtenam.updateCanceledFlag(sabtenamId, code);
     }
 
+    public void confirmStudent(int sabtenamId, String apiCode, int courseId) {
+        Sabtenam sabtenam = new Sabtenam(this);
+        sabtenam.confirmStudent(sabtenamId, apiCode, courseId);
+    }
+
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        onPresentSabtenamListaener.confirmSabtenam(res.get(0).code == 0 ? false : true);
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentSabtenamListaener.confirmSabtenam(res.get(0).code == 0 ? false : true);
     }
 
     @Override

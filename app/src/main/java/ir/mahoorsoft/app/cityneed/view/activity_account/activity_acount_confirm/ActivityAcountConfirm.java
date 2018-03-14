@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -32,6 +33,13 @@ public class ActivityAcountConfirm extends AppCompatActivity {
         pointer();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("حساب کاربری");
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
         settingUpViewPager();
 
@@ -51,4 +59,9 @@ public class ActivityAcountConfirm extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabsAcountConfirm);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 }

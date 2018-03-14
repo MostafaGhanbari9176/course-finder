@@ -1,6 +1,9 @@
 package ir.mahoorsoft.app.cityneed.view.activity_sms_box;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,11 +11,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +30,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
+import ir.mahoorsoft.app.cityneed.presenter.PresentReport;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSmsListIn;
@@ -34,7 +40,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 27-Feb-18.
  */
 
-public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListIn.OnClickItemSmsList {
+public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListIn.OnClickItemSmsList, PresentReport.OnPresentReportListener {
     boolean isUserChanged = true;
     int deletedMessagePotision;
     View view;
@@ -61,7 +67,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     }
 
     private void getData() {
-        String s = Pref.getStringValue(PrefKey.apiCode, "");
+
         dialogProgres.showProgresBar();
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
         presenterSmsBox.getRsSms(Pref.getStringValue(PrefKey.apiCode, ""));
@@ -132,9 +138,64 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     }
 
     @Override
-    public void sendSms(int position) {
+    public void reportSms(int position) {
+        getReportData(position);
+    }
 
-        getTextMessage(position);
+    private void getReportData(final int position) {
+        final Dialog dialog = new Dialog(G.context);
+        LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = li.inflate(R.layout.dialog_report, null, false);
+        final TextView textView = (TextView) view.findViewById(R.id.txtDialogReport);
+        Button btnConfirm = (Button) view.findViewById(R.id.btnConfirmDialogReport);
+        Button btnCancel = (Button) view.findViewById(R.id.btnCancelDialogReport);
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkReportData(textView)) {
+                    sendReport("sms", textView.getText().toString(), source.get(position).id, source.get(position).tsId, Pref.getStringValue(PrefKey.phone, ""));
+                    dialog.cancel();
+                }
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+    }
+
+    private boolean checkReportData(TextView txt) {
+        if (TextUtils.isEmpty(txt.getText().toString().trim()))
+            txt.setError("یه دلیل ثبت کنید");
+        else
+            return true;
+        return false;
+    }
+
+    private void sendReport(String signText, String reportText, int spamId, String spamerId, String reporterId) {
+        dialogProgres.showProgresBar();
+        PresentReport presentReport = new PresentReport(this);
+        presentReport.report(signText, reportText, spamId, spamerId, reporterId);
+    }
+
+    @Override
+    public void flagFromReport(boolean flag) {
+        dialogProgres.closeProgresBar();
+        if (flag)
+            messageFromReport("ارسال شد,بابت فیدبک شما متشکریم");
+        else
+            messageFromReport("خطا");
+    }
+
+    @Override
+    public void messageFromReport(String message) {
+        dialogProgres.closeProgresBar();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     private void upDateSeen(int position) {

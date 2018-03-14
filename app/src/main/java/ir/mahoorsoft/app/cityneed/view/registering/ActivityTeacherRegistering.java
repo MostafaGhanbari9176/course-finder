@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +51,6 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     DialogProgres dialogProgres;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +58,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         pointers();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("ارتقاء به مدرس");
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +145,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
 
         Intent intent = new Intent(this, aClass);
         startActivity(intent);
-        finish();
+        this.finish();
 
     }
 
@@ -157,10 +158,6 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     public void onClick(View view) {
 
         switch (view.getId()) {
-/*            case R.id.btnBackRegistery:
-                starterActivitry(ActivityProfile.class);
-                break;*/
-
             case R.id.btnLocation:
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivityForResult(intent, 2);
@@ -193,32 +190,28 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
 
     private void getData() {
 
-
-        try {
-            if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
-                throw new Exception("لطفا موقعیت مکانی خود را تعیین کنید.");
-            Long.parseLong(txtPhone.getText().toString().trim());
-            if (txtPhone.getText().toString().trim().length() != 11)
-                throw new Exception("لطفا شماره تماس خود را صحیح وارد کنید.");
-
-            if (txtSubject.getText().toString().trim().length() != 0 &&
-                    //txtAddress.getText().toString().trim().length() != 0 &&
-                    txtTozihat.getText().toString().trim().length() != 0 &&
-                    btnLocation.getText().length() != 0) {
-                if (cbxPrivate.isChecked() || cbxPublic.isChecked()) {
-                    showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید؟", "بله", "بررسی");
-                } else {
-                    showDialog("خطا", "لطفا نوع آموزش خود را مشخص کنید", "", "قبول");
-
-                }
-            } else {
-                showDialog("خطا", "لطفا اطلاعات را کامل وصحیح وارد کنید...", "", "قبول");
-
+        if (TextUtils.isEmpty(txtSubject.getText().toString().trim())) {
+            txtSubject.setError("کامل کنید");
+            txtSubject.requestFocus();
+        } else if (TextUtils.isEmpty(txtPhone.getText().toString().trim())) {
+            txtPhone.setError("کامل کنید");
+            txtPhone.requestFocus();
+        } else if (TextUtils.isEmpty(txtTozihat.getText().toString().trim())) {
+            txtTozihat.setError("کامل کنید");
+            txtTozihat.requestFocus();
+        } else if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
+            showDialog("خطا", "لطفا موقعیت مکانی خود را تعیین کنید", "", "قبول");
+        else {
+            try {
+                Long.parseLong(txtPhone.getText().toString().trim());
+                showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید؟", "بله", "بررسی");
+            } catch (Exception e) {
+                txtPhone.setError("صحیح وارد کنید");
+                txtPhone.requestFocus();
             }
-        } catch (Exception e) {
-            showDialog("خطا", e.getMessage(), "", "قبول");
         }
-    }///barresi
+
+    }
 
     private void sendDataForServer() {
         dialogProgres.showProgresBar();

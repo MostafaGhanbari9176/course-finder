@@ -51,7 +51,8 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/dark_eq">
 
                             <EditText
                                 android:id="@+id/txtSubjectRegisteryCourse"
@@ -89,7 +90,8 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/dark_eq">
 
                             <EditText
                                 android:id="@+id/txtsharayetRegisteryCourse"
@@ -126,7 +128,8 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/dark_eq">
 
                             <EditText
                                 android:id="@+id/txtMonyRegisteryCourse"
@@ -164,7 +167,8 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/dark_eq">
 
                             <EditText
                                 android:id="@+id/txtMinRange"
@@ -203,7 +207,8 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/dark_eq">
 
                             <EditText
                                 android:id="@+id/txtMaxRange"
@@ -242,7 +247,8 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/dark_eq">
 
                             <EditText
                                 android:id="@+id/txtCapacityRegisteryCourse"
@@ -281,7 +287,8 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/dark_eq">
 
                             <EditText
                                 android:id="@+id/txtTozihatRegisteryCourse"

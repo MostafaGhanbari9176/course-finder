@@ -166,7 +166,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
                 selectedMarker.showInfoWindow();
                 selectedMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
             } else
-                showDialog("آموزشگاه : " + marker.getTitle(), "نمایش دوره های این آموزشگاه؟", "بله", "خیر");
+                showDialog(marker.getTitle(), "نمایش دوره های این آموزشگاه؟", "بله", "خیر");
 
         } catch (Exception e) {
             e.getMessage();

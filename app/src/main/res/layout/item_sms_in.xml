@@ -90,14 +90,14 @@
                         android:gravity="center|start" />
 
                     <ImageView
-                        android:id="@+id/btnSendSmsItemIn"
+                        android:id="@+id/btnDeleteItemIn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="4dp"
-                        android:src="@drawable/icon_message_box" />
+                        android:src="@drawable/icon_delete_red" />
 
                 </LinearLayout>
 
@@ -125,14 +125,14 @@
                         android:gravity="center|start" />
 
                     <ImageView
-                        android:id="@+id/btnDeleteItemIn"
+                        android:id="@+id/btnReportItemSms"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="4dp"
-                        android:src="@drawable/icon_delete_red" />
+                        android:src="@drawable/icon_feedback" />
 
                 </LinearLayout>
             </LinearLayout>

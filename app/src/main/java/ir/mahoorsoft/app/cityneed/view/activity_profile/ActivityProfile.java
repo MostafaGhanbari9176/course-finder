@@ -48,7 +48,7 @@ import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
+import ir.mahoorsoft.app.cityneed.view.acivity_launcher.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -76,6 +76,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     LinearLayout llTrendingUP;
     DialogProgres dialogProgres;
     int flagMadrak = 0;
+    boolean haveASubscribe = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,9 +86,6 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         dialogProgres = new DialogProgres(this);
         setContentView(R.layout.activity_profile);
         pointer();
-        //     checkUserType();
-
-
     }
 
     private void pointer() {
@@ -102,6 +100,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         (btnMap = (Button) findViewById(R.id.btnMapProfile)).setOnClickListener(this);
         (btnListCourse = (Button) findViewById(R.id.btnAddListProfile)).setOnClickListener(this);
         (btnSmsBox = (Button) findViewById(R.id.btnMessageBoxProfile)).setOnClickListener(this);
+        ((Button) findViewById(R.id.btnHelp)).setOnClickListener(this);
         txtUpload = (TextView) findViewById(R.id.txtUploadMadrak);
         llAddCourse = (LinearLayout) findViewById(R.id.llAddCourseProfile);
         llListAddCourse = (LinearLayout) findViewById(R.id.llAddCourseListProfile);
@@ -138,6 +137,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btnTrendingUpProfile:
                 starterActivity(ActivityTeacherRegistering.class);
+                this.finish();
                 break;
             case R.id.btnSabtenamListProfile:
                 starterActivity(ActivitySabtenamList.class);
@@ -148,6 +148,9 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
             case R.id.rlUploadMadrak:
                 uploalMadrak();
+                break;
+            case R.id.btnHelp:
+                runHelper();
                 break;
             case R.id.btnMapProfile:
                 if (!mapIsShow) {
@@ -162,11 +165,28 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void runHelper() {
+
+        int typeMode = Pref.getIntegerValue(PrefKey.userTypeMode, 0);
+        switch (typeMode) {
+            case 0:
+                showDialogForHelper("بله", "");
+                break;
+            case 1:
+            case 2:
+                showDialogForHelper("", "بله");
+                break;
+        }
+
+    }
+
     private void addCourse() {
         if (flagMadrak == 0)
             showDialogForMadrakState("مدرک یا مجوز آموزشی", "برای ثبت دوره مدرک شما باید تایید شده باشد", "بارگذاری مدرک", "متوجه شدم", "");
         else if (flagMadrak == 1)
             showDialogForMadrakState("مدرک یا مجوز آموزشی", "مدرک شما در انتظار تایید است,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
+        else if (!haveASubscribe)
+            showDialogForMadrakState("اشتراک", "شما هیچ اشتراک فعالی ندارید لطفا نسخه جدید برنامه را نصب کنید.", "", "متوجه شدم", "");
         else
             starterActivity(ActivityCourseRegistring.class);
     }
@@ -253,7 +273,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 llListAddCourse.setVisibility(View.GONE);
                 llAddCourse.setVisibility(View.GONE);
                 ratBar.setVisibility(View.GONE);
-                setImage(R.drawable.user, imgProfile);
+                setImage(R.drawable.defult, imgProfile);
                 replaceContentWith(new FragmentProfileKarbar());
                 if (Pref.getBollValue(PrefKey.profileUserPage, true))
                     showDialogForHelper("بله", "");
@@ -263,7 +283,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 checkMadrak();
                 llTrendingUP.setVisibility(View.GONE);
                 llMap.setVisibility(View.GONE);
-                setImgUrl(Pref.getStringValue(PrefKey.apiCode, ""), imgProfile);
+                setImgUrl(Pref.getStringValue(PrefKey.pictureId, ""), imgProfile);
                 replaceContentWith(new FragmentProfileAmozeshgah());
                 if (Pref.getBollValue(PrefKey.profileTeacherPage, true))
                     showDialogForHelper("", "بله");
@@ -282,7 +302,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png")
                 .fitCenter()
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-                .error(R.drawable.user)
+                .error(R.drawable.defult)
                 .into(image);
     }
 
@@ -290,7 +310,8 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         Glide.with(this)
                 .load(img)
                 .fitCenter()
-                .error(R.drawable.user)
+                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                .error(R.drawable.defult)
                 .into(image);
     }
 
@@ -340,6 +361,11 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     public void responseForMadrak(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
         ratBar.setRating(res.code);
+        if ((new String(Base64.decode(Base64.decode(res.bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS"))
+            haveASubscribe = true;
+        else
+            haveASubscribe = false;
+
         if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("error")) {
             replaceContentWith(new FragmentErrorServer());
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {
@@ -515,6 +541,13 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     }
 
     private void runHelperForTeacher() {
+
+        SimpleTarget starter = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnSabtenamListProfile))
+                .setRadius(1f)
+                .setTitle("تبریک و تشکر از اینکه به ما در جهت توسعه کسب و کار خود اعتماد کردید")
+                .setDescription("در ابتدا باید شما از سمت ما تایید اعتبار شوید سپس می توانید دوره های خود را ثبت کنید پس از ثیت هر دوره محصلین می توانند درخواست ثبتنام دهند و پس از تایید از جانب شما از طریق برنامه و مراجعه حضوری محصل ثبتنام نهایی می شود.")
+                .build();
+
         SimpleTarget sabtenam = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.btnSabtenamListProfile))
                 .setRadius(100f)
                 .setTitle("لیست")
@@ -548,22 +581,20 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
 
         Spotlight.with(ActivityProfile.this)
-                .setOverlayColor(ContextCompat.getColor(ActivityProfile.this, R.color.blue))
+                .setOverlayColor(ContextCompat.getColor(ActivityProfile.this, R.color.blue_ios))
                 .setDuration(500L)
                 .setAnimation(new DecelerateInterpolator(4f))
-                .setTargets(sabtenam, add, sms, madrak, addList, logout)
+                .setTargets(starter, sabtenam, add, sms, madrak, addList, logout)
                 .setClosedOnTouchedOutside(true)
                 .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
                     @Override
                     public void onStarted() {
-                        Toast.makeText(ActivityProfile.this, "شروع شد", Toast.LENGTH_SHORT)
-                                .show();
+
                     }
                 })
                 .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
                     @Override
                     public void onEnded() {
-                        Toast.makeText(ActivityProfile.this, "پایان", Toast.LENGTH_SHORT).show();
                         Pref.saveBollValue(PrefKey.profileTeacherPage, false);
                     }
                 })

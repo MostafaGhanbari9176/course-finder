@@ -27,7 +27,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
 
     public interface OnClickItemCourseList {
         void courseListItemClick(int id);
-        void courseDeletedClick(int position);
+
     }
 
     private OnClickItemCourseList onClickItemCourseList;
@@ -76,26 +76,20 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         final StCourse items = surce.get(position);
         if(items.isDeleted == 1 || items.isCanceled == 1){
             holder.rlDeletedMessage.setVisibility(View.VISIBLE);
-            if(items.isCanceled == 1)
-                holder.txtDeleted.setText("دوره مورد نظر از سمت مدرس لغو ثبت نام شده است");
         }
-
         holder.txtCourseName.setText(items.CourseName);
         holder.txtstartDate.setText(items.startDate);
         holder.txtMasterName.setText(items.MasterName);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
-                .error(R.drawable.user)
+                .error(R.drawable.defult)
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .centerCrop()
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (items.isDeleted == 1 || items.isCanceled == 1)
-                    onClickItemCourseList.courseDeletedClick(position);
-                else
-                    onClickItemCourseList.courseListItemClick(items.id);
+                onClickItemCourseList.courseListItemClick(items.id);
             }
         });
     }

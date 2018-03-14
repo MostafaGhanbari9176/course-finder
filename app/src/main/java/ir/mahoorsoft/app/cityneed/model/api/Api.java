@@ -174,8 +174,13 @@ public interface Api {
             @Path("ac") String ac
     );
 
-    @GET("checkedServer")
-    Call<ArrayList<ResponseOfServer>> checkedServer();
+    @GET("checkedServerStatuse")
+    Call<ArrayList<ResponseOfServer>> checkedServerStatuse();
+
+    @GET("checkedUserStatuse/{id}")
+    Call<ArrayList<ResponseOfServer>> checkedUserStatuse(
+            @Path("id") String id
+    );
 
     @GET("sabtenam/{idCourse}/{idTeacher}/{idUser}")
     Call<ArrayList<ResponseOfServer>> sabtenam(
@@ -286,6 +291,25 @@ public interface Api {
     Call<ArrayList<StComment>> getCommentByTeacherId(
             @Path("teacherId") String teacherId
     );
+
+    @GET("RePoRt/{signText}/{reportText}/{spamId}/{spamerId}/{reporterId}")
+    Call<ArrayList<ResponseOfServer>> report(
+            @Path("signText") String signText,
+            @Path("reportText") String reportText,
+            @Path("spamId") int spamId,
+            @Path("spamerId") String spamerId,
+            @Path("reporterId") String reporterId
+    );
+
+    @GET("confirmStudent/{sabtenamId}/{ac}/{courseId}")
+    Call<ArrayList<ResponseOfServer>> confirmStudent(
+            @Path("sabtenamId") int sabtenamId,
+            @Path("courseId") int courseId,
+            @Path("ac") String apiCode
+    );
+
+    @GET("getSelectedTeacher")
+    Call<ArrayList<StTeacher>> selectedTeacher();
 
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(

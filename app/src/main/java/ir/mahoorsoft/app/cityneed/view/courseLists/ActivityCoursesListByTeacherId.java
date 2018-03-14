@@ -107,12 +107,8 @@ public class ActivityCoursesListByTeacherId extends AppCompatActivity implements
     public void courseListItemClick(int id) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", id);
+        intent.putExtra("teacherId", apiCode);
         startActivity(intent);
-    }
-
-    @Override
-    public void courseDeletedClick(int position) {
-
     }
 
     @Override

@@ -8,10 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
 
 /**

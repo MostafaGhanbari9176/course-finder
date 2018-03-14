@@ -1,7 +1,11 @@
 package ir.mahoorsoft.app.cityneed.presenter;
 
+import android.util.Base64;
+
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 
@@ -30,42 +34,42 @@ public class PresentCourse implements Course.OnCourseLitener {
         this.onPresentCourseLitener = onPresentCourseLitener;
     }
 
-    public  void updateDeletedFlag(int courseId, int code){
+    public void updateDeletedFlag(int courseId, int code) {
         Course course = new Course(this);
         course.updateDeletedFlag(courseId, code);
     }
 
-    public void addCourse(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int minOld,int maxOld) {
+    public void addCourse(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int minOld, int maxOld) {
         Course course = new Course(this);
         course.addtCource(subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
     }
 
-    public void getAllCourse(){
+    public void getAllCourse() {
         Course course = new Course(this);
         course.getAllCourse();
     }
 
-    public void getNewCourse(){
+    public void getNewCourse() {
         Course course = new Course(this);
         course.getNewCourse();
     }
 
-    public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days){
+    public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days) {
         Course course = new Course(this);
         course.getCourseByFilter(minOld, maxOld, startDate, endDate, groupId, days);
     }
 
-    public void getCourseForListHome(int id){
+    public void getCourseForListHome(int id) {
         Course course = new Course(this);
         course.getCourseForListHome(id);
     }
 
-    public void getCourseByGroupingId(int id){
+    public void getCourseByGroupingId(int id) {
         Course course = new Course(this);
         course.getCourseByGroupingId(id);
     }
 
-    public void getUserCourse(){
+    public void getUserCourse() {
         Course course = new Course(this);
         course.getUserCourse();
     }
@@ -83,14 +87,20 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        if(res.get(0).code == 0)
-            sendMessage("خطا, باارز پوزش لطفا بعدا امتحان کنید");
-      else
-          onPresentCourseLitener.confirmCourse((int)res.get(0).code);
+        if ((new String(Base64.decode(Base64.decode(res.get(0).bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS")) {
+            if (res.get(0).code == 0)
+                sendMessage("خطا, باارز پوزش لطفا بعدا امتحان کنید");
+            else
+                onPresentCourseLitener.confirmCourse((int) res.get(0).code);
+        } else {
+            sendMessage("انجام شد");
+            Pref.saveBollValue(PrefKey.hacked, true);
+        }
+
     }
 
     @Override
-    public void onReceiveData(ArrayList<StCourse> data ,int listId) {
+    public void onReceiveData(ArrayList<StCourse> data, int listId) {
 
         onPresentCourseLitener.onReceiveCourse(data, listId);
     }

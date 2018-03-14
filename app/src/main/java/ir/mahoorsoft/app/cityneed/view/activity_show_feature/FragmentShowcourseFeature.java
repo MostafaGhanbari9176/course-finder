@@ -197,8 +197,8 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     private void setImage() {
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
-                .centerCrop()
-                .error(R.drawable.user)
+                .fitCenter()
+                .error(R.drawable.defult)
                 .clone()
                 .into(img);
 
@@ -208,7 +208,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     @Override
     public void sendMessageFCT(String message) {
         dialogProgres.closeProgresBar();
-
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 

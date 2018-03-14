@@ -111,11 +111,6 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
     }
 
     @Override
-    public void courseDeletedClick(int position) {
-
-    }
-
-    @Override
     public void onBackPressed() {
         finish();
         super.onBackPressed();

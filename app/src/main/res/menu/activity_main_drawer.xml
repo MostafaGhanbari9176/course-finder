@@ -3,31 +3,32 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/btnSearch_Menu"
-            android:icon="@drawable/icon_search_true"
-            android:title="@string/menu_text_two" />
-        <item
-            android:id="@+id/btnMap_Menu"
-            android:icon="@drawable/icon_map"
-            android:title="@string/menu_text_nine" />
-        <item
-            android:id="@+id/btnHome_Menu"
+            android:id="@+id/btnHomeMenu"
             android:icon="@drawable/icon_home_true"
-            android:title="@string/menu_text_eight" />
+            android:title="خانه" />
+        <item
+            android:id="@+id/btnMapMenu"
+            android:icon="@drawable/icon_map"
+            android:title="نقشه" />
+        <item
+            android:id="@+id/btnSearchMenu"
+            android:icon="@drawable/icon_search_true"
+            android:title="جستجو" />
+
     </group>
 
     <item
-        android:id="@+id/new_course"
-        android:icon="@drawable/icon_profile"
-        android:title="@string/menu_text_five" />
+        android:id="@+id/btnSabtenamListMenu"
+        android:icon="@drawable/icon_list"
+        android:title="دوره های ثبت نام شده" />
     <item
-        android:id="@+id/grouping"
+        android:id="@+id/btnSmsBoxMenu"
+        android:icon="@drawable/icon_message_box"
+        android:title="صندوق پیام" />
+    <item
+        android:id="@+id/btnGroupingMenu"
         android:icon="@drawable/icon_list"
         android:title="دسته بندی" />
 
-    <item
-        android:id="@+id/secorityPass"
-        android:icon="@drawable/icon_list"
-        android:title="رمز ورود,برنامه" />
 
 </menu>

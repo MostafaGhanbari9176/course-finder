@@ -6,6 +6,7 @@ package ir.mahoorsoft.app.cityneed.model.struct;
 
 public class PrefKey {
     public static final String IsLogin = "isLogin";
+    public static final String pictureId = "pictureId";
     public static final String secorityPass = "secorityPass";
     public static final String apiCode = "apiCode";
     public static final String lat = "lat";
@@ -24,4 +25,5 @@ public class PrefKey {
     /////////////////////////helperFlags
     public static final String profileUserPage = "one";
     public static final String profileTeacherPage = "two";
+    public static final String hacked = "hacked";
 }

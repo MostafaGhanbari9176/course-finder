@@ -77,4 +77,21 @@ public class Sabtenam {
             }
         });
     }
+
+    public void confirmStudent(int sabtenamId, String apiCode, int courseId) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> methode = api.confirmStudent(sabtenamId, courseId, apiCode);
+        methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
+                onSabtenamListener.onReceiveFlag(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onSabtenamListener.sendMessage(Message.convertRetrofitMessage(t.toString()));
+            }
+        });
+    }
 }

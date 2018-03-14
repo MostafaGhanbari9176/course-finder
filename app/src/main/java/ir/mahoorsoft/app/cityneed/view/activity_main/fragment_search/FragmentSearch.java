@@ -34,13 +34,13 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 /**
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentSearch extends Fragment implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, AdapterCourseList.OnClickItemCourseList, DialogTabaghe.OnTabagheItemClick, DialogDayWeek.ReturnDay {
+public class FragmentSearch extends Fragment implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, AdapterCourseList.OnClickItemCourseList, DialogGrouping.OnTabagheItemClick, DialogDayWeek.ReturnDay {
 
     View view;
     LinearLayout btnFilter;
@@ -145,7 +145,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
                 showDatePicker(true);
                 break;
             case R.id.btnSelectGroupFilter:
-                (new DialogTabaghe(G.context, this)).Show();
+                (new DialogGrouping(G.context, this)).Show();
                 break;
             case R.id.llDeleteFilter:
                 btnDeleteFilter.setVisibility(View.GONE);
@@ -346,11 +346,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
     @Override
     public void courseListItemClick(int id) {
-
-    }
-
-    @Override
-    public void courseDeletedClick(int position) {
 
     }
 

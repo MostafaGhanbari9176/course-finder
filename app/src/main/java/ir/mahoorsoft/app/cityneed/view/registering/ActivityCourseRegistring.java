@@ -36,20 +36,13 @@ import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 /**
  * Created by M-gh on 28-Jan-18.
  */
 
-public class ActivityCourseRegistring extends AppCompatActivity implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener, DialogTabaghe.OnTabagheItemClick, DialogDayWeek.ReturnDay {
-    /*    RadioButton rb1;
-        RadioButton rb2;
-        RadioButton rb3;
-        RadioButton rb4;
-        RadioButton rb5;
-        RadioButton rb6;
-        RadioButton rb7;*/
+public class ActivityCourseRegistring extends AppCompatActivity implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener, DialogGrouping.OnTabagheItemClick, DialogDayWeek.ReturnDay {
     TextView txtSubject;
     boolean isUserChanged = true;
     TextView txtTozihat;
@@ -231,7 +224,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                 showTimePicker();
                 break;
             case R.id.btnChoseTabaghe:
-                (new DialogTabaghe(this, this)).Show();
+                (new DialogGrouping(this, this)).Show();
                 break;
             case R.id.btnDaysRejistery:
                 (new DialogDayWeek(this, this)).Show();

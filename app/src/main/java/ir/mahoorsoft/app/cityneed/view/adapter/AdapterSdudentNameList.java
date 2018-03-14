@@ -1,7 +1,9 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +30,12 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
         void sendSms(int position);
 
         void deleteSabtenam(int position);
+
+        void confirmStudent(int position, CardView cardView);
     }
 
     public static Stack<Integer> checkedUser = new Stack<>();
+    public static Stack<CardView> selectedItems = new Stack<>();
 
     private OnClickItemSdutentNameList onClickItemSdutentNameList;
     private Context context;
@@ -40,6 +45,7 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
 
     public AdapterSdudentNameList(Context context, ArrayList<StUser> surce, OnClickItemSdutentNameList onClickItemSdutentNameList, boolean showCheckBox) {
         checkedUser.clear();
+        selectedItems.clear();
         this.context = context;
         this.surce = surce;
         this.onClickItemSdutentNameList = onClickItemSdutentNameList;
@@ -50,14 +56,20 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
         TextView txtName;
         Button btnSendSms;
         Button btnDeleteSabtenam;
+        Button btnConfirm;
         CheckBox cbx;
+        CardView cardView;
+        LinearLayout llButton;
 
         public Holder(View itemView) {
             super(itemView);
+            llButton = (LinearLayout) itemView.findViewById(R.id.llItemStudentName);
+            cardView = (CardView) itemView.findViewById(R.id.cvItemStudentName);
             cbx = (CheckBox) itemView.findViewById(R.id.cbxMoreSelect);
             txtName = (TextView) itemView.findViewById(R.id.txtItemStudentName);
             btnSendSms = (Button) itemView.findViewById(R.id.btnSendSmsStudentListName);
             btnDeleteSabtenam = (Button) itemView.findViewById(R.id.btnDeleteSabtenamStudentListName);
+            btnConfirm = (Button) itemView.findViewById(R.id.btnConfirmSabtenamStudent);
         }
     }
 
@@ -69,19 +81,26 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
     }
 
     @Override
-    public void onBindViewHolder(AdapterSdudentNameList.Holder holder, final int position) {
+    public void onBindViewHolder(final AdapterSdudentNameList.Holder holder, final int position) {
         final StUser items = surce.get(position);
+        if (items.status == 0) {
+            holder.cardView.setCardBackgroundColor(Color.argb(100, 255, 118, 144));
+        }
         holder.txtName.setText(items.name);
-        if (showCheckBox)
+        if (showCheckBox) {
             holder.cbx.setVisibility(View.VISIBLE);
+            holder.llButton.setVisibility(View.GONE);
+        }
         holder.cbx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+                if (isChecked) {
                     checkedUser.push(position);
-                else {
+                    selectedItems.push(holder.cardView);
+                } else {
                     int index = checkedUser.indexOf(position);
                     checkedUser.remove(index);
+                    selectedItems.remove(index);
                 }
             }
         });
@@ -96,6 +115,14 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
             @Override
             public void onClick(View v) {
                 onClickItemSdutentNameList.deleteSabtenam(position);
+            }
+        });
+
+        holder.btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onClickItemSdutentNameList.confirmStudent(position, holder.cardView);
             }
         });
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/light"
+    android:background="@color/light_two"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
@@ -24,22 +24,62 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/llViewPager"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/img_view_pager_height"
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <cn.lightsky.infiniteindicator.InfiniteIndicator
-                        android:id="@+id/viewPager"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@mipmap/backgrand"
-                        app:indicator_type="indicator_anim_circle">
+                        android:layout_height="match_parent">
 
-                    </cn.lightsky.infiniteindicator.InfiniteIndicator>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/textView30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:padding="4dp"
+                                android:text="اپلیکیشن دوره های آموزشی من"
+                                android:textColor="@color/light"
+                                android:textSize="@dimen/txt_size_big"
+                                android:textStyle="bold|italic" />
+
+                            <TextView
+                                android:id="@+id/textView29"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:padding="4dp"
+                                android:text="امکانی برای تبلیغات دوره های برگزار شده توسط شما"
+                                android:textColor="@color/light"
+                                android:textSize="@dimen/txt_size_big"
+                                android:textStyle="bold|italic" />
+                        </LinearLayout>
+
+                        <cn.lightsky.infiniteindicator.InfiniteIndicator
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+
+                            app:indicator_type="indicator_anim_circle">
+
+                        </cn.lightsky.infiniteindicator.InfiniteIndicator>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 

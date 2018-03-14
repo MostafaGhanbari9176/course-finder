@@ -56,9 +56,12 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_show_teacher_feture, container, false);
-        inite();
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_show_teacher_feture, container, false);
+            inite();
+        }
         return view;
+
     }
 
     private void inite() {
@@ -124,7 +127,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         txtSubject.setText(users.get(0).subject);
         txtPhone.setText(users.get(0).phone);
         txtLandPhone.setText(users.get(0).landPhone);
-        setImg();
+        setImg(users.get(0).pictureId);
         setTeacherLocation();
     }
 
@@ -136,11 +139,11 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         marker.setPosition(latLng);
     }
 
-    private void setImg() {
+    private void setImg(String pictureId) {
         Glide.with(this)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + teacherId + ".png")
-                .centerCrop()
-                .error(R.drawable.user)
+                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + pictureId + ".png")
+                .fitCenter()
+                .error(R.drawable.defult)
                 .clone()
                 .into(img);
     }
@@ -163,5 +166,8 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         marker = mMap.addMarker(markerOptions);
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setRotateGesturesEnabled(true);
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
     }
 }

@@ -5,7 +5,7 @@
         android:title="حذف چندین نفر" />
     <item
         android:id="@+id/moreSms"
-        android:title="ارسال پیام به چنذین نفر" />
+        android:title="ارسال پیام به چندین نفر" />
     <item
         android:id="@+id/moreConfirm"
         android:title="تایید چند نفر" />

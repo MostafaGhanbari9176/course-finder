@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -33,7 +34,11 @@ public class ActivityOptionalCourse extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             courseId = getIntent().getIntExtra("id", -1);
             teacherId = getIntent().getStringExtra("teacherId");
+        } else {
+            Toast.makeText(this, "خطا!!", Toast.LENGTH_SHORT).show();
+            this.finish();
         }
+
         init();
     }
 
@@ -55,6 +60,7 @@ public class ActivityOptionalCourse extends AppCompatActivity {
         adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
         adapterViewPager.add(new FragmentShowcourseFeature(), "مشخصات");
         adapterViewPager.add(new FragmentShowTeacherFeature(), "آموزشگاه");
+        adapterViewPager.add(new FragmentTeacherCourse(), "سایر دوره های آموزشگاه");
         adapterViewPager.add(new FragmentComment(), "نظرات و امتیازات");
         viewPager.setAdapter(adapterViewPager);
 
@@ -70,5 +76,12 @@ public class ActivityOptionalCourse extends AppCompatActivity {
     public void onBackPressed() {
         this.finish();
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        G.context = this;
+        G.activity = this;
+        super.onResume();
     }
 }

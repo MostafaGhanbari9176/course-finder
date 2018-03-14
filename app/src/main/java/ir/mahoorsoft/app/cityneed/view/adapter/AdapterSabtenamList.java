@@ -27,7 +27,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamList.Holder> {
 
     public interface OnClickItemCourseList {
-        void courseListItemClick(int id);
+        void courseListItemClick(int position);
 
         void courseDeletedClick(int position);
 
@@ -97,7 +97,7 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
         holder.txtMasterName.setText(items.MasterName);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
-                .error(R.drawable.user)
+                .error(R.drawable.defult)
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .centerCrop()
                 .into(holder.imgItem);
@@ -107,7 +107,7 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
                 if (items.isDeleted == 1 || items.isCanceled == 1)
                     onClickItemCourseList.courseDeletedClick(position);
                 else
-                    onClickItemCourseList.courseListItemClick(items.id);
+                    onClickItemCourseList.courseListItemClick(position);
             }
         });
         holder.btnSendSms.setOnClickListener(new View.OnClickListener() {

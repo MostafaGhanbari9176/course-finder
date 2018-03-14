@@ -3,7 +3,6 @@ package ir.mahoorsoft.app.cityneed.view.activity_main;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,36 +16,33 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import ir.mahoorsoft.app.cityneed.G;
-
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
-import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedServer;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentSelfCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
+import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
+import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogTabaghe;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 import ir.mahoorsoft.app.cityneed.view.purchase.ActivityPurchase;
 
 
-public class ActivityMain extends AppCompatActivity implements View.OnClickListener, DialogTabaghe.OnTabagheItemClick, NavigationView.OnNavigationItemSelectedListener, PresentCheckedServer.OnPresentCheckServrer {
+public class ActivityMain extends AppCompatActivity implements View.OnClickListener, DialogGrouping.OnTabagheItemClick, NavigationView.OnNavigationItemSelectedListener {
 
     boolean selfChecked = false;
     boolean publicChecked = true;
-
-    public static Toolbar toolbar;
+    Toolbar toolbar;
     TextView txtUserName;
     TextView txtProfileButton;
     View viewNavHeder;
-    View viewMenu;
     LinearLayout llRadioGroup;
     RadioButton rbSelf;
     RadioButton rbOther;
@@ -55,7 +51,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     NavigationView navigationView;
     FrameLayout contentMain;
     public DialogProgres dialogProgres;
-    boolean flag = true;
     private FragmentHome fhome = null;
 
     @Override
@@ -66,29 +61,21 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         dialogProgres = new DialogProgres(this);
         setContentView(R.layout.activity_main);
         init();
-        checkedServer();
-
+        rbOther.setChecked(true);
+        fhome = new FragmentHome();
+        replaceContentWith(fhome);
     }
 
     private void init() {
-
         pointers();
         profileCheck();
         setSupportActionBar(toolbar);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
-
-    private void checkedServer() {
-        dialogProgres.showProgresBar();
-        PresentCheckedServer presentCheckedServer = new PresentCheckedServer(this);
-        presentCheckedServer.checkedServer();
-    }
-
 
     private void pointers() {
 
@@ -106,7 +93,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         llNavHeder.setOnClickListener(this);
         rbOther.setOnClickListener(this);
         rbSelf.setOnClickListener(this);
-        // txtProfileButton.setOnClickListener(this);
+
     }
 
     @Override
@@ -155,7 +142,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
-    private void startActivity(Class aClass) {
+    private void starterActivity(Class aClass) {
         Intent intent = new Intent(this, aClass);
         startActivity(intent);
 
@@ -167,31 +154,34 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
         switch (item.getItemId()) {
 
-            case R.id.btnHome_Menu:
-                toolbar.setVisibility(View.VISIBLE);
-                fhome = new FragmentHome();
-                replaceContentWith(fhome);
-                flag = true;
+            case R.id.btnHomeMenu:
+                if (fhome == null) {
+                    fhome = new FragmentHome();
+                    replaceContentWith(fhome);
+                }
                 break;
-            case R.id.secorityPass:
-                startActivity(ActivityPurchase.class);
-                break;
-            case R.id.btnMap_Menu:
+            case R.id.btnMapMenu:
                 fhome = null;
-                toolbar.setVisibility(View.GONE);
                 replaceContentWith(new FragmentMap());
-                flag = false;
                 break;
-            case R.id.btnSearch_Menu:
+            case R.id.btnSearchMenu:
                 fhome = null;
-                toolbar.setVisibility(View.GONE);
                 replaceContentWith(new FragmentSearch());
-                flag = false;
                 break;
-            case R.id.grouping:
-
-                new DialogTabaghe(this, this).Show();
-                flag = false;
+            case R.id.btnSabtenamListMenu:
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
+                    starterActivity(ActivitySabtenamList.class);
+                else
+                    Toast.makeText(this, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnSmsBoxMenu:
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
+                    starterActivity(ActivitySmsBox.class);
+                else
+                    Toast.makeText(this, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnGroupingMenu:
+                new DialogGrouping(this, this).Show();
                 break;
         }
 
@@ -199,19 +189,19 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    private void checkPass(){
+    private void checkPass() {
 //        if(Pref.saveStringValue(PrefKey.secorityPass,""))
     }
 
-    private void showPassDialog(){}
+    private void showPassDialog() {
+    }
 
     @Override
     public void onBackPressed() {
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (!flag) {
-            toolbar.setVisibility(View.VISIBLE);
+        } else if (fhome == null) {
             fhome = new FragmentHome();
             replaceContentWith(fhome);
 
@@ -223,10 +213,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     private void acountCheck() {
         if (Pref.getBollValue(PrefKey.IsLogin, false)) {
-            startActivity(ActivityProfile.class);
+            starterActivity(ActivityProfile.class);
 
         } else {
-            startActivity(ActivityAcountConfirm.class);
+            starterActivity(ActivityAcountConfirm.class);
         }
     }
 
@@ -260,28 +250,13 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         super.onResume();
     }
 
-    @Override
-    public void serverChecked(boolean online) {
-        dialogProgres.closeProgresBar();
-        if (online) {
-            toolbar.setVisibility(View.VISIBLE);
-            rbOther.setChecked(true);
-            fhome = new FragmentHome();
-            replaceContentWith(fhome);
-        } else {
-            fhome = null;
-            toolbar.setVisibility(View.GONE);
-            replaceContentWith(new FragmentErrorServer());
-        }
-    }
-
 
     @Override
     public void tabagheInf(String name, int id) {
+        //   Toast.makeText(this, name + "     " + id, Toast.LENGTH_SHORT).show();
         if (fhome != null) {
             fhome.queryForCourses(id);
         } else {
-            toolbar.setVisibility(View.VISIBLE);
             fhome = new FragmentHome();
             replaceContentWith(fhome);
             fhome.queryForCourses(id);

@@ -74,6 +74,22 @@ public class Teacher {
         });
     }
 
+    public void getSelectedTeacher() {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StTeacher>> getTeacher = api.selectedTeacher();
+        getTeacher.enqueue(new Callback<ArrayList<StTeacher>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StTeacher>> call, retrofit2.Response<ArrayList<StTeacher>> response) {
+                onTeacherListener.onReceiveData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StTeacher>> call, Throwable t) {
+                onTeacherListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
     public void updateTeacher(String landPhone, String subject, String address, int cityId, int madrak) {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<ResponseOfServer>> updateTracher = api.updateTeacher(Phone, landPhone, address, subject, cityId, madrak);
@@ -96,7 +112,7 @@ public class Teacher {
         getMs.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
-                onTeacherListener.responseForMadrak(response.body().get(0));
+                onTeacherListener.responseForMadrak(response.body());
             }
 
             @Override
@@ -123,7 +139,7 @@ public class Teacher {
     }
 
     public interface OnTeacherListener {
-        void responseForMadrak(ResponseOfServer res);
+        void responseForMadrak(ArrayList<ResponseOfServer> res);
 
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
 

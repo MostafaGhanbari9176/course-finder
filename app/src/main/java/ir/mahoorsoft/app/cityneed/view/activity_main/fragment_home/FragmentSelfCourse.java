@@ -35,7 +35,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     TextView txt;
     AdapterCourseListTeacher adapter;
     RecyclerView list;
-    ArrayList<StCourse> surce;
+    ArrayList<StCourse> surce = new ArrayList<>();;
     DialogProgres dialogProgres;
 
     @Nullable
@@ -50,7 +50,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
         ((Toolbar) view.findViewById(R.id.tlbList)).setVisibility(View.GONE);
         txt = (TextView) view.findViewById(R.id.txtEmptyCourseList);
         dialogProgres = new DialogProgres(G.context);
-        surce = new ArrayList<>();
+
         list = (RecyclerView) view.findViewById(R.id.RVList);
         adapter = new AdapterCourseListTeacher(G.context, surce, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
@@ -88,7 +88,9 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
         else {
             txt.setVisibility(View.GONE);
             list = (RecyclerView) view.findViewById(R.id.RVList);
-            adapter = new AdapterCourseListTeacher(G.context, course, this);
+            surce.clear();
+            surce.addAll(course);
+            adapter = new AdapterCourseListTeacher(G.context, surce, this);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                     , LinearLayoutManager.VERTICAL, false);
             list.setLayoutManager(layoutManager);
@@ -103,9 +105,10 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     }
 
     @Override
-    public void courseListItemClick(int id) {
+    public void courseListItemClick(int position) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", surce.get(position).id);
+        intent.putExtra("teacherId", Pref.getStringValue(PrefKey.apiCode,""));
         startActivity(intent);
     }
 }

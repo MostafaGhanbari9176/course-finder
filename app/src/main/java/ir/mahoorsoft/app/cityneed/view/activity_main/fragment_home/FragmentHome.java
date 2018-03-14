@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
@@ -27,29 +28,34 @@ import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
+import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
-import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTabagheList;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListHome;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByGroupingId;
+import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByTeacherId;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterTabagheList.OnClickItemTabagheList {
+public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener {
     LinearLayout scrollView;
     LinearLayout llitems;
     CardView btnDelete;
     private ArrayList<Page> pageViews;
-    AdapterTabagheList adapterGrouping;
+    AdapterGroupingListHome adapterGrouping;
     private InfiniteIndicator mAnimCircleIndicator;
     View view;
     RecyclerView groupingList;
@@ -61,7 +67,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        ActivityMain.toolbar.setVisibility(View.VISIBLE);
         init();
         return view;
     }
@@ -69,7 +74,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     private void init() {
         dialogProgres = new DialogProgres(G.context);
         pointer();
-        settingUpVPager();
+        initData();
+
         queeyForGroupingListData();
         dialogProgres.showProgresBar();
         queryForCourses(-1);
@@ -83,8 +89,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void settingUpVPager() {
-
-        initData();
         mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.viewPager);
         IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
                 .imageLoader(new GlideLoader())
@@ -111,11 +115,13 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void pointer() {
+        (view.findViewById(R.id.llViewPager)).setBackgroundColor(randomColor());
         btnDelete = (CardView) view.findViewById(R.id.btnDeletGroupingHome);
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 queryForCourses(-1);
+                adapterGrouping.setSelectedCardView(null);
             }
         });
         btnDelete.setVisibility(View.GONE);
@@ -123,6 +129,25 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         groupingList = (RecyclerView) view.findViewById(R.id.RVGroupingItemsHome);
         scrollView = (LinearLayout) view.findViewById(R.id.llSV);
         llitems = (LinearLayout) view.findViewById(R.id.llItemsHome);
+
+    }
+
+    private int randomColor() {
+        int color = (new Random()).nextInt(5);
+        switch (color) {
+            case 0:
+                return ContextCompat.getColor(G.context, R.color.blue_ios);
+            case 1:
+                return ContextCompat.getColor(G.context, R.color.purple_ios);
+            case 2:
+                return ContextCompat.getColor(G.context, R.color.orange_ios);
+            case 3:
+                return ContextCompat.getColor(G.context, R.color.pink_ios);
+            case 4:
+                return ContextCompat.getColor(G.context, R.color.red_ios);
+            default:
+                return ContextCompat.getColor(G.context, R.color.light_eq);
+        }
 
     }
 
@@ -159,7 +184,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onPageClick(int position, Page page) {
-        Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
+        Intent intent = new Intent(G.context, ActivityCoursesListByTeacherId.class);
+        intent.putExtra("apiCode", page.data);
         startActivity(intent);
     }
 
@@ -170,10 +196,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void initData() {
-        pageViews = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            pageViews.add(new Page(i + "", ApiClient.serverAddress + "/city_need/v1/uploads/course/" + i + ".png", this));
-        }
+
+        PresentTeacher presentTeacher = new PresentTeacher(this);
+        presentTeacher.getSelectedTeacher();
     }
 
     @Override
@@ -266,7 +291,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onResiveTabaghe(ArrayList<StGrouping> data) {
-        adapterGrouping = new AdapterTabagheList(G.context, data, this);
+        adapterGrouping = new AdapterGroupingListHome(G.context, data, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, false);
         groupingList.setLayoutManager(layoutManager);
@@ -291,5 +316,33 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     public void tabagheListItemClick(int position, int sourceNumber, int groupId) {
         dialogProgres.showProgresBar();
         queryForCourses(groupId);
+    }
+
+    @Override
+    public void sendMessageFTT(String message) {
+        dialogProgres.closeProgresBar();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void confirmTeacher(boolean flag) {
+
+    }
+
+    @Override
+    public void onReceiveTeacher(ArrayList<StTeacher> users) {
+        dialogProgres.closeProgresBar();
+        if (users == null || users.size() == 0)
+            return;
+        pageViews = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            pageViews.add(new Page(users.get(i).ac, ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + 1 + ".png", this));
+        }
+        settingUpVPager();
+    }
+
+    @Override
+    public void responseForMadrak(ResponseOfServer res) {
+
     }
 }

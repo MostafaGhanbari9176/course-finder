@@ -62,7 +62,6 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_course_list_teacher, parent, false);
         Holder holder = new Holder(view);
-
         return holder;
     }
 
@@ -77,7 +76,7 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
         holder.txtCapacity.setText(items.capacity+"");
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
-                .error(R.drawable.user)
+                .error(R.drawable.defult)
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .centerCrop()
                 .into(holder.imgItem);
