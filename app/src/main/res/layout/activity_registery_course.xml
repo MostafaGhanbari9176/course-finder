@@ -66,6 +66,7 @@
                                 android:gravity="center|start"
                                 android:hint="عنوان دوره "
                                 android:inputType="textPersonName"
+                                android:maxLength="50"
                                 android:maxLines="1"
                                 android:paddingRight="48dp"
                                 android:textColor="@color/dark_eq"

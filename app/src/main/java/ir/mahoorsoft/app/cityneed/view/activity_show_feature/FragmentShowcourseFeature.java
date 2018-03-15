@@ -35,6 +35,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterComment;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
+import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
@@ -56,15 +57,17 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     TextView txtCapacity;
     TextView txtsharayet;
     TextView txtRange;
+    TextView txtNews;
     LinearLayout moreDetails;
     LinearLayout btnMoreDetails;
     LinearLayout llRatBar;
     RatingBar ratBar;
     ProgressBar pbRatBar;
-
+    int capacity;
     Button btnRegister;
     int courseId = ActivityOptionalCourse.courseId;
     String idTeacher;
+    String startDate;
     String idUser = Pref.getStringValue(PrefKey.apiCode, "");
     DialogProgres dialogProgres;
 
@@ -128,6 +131,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtName = (TextView) view.findViewById(R.id.txtNAmeFeature);
         txtMasterName = (TextView) view.findViewById(R.id.txtMasterNameFeature);
         txtDay = (TextView) view.findViewById(R.id.txtDayFeature);
+        txtNews = (TextView) view.findViewById(R.id.txtNewsCourseFeature);
         txtEndDate = (TextView) view.findViewById(R.id.txtEndDateFeature);
         txtHours = (TextView) view.findViewById(R.id.txtHoursFeature);
         txtType = (TextView) view.findViewById(R.id.txtTypeFeature);
@@ -164,6 +168,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     private void registerHe() {
+
         if (Pref.getBollValue(PrefKey.IsLogin, false)) {
             dialogProgres.showProgresBar();
             PresentSabtenam presentSabtenam = new PresentSabtenam(this);
@@ -171,6 +176,32 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         } else
             showDialog();
     }
+
+    private boolean checkDate() {
+        char[] chartodaydate = (DateCreator.todayDate()).toCharArray();
+        char[] charStartDate = (startDate).toCharArray();
+        String help = "";
+        for (int i = 0; i < chartodaydate.length; i++) {
+
+            if (chartodaydate[i] != '-') {
+                help = help + chartodaydate[i];
+            }
+        }
+        int todaydate = Integer.parseInt(help);
+        help = "";
+        for (int i = 0; i < charStartDate.length; i++) {
+
+            if (charStartDate[i] != '-') {
+                help = help + charStartDate[i];
+            }
+        }
+        int startDate = Integer.parseInt(help);
+
+        if (startDate - (todaydate - 2) < 0)
+            return false;
+        return true;
+    }
+
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
@@ -220,6 +251,8 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
+        capacity = course.get(0).capacity;
+        startDate = course.get(0).startDate;
         idTeacher = course.get(0).idTeacher;
         txtMony.setText(formatter.format(course.get(0).mony) + " تومان");
         txtCapacity.setText(course.get(0).capacity + " نفر");
@@ -233,8 +266,23 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtDay.setText(course.get(0).day);
         txtTabaghe.setText(course.get(0).tabaghe);
         txtsharayet.setText(course.get(0).sharayet);
+        checkCourseData();
         setImage();
 
+    }
+
+    private void checkCourseData() {
+        if (!checkDate()) {
+            btnRegister.setVisibility(View.GONE);
+            ratBar.setVisibility(View.GONE);
+            txtNews.setVisibility(View.VISIBLE);
+            txtNews.setText("دوره در تاریخ " + startDate + " برگزار شده");
+        } else if (capacity == 0) {
+            btnRegister.setVisibility(View.GONE);
+            ratBar.setVisibility(View.GONE);
+            txtNews.setVisibility(View.VISIBLE);
+            txtNews.setText("ظرفیت دوره تکمیل شده");
+        }
     }
 
     @Override
@@ -254,7 +302,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             issabtenamed = true;
             setUpRatBar();
             sendMessageFCT("انجام شد");
-            llRatBar.setVisibility(View.VISIBLE);
+            txtNews.setVisibility(View.VISIBLE);
             btnRegister.setVisibility(View.GONE);
         } else
             sendMessageFCT("خطا");
@@ -263,8 +311,13 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     @Override
     public void checkSabtenam(float ratBarValue) {
         if (ratBarValue == -1) {
+            txtNews.setVisibility(View.GONE);
             llRatBar.setVisibility(View.GONE);
+        } else if (ratBarValue == -2) {
+            btnRegister.setVisibility(View.GONE);
+            txtNews.setVisibility(View.VISIBLE);
         } else {
+            txtNews.setVisibility(View.GONE);
             issabtenamed = true;
             btnRegister.setVisibility(View.GONE);
             llRatBar.setVisibility(View.VISIBLE);

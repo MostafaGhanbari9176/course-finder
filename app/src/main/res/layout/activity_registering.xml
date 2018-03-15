@@ -66,6 +66,7 @@
                                 android:gravity="start"
                                 android:hint="عنوان آموزش "
                                 android:inputType="textPersonName"
+                                android:maxLength="50"
                                 android:maxLines="1"
                                 android:paddingStart="8dp"
                                 android:textColor="@color/text_home"
