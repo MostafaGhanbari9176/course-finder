@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -49,6 +51,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     RadioButton rbTeacherName;
     RecyclerView list;
     ArrayList<StCourse> source = new ArrayList<>();
+    ArrayList<StCourse> helpSource = new ArrayList<>();
     AdapterCourseList adapter;
     DialogProgres dialogProgres;
     TextView txtSearch;
@@ -98,7 +101,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().length() == 0)
-                    onReceiveCourse(source, -1);
+
+                    onReceiveCourse(helpSource, -1);
                 else {
                     if (rbTeacherName.isChecked())
                         searchTeacherName(s.toString());
@@ -210,13 +214,13 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
     private void searchCourseName(String searchFlag) {
         if (searchFlag.length() == 0) {
-            onReceiveCourse(source, -1);
+            onReceiveCourse(helpSource, -1);
             return;
         }
         ArrayList<StCourse> serachSource = new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
-            if ((source.get(i).CourseName).contains(searchFlag))
-                serachSource.add(source.get(i));
+        for (int i = 0; i < helpSource.size(); i++) {
+            if ((helpSource.get(i).CourseName).contains(searchFlag))
+                serachSource.add(helpSource.get(i));
         }
         if (serachSource.size() == 0) {
             txtSearch.setBackgroundResource(R.drawable.txt_search_errore);
@@ -225,21 +229,23 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             txtSearch.setBackgroundResource(R.drawable.txt_search);
             txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
         }
-        adapter = new AdapterCourseList(G.context, serachSource, this);
+        source.clear();
+        source.addAll(serachSource);
+        adapter = new AdapterCourseList(G.context, source, this);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
     private void searchTeacherName(String searchFlag) {
         if (searchFlag.length() == 0) {
-            onReceiveCourse(source, -1);
+            onReceiveCourse(helpSource, -1);
             return;
         }
         ArrayList<StCourse> serachSource = new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
+        for (int i = 0; i < helpSource.size(); i++) {
             try {
-                if ((source.get(i).MasterName).contains(searchFlag))
-                    serachSource.add(source.get(i));
+                if ((helpSource.get(i).MasterName).contains(searchFlag))
+                    serachSource.add(helpSource.get(i));
             } catch (Exception e) {
                 e.getMessage();
             }
@@ -251,7 +257,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             txtSearch.setBackgroundResource(R.drawable.txt_search);
             txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
         }
-        adapter = new AdapterCourseList(G.context, serachSource, this);
+        source.clear();
+        source.addAll(serachSource);
+        adapter = new AdapterCourseList(G.context, source, this);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -321,8 +329,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         if (course.size() == 0 || course.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);
             source.clear();
-
             adapter = new AdapterCourseList(G.context, source, this);
+            list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             return;
         } else
@@ -330,6 +338,11 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         if (source != course) {
             source.clear();
             source.addAll(course);
+
+        }
+        if (helpSource != course) {
+            helpSource.clear();
+            helpSource.addAll(course);
         }
         adapter = new AdapterCourseList(G.context, source, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
@@ -345,8 +358,11 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     @Override
-    public void courseListItemClick(int id) {
-
+    public void courseListItemClick(int position) {
+        Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
+        intent.putExtra("id", source.get(position).id);
+        intent.putExtra("teacherId", source.get(position).idTeacher);
+        startActivity(intent);
     }
 
     @Override

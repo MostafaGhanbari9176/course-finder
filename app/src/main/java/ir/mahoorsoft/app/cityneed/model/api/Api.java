@@ -8,6 +8,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StMahoorAppData;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
@@ -310,6 +311,9 @@ public interface Api {
 
     @GET("getSelectedTeacher")
     Call<ArrayList<StTeacher>> selectedTeacher();
+
+    @GET("getMahoorAppData")
+    Call<ArrayList<StMahoorAppData>> getMahoorAppData();
 
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(

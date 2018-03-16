@@ -29,6 +29,10 @@
         android:id="@+id/btnGroupingMenu"
         android:icon="@drawable/icon_list"
         android:title="دسته بندی" />
+    <item
+        android:id="@+id/btnAboutUsMenu"
+        android:icon="@drawable/icon_family"
+        android:title="درباره ما" />
 
 
 </menu>

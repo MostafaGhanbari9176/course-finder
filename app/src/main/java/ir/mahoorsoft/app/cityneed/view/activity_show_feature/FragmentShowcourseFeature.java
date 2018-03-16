@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -228,6 +229,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     private void setImage() {
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
+                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .fitCenter()
                 .error(R.drawable.defult)
                 .clone()

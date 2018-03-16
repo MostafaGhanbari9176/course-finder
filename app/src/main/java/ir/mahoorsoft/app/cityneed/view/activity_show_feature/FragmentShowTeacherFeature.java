@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -142,6 +143,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     private void setImg(String pictureId) {
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + pictureId + ".png")
+                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .fitCenter()
                 .error(R.drawable.defult)
                 .clone()

@@ -69,6 +69,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
 
         public void bindData(final StCourse items) {
             if (items.endOfList == 0) {
+                endOfList.setVisibility(View.GONE);
                 Glide.with(context)
                         .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
                         .error(R.drawable.defult)

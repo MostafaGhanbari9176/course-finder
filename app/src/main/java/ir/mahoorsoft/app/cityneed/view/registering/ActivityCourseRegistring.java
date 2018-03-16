@@ -218,7 +218,10 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                 showDatePicker(true);
                 break;
             case R.id.btnSaveRegisteryRegisteryCourse:
-                checkData();
+                if (btnSave.getText().toString().equals("ادامه"))
+                    this.finish();
+                else
+                    checkData();
                 break;
             case R.id.btnChooseTimeRegisteryCourse:
                 showTimePicker();
@@ -322,9 +325,10 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         dialogProgres.closeProgresBar();
-        if (requestCode == 2) {
+        if (requestCode == 2 && data != null) {
             uploadImage(data.getStringExtra("path"));
-        }
+        } else
+            sendMessageFCT("خطا!!!");
     }
 
     private void sendDataForServer() {
@@ -350,13 +354,17 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     public void sendMessageFCT(String message) {
         dialogProgres.closeProgresBar();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void confirmCourse(int id) {
+
         dialogProgres.closeProgresBar();
+        btnSave.setText("ادامه");
         this.id = id;
         shoDialog();
+
     }
 
 

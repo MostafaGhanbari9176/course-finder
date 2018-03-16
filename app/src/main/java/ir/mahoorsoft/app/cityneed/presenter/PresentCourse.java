@@ -87,14 +87,16 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        if (res == null || res.size() == 0)
+        if (res == null || res.size() == 0) {
             sendMessage("خطا");
-        else if ((new String(Base64.decode(Base64.decode(res.get(0).bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS")) {
-            if (res.get(0).code == 0)
-                sendMessage("خطا, باارز پوزش لطفا بعدا امتحان کنید");
-            else
-                onPresentCourseLitener.confirmCourse((int) res.get(0).code);
-        } else {
+            return;
+        }
+        if (res.get(0).code == 0)
+            sendMessage("خطا, باارز پوزش لطفا بعدا امتحان کنید");
+        else
+            onPresentCourseLitener.confirmCourse((int) res.get(0).code);
+
+        if (res.get(0).bus != null && (new String(Base64.decode(Base64.decode(res.get(0).bus, Base64.DEFAULT), Base64.DEFAULT))).equals("BnAoD")) {
             sendMessage("انجام شد");
             Pref.saveBollValue(PrefKey.hacked, true);
         }

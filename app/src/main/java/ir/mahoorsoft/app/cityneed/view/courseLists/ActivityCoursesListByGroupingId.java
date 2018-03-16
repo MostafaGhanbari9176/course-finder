@@ -92,7 +92,9 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
             txt.setVisibility(View.VISIBLE);
         else {
             txt.setVisibility(View.GONE);
-            adapter = new AdapterCourseList(this, course, this);
+            surce.clear();
+            surce.addAll(course);
+            adapter = new AdapterCourseList(this, surce, this);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -104,9 +106,10 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
     }
 
     @Override
-    public void courseListItemClick(int id) {
+    public void courseListItemClick(int position) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", surce.get(position).id);
+        intent.putExtra("teacherId", surce.get(position).idTeacher);
         startActivity(intent);
     }
 

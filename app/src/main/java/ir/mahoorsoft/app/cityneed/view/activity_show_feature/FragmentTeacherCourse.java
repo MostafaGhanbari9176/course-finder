@@ -88,7 +88,9 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
         else {
             txt.setVisibility(View.GONE);
             list = (RecyclerView) view.findViewById(R.id.RVList);
-            adapter = new AdapterCourseList(G.context, course, this);
+            surce.clear();
+            surce.addAll(course);
+            adapter = new AdapterCourseList(G.context, surce, this);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                     , LinearLayoutManager.VERTICAL, false);
             list.setLayoutManager(layoutManager);
@@ -103,9 +105,9 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
     }
 
     @Override
-    public void courseListItemClick(int id) {
+    public void courseListItemClick(int position) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", surce.get(position).id);
         intent.putExtra("teacherId", ActivityOptionalCourse.teacherId);
         startActivity(intent);
     }

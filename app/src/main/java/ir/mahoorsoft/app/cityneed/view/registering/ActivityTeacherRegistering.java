@@ -230,6 +230,10 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
+            if(data == null){
+                sendMessageFTT("خطا!!!");
+                return;
+            }
             if (requestCode == 1 && resultCode == RESULT_OK) {
                 uploadFile(data.getStringExtra("path"));
             }
@@ -253,7 +257,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     public void confirmTeacher(boolean flag) {
         dialogProgres.closeProgresBar();
         if (flag) {
-            Pref.saveStringValue(PrefKey.location, btnLocation.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.pictureId, Pref.getStringValue(PrefKey.apiCode, ""));
             Pref.saveStringValue(PrefKey.landPhone, txtPhone.getText().toString().trim());
             Pref.saveStringValue(PrefKey.subject, txtSubject.getText().toString().trim());
             Pref.saveIntegerValue(PrefKey.madrak, 0);

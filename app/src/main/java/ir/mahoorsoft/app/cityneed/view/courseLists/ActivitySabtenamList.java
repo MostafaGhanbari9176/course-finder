@@ -131,9 +131,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     @Override
     public void courseDeletedClick(int position) {
-        if (surce.get(position).isDeleted == 1)
-            queryForUpdateDeletedFlag(surce.get(position).id);
-        if (surce.get(position).isCanceled == 1)
+        if (surce.get(position).isCanceled == 1 || surce.get(position).isDeleted == 1)
             queryForUpdateCanceledFlag(surce.get(position).sabtenamId);
         surce.remove(position);
         adapter.notifyItemRemoved(position);

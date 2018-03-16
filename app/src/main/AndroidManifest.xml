@@ -66,6 +66,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
+
+        <activity
+            android:name=".view.ActivityAboutUs"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+
         <activity
             android:name=".view.courseLists.ActivityCoursesListByTeacherId"
             android:screenOrientation="portrait"

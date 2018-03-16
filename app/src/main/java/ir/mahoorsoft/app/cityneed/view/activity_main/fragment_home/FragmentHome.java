@@ -336,7 +336,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             return;
         pageViews = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
-            pageViews.add(new Page(users.get(i).ac, ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + 1 + ".png", this));
+            pageViews.add(new Page(users.get(i).ac, ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + users.get(i).pictureId + ".png", this));
         }
         settingUpVPager();
     }

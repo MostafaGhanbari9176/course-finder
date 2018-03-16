@@ -22,6 +22,7 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.view.ActivityAboutUs;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
@@ -182,6 +183,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnGroupingMenu:
                 new DialogGrouping(this, this).Show();
+                break;
+            case R.id.btnAboutUsMenu:
+                starterActivity(ActivityAboutUs.class);
                 break;
         }
 

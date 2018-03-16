@@ -26,7 +26,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Holder> {
 
     public interface OnClickItemCourseList {
-        void courseListItemClick(int id);
+        void courseListItemClick(int position);
 
     }
 
@@ -89,7 +89,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCourseList.courseListItemClick(items.id);
+                onClickItemCourseList.courseListItemClick(position);
             }
         });
     }
