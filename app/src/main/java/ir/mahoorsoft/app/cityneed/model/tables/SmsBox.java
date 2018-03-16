@@ -19,11 +19,11 @@ public class SmsBox {
     public interface OnSmsBoxResponseListener {
         void resiveSms(ArrayList<StSmsBox> sms);
 
-        void resiveFlag(ResponseOfServer res);
+        void resiveFlag(ArrayList<ResponseOfServer> res);
 
-        void deleteSmsFlag(ResponseOfServer res);
+        void deleteSmsFlag(ArrayList<ResponseOfServer> res);
 
-        void sendingMessageFlag(ResponseOfServer res);
+        void sendingMessageFlag(ArrayList<ResponseOfServer> res);
 
         void sendMessage(String message);
     }
@@ -40,7 +40,7 @@ public class SmsBox {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onSmsBoxResponseListener.sendingMessageFlag(response.body().get(0));
+                onSmsBoxResponseListener.sendingMessageFlag(response.body());
             }
 
             @Override
@@ -91,7 +91,7 @@ public class SmsBox {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onSmsBoxResponseListener.resiveFlag(response.body().get(0));
+                onSmsBoxResponseListener.resiveFlag(response.body());
             }
 
             @Override
@@ -107,7 +107,7 @@ public class SmsBox {
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onSmsBoxResponseListener.deleteSmsFlag(response.body().get(0));
+                onSmsBoxResponseListener.deleteSmsFlag(response.body());
             }
 
             @Override

@@ -62,6 +62,9 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
 
     @Override
     public void checkSabtenam(ArrayList<ResponseOfServer> res) {
-        onPresentSabtenamListaener.checkSabtenam(res.get(0).code);
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentSabtenamListaener.checkSabtenam(res.get(0).code);
     }
 }

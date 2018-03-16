@@ -31,7 +31,10 @@ public class PresentUpload implements Upload.OnUploadListener {
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        onPresentUploadListener.flagFromUpload(res.get(0));
+        if (res == null || res.size() == 0)
+            sendMessage("خطا,پیش بینی نشده!!!");
+        else
+            onPresentUploadListener.flagFromUpload(res.get(0));
     }
 
     @Override

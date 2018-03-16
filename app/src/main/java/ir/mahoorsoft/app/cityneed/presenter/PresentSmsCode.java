@@ -32,10 +32,11 @@ public class PresentSmsCode implements SmsCode.OnSmsCodeListener {
 
     @Override
     public void responseOfServer(ArrayList<ResponseOfServer> responseOfServer) {
-        if(responseOfServer.get(0).code == 0)
-            onPresentSmsCodeListener.confirmSmsCode(false);
+        if (responseOfServer == null || responseOfServer.size() == 0)
+            sendMessage("خطا");
         else
-            onPresentSmsCodeListener.confirmSmsCode(true);
+            onPresentSmsCodeListener.confirmSmsCode(responseOfServer.get(0).code == 0 ? false : true);
+
     }
 
     @Override

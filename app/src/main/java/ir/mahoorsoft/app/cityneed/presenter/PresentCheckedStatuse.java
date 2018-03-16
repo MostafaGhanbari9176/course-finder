@@ -11,33 +11,42 @@ import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 
 public class PresentCheckedStatuse implements CheckedSTatuse.OnCheckServer {
 
-    public interface OnPresentCheckServrer{
+    public interface OnPresentCheckServrer {
         void serverChecked(boolean online);
+
         void userChecked(boolean online);
     }
 
     OnPresentCheckServrer onPresentCheckServrer;
 
-    public PresentCheckedStatuse(OnPresentCheckServrer onPresentCheckServrer){this.onPresentCheckServrer = onPresentCheckServrer;}
+    public PresentCheckedStatuse(OnPresentCheckServrer onPresentCheckServrer) {
+        this.onPresentCheckServrer = onPresentCheckServrer;
+    }
 
-    public void checkedServerStatuse(){
+    public void checkedServerStatuse() {
         CheckedSTatuse checkedSTatuse = new CheckedSTatuse(this);
         checkedSTatuse.checkServerStatuse();
     }
 
-    public void checkedUserStatuse(){
+    public void checkedUserStatuse() {
         CheckedSTatuse checkedSTatuse = new CheckedSTatuse(this);
         checkedSTatuse.checkUserStatuse();
     }
 
     @Override
     public void ResponseForSarverStatuse(ArrayList<ResponseOfServer> res) {
-        onPresentCheckServrer.serverChecked(res.get(0).code == 0 ? false : true);
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentCheckServrer.serverChecked(res.get(0).code == 0 ? false : true);
     }
 
     @Override
     public void ResponseForUserStatuse(ArrayList<ResponseOfServer> res) {
-        onPresentCheckServrer.userChecked(res.get(0).code == 0 ? false : true);
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentCheckServrer.userChecked(res.get(0).code == 0 ? false : true);
     }
 
     @Override

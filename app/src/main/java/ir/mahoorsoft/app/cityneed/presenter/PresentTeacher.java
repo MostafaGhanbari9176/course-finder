@@ -63,12 +63,18 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        onPresentTeacherListener.confirmTeacher(res.get(0).code == 0 ? false : true);
+        if (res == null || res.size() == 0)
+            sendMessage("خطا,پیش بینی نشده!!!");
+        else
+            onPresentTeacherListener.confirmTeacher(res.get(0).code == 0 ? false : true);
     }
 
     @Override
     public void onReceiveData(ArrayList<StTeacher> data) {
-        onPresentTeacherListener.onReceiveTeacher(data);
+        if (data == null || data.size() == 0)
+            sendMessage("خطا,پیش بینی نشده!!!");
+        else
+            onPresentTeacherListener.onReceiveTeacher(data);
     }
 
     @Override

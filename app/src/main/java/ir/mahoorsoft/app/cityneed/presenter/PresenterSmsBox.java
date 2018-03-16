@@ -10,43 +10,48 @@ import ir.mahoorsoft.app.cityneed.model.tables.SmsBox;
  * Created by M-gh on 27-Feb-18.
  */
 
-public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener{
+public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener {
 
 
-
-    public interface OnPresentSmsBoxListener{
+    public interface OnPresentSmsBoxListener {
         void onResiveSms(ArrayList<StSmsBox> sms);
+
         void onResiveFlagFromSmsBox(boolean flag);
+
         void smsDeleteFlag(boolean flag);
+
         void sendingMessageFlag(boolean flag);
+
         void messageFromSmsBox(String message);
     }
+
     OnPresentSmsBoxListener onPresentSmsBoxListener;
-    public PresenterSmsBox(OnPresentSmsBoxListener onPresentSmsBoxListener){
+
+    public PresenterSmsBox(OnPresentSmsBoxListener onPresentSmsBoxListener) {
         this.onPresentSmsBoxListener = onPresentSmsBoxListener;
     }
 
-    public void saveSms(String smsText, String tsId, String rsId, int courseId, int howSending){
+    public void saveSms(String smsText, String tsId, String rsId, int courseId, int howSending) {
         SmsBox smsBox = new SmsBox(this);
         smsBox.saveSms(smsText, tsId, rsId, courseId, howSending);
     }
 
-    public void getRsSms(String rsId){
+    public void getRsSms(String rsId) {
         SmsBox smsBox = new SmsBox(this);
         smsBox.getRsSms(rsId);
     }
 
-    public void getTsSms(String tsId){
+    public void getTsSms(String tsId) {
         SmsBox smsBox = new SmsBox(this);
         smsBox.getTsSms(tsId);
     }
 
-    public void upDateSeen(int smsId){
+    public void upDateSeen(int smsId) {
         SmsBox smsBox = new SmsBox(this);
         smsBox.upDateSeen(smsId);
     }
 
-    public void deleteMessage(int smsId){
+    public void deleteMessage(int smsId) {
         SmsBox smsBox = new SmsBox(this);
         smsBox.deleteSms(smsId);
     }
@@ -57,18 +62,27 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener{
     }
 
     @Override
-    public void resiveFlag(ResponseOfServer res) {
-        onPresentSmsBoxListener.onResiveFlagFromSmsBox(res.code == 0 ? false : true);
+    public void resiveFlag(ArrayList<ResponseOfServer> res) {
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentSmsBoxListener.onResiveFlagFromSmsBox(res.get(0).code == 0 ? false : true);
     }
 
     @Override
-    public void deleteSmsFlag(ResponseOfServer res) {
-        onPresentSmsBoxListener.smsDeleteFlag(res.code == 0 ? false : true);
+    public void deleteSmsFlag(ArrayList<ResponseOfServer> res) {
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentSmsBoxListener.smsDeleteFlag(res.get(0).code == 0 ? false : true);
     }
 
     @Override
-    public void sendingMessageFlag(ResponseOfServer res) {
-        onPresentSmsBoxListener.sendingMessageFlag(res.code == 0 ? false : true);
+    public void sendingMessageFlag(ArrayList<ResponseOfServer> res) {
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentSmsBoxListener.sendingMessageFlag(res.get(0).code == 0 ? false : true);
     }
 
     @Override

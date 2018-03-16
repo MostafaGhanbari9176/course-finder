@@ -56,7 +56,10 @@ public class PresenterComment implements Comment.OnCommentResponseListener {
 
     @Override
     public void resiveComment(ArrayList<StComment> comment) {
-        onPresentCommentListener.onResiveComment(comment);
+        if (comment == null || comment.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentCommentListener.onResiveComment(comment);
     }
 
     @Override

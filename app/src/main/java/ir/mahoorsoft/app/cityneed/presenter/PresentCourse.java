@@ -87,7 +87,9 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        if ((new String(Base64.decode(Base64.decode(res.get(0).bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS")) {
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else if ((new String(Base64.decode(Base64.decode(res.get(0).bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS")) {
             if (res.get(0).code == 0)
                 sendMessage("خطا, باارز پوزش لطفا بعدا امتحان کنید");
             else
@@ -101,13 +103,18 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     @Override
     public void onReceiveData(ArrayList<StCourse> data, int listId) {
-
-        onPresentCourseLitener.onReceiveCourse(data, listId);
+        if (data == null || data.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentCourseLitener.onReceiveCourse(data, listId);
     }
 
     @Override
     public void DataForHomeLists(ArrayList<StHomeListItems> data) {
-        onPresentCourseLitener.onReceiveCourseForListHome(data);
+        if (data == null || data.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentCourseLitener.onReceiveCourseForListHome(data);
     }
 
     @Override
