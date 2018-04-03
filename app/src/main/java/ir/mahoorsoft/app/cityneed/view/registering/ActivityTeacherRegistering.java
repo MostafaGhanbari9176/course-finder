@@ -230,7 +230,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            if(data == null){
+            if (data == null) {
                 sendMessageFTT("خطا!!!");
                 return;
             }
@@ -293,13 +293,12 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     @Override
     public void flagFromUpload(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
-        if (res.code == 0) {
-            showAlertDialog("خطا", "خطا در بارگذاری تصویر لطفا بعدا امتحان کنید.", "", "قبول");
-        } else if (res.code == 1) {
+        if (res.code == 1) {
             showAlertDialog("عملیات موفق", "تصویر بارگذاری شد", "", "خب");
-        } else if (res.code == 2) {
-            showAlertDialog("خطا", "حجم تصویر باید بین یک تا پنج مگابایت باشد", "", "قبول");
+        } else {
+            showAlertDialog("خطا", "خطا در بارگذاری تصویر لطفا بعدا امتحان کنید.", "", "قبول");
         }
+
     }
 
     private void showAlertDialog(String title, String message, String buttonTrue, String btnFalse) {

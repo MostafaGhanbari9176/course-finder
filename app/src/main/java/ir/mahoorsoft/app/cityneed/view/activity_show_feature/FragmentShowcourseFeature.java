@@ -230,8 +230,8 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         Glide.with(this)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-                .fitCenter()
-                .error(R.drawable.defult)
+                .centerCrop()
+                .error(R.drawable.books)
                 .clone()
                 .into(img);
 
@@ -358,7 +358,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             messageFromComment("امتیاز شما ثبت شد");
         else {
             messageFromComment("خطا,امتیاز شما ثبت نشد");
-
         }
     }
 

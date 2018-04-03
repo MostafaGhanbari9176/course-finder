@@ -82,7 +82,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         holder.txtMasterName.setText(items.MasterName);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
-                .error(R.drawable.defult)
+                .error(R.drawable.books)
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .centerCrop()
                 .into(holder.imgItem);

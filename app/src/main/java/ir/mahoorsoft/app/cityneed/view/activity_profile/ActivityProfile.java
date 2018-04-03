@@ -27,11 +27,11 @@ import com.takusemba.spotlight.SimpleTarget;
 import com.takusemba.spotlight.Spotlight;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
@@ -40,17 +40,19 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
+import ir.mahoorsoft.app.cityneed.view.acivity_launcher.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
-import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
-import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
-import ir.mahoorsoft.app.cityneed.view.acivity_launcher.FragmentErrorServer;
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
+import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
+import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
+
+;
 
 
 /**
@@ -77,6 +79,8 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     DialogProgres dialogProgres;
     int flagMadrak = 0;
     boolean haveASubscribe = false;
+    boolean isResponseForImage = false;
+    int typeMode = Pref.getIntegerValue(PrefKey.userTypeMode, 0);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,14 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
         ratBar = (RatingBar) findViewById(R.id.ratBarProfile);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
+        imgProfile.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (typeMode != 0)
+                    selectImage();
+                return false;
+            }
+        });
         (btnLogOut = (Button) findViewById(R.id.btnLogOut)).setOnClickListener(this);
         (rlUpload = (RelativeLayout) findViewById(R.id.rlUploadMadrak)).setOnClickListener(this);
         (btnAddCourse = (Button) findViewById(R.id.btnAddCourseProfile)).setOnClickListener(this);
@@ -107,6 +119,12 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         llTrendingUP = (LinearLayout) findViewById(R.id.llTrendingUpProfile);
         llMap = (LinearLayout) findViewById(R.id.llMapProfil);
 
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent(this, ActivityFiles.class);
+        intent.putExtra("isImage", true);
+        startActivityForResult(intent, 2);
     }
 
     @Override
@@ -266,14 +284,14 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     }
 
     private void checkUserType() {
-        int typeMode = Pref.getIntegerValue(PrefKey.userTypeMode, 0);
+
         switch (typeMode) {
             case 0:
                 rlUpload.setVisibility(View.GONE);
                 llListAddCourse.setVisibility(View.GONE);
                 llAddCourse.setVisibility(View.GONE);
                 ratBar.setVisibility(View.GONE);
-                setImage(R.drawable.defult, imgProfile);
+                setUserImage();
                 replaceContentWith(new FragmentProfileKarbar());
                 if (Pref.getBollValue(PrefKey.profileUserPage, true))
                     showDialogForHelper("بله", "");
@@ -283,7 +301,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 checkMadrak();
                 llTrendingUP.setVisibility(View.GONE);
                 llMap.setVisibility(View.GONE);
-                setImgUrl(Pref.getStringValue(PrefKey.pictureId, ""), imgProfile);
+                setImgUrl();
                 replaceContentWith(new FragmentProfileAmozeshgah());
                 if (Pref.getBollValue(PrefKey.profileTeacherPage, true))
                     showDialogForHelper("", "بله");
@@ -297,22 +315,26 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         presentTeacher.getMadrakStateAndRat();
     }
 
-    private void setImgUrl(String name, ImageView image) {
+    private void setImgUrl() {
         Glide.with(this)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + name + ".png")
+                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + Pref.getStringValue(PrefKey.pictureId, "") + ".png")
                 .fitCenter()
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-                .error(R.drawable.defult)
-                .into(image);
+                .error(R.drawable.university)
+                .into(imgProfile);
     }
 
-    private void setImage(int img, ImageView image) {
+    private void setUserImage() {
+        int img;
+        if (((new Random()).nextInt(10)) % 2 == 0)
+            img = R.drawable.user1;
+        else
+            img = R.drawable.user2;
         Glide.with(this)
                 .load(img)
                 .fitCenter()
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-                .error(R.drawable.defult)
-                .into(image);
+                .into(imgProfile);
     }
 
     private void showAlertDialog(String title, String message, String buttonTrue, String btnFalse) {
@@ -384,8 +406,15 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == 1 && resultCode == RESULT_OK) {
-                uploadFile(data.getStringExtra("path"));
+            if (data == null) {
+                sendMessageFTT("خطا!!!");
+                return;
+            }
+            if (resultCode == RESULT_OK) {
+                if (requestCode == 1)
+                    uploadFile(data.getStringExtra("path"));
+                else if (requestCode == 2)
+                    uploadImage(data.getStringExtra("path"));
             }
 
         } catch (Exception ex) {
@@ -395,10 +424,20 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     }
 
     private void uploadFile(String path) {
+        isResponseForImage = false;
         dialogProgres = new DialogProgres(this, "درحال بارگذاری");
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
         presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.phone, "") + ".pdf", path);
+
+    }
+
+    private void uploadImage(String path) {
+        isResponseForImage = true;
+        dialogProgres = new DialogProgres(this, "درحال بارگذاری");
+        dialogProgres.showProgresBar();
+        PresentUpload presentUpload = new PresentUpload(this);
+        presentUpload.uploadFile("teacher", Pref.getStringValue(PrefKey.pictureId, "") + ".png", path);
 
     }
 
@@ -410,14 +449,14 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     @Override
     public void flagFromUpload(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
-        if (res.code == 0) {
-            showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
-        } else if (res.code == 1) {
+        if (res.code == 1 && !isResponseForImage) {
             dialogProgres.showProgresBar();
             PresentTeacher presentTeacher = new PresentTeacher(this);
             presentTeacher.upMs();
-        } else if (res.code == 2) {
-            showAlertDialog("خطا", "حجم فایل باید بین یک تا پنج مگابایت باشد", "", "قبول");
+        } else if (res.code == 1) {
+            setImgUrl();
+        } else {
+            showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
         }
     }
 
@@ -578,13 +617,18 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
                 .setTitle("خروج")
                 .setDescription("خروج از حساب کاربری")
                 .build();
+        SimpleTarget img = new SimpleTarget.Builder(ActivityProfile.this).setPoint(findViewById(R.id.imgProfile))
+                .setRadius(300f)
+                .setTitle("تصویر آموزشگاه")
+                .setDescription("برای تغییر لمس کرده و نگه دارید")
+                .build();
 
 
         Spotlight.with(ActivityProfile.this)
                 .setOverlayColor(ContextCompat.getColor(ActivityProfile.this, R.color.blue_ios))
                 .setDuration(500L)
                 .setAnimation(new DecelerateInterpolator(4f))
-                .setTargets(starter, sabtenam, add, sms, madrak, addList, logout)
+                .setTargets(starter, sabtenam, add, sms, madrak, addList, logout, img)
                 .setClosedOnTouchedOutside(true)
                 .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
                     @Override

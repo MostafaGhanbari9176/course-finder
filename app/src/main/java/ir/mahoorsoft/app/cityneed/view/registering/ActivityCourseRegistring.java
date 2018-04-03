@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -67,6 +68,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     int id;
     int tabagheId;
     String days = "";
+    Toolbar tlb;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +83,16 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     }
 
     private void pointers() {
+        tlb = (Toolbar) findViewById(R.id.tlbCourseRegistery);
+        setSupportActionBar(tlb);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        getSupportActionBar().setTitle("ثبت دوره جدید");
         txtCapacity = (TextView) findViewById(R.id.txtCapacityRegisteryCourse);
         txtMony = (TextView) findViewById(R.id.txtMonyRegisteryCourse);
         txtMinRange = (TextView) findViewById(R.id.txtMinRange);
@@ -325,6 +337,10 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         dialogProgres.closeProgresBar();
+        if (data == null) {
+            sendMessageFCT("خطا!!!");
+            return;
+        }
         if (requestCode == 2 && data != null) {
             uploadImage(data.getStringExtra("path"));
         } else
@@ -425,12 +441,11 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     @Override
     public void flagFromUpload(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
-        if (res.code == 0) {
-            sendMessageFCT("خطا در بارگذاری لطفا بعدا امتحان کنید.");
-        } else if (res.code == 1) {
-
-        } else if (res.code == 2) {
-            sendMessageFCT("حجم فایل باید بین یک تا پنج مگابایت باشد");
+        if (res.code == 1) {
+            sendMessageFCT("بارگذاری شد");
+        }
+        else{
+            sendMessageFCT("خطا در بارگذاری");
         }
         this.finish();
     }
@@ -455,25 +470,6 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         builder.show();
     }
 
-/*    private String getDay() {
-*//*        String day = "";
-        if (rb1.isChecked())
-            day = "شنبه";
-        else if (rb2.isChecked())
-            day = "یکشنبه";
-        else if (rb3.isChecked())
-            day = "دوشنبه";
-        else if (rb4.isChecked())
-            day = "سه شنبه";
-        else if (rb5.isChecked())
-            day = "چهار شنبه";
-        else if (rb6.isChecked())
-            day = "پنجشنبه";
-        else if (rb7.isChecked())
-            day = "جمعه";
-        return day;*//*
-    }*/
-
     @Override
     public void tabagheInf(String name, int id) {
         tabagheId = id;
@@ -486,6 +482,12 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         this.days = days;
         btnDays.setText(days);
         sendMessageFCT(days);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }
 

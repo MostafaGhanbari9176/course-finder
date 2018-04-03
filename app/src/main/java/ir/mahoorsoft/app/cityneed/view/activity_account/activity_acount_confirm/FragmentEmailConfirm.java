@@ -147,7 +147,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             txtEmail.requestFocus();
         } else if (!isEmailValid(mail)) {
             txtEmail.requestFocus();
-            txtEmail.setError("صحیح وارد کنید کنید");
+            txtEmail.setError("صحیح وارد کنید");
         } else {
             sendEmailForserver(mail);
         }
@@ -192,9 +192,10 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             showAlertDialog("با ارز پوزش", "خطایی رخ داده لطفا دوباره تلاش کنید", "", "خب");
 
         if (flag) {
-            sendMessageFScT("ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد");
+            Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
             btnConfirmEmail.setText("تغیر آدرس ایمیل");
             txtEmail.setEnabled(false);
+            txtName.setEnabled(false);
             txtCode.setEnabled(true);
             btnConfirmCode.setEnabled(true);
         }
@@ -203,7 +204,13 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     @Override
     public void sendMessageFScT(String message) {
         dialogProgres.closeProgresBar();
-        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
+        btnConfirmEmail.setText("تغیر آدرس ایمیل");
+        txtEmail.setEnabled(false);
+        txtName.setEnabled(false);
+        txtCode.setEnabled(true);
+        btnConfirmCode.setEnabled(true);
+       // Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -344,6 +351,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
                 if (btnConfirmEmail.getText().equals("تغیر آدرس ایمیل")) {
                     btnConfirmEmail.setText("تایید ایمیل");
                     txtEmail.setEnabled(true);
+                    txtName.setEnabled(true);
                     txtCode.setEnabled(false);
                     btnConfirmCode.setEnabled(false);
                 } else

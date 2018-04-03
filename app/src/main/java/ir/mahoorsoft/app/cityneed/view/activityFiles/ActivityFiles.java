@@ -41,9 +41,7 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
     boolean flag = false;
     String root = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
     Toolbar tlb;
-    public ActivityFiles() {
-    }
-
+    int position = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +49,7 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
         btnBack = (Button) findViewById(R.id.btn_folder_list_back);
         tlb = (Toolbar) findViewById(R.id.tlbActivityFile);
         setSupportActionBar(tlb);
+        getSupportActionBar().setTitle("فقط فایل هایه با سایز مجاز قابل رویت است");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +103,7 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
                     folderList.add(files[i]);
                     surce.add(file);
                 }
-                if (getIntent().getExtras() != null) {
+                if (getIntent().getExtras() != null && files[i].length() >= 5120 && files[i].length() <= 5242880 ) {
                     if (getIntent().getExtras().getBoolean("isImage")) {
                         if (files[i].getName().toLowerCase().endsWith(".png") || files[i].getName().toLowerCase().endsWith(".jpeg") || files[i].getName().toLowerCase().endsWith(".jpg")) {
                             file.Image = R.drawable.file_orange_icon;
@@ -172,16 +171,16 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
     public void selectItem(int position) {
         flag = true;
         setSurce(folderList.get(position).getAbsolutePath());
-
+        this.position = position;
     }
 
     @Override
     public void onBackPressed() {
         if (saveAddress.size()  > 1) {
+            list.scrollToPosition(position);
             saveAddress.pop();
             setSurce(saveAddress.pop());
         } else {
-
             finish();
             super.onBackPressed();
         }

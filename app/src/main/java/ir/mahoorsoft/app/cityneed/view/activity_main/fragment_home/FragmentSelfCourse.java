@@ -19,9 +19,13 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.uploadFile.Upload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
+import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -30,13 +34,15 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 03-Feb-18.
  */
 
-public class FragmentSelfCourse extends Fragment implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
+public class FragmentSelfCourse extends Fragment implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener {
     View view;
     TextView txt;
     AdapterCourseListTeacher adapter;
     RecyclerView list;
-    ArrayList<StCourse> surce = new ArrayList<>();;
+    ArrayList<StCourse> surce = new ArrayList<>();
+    ;
     DialogProgres dialogProgres;
+    int position;
 
     @Nullable
     @Override
@@ -83,7 +89,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
-        if(course.get(0).empty == 1)
+        if (course.get(0).empty == 1)
             txt.setVisibility(View.VISIBLE);
         else {
             txt.setVisibility(View.GONE);
@@ -108,7 +114,55 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     public void courseListItemClick(int position) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", surce.get(position).id);
-        intent.putExtra("teacherId", Pref.getStringValue(PrefKey.apiCode,""));
+        intent.putExtra("teacherId", Pref.getStringValue(PrefKey.apiCode, ""));
         startActivity(intent);
+    }
+
+    @Override
+    public void changeImage(int position) {
+        this.position = position;
+        selectImage();
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent(G.context, ActivityFiles.class);
+        intent.putExtra("isImage", true);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        dialogProgres.closeProgresBar();
+        if (data == null) {
+            sendMessageFCT("خطا!!!");
+            return;
+        }
+        if (requestCode == 2 && data != null) {
+            uploadImage(data.getStringExtra("path"));
+        } else
+            sendMessageFCT("خطا!!!");
+    }
+
+    private void uploadImage(String path) {
+        dialogProgres = new DialogProgres(G.context, "درحال بارگذاری");
+        dialogProgres.showProgresBar();
+        PresentUpload presentUpload = new PresentUpload(this);
+        presentUpload.uploadFile("course", surce.get(position).id + ".png", path);
+    }
+
+    @Override
+    public void messageFromUpload(String message) {
+        sendMessageFCT(message);
+    }
+
+    @Override
+    public void flagFromUpload(ResponseOfServer res) {
+
+        if (res.code == 1)
+            sendMessageFCT("بارگذاری شد");
+        else
+            sendMessageFCT("خطا!!!");
     }
 }

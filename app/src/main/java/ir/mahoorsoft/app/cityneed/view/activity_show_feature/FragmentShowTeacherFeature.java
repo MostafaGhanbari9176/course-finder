@@ -145,7 +145,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + pictureId + ".png")
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .fitCenter()
-                .error(R.drawable.defult)
+                .error(R.drawable.university)
                 .clone()
                 .into(img);
     }

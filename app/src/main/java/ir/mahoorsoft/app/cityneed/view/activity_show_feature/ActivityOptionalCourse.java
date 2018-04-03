@@ -58,11 +58,12 @@ public class ActivityOptionalCourse extends AppCompatActivity {
 
     private void settingUpViewPager() {
         adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
-        adapterViewPager.add(new FragmentShowcourseFeature(), "مشخصات");
-        adapterViewPager.add(new FragmentShowTeacherFeature(), "آموزشگاه");
-        adapterViewPager.add(new FragmentTeacherCourse(), "سایر دوره های آموزشگاه");
         adapterViewPager.add(new FragmentComment(), "نظرات و امتیازات");
+        adapterViewPager.add(new FragmentTeacherCourse(), "سایر دوره های آموزشگاه");
+        adapterViewPager.add(new FragmentShowTeacherFeature(), "آموزشگاه");
+        adapterViewPager.add(new FragmentShowcourseFeature(), "مشخصات");
         viewPager.setAdapter(adapterViewPager);
+        viewPager.setCurrentItem(3);
 
     }
 

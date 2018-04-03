@@ -97,6 +97,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.Holder> {
             Glide.with(context)
                     .load(imgFile)
                     .asBitmap()
+                    .error(R.drawable.android)
                     .centerCrop()
                     .into(holder.img);
         }catch (Exception e){

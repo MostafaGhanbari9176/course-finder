@@ -208,7 +208,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         } else if (fhome == null) {
             fhome = new FragmentHome();
             replaceContentWith(fhome);
-
+            rbOther.setChecked(true);
+            publicChecked = true;
+            selfChecked = false;
         } else {
 
             super.onBackPressed();

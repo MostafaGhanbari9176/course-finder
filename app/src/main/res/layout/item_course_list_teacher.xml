@@ -22,11 +22,32 @@
                 android:gravity="right"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/imgItemCourseListTeacher"
-                    android:layout_width="@dimen/img_item"
-                    android:layout_height="@dimen/img_item"
-                    android:layout_marginEnd="16dp" />
+                <RelativeLayout
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/imgItemCourseListTeacher"
+                        android:layout_width="@dimen/img_item"
+                        android:layout_height="@dimen/img_item" />
+
+                    <LinearLayout
+                        android:id="@+id/llHelpMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.7"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="برای تغیر تصویر لمس کرده و نگه دارید" />
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -103,7 +124,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:alpha="0.85"
+                    android:alpha="0.7"
                     android:background="@color/red"
                     android:orientation="vertical"></LinearLayout>
 

@@ -17,9 +17,12 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
+import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityStudentNameList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -28,8 +31,8 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivityTeacherCoursesList extends AppCompatActivity implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
-
+public class ActivityTeacherCoursesList extends AppCompatActivity implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener {
+    int position;
     AdapterCourseListTeacher adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
@@ -104,7 +107,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
 
     @Override
     public void courseListItemClick(int position) {
-        Intent intent = new Intent(G.context, ActivityStudentNameList.class);
+        Intent intent = new Intent(this, ActivityStudentNameList.class);
         intent.putExtra("id", surce.get(position).id);
         intent.putExtra("name", surce.get(position).CourseName);
         startActivity(intent);
@@ -114,5 +117,52 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     public void onBackPressed() {
         finish();
         super.onBackPressed();
+    }
+    @Override
+    public void changeImage(int position) {
+        this.position = position;
+        selectImage();
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent(this, ActivityFiles.class);
+        intent.putExtra("isImage", true);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        dialogProgres.closeProgresBar();
+        if (data == null) {
+            sendMessageFCT("خطا!!!");
+            return;
+        }
+        if (requestCode == 2 && data != null) {
+            uploadImage(data.getStringExtra("path"));
+        } else
+            sendMessageFCT("خطا!!!");
+    }
+
+    private void uploadImage(String path) {
+        dialogProgres = new DialogProgres(this, "درحال بارگذاری");
+        dialogProgres.showProgresBar();
+        PresentUpload presentUpload = new PresentUpload(this);
+        presentUpload.uploadFile("course", surce.get(position).id + ".png", path);
+    }
+
+    @Override
+    public void messageFromUpload(String message) {
+        sendMessageFCT(message);
+    }
+
+    @Override
+    public void flagFromUpload(ResponseOfServer res) {
+
+        if (res.code == 1)
+            sendMessageFCT("بارگذاری شد");
+        else
+            sendMessageFCT("خطا!!!");
     }
 }

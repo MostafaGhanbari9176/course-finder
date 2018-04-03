@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
@@ -28,8 +27,6 @@ import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
-import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
@@ -39,6 +36,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
+import ir.mahoorsoft.app.cityneed.view.RandomColor;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListHome;
@@ -74,7 +72,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     private void init() {
         dialogProgres = new DialogProgres(G.context);
         pointer();
-        initData();
+        initViewPagerData();
 
         queeyForGroupingListData();
         dialogProgres.showProgresBar();
@@ -93,6 +91,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
                 .imageLoader(new GlideLoader())
                 .isStopWhileTouch(true)
+                .isAutoScroll(true)
+                .isLoop(true)
+                .isDrawIndicator(true)
                 .onPageChangeListener(this)
                 .onPageClickListener(this)
                 .direction(1)
@@ -100,8 +101,10 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
                 .internal(5000)
                 .scrollDurationFactor(5)
                 .build();
+
         mAnimCircleIndicator.init(configuration);
         mAnimCircleIndicator.notifyDataChange(pageViews);
+
 
     }
 
@@ -115,13 +118,13 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void pointer() {
-        (view.findViewById(R.id.llViewPager)).setBackgroundColor(randomColor());
+        (view.findViewById(R.id.llViewPager)).setBackgroundColor(RandomColor.randomColor(G.context));
         btnDelete = (CardView) view.findViewById(R.id.btnDeletGroupingHome);
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 queryForCourses(-1);
-                adapterGrouping.setSelectedCardView(null);
+                adapterGrouping.setSelectedItem(null);
             }
         });
         btnDelete.setVisibility(View.GONE);
@@ -129,25 +132,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         groupingList = (RecyclerView) view.findViewById(R.id.RVGroupingItemsHome);
         scrollView = (LinearLayout) view.findViewById(R.id.llSV);
         llitems = (LinearLayout) view.findViewById(R.id.llItemsHome);
-
-    }
-
-    private int randomColor() {
-        int color = (new Random()).nextInt(5);
-        switch (color) {
-            case 0:
-                return ContextCompat.getColor(G.context, R.color.blue_ios);
-            case 1:
-                return ContextCompat.getColor(G.context, R.color.purple_ios);
-            case 2:
-                return ContextCompat.getColor(G.context, R.color.orange_ios);
-            case 3:
-                return ContextCompat.getColor(G.context, R.color.pink_ios);
-            case 4:
-                return ContextCompat.getColor(G.context, R.color.red_ios);
-            default:
-                return ContextCompat.getColor(G.context, R.color.light_eq);
-        }
 
     }
 
@@ -195,8 +179,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     }
 
-    private void initData() {
-
+    private void initViewPagerData() {
         PresentTeacher presentTeacher = new PresentTeacher(this);
         presentTeacher.getSelectedTeacher();
     }

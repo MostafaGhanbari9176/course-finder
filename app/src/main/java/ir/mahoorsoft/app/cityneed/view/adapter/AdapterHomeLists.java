@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -72,7 +73,8 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                 endOfList.setVisibility(View.GONE);
                 Glide.with(context)
                         .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
-                        .error(R.drawable.defult)
+                        .error(R.drawable.books)
+                        .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                         .centerCrop()
                         .into(imgItem);
 
@@ -90,7 +92,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                 });
             } else {
                 endOfList.setVisibility(View.VISIBLE);
-                endOfList.setBackgroundColor(RandomColor.randomColor(context));
+                //endOfList.setBackgroundColor(RandomColor.randomColor(context));
             }
             item.setOnClickListener(new View.OnClickListener() {
                 @Override

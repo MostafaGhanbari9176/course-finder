@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 
 /**
@@ -27,6 +29,7 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
 
     public interface OnClickItemCourseList {
         void courseListItemClick(int position);
+        void changeImage(int position);
     }
 
     private OnClickItemCourseList onClickItemCourseList;
@@ -46,15 +49,17 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
         TextView txtCapacity;
         TextView txtCourseName;
         LinearLayout item;
-        RelativeLayout relativeLayout;
+        LinearLayout helpMessage;
+        RelativeLayout unValidMessage;
 
         public Holder(View itemView) {
             super(itemView);
-            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rlUnValidCourse);
+            unValidMessage = (RelativeLayout) itemView.findViewById(R.id.rlUnValidCourse);
             imgItem = (ImageView) itemView.findViewById(R.id.imgItemCourseListTeacher);
             txtCapacity = (TextView) itemView.findViewById(R.id.txtCapacityItem);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemTeacher);
             item = (LinearLayout) itemView.findViewById(R.id.itemCourseListTeacher);
+            helpMessage = (LinearLayout) itemView.findViewById(R.id.llHelpMessage);
         }
     }
 
@@ -68,23 +73,34 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
         final StCourse items = surce.get(position);
-        if(items.vaziat == 0)
-            holder.relativeLayout.setVisibility(View.VISIBLE);
+        if(position == 0 && !Pref.getBollValue(PrefKey.courseImageHelp,false)){
+            holder.helpMessage.setVisibility(View.VISIBLE);
+            Pref.saveBollValue(PrefKey.courseImageHelp,true);
+        }
+        if (items.vaziat == 0)
+            holder.unValidMessage.setVisibility(View.VISIBLE);
         else
-            holder.relativeLayout.setVisibility(View.GONE);
+            holder.unValidMessage.setVisibility(View.GONE);
         holder.txtCourseName.setText(items.CourseName);
-        holder.txtCapacity.setText(items.capacity+"");
+        holder.txtCapacity.setText(items.capacity + "");
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
-                .error(R.drawable.defult)
+                .error(R.drawable.books)
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .centerCrop()
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(items.vaziat == 1)
-                onClickItemCourseList.courseListItemClick(position);
+                if (items.vaziat == 1)
+                    onClickItemCourseList.courseListItemClick(position);
+            }
+        });
+        holder.imgItem.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onClickItemCourseList.changeImage(position);
+                return false;
             }
         });
     }

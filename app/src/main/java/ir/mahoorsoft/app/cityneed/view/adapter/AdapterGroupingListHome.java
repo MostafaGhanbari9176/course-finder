@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -35,7 +34,7 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
     private OnClickItemTabagheList onClickItemTabagheList;
     private Context context;
     private ArrayList<StGrouping> surce = new ArrayList<>();
-    private CardView selectedCardView;
+    private Holder selectedItem;
 
 
     public AdapterGroupingListHome(Context context, ArrayList<StGrouping> surce, OnClickItemTabagheList onClickItemTabagheList) {
@@ -81,19 +80,24 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSelectedCardView(holder.cardView);
+                setSelectedItem(holder);
                 onClickItemTabagheList.tabagheListItemClick(position, items.sourceNumber, items.id);
             }
         });
     }
 
-    public void setSelectedCardView(CardView cardView) {
-        if (selectedCardView != null)
-            selectedCardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light));
-        if (cardView == null)
+    public void setSelectedItem(Holder holder) {
+        if (selectedItem != null) {
+            selectedItem.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light));
+            selectedItem.imgItem.setVisibility(View.VISIBLE);
+            selectedItem.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.dark_eq));
+
+        }
+        if (holder == null)
             return;
-        selectedCardView = cardView;
-        selectedCardView.setCardBackgroundColor(RandomColor.randomColor(context));
+        selectedItem = holder;
+        selectedItem.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light_eq));
+        selectedItem.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.yellow_ios));
     }
 
     @Override

@@ -158,11 +158,11 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
         this.position = position;
         this.sourceNumber = sourceNumber;
         if (sourceNumber == 1) {
-            adapter2.setSelectedCardView(null);
+            adapter2.setSelectedItem(null);
             btnSelectHere.setText("انتخاب : " + source.get(position).subject);
             btnEnter.setText("ورود به : " + source.get(position).subject);
         } else {
-            adapter.setSelectedCardView(null);
+            adapter.setSelectedItem(null);
             btnSelectHere.setText("انتخاب : " + source2.get(position).subject);
             btnEnter.setText("ورود به : " + source2.get(position).subject);
         }

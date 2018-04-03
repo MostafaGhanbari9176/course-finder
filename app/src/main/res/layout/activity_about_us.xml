@@ -502,7 +502,7 @@
                             android:layout_height="wrap_content"
                             android:paddingBottom="16dp"
                             android:paddingTop="16dp"
-                            android:text="سایر اپلیکیشن های ما : "
+                            android:text=" سایر اپلیکیشن های ما : "
                             android:textSize="@dimen/txt_size_big"
                             android:textStyle="italic" />
                     </LinearLayout>
