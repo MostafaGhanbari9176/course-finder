@@ -390,6 +390,11 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     }
 
     @Override
+    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+
+    }
+
+    @Override
     public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
 
     }

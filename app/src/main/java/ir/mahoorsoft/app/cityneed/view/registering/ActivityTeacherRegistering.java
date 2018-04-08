@@ -280,6 +280,16 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     }
 
     @Override
+    public void onReceiveNewTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
+    public void onReceiveSelectedTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
     public void responseForMadrak(ResponseOfServer res) {
 
     }

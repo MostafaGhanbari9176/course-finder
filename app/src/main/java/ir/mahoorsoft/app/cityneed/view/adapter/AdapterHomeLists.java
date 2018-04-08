@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.bumptech.glide.signature.StringSignature;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -65,10 +68,13 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             txtMasterName = (TextView) itemView.findViewById(R.id.txtMasterNameHomeItem);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtNameCourseHomeItem);
             item = (LinearLayout) itemView.findViewById(R.id.itemHome);
+
+
             endOfList = (LinearLayout) itemView.findViewById(R.id.llCustomColorItemHome);
         }
 
         public void bindData(final StCourse items) {
+
             if (items.endOfList == 0) {
                 endOfList.setVisibility(View.GONE);
                 Glide.with(context)
@@ -79,8 +85,8 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                         .into(imgItem);
 
                 Typeface tf = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/Far_Homa.ttf");
-                txtMasterName.setTypeface(tf);
-                txtCourseName.setTypeface(tf);
+/*                txtMasterName.setTypeface(tf);
+                txtCourseName.setTypeface(tf);*/
                 txtCourseName.setText(items.CourseName);
                 txtMasterName.setText("آموزشگاه " + items.MasterName);
                 item.setOnLongClickListener(new View.OnLongClickListener() {

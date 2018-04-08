@@ -117,6 +117,11 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
     }
 
     @Override
+    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+
+    }
+
+    @Override
     public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
 
     }

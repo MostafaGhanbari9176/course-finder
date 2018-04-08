@@ -380,6 +380,16 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
+    public void onReceiveNewTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
+    public void onReceiveSelectedTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
     public void responseForMadrak(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
         ratBar.setRating(res.code);

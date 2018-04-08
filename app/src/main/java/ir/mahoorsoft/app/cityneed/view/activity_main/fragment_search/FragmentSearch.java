@@ -353,6 +353,11 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     @Override
+    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+
+    }
+
+    @Override
     public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
 
     }

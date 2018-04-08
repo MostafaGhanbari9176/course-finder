@@ -132,6 +132,16 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         setTeacherLocation();
     }
 
+    @Override
+    public void onReceiveNewTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
+    public void onReceiveSelectedTeacher(ArrayList<StTeacher> users) {
+
+    }
+
     private void setTeacherLocation() {
         LatLng latLng = new LatLng(Double.parseDouble(teacher.lt), Double.parseDouble(teacher.lg));
         CameraPosition cameraPosition = new CameraPosition.Builder().target(

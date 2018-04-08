@@ -144,6 +144,16 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     }
 
     @Override
+    public void onReceiveNewTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
+    public void onReceiveSelectedTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
     public void responseForMadrak(ResponseOfServer res) {
 
     }

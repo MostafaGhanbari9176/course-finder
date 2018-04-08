@@ -33,6 +33,11 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         teacher.getSelectedTeacher();
     }
 
+    public void getNewTeacher() {
+        Teacher teacher = new Teacher(this);
+        teacher.getNewTeacher();
+    }
+
     public void getAllTeacher() {
         Teacher teacher = new Teacher(this);
         teacher.getAllTeacher();
@@ -78,6 +83,22 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
     }
 
     @Override
+    public void onReceiveSelectedTeacher(ArrayList<StTeacher> data) {
+        if (data == null || data.size() == 0)
+            sendMessage("خطا,پیش بینی نشده!!!");
+        else
+            onPresentTeacherListener.onReceiveSelectedTeacher(data);
+    }
+
+    @Override
+    public void onReceiveNewTeacher(ArrayList<StTeacher> data) {
+        if (data == null || data.size() == 0)
+            sendMessage("خطا,پیش بینی نشده!!!");
+        else
+            onPresentTeacherListener.onReceiveNewTeacher(data);
+    }
+
+    @Override
     public void sendMessage(String message) {
         onPresentTeacherListener.sendMessageFTT(message);
     }
@@ -88,6 +109,10 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         void confirmTeacher(boolean flag);
 
         void onReceiveTeacher(ArrayList<StTeacher> users);
+
+        void onReceiveNewTeacher(ArrayList<StTeacher> users);
+
+        void onReceiveSelectedTeacher(ArrayList<StTeacher> users);
 
         void responseForMadrak(ResponseOfServer res);
     }

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
@@ -40,6 +40,7 @@ import ir.mahoorsoft.app.cityneed.view.RandomColor;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListHome;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTeacherList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByGroupingId;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByTeacherId;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -48,7 +49,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener {
+public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener, AdapterTeacherList.OnClickItemTeacherList {
     LinearLayout scrollView;
     LinearLayout llitems;
     CardView btnDelete;
@@ -59,7 +60,14 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     RecyclerView groupingList;
     DialogProgres dialogProgres;
     TextView txtEmpty;
+    public static int id = -1;
 
+    ProgressBar pbarSelectedTeacherList;
+    ProgressBar pbarNewTeacherList;
+    ProgressBar pbarNewCourseList;
+    TextView txtEmptySelectedTeacherList;
+    TextView txtEmptyNewTeacherList;
+    TextView txtEmptyNewCourseList;
 
     @Nullable
     @Override
@@ -72,11 +80,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     private void init() {
         dialogProgres = new DialogProgres(G.context);
         pointer();
-        initViewPagerData();
-
+        getNewCourse();
+        getSelectedTeacher();
+        getNewTeacher();
         queeyForGroupingListData();
         dialogProgres.showProgresBar();
-        queryForCourses(-1);
+        queryForCourses(id);
 
 
     }
@@ -133,6 +142,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         scrollView = (LinearLayout) view.findViewById(R.id.llSV);
         llitems = (LinearLayout) view.findViewById(R.id.llItemsHome);
 
+        txtEmptyNewCourseList = (TextView) view.findViewById(R.id.txtEmptyNewCourseListHome);
+        txtEmptyNewTeacherList = (TextView) view.findViewById(R.id.txtEmptyNewTeacherListHome);
+        txtEmptySelectedTeacherList = (TextView) view.findViewById(R.id.txtEmptySelectedTeacherListHome);
+        pbarNewTeacherList = (ProgressBar) view.findViewById(R.id.pbarNewTeacherListHome);
+        pbarNewCourseList = (ProgressBar) view.findViewById(R.id.pbarNewCourseListHome);
+        pbarSelectedTeacherList = (ProgressBar) view.findViewById(R.id.pbarSelectedTeacherListHome);
     }
 
     @Override
@@ -179,13 +194,28 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     }
 
-    private void initViewPagerData() {
+    private void getSelectedTeacher() {
+        pbarSelectedTeacherList.setVisibility(View.VISIBLE);
         PresentTeacher presentTeacher = new PresentTeacher(this);
         presentTeacher.getSelectedTeacher();
     }
 
+    private void getNewTeacher() {
+        pbarNewTeacherList.setVisibility(View.VISIBLE);
+        PresentTeacher presentTeacher = new PresentTeacher(this);
+        presentTeacher.getNewTeacher();
+    }
+
+    private void getNewCourse() {
+        pbarNewCourseList.setVisibility(View.VISIBLE);
+        PresentCourse presentCourse = new PresentCourse(this);
+        presentCourse.getNewCourse();
+    }
+
     @Override
     public void sendMessageFCT(String message) {
+        pbarNewCourseList.setVisibility(View.GONE);
+        txtEmptyNewCourseList.setVisibility(View.VISIBLE);
         dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
@@ -198,6 +228,27 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
 
+    }
+
+    @Override
+    public void onReceiveNewCourse(ArrayList<StCourse> data) {
+        pbarSelectedTeacherList.setVisibility(View.GONE);
+        if (data == null || data.size() == 0 || data.get(0).empty == 1) {
+            txtEmptyNewCourseList.setVisibility(View.VISIBLE);
+            return;
+        }
+        txtEmptyNewCourseList.setVisibility(View.GONE);
+        settingUpNewCourseList(data);
+    }
+
+    private void settingUpNewCourseList(ArrayList<StCourse> data) {
+        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVNewCourseHome);
+        AdapterHomeLists adapter = new AdapterHomeLists(G.context, data, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                , LinearLayoutManager.HORIZONTAL, false);
+        list.setLayoutManager(layoutManager);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -304,6 +355,10 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void sendMessageFTT(String message) {
         dialogProgres.closeProgresBar();
+        pbarNewTeacherList.setVisibility(View.GONE);
+        pbarSelectedTeacherList.setVisibility(View.GONE);
+        txtEmptySelectedTeacherList.setVisibility(View.VISIBLE);
+        txtEmptyNewTeacherList.setVisibility(View.VISIBLE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -313,19 +368,71 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void onReceiveTeacher(ArrayList<StTeacher> users) {
+    public void onReceiveTeacher(ArrayList<StTeacher> data) {
         dialogProgres.closeProgresBar();
-        if (users == null || users.size() == 0)
+        if (data == null || data.size() == 0 || data.get(0).empty == 1)
             return;
-        pageViews = new ArrayList<>();
+/*        pageViews = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
             pageViews.add(new Page(users.get(i).ac, ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + users.get(i).pictureId + ".png", this));
         }
-        settingUpVPager();
+        settingUpVPager();*/
+    }
+
+    @Override
+    public void onReceiveNewTeacher(ArrayList<StTeacher> data) {
+        pbarNewTeacherList.setVisibility(View.GONE);
+        if (data == null || data.size() == 0 || data.get(0).empty == 1) {
+            txtEmptyNewTeacherList.setVisibility(View.VISIBLE);
+            return;
+        }
+        txtEmptyNewTeacherList.setVisibility(View.GONE);
+        settingUpNewTeacherList(data);
+    }
+
+    @Override
+    public void onReceiveSelectedTeacher(ArrayList<StTeacher> data) {
+        pbarSelectedTeacherList.setVisibility(View.GONE);
+        if (data == null || data.size() == 0 || data.get(0).empty == 1) {
+
+            return;
+        }
+        txtEmptySelectedTeacherList.setVisibility(View.GONE);
+        settingUpSelectedTeacherList(data);
+
+    }
+
+    private void settingUpSelectedTeacherList(ArrayList<StTeacher> data) {
+
+
+        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVSelectedTeacherHome);
+        AdapterTeacherList adapter = new AdapterTeacherList(G.context, data, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                , LinearLayoutManager.HORIZONTAL, false);
+        list.setLayoutManager(layoutManager);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void settingUpNewTeacherList(ArrayList<StTeacher> data) {
+
+        txtEmptyNewTeacherList.setVisibility(View.GONE);
+        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVNewTeacherHome);
+        AdapterTeacherList adapter = new AdapterTeacherList(G.context, data, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                , LinearLayoutManager.HORIZONTAL, false);
+        list.setLayoutManager(layoutManager);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void responseForMadrak(ResponseOfServer res) {
+
+    }
+
+    @Override
+    public void teacherListItemClick(int position) {
 
     }
 }

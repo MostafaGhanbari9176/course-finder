@@ -100,6 +100,11 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
     }
 
     @Override
+    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+
+    }
+
+    @Override
     public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
 
     }

@@ -294,6 +294,16 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     @Override
+    public void onReceiveNewTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
+    public void onReceiveSelectedTeacher(ArrayList<StTeacher> users) {
+
+    }
+
+    @Override
     public void responseForMadrak(ResponseOfServer res) {
 
     }

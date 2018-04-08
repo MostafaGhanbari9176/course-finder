@@ -24,11 +24,13 @@ public class PresentCourse implements Course.OnCourseLitener {
 
         void onReceiveCourse(ArrayList<StCourse> course, int listId);
 
+        void onReceiveNewCourse(ArrayList<StCourse> course);
+
         void onReceiveCourseForListHome(ArrayList<StHomeListItems> items);
 
     }
 
-    OnPresentCourseLitener onPresentCourseLitener;
+    private OnPresentCourseLitener onPresentCourseLitener;
 
     public PresentCourse(OnPresentCourseLitener onPresentCourseLitener) {
         this.onPresentCourseLitener = onPresentCourseLitener;
@@ -109,6 +111,14 @@ public class PresentCourse implements Course.OnCourseLitener {
             sendMessage("خطا");
         else
             onPresentCourseLitener.onReceiveCourse(data, listId);
+    }
+
+    @Override
+    public void onReceiveNewCourse(ArrayList<StCourse> data) {
+        if (data == null || data.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentCourseLitener.onReceiveNewCourse(data);
     }
 
     @Override

@@ -312,6 +312,9 @@ public interface Api {
     @GET("getSelectedTeacher")
     Call<ArrayList<StTeacher>> selectedTeacher();
 
+    @GET("getNewTeacher")
+    Call<ArrayList<StTeacher>> newTeacher();
+
     @GET("getMahoorAppData")
     Call<ArrayList<StMahoorAppData>> getMahoorAppData();
 

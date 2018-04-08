@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeNaveDownHome"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="داشبورد" />
+
+    <item
+        android:id="@+id/groupingNavDownHome"
+        android:icon="@drawable/icon_menu"
+        android:title="دسته بندی" />
+
+    <item
+        android:id="@+id/searchNanDownHome"
+        android:icon="@drawable/icon_search_false"
+        android:title="جستجو" />
+
+    <item
+        android:id="@+id/teacherListNavDownHome"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="آموزشگاها" />
+
+</menu>

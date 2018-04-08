@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_main;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.view.ActivityAboutUs;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_grouping_list.FragmentGroupingList;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
@@ -33,7 +35,6 @@ import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
-import ir.mahoorsoft.app.cityneed.view.purchase.ActivityPurchase;
 
 
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener, DialogGrouping.OnTabagheItemClick, NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +54,38 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     FrameLayout contentMain;
     public DialogProgres dialogProgres;
     private FragmentHome fhome = null;
+    BottomNavigationView navDown;
+    private BottomNavigationView.OnNavigationItemSelectedListener navdownItemListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.homeNaveDownHome:
+                    if (fhome == null) {
+                        fhome = new FragmentHome();
+                        replaceContentWith(fhome);
+                    }
+                    return true;
+
+                case R.id.searchNanDownHome:
+                    fhome = null;
+                    replaceContentWith(new FragmentSearch());
+                    return true;
+
+                case R.id.groupingNavDownHome:
+                    fhome = null;
+                    replaceContentWith(new FragmentGroupingList());
+                    return true;
+
+                case R.id.teacherListNavDownHome:
+
+                    return true;
+            }
+            return false;
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +113,8 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     private void pointers() {
 
+        navDown = (BottomNavigationView) findViewById(R.id.bottomNav_down_Home);
+        navDown.setOnNavigationItemSelectedListener(navdownItemListener);
         rbSelf = (RadioButton) findViewById(R.id.rbSelfMain);
         rbOther = (RadioButton) findViewById(R.id.rbOtherMain);
         llRadioGroup = (LinearLayout) findViewById(R.id.llRadioGroupMain);
@@ -91,6 +126,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         txtProfileButton = (TextView) viewNavHeder.findViewById(R.id.txtProfileButton_menu);
         llNavHeder = (LinearLayout) viewNavHeder.findViewById(R.id.navHederMain);
         contentMain = (FrameLayout) findViewById(R.id.contentMain);
+
         llNavHeder.setOnClickListener(this);
         rbOther.setOnClickListener(this);
         rbSelf.setOnClickListener(this);
@@ -265,7 +301,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         } else {
             fhome = new FragmentHome();
             replaceContentWith(fhome);
-            fhome.queryForCourses(id);
+            fhome.id = id;
         }
     }
 }

@@ -25,6 +25,8 @@ public class Course {
 
         void onReceiveData(ArrayList<StCourse> data, int listId);
 
+        void onReceiveNewCourse(ArrayList<StCourse> data);
+
         void DataForHomeLists(ArrayList<StHomeListItems> data);
 
         void sendMessage(String message);
@@ -71,7 +73,6 @@ public class Course {
     }
 
 
-
     public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days) {
 
         Api api = ApiClient.getClient().create(Api.class);
@@ -111,7 +112,7 @@ public class Course {
         getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body(), 3);
+                onCourseLitener.onReceiveNewCourse(response.body());
             }
 
             @Override
@@ -159,7 +160,7 @@ public class Course {
         get.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body(),-1);
+                onCourseLitener.onReceiveData(response.body(), -1);
             }
 
             @Override

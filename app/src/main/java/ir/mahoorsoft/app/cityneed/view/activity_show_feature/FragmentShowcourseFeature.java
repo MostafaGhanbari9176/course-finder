@@ -273,6 +273,11 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     }
 
+    @Override
+    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+
+    }
+
     private void checkCourseData() {
         if (!checkDate()) {
             btnRegister.setVisibility(View.GONE);

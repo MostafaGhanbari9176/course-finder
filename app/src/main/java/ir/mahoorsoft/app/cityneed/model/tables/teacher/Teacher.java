@@ -80,7 +80,23 @@ public class Teacher {
         getTeacher.enqueue(new Callback<ArrayList<StTeacher>>() {
             @Override
             public void onResponse(Call<ArrayList<StTeacher>> call, retrofit2.Response<ArrayList<StTeacher>> response) {
-                onTeacherListener.onReceiveData(response.body());
+                onTeacherListener.onReceiveSelectedTeacher(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StTeacher>> call, Throwable t) {
+                onTeacherListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void getNewTeacher() {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StTeacher>> getTeacher = api.newTeacher();
+        getTeacher.enqueue(new Callback<ArrayList<StTeacher>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StTeacher>> call, retrofit2.Response<ArrayList<StTeacher>> response) {
+                onTeacherListener.onReceiveNewTeacher(response.body());
             }
 
             @Override
@@ -144,6 +160,10 @@ public class Teacher {
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
 
         void onReceiveData(ArrayList<StTeacher> data);
+
+        void onReceiveSelectedTeacher(ArrayList<StTeacher> data);
+
+        void onReceiveNewTeacher(ArrayList<StTeacher> data);
 
         void sendMessage(String message);
     }

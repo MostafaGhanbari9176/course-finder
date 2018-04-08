@@ -101,6 +101,11 @@ public class ActivityCoursesListByTeacherId extends AppCompatActivity implements
     }
 
     @Override
+    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+
+    }
+
+    @Override
     public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
 
     }
