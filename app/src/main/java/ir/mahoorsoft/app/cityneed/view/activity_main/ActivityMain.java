@@ -2,6 +2,8 @@ package ir.mahoorsoft.app.cityneed.view.activity_main;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,11 +22,14 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
+
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.view.ActivityAboutUs;
+import ir.mahoorsoft.app.cityneed.view.RandomColor;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_grouping_list.FragmentGroupingList;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
@@ -55,37 +61,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     public DialogProgres dialogProgres;
     private FragmentHome fhome = null;
     BottomNavigationView navDown;
-    private BottomNavigationView.OnNavigationItemSelectedListener navdownItemListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.homeNaveDownHome:
-                    if (fhome == null) {
-                        fhome = new FragmentHome();
-                        replaceContentWith(fhome);
-                    }
-                    return true;
-
-                case R.id.searchNanDownHome:
-                    fhome = null;
-                    replaceContentWith(new FragmentSearch());
-                    return true;
-
-                case R.id.groupingNavDownHome:
-                    fhome = null;
-                    replaceContentWith(new FragmentGroupingList());
-                    return true;
-
-                case R.id.teacherListNavDownHome:
-
-                    return true;
-            }
-            return false;
-        }
-
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +89,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     private void pointers() {
 
         navDown = (BottomNavigationView) findViewById(R.id.bottomNav_down_Home);
-        navDown.setOnNavigationItemSelectedListener(navdownItemListener);
+        navDown.setBackgroundColor(RandomColor.randomColor(ActivityMain.this));
+        setNavigationItemListener();
+        disableShiftModeNavigation(navDown);
         rbSelf = (RadioButton) findViewById(R.id.rbSelfMain);
         rbOther = (RadioButton) findViewById(R.id.rbOtherMain);
         llRadioGroup = (LinearLayout) findViewById(R.id.llRadioGroupMain);
@@ -131,6 +108,64 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         rbOther.setOnClickListener(this);
         rbSelf.setOnClickListener(this);
 
+    }
+
+    private void setNavigationItemListener() {
+
+        navDown.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                navDown.setBackgroundColor(RandomColor.randomColor(ActivityMain.this));
+                switch (item.getItemId()) {
+                    case R.id.homeNaveDownHome:
+                        if (fhome == null) {
+                            fhome = new FragmentHome();
+                            replaceContentWith(fhome);
+                        }
+                        return true;
+
+                    case R.id.searchNanDownHome:
+                        fhome = null;
+                        replaceContentWith(new FragmentSearch());
+                        return true;
+
+                    case R.id.groupingNavDownHome:
+                        fhome = null;
+                        replaceContentWith(new FragmentGroupingList());
+                        return true;
+
+                    case R.id.teacherListNavDownHome:
+
+                        return true;
+                }
+                return false;
+            }
+
+        });
+
+    }
+
+    private void disableShiftModeNavigation(BottomNavigationView view) {
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
+        try {
+            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+            shiftingMode.setAccessible(true);
+            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setAccessible(false);
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
+                //noinspection RestrictedApi
+                item.setShiftingMode(false);
+                // set once again checked value, so view will be updated
+                //noinspection RestrictedApi
+                item.setChecked(item.getItemData().isChecked());
+            }
+        } catch (NoSuchFieldException e) {
+            Log.e("BNVHelper", "Unable to get shift mode field", e);
+        } catch (IllegalAccessException e) {
+            Log.e("BNVHelper", "Unable to change value of shift mode", e);
+        }
     }
 
     @Override

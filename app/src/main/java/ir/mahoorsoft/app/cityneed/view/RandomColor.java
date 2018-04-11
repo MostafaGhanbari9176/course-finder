@@ -14,24 +14,20 @@ import ir.mahoorsoft.app.cityneed.R;
 public class RandomColor {
 
     public static int randomColor(Context context) {
-        int color = (new Random()).nextInt(8);
+        int color = (new Random()).nextInt(6);
         switch (color) {
             case 0:
-                return ContextCompat.getColor(context, R.color.blue_ios);
+                return ContextCompat.getColor(context, R.color.blue_tel);
             case 1:
-                return ContextCompat.getColor(context, R.color.green_ios);
+                return ContextCompat.getColor(context, R.color.green_tel);
             case 2:
-                return ContextCompat.getColor(context, R.color.orange_ios);
+                return ContextCompat.getColor(context, R.color.orange_tel);
             case 3:
-                return ContextCompat.getColor(context, R.color.pink_ios);
+                return ContextCompat.getColor(context, R.color.pink_tel);
             case 4:
-                return ContextCompat.getColor(context, R.color.purple_ios);
+                return ContextCompat.getColor(context, R.color.purple_tel);
             case 5:
                 return ContextCompat.getColor(context, R.color.tealblue_ios);
-            case 6:
-                return ContextCompat.getColor(context, R.color.red_ios);
-            case 7:
-                return ContextCompat.getColor(context, R.color.yellow_ios);
             default:
                 return ContextCompat.getColor(context, R.color.dark_eq);
         }

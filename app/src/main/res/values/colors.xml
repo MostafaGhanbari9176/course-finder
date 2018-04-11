@@ -53,5 +53,11 @@
     <color name="light_one">#E1E6E9</color>
     <color name="light_two">#FAFAFA</color>
     <color name="light">#ffffff</color>
+    <!--telegram nav color  -->
+    <color name="blue_tel">#68b6f3</color>
+    <color name="orange_tel">#f1ae53</color>
+    <color name="green_tel">#69ba6d</color>
+    <color name="pink_tel">#e37475</color>
+    <color name="purple_tel">#7a87c9</color>
 
 </resources>

@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
@@ -53,6 +56,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     LinearLayout scrollView;
     LinearLayout llitems;
     CardView btnDelete;
+    LinearLayout llViewPager;
     private ArrayList<Page> pageViews;
     AdapterGroupingListHome adapterGrouping;
     private InfiniteIndicator mAnimCircleIndicator;
@@ -99,7 +103,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.viewPager);
         IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
                 .imageLoader(new GlideLoader())
-                .isStopWhileTouch(true)
                 .isAutoScroll(true)
                 .isLoop(true)
                 .isDrawIndicator(true)
@@ -127,8 +130,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void pointer() {
-        (view.findViewById(R.id.llViewPager)).setBackgroundColor(RandomColor.randomColor(G.context));
+       // (view.findViewById(R.id.llViewPager)).setBackgroundColor(RandomColor.randomColor(G.context));
         btnDelete = (CardView) view.findViewById(R.id.btnDeletGroupingHome);
+        llViewPager = (LinearLayout) view.findViewById(R.id.llViewPager);
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +152,15 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         pbarNewTeacherList = (ProgressBar) view.findViewById(R.id.pbarNewTeacherListHome);
         pbarNewCourseList = (ProgressBar) view.findViewById(R.id.pbarNewCourseListHome);
         pbarSelectedTeacherList = (ProgressBar) view.findViewById(R.id.pbarSelectedTeacherListHome);
+
+        setPaletteSize();
+    }
+
+    private void setPaletteSize(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        llViewPager.getLayoutParams().height = (int)(width/1.7);
     }
 
     @Override
@@ -372,11 +385,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         dialogProgres.closeProgresBar();
         if (data == null || data.size() == 0 || data.get(0).empty == 1)
             return;
-/*        pageViews = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            pageViews.add(new Page(users.get(i).ac, ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + users.get(i).pictureId + ".png", this));
-        }
-        settingUpVPager();*/
+
     }
 
     @Override
@@ -403,15 +412,20 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void settingUpSelectedTeacherList(ArrayList<StTeacher> data) {
+        pageViews = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            pageViews.add(new Page(data.get(i).ac, ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + data.get(i).pictureId + ".png", this));
+        }
+        settingUpVPager();
 
 
-        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVSelectedTeacherHome);
+/*        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVSelectedTeacherHome);
         AdapterTeacherList adapter = new AdapterTeacherList(G.context, data, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, false);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
     }
 
     private void settingUpNewTeacherList(ArrayList<StTeacher> data) {
