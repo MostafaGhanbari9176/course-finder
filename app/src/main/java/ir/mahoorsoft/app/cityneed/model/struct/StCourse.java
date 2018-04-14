@@ -28,5 +28,6 @@ public class StCourse {
     public int sabtenamId;
     public int vaziat;
     public int endOfList;
+    public int numberOfWaitingStudent;
 
 }

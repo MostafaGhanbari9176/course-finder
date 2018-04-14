@@ -47,6 +47,7 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
     public class Holder extends RecyclerView.ViewHolder {
         ImageView imgItem;
         TextView txtCapacity;
+        TextView txtnumberOfStudent;
         TextView txtCourseName;
         LinearLayout item;
         LinearLayout helpMessage;
@@ -56,8 +57,9 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
             super(itemView);
             unValidMessage = (RelativeLayout) itemView.findViewById(R.id.rlUnValidCourse);
             imgItem = (ImageView) itemView.findViewById(R.id.imgItemCourseListTeacher);
-            txtCapacity = (TextView) itemView.findViewById(R.id.txtCapacityItem);
-            txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemTeacher);
+            txtCapacity = (TextView) itemView.findViewById(R.id.txtCapacityItemCourseListTeacher);
+            txtnumberOfStudent = (TextView) itemView.findViewById(R.id.txtNumberOfStudentItemCourseListTeacher);
+            txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemCourseListTeacher);
             item = (LinearLayout) itemView.findViewById(R.id.itemCourseListTeacher);
             helpMessage = (LinearLayout) itemView.findViewById(R.id.llHelpMessage);
         }
@@ -82,6 +84,7 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
         else
             holder.unValidMessage.setVisibility(View.GONE);
         holder.txtCourseName.setText(items.CourseName);
+        holder.txtnumberOfStudent.setText(items.numberOfWaitingStudent +"");
         holder.txtCapacity.setText(items.capacity + "");
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
@@ -90,6 +93,13 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
                 .centerCrop()
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (items.vaziat == 1)
+                    onClickItemCourseList.courseListItemClick(position);
+            }
+        });
+        holder.imgItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (items.vaziat == 1)

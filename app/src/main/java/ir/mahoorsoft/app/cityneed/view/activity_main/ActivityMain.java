@@ -7,6 +7,7 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -89,7 +90,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     private void pointers() {
 
         navDown = (BottomNavigationView) findViewById(R.id.bottomNav_down_Home);
-        navDown.setBackgroundColor(RandomColor.randomColor(ActivityMain.this));
+        navDown.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_tel));
         setNavigationItemListener();
         disableShiftModeNavigation(navDown);
         rbSelf = (RadioButton) findViewById(R.id.rbSelfMain);
@@ -116,10 +117,11 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                navDown.setBackgroundColor(RandomColor.randomColor(ActivityMain.this));
+
                 switch (item.getItemId()) {
                     case R.id.homeNaveDownHome:
                         if (fhome == null) {
+                            navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
                             fhome = new FragmentHome();
                             replaceContentWith(fhome);
                         }
@@ -132,6 +134,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
                     case R.id.groupingNavDownHome:
                         fhome = null;
+                        navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
                         replaceContentWith(new FragmentGroupingList());
                         return true;
 

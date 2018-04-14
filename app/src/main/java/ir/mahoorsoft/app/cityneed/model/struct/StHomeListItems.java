@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class StHomeListItems {
-    public String GroupingSubject;
+    public String groupSubject;
     public ArrayList<StCourse> courses;
     public int empty;
 }

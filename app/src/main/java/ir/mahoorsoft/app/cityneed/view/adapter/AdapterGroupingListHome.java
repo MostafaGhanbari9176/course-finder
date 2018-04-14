@@ -70,6 +70,7 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
     @Override
     public void onBindViewHolder(final AdapterGroupingListHome.Holder holder, final int position) {
         final StGrouping items = surce.get(position);
+        setSelectedItem(selectedItem);
         holder.txtTabagheName.setText(items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
@@ -89,9 +90,7 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
     public void setSelectedItem(Holder holder) {
         if (selectedItem != null) {
             selectedItem.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light));
-            selectedItem.imgItem.setVisibility(View.VISIBLE);
             selectedItem.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.dark_eq));
-
         }
         if (holder == null)
             return;

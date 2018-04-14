@@ -50,6 +50,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     DialogProgres dialogProgres;
     TextView txt;
     int courseId;
+    public static boolean removeWaiting = false;
     String courseName;
     Toolbar tlb;
     FloatingActionButton fltbMenu;
@@ -68,14 +69,14 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_name_list);
+        removeWaiting = false;
         if (getIntent().getExtras() != null) {
             courseId = getIntent().getIntExtra("id", 0);
             courseName = getIntent().getStringExtra("name");
         }
         pointers();
-
         setSupportActionBar(tlb);
-        getSupportActionBar().setTitle("محصلین این دوره");
+        getSupportActionBar().setTitle("محصلین دوره " + courseName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -488,6 +489,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
                 deleteItems();
             else
                 changeClorItems();
+           removeWaiting = true;
             sendMessageFUT("انجام شد");
         } else
             sendMessageFUT("خطا!!!");

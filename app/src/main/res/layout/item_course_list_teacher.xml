@@ -36,7 +36,7 @@
                         android:id="@+id/llHelpMessage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:alpha="0.7"
+                        android:alpha="0.8"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -47,6 +47,23 @@
                             android:gravity="center"
                             android:text="برای تغیر تصویر لمس کرده و نگه دارید" />
                     </LinearLayout>
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="2dp"
+                        app:cardBackgroundColor="@color/light_eq">
+
+                        <TextView
+                            android:id="@+id/txtNumberOfStudentItemCourseListTeacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textColor="@color/yellow_ios"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+                    </android.support.v7.widget.CardView>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -73,7 +90,7 @@
                             android:textSize="@dimen/txt_size_smal" />
 
                         <TextView
-                            android:id="@+id/txtCourseNameItemTeacher"
+                            android:id="@+id/txtCourseNameItemCourseListTeacher"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -101,7 +118,7 @@
                             android:textSize="@dimen/txt_size_smal" />
 
                         <TextView
-                            android:id="@+id/txtCapacityItem"
+                            android:id="@+id/txtCapacityItemCourseListTeacher"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -119,7 +136,8 @@
             <RelativeLayout
                 android:id="@+id/rlUnValidCourse"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"

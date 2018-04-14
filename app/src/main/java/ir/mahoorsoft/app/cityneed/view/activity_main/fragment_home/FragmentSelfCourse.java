@@ -26,6 +26,7 @@ import ir.mahoorsoft.app.cityneed.model.uploadFile.Upload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityStudentNameList;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -117,9 +118,9 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
     @Override
     public void courseListItemClick(int position) {
-        Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
+        Intent intent = new Intent(G.context, ActivityStudentNameList.class);
         intent.putExtra("id", surce.get(position).id);
-        intent.putExtra("teacherId", Pref.getStringValue(PrefKey.apiCode, ""));
+        intent.putExtra("name", surce.get(position).CourseName);
         startActivity(intent);
     }
 
@@ -169,5 +170,14 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
             sendMessageFCT("بارگذاری شد");
         else
             sendMessageFCT("خطا!!!");
+    }
+
+    @Override
+    public void onResume() {
+        if (ActivityStudentNameList.removeWaiting){
+            setSource();
+            ActivityStudentNameList.removeWaiting = false;
+        }
+        super.onResume();
     }
 }

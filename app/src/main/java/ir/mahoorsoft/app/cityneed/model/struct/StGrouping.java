@@ -8,6 +8,7 @@ public class StGrouping {
     public int sourceNumber;
     public int id;
     public int uperId;
+    public int rootId;
     public String subject;
     public int empty;
 

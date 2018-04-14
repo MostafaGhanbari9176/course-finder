@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -47,9 +48,10 @@ public class G extends Application {
         while ((st < len) && (string.charAt(len - 1) == subString)) {
             len--;
         }
-        String k = ((st > 0) || (len < count)) ? string.substring(st, len) : string;
         return ((st > 0) || (len < count)) ? string.substring(st, len) : string;
     }
 
-
+    public static int dpToPx(float dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+    }
 }

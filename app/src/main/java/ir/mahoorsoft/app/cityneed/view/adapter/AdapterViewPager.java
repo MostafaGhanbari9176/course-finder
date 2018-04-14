@@ -4,6 +4,8 @@ package ir.mahoorsoft.app.cityneed.view.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
+
 import java.util.ArrayList;
 
 /**
@@ -41,5 +43,10 @@ public class AdapterViewPager extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return fragments.size();
+    }
+
+    @Override
+    public void destroyItem(View container, int position, Object object) {
+        super.destroyItem(container, position, object);
     }
 }

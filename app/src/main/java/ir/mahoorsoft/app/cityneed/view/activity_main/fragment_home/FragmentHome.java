@@ -1,13 +1,13 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -39,7 +39,6 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
-import ir.mahoorsoft.app.cityneed.view.RandomColor;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListHome;
@@ -121,16 +120,18 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     public void queryForCourses(int groupId) {
+
         if (groupId == -1)
             btnDelete.setVisibility(View.GONE);
         else
             btnDelete.setVisibility(View.VISIBLE);
+        dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseForListHome(groupId);
     }
 
     private void pointer() {
-       // (view.findViewById(R.id.llViewPager)).setBackgroundColor(RandomColor.randomColor(G.context));
+        // (view.findViewById(R.id.llViewPager)).setBackgroundColor(RandomColor.randomColor(G.context));
         btnDelete = (CardView) view.findViewById(R.id.btnDeletGroupingHome);
         llViewPager = (LinearLayout) view.findViewById(R.id.llViewPager);
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -156,11 +157,11 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         setPaletteSize();
     }
 
-    private void setPaletteSize(){
+    private void setPaletteSize() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
-        llViewPager.getLayoutParams().height = (int)(width/1.7);
+        llViewPager.getLayoutParams().height = (int) (width / 1.5);
     }
 
     @Override
@@ -275,59 +276,64 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         if (((LinearLayout) llitems).getChildCount() > 0)
             ((LinearLayout) llitems).removeAllViews();
 
-        if (items.size() == 0 || items.get(0).empty == 1) {
+/*        if (items.size() == 0 || items.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);
             return;
         } else
-            txtEmpty.setVisibility(View.GONE);
+            txtEmpty.setVisibility(View.GONE);*/
 
         for (int i = 0; i < items.size(); i++) {
             LinearLayout masterLayout = new LinearLayout(G.context);
             masterLayout.setOrientation(LinearLayout.VERTICAL);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             masterLayout.setLayoutParams(params);
-            masterLayout.setGravity(Gravity.RIGHT);
-
-            LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            lineParams.setMargins(8, 50, 25, 25);
-            LinearLayout line = new LinearLayout(G.context);
-            line.setOrientation(LinearLayout.HORIZONTAL);
-            line.setLayoutParams(lineParams);
-            line.setGravity(Gravity.CENTER);
+            masterLayout.setGravity(Gravity.CENTER);
 
             TextView textView = new TextView(G.context);
-            textView.setText(items.get(i).GroupingSubject);
-            textView.setGravity(Gravity.RIGHT);
+            textView.setTextColor(ContextCompat.getColor(G.context, R.color.light));
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+            textView.setText("دوره های " + items.get(i).groupSubject);
             LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-
-            line.addView(textView, textParams);
+            int dp = G.dpToPx(16);
+            textParams.setMargins(dp, dp, dp, dp);
+            masterLayout.addView(textView, textParams);
 
             CardView cardView = new CardView(G.context);
-            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(0, 4, 1);
+            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardView.setLayoutParams(cardParam);
-            try {
-                cardView.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_eq));
-            } catch (Exception e) {
+            cardParam.setMargins(0, G.dpToPx(4), 0, 0);
+            masterLayout.addView(cardView, cardParam);
 
+            if (items.get(i).empty == 0) {
+                RecyclerView list = new RecyclerView(G.context);
+                AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                        , LinearLayoutManager.HORIZONTAL, false);
+                list.setLayoutManager(layoutManager);
+                list.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                cardView.addView(list);
+            } else {
+                TextView textEmpty = new TextView(G.context);
+                textEmpty.setTextColor(ContextCompat.getColor(G.context, R.color.pink_tel));
+                textEmpty.setTypeface(textView.getTypeface(), Typeface.BOLD);
+                textEmpty.setText("موجود نیست");
+                cardView.addView(textEmpty, textParams);
             }
-            cardParam.setMargins(2, 2, 16, 2);
-            line.addView(cardView, cardParam);
 
 
-            masterLayout.addView(line);
-
-            RecyclerView list = new RecyclerView(G.context);
-            AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                    , LinearLayoutManager.HORIZONTAL, false);
-            list.setLayoutManager(layoutManager);
-            list.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            masterLayout.addView(list);
-
-            llitems.addView(masterLayout);
+            CardView cardViewMaster = new CardView(G.context);
+            cardViewMaster.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
+            LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardViewMaster.setLayoutParams(cardViewMasterParam);
+            dp = G.dpToPx(2);
+            cardViewMasterParam.setMargins(dp, dp, dp, G.dpToPx(8));
+            cardViewMaster.addView(masterLayout);
+            llitems.addView(cardViewMaster, cardViewMasterParam);
         }
     }
 

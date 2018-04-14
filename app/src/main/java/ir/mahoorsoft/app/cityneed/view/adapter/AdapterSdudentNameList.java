@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -121,8 +122,10 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
         holder.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                onClickItemSdutentNameList.confirmStudent(position, holder.cardView);
+                if (items.status == 0)
+                    onClickItemSdutentNameList.confirmStudent(position, holder.cardView);
+                else
+                    Toast.makeText(context, "تایید شده!", Toast.LENGTH_SHORT).show();
             }
         });
     }

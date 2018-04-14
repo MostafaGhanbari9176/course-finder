@@ -25,6 +25,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityStudentNameList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSdudentNameList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -123,6 +124,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
         finish();
         super.onBackPressed();
     }
+
     @Override
     public void changeImage(int position) {
         this.position = position;
@@ -169,5 +171,14 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
             sendMessageFCT("بارگذاری شد");
         else
             sendMessageFCT("خطا!!!");
+    }
+
+    @Override
+    protected void onResume() {
+        if (ActivityStudentNameList.removeWaiting){
+            getData();
+            ActivityStudentNameList.removeWaiting = false;
+        }
+        super.onResume();
     }
 }

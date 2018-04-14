@@ -58,7 +58,10 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener {
 
     @Override
     public void resiveSms(ArrayList<StSmsBox> sms) {
-        onPresentSmsBoxListener.onResiveSms(sms);
+        if (sms == null || sms.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentSmsBoxListener.onResiveSms(sms);
     }
 
     @Override

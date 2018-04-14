@@ -7,7 +7,7 @@
     <dimen name="txt_size_vbig">32dp</dimen>
 
 
-    <dimen name="txt_item_home">10dp</dimen>
+    <dimen name="txt_item_home">12dp</dimen>
     <dimen name="colorLine">2dp</dimen>
     <dimen name="txt_submit_iformation">20dp</dimen>
     <dimen name="txt_dialog">12dp</dimen>
