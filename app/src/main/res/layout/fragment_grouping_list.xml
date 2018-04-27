@@ -7,6 +7,12 @@
     android:layout_height="match_parent">
 
 
+    <Button
+        android:id="@+id/btnHelpMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

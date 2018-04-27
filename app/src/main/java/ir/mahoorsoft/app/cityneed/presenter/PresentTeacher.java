@@ -3,6 +3,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.tables.teacher.Teacher;
 
@@ -33,9 +34,9 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         teacher.getSelectedTeacher();
     }
 
-    public void getNewTeacher() {
+    public void getCustomTeacherListData() {
         Teacher teacher = new Teacher(this);
-        teacher.getNewTeacher();
+        teacher.getCustomTeacherListData();
     }
 
     public void getAllTeacher() {
@@ -91,11 +92,9 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
     }
 
     @Override
-    public void onReceiveNewTeacher(ArrayList<StTeacher> data) {
-        if (data == null || data.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
-        else
-            onPresentTeacherListener.onReceiveNewTeacher(data);
+    public void onReceiveCustomTeacherListData(ArrayList<StCustomTeacherListHome> data) {
+        if (!(data == null || data.size() == 0))
+            onPresentTeacherListener.onReceiveCustomeTeacherListData(data);
     }
 
     @Override
@@ -110,7 +109,7 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
 
         void onReceiveTeacher(ArrayList<StTeacher> users);
 
-        void onReceiveNewTeacher(ArrayList<StTeacher> users);
+        void onReceiveCustomeTeacherListData(ArrayList<StCustomTeacherListHome> data);
 
         void onReceiveSelectedTeacher(ArrayList<StTeacher> users);
 

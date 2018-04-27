@@ -25,7 +25,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.Holder> {
+public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherListHome.Holder> {
 
     public interface OnClickItemTeacherList {
         void teacherListItemClick(int position);
@@ -36,7 +36,7 @@ public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.
     private ArrayList<StTeacher> surce = new ArrayList<>();
 
 
-    public AdapterTeacherList(Context context, ArrayList<StTeacher> surce, OnClickItemTeacherList onClickItemCourseList) {
+    public AdapterTeacherListHome(Context context, ArrayList<StTeacher> surce, OnClickItemTeacherList onClickItemCourseList) {
         this.context = context;
         this.surce = surce;
         this.onClickItemTeacherList = onClickItemCourseList;
@@ -60,7 +60,7 @@ public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.
             DisplayMetrics displayMetrics = new DisplayMetrics();
             G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
-            LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams((width-300),(int)((width-40)/1.7));
+            LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams((width-300),(int)((width-300)/1.5));
             item.setLayoutParams(params);
         }
     }

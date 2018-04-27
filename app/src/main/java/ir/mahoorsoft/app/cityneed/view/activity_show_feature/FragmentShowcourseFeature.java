@@ -31,7 +31,7 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterComment;
@@ -273,10 +273,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     }
 
-    @Override
-    public void onReceiveNewCourse(ArrayList<StCourse> course) {
 
-    }
 
     private void checkCourseData() {
         if (!checkDate()) {
@@ -293,7 +290,12 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     @Override
-    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
+    public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
+
+    }
+
+    @Override
+    public void onReceiveCustomCourseListForHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 

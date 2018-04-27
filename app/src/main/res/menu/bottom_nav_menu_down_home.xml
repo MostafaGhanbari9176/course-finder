@@ -21,4 +21,9 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="آموزشگاها" />
 
+    <item
+        android:id="@+id/profileNavDownHome"
+        android:icon="@drawable/icon_profile"
+        android:title="حساب کاربری" />
+
 </menu>

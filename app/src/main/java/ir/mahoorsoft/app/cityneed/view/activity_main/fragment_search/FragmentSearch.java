@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
@@ -352,13 +352,15 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         adapter.notifyDataSetChanged();
     }
 
+
+
     @Override
-    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+    public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 
     @Override
-    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
+    public void onReceiveCustomCourseListForHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 

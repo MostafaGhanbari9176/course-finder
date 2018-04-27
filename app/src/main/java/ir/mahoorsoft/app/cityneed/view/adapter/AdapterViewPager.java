@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Created by MAHNAZ on 10/9/2017.
@@ -15,8 +17,8 @@ import java.util.ArrayList;
 public class AdapterViewPager extends FragmentPagerAdapter {
 
 
-    private ArrayList<Fragment> fragments = new ArrayList<>();
-    private ArrayList<String> title = new ArrayList<>();
+    private Stack<Fragment> fragments = new Stack<>();
+    private Stack<String> titles = new Stack<>();
 
 
     public AdapterViewPager(FragmentManager fm) {
@@ -25,10 +27,18 @@ public class AdapterViewPager extends FragmentPagerAdapter {
     }
 
     public void add(Fragment fragment, String title) {
-        fragments.add(fragment);
-        this.title.add(title);
+        fragments.push(fragment);
+        titles.push(title);
 
     }
+
+    public void remove() {
+        fragments.pop();
+        titles.pop();
+
+    }
+
+
 
     @Override
     public Fragment getItem(int position) {
@@ -37,7 +47,7 @@ public class AdapterViewPager extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return title.get(position);
+        return titles.get(position);
     }
 
     @Override
@@ -45,8 +55,4 @@ public class AdapterViewPager extends FragmentPagerAdapter {
         return fragments.size();
     }
 
-    @Override
-    public void destroyItem(View container, int position, Object object) {
-        super.destroyItem(container, position, object);
-    }
 }

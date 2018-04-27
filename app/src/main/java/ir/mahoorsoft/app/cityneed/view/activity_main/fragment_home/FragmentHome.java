@@ -32,8 +32,9 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
@@ -42,7 +43,7 @@ import ir.mahoorsoft.app.cityneed.view.GlideLoader;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListHome;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTeacherList;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTeacherListHome;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByGroupingId;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByTeacherId;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -51,9 +52,11 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener, AdapterTeacherList.OnClickItemTeacherList {
+public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener, AdapterTeacherListHome.OnClickItemTeacherList {
     LinearLayout scrollView;
     LinearLayout llitems;
+    LinearLayout llCustomeCourseList;
+    LinearLayout llCustomTeacherList;
     CardView btnDelete;
     LinearLayout llViewPager;
     private ArrayList<Page> pageViews;
@@ -64,13 +67,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     DialogProgres dialogProgres;
     TextView txtEmpty;
     public static int id = -1;
-
     ProgressBar pbarSelectedTeacherList;
-    ProgressBar pbarNewTeacherList;
-    ProgressBar pbarNewCourseList;
     TextView txtEmptySelectedTeacherList;
-    TextView txtEmptyNewTeacherList;
-    TextView txtEmptyNewCourseList;
 
     @Nullable
     @Override
@@ -83,13 +81,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     private void init() {
         dialogProgres = new DialogProgres(G.context);
         pointer();
-        getNewCourse();
+        getCustomCourseListData();
         getSelectedTeacher();
-        getNewTeacher();
+        getCustomTeacherListData();
         queeyForGroupingListData();
         dialogProgres.showProgresBar();
         queryForCourses(id);
-
 
     }
 
@@ -146,12 +143,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         groupingList = (RecyclerView) view.findViewById(R.id.RVGroupingItemsHome);
         scrollView = (LinearLayout) view.findViewById(R.id.llSV);
         llitems = (LinearLayout) view.findViewById(R.id.llItemsHome);
-
-        txtEmptyNewCourseList = (TextView) view.findViewById(R.id.txtEmptyNewCourseListHome);
-        txtEmptyNewTeacherList = (TextView) view.findViewById(R.id.txtEmptyNewTeacherListHome);
+        llCustomeCourseList = (LinearLayout) view.findViewById(R.id.llCustomCourseListHome);
+        llCustomTeacherList = (LinearLayout) view.findViewById(R.id.llCustomTeacherListHome);
         txtEmptySelectedTeacherList = (TextView) view.findViewById(R.id.txtEmptySelectedTeacherListHome);
-        pbarNewTeacherList = (ProgressBar) view.findViewById(R.id.pbarNewTeacherListHome);
-        pbarNewCourseList = (ProgressBar) view.findViewById(R.id.pbarNewCourseListHome);
         pbarSelectedTeacherList = (ProgressBar) view.findViewById(R.id.pbarSelectedTeacherListHome);
 
         setPaletteSize();
@@ -214,22 +208,20 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         presentTeacher.getSelectedTeacher();
     }
 
-    private void getNewTeacher() {
-        pbarNewTeacherList.setVisibility(View.VISIBLE);
+    private void getCustomTeacherListData() {
+
         PresentTeacher presentTeacher = new PresentTeacher(this);
-        presentTeacher.getNewTeacher();
+        presentTeacher.getCustomTeacherListData();
     }
 
-    private void getNewCourse() {
-        pbarNewCourseList.setVisibility(View.VISIBLE);
+    private void getCustomCourseListData() {
+
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getNewCourse();
+        presentCourse.getCustomCourseListData();
     }
 
     @Override
     public void sendMessageFCT(String message) {
-        pbarNewCourseList.setVisibility(View.GONE);
-        txtEmptyNewCourseList.setVisibility(View.VISIBLE);
         dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
@@ -245,33 +237,127 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void onReceiveNewCourse(ArrayList<StCourse> data) {
-        pbarSelectedTeacherList.setVisibility(View.GONE);
-        if (data == null || data.size() == 0 || data.get(0).empty == 1) {
-            txtEmptyNewCourseList.setVisibility(View.VISIBLE);
-            return;
-        }
-        txtEmptyNewCourseList.setVisibility(View.GONE);
-        settingUpNewCourseList(data);
-    }
-
-    private void settingUpNewCourseList(ArrayList<StCourse> data) {
-        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVNewCourseHome);
-        AdapterHomeLists adapter = new AdapterHomeLists(G.context, data, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+    public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
+        dialogProgres.closeProgresBar();
+        creatListsByGrouping(items);
     }
 
     @Override
-    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
-        dialogProgres.closeProgresBar();
-        creatLists(items);
+    public void onReceiveCustomCourseListForHome(ArrayList<StCustomCourseListHome> items) {
+        creatCustomCourseList(items);
     }
 
-    private void creatLists(ArrayList<StHomeListItems> items) {
+    private void creatCustomTeacherList(ArrayList<StCustomTeacherListHome> items) {
+
+        if (((LinearLayout) llCustomTeacherList).getChildCount() > 0)
+            ((LinearLayout) llCustomTeacherList).removeAllViews();
+
+
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).teachers.get(0).empty == 1)
+                continue;
+            LinearLayout masterLayout = new LinearLayout(G.context);
+            masterLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            masterLayout.setLayoutParams(params);
+            masterLayout.setGravity(Gravity.CENTER);
+
+            TextView textView = new TextView(G.context);
+            textView.setTextColor(ContextCompat.getColor(G.context, R.color.light));
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+            textView.setText(items.get(i).groupSubject);
+            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            int dp = G.dpToPx(16);
+            textParams.setMargins(dp, dp, dp, dp);
+            masterLayout.addView(textView, textParams);
+
+            CardView cardView = new CardView(G.context);
+            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardView.setLayoutParams(cardParam);
+            cardParam.setMargins(0, G.dpToPx(4), 0, 0);
+            masterLayout.addView(cardView, cardParam);
+
+
+            RecyclerView list = new RecyclerView(G.context);
+            AdapterTeacherListHome adapterTeacherListHome = new AdapterTeacherListHome(G.context, items.get(i).teachers, this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                    , LinearLayoutManager.HORIZONTAL, false);
+            list.setLayoutManager(layoutManager);
+            list.setAdapter(adapterTeacherListHome);
+            adapterTeacherListHome.notifyDataSetChanged();
+            cardView.addView(list);
+
+            CardView cardViewMaster = new CardView(G.context);
+            cardViewMaster.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
+            LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardViewMaster.setLayoutParams(cardViewMasterParam);
+            dp = G.dpToPx(2);
+            cardViewMasterParam.setMargins(dp, dp, dp, G.dpToPx(8));
+            cardViewMaster.addView(masterLayout);
+            llCustomTeacherList.addView(cardViewMaster, cardViewMasterParam);
+        }
+    }
+
+    private void creatCustomCourseList(ArrayList<StCustomCourseListHome> items) {
+
+        if (((LinearLayout) llCustomeCourseList).getChildCount() > 0)
+            ((LinearLayout) llCustomeCourseList).removeAllViews();
+
+
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).courses.get(0).empty == 1)
+                continue;
+            LinearLayout masterLayout = new LinearLayout(G.context);
+            masterLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            masterLayout.setLayoutParams(params);
+            masterLayout.setGravity(Gravity.CENTER);
+
+            TextView textView = new TextView(G.context);
+            textView.setTextColor(ContextCompat.getColor(G.context, R.color.light));
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+            textView.setText(items.get(i).groupSubject);
+            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            int dp = G.dpToPx(16);
+            textParams.setMargins(dp, dp, dp, dp);
+            masterLayout.addView(textView, textParams);
+
+            CardView cardView = new CardView(G.context);
+            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardView.setLayoutParams(cardParam);
+            cardParam.setMargins(0, G.dpToPx(4), 0, 0);
+            masterLayout.addView(cardView, cardParam);
+
+
+            RecyclerView list = new RecyclerView(G.context);
+            AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                    , LinearLayoutManager.HORIZONTAL, false);
+            list.setLayoutManager(layoutManager);
+            list.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            cardView.addView(list);
+
+            CardView cardViewMaster = new CardView(G.context);
+            cardViewMaster.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
+            LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardViewMaster.setLayoutParams(cardViewMasterParam);
+            dp = G.dpToPx(2);
+            cardViewMasterParam.setMargins(dp, dp, dp, G.dpToPx(8));
+            cardViewMaster.addView(masterLayout);
+            llCustomeCourseList.addView(cardViewMaster, cardViewMasterParam);
+        }
+    }
+
+    private void creatListsByGrouping(ArrayList<StCustomCourseListHome> items) {
 
         if (((LinearLayout) llitems).getChildCount() > 0)
             ((LinearLayout) llitems).removeAllViews();
@@ -374,10 +460,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void sendMessageFTT(String message) {
         dialogProgres.closeProgresBar();
-        pbarNewTeacherList.setVisibility(View.GONE);
         pbarSelectedTeacherList.setVisibility(View.GONE);
         txtEmptySelectedTeacherList.setVisibility(View.VISIBLE);
-        txtEmptyNewTeacherList.setVisibility(View.VISIBLE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -395,14 +479,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void onReceiveNewTeacher(ArrayList<StTeacher> data) {
-        pbarNewTeacherList.setVisibility(View.GONE);
-        if (data == null || data.size() == 0 || data.get(0).empty == 1) {
-            txtEmptyNewTeacherList.setVisibility(View.VISIBLE);
-            return;
-        }
-        txtEmptyNewTeacherList.setVisibility(View.GONE);
-        settingUpNewTeacherList(data);
+    public void onReceiveCustomeTeacherListData(ArrayList<StCustomTeacherListHome> data) {
+        creatCustomTeacherList(data);
     }
 
     @Override
@@ -426,24 +504,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
 
 /*        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVSelectedTeacherHome);
-        AdapterTeacherList adapter = new AdapterTeacherList(G.context, data, this);
+        AdapterTeacherListHome adapter = new AdapterTeacherListHome(G.context, data, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                 , LinearLayoutManager.HORIZONTAL, false);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();*/
-    }
-
-    private void settingUpNewTeacherList(ArrayList<StTeacher> data) {
-
-        txtEmptyNewTeacherList.setVisibility(View.GONE);
-        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVNewTeacherHome);
-        AdapterTeacherList adapter = new AdapterTeacherList(G.context, data, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     @Override

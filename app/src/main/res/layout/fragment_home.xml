@@ -89,131 +89,17 @@
 
             </RelativeLayout>
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
+                android:id="@+id/llCustomTeacherListHome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="2dp"
-                app:cardBackgroundColor="@color/blue_tel">
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:text="دوره های جدید"
-                        android:textColor="@color/light"
-                        android:textStyle="bold" />
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/RVNewCourseHome"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-
-                            <TextView
-                                android:id="@+id/txtEmptyNewCourseListHome"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_margin="20dp"
-                                android:text="موجود نیست"
-                                android:visibility="gone" />
-
-                            <ProgressBar
-                                android:id="@+id/pbarNewCourseListHome"
-                                style="?android:attr/progressBarStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_margin="8dp"
-                                android:visibility="gone" />
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
+            <LinearLayout
+                android:id="@+id/llCustomCourseListHome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="2dp"
-                app:cardBackgroundColor="@color/blue_tel">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:text="آموزشگاهای جدید"
-                        android:textColor="@color/light"
-                        android:textStyle="bold" />
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/RVNewTeacherHome"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-
-                            <TextView
-                                android:id="@+id/txtEmptyNewTeacherListHome"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_margin="20dp"
-                                android:text="موجود نیست"
-                                android:visibility="gone" />
-
-                            <ProgressBar
-                                android:id="@+id/pbarNewTeacherListHome"
-                                style="?android:attr/progressBarStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_margin="8dp"
-                                android:visibility="gone" />
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -240,7 +126,7 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/icon_delete_red" />
+                            app:srcCompat="@drawable/icon_delete_red" />
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.RecyclerView

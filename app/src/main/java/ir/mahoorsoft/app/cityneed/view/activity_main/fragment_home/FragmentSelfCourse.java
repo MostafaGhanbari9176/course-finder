@@ -21,13 +21,11 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
-import ir.mahoorsoft.app.cityneed.model.uploadFile.Upload;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityStudentNameList;
-import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -106,13 +104,14 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
         }
     }
 
+
     @Override
-    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+    public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 
     @Override
-    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
+    public void onReceiveCustomCourseListForHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 

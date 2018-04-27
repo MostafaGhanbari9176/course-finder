@@ -31,36 +31,13 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class FragmentChildGroupingList extends Fragment implements AdapterGroupingListName.OnClickItemTabagheList, PresentGrouping.OnPresentTabagheListener {
-    public interface EditePages {
-        void addPage(int id, String name);
 
-        void updatePage();
-    }
-
-    EditePages editePages;
     View view;
     RecyclerView list;
     AdapterGroupingListName adapter;
     ArrayList<StGrouping> source = new ArrayList<>();
     DialogProgres dialogProgres;
-    int pageId;
-    int pageGroupId;
-    String pageName = "";
-    static boolean update = false;
 
-/*    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            editePages = (EditePages) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement MyInterface ");
-        }
-    }*/
 
     @Nullable
     @Override
@@ -75,12 +52,8 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
         list = (RecyclerView) view.findViewById(R.id.RVFragmentGroupingList);
     }
 
-    public void queryForGroupList(int pageId, String pageName, int pageGroupId) {
-        this.pageId = pageId;
-        this.pageName = pageName;
-        this.pageGroupId = pageGroupId;
-        if (dialogProgres == null)
-            dialogProgres = new DialogProgres(G.context);
+    public void queryForGroupList(int pageGroupId) {
+        dialogProgres = new DialogProgres(G.context);
         dialogProgres.showProgresBar();
         PresentGrouping presentGrouping = new PresentGrouping(this);
         presentGrouping.getTabaghe(pageGroupId);
@@ -88,29 +61,7 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
 
     @Override
     public void tabagheListItemClick(int position, int groupId) {
-
-        int currentPage = FragmentGroupingList.viewPager.getCurrentItem();
-        for (int i = 0; i < FragmentGroupingList.pages.size(); i++) {
-
-            if (FragmentGroupingList.pages.get(i).pageId > currentPage) {
-                FragmentGroupingList.pages.remove(i);
-                i--;
-                FragmentGroupingList.itemCounter--;
-                update = true;
-            }
-        }
-        editePages.addPage(groupId, source.get(position).subject);
-    }
-
-    public void setSource(ArrayList<StGrouping> source) {
-        this.source.addAll(source);
-        adapter = new AdapterGroupingListName(G.context, this.source, this);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(G.context, LinearLayoutManager.VERTICAL, false);
-        if (list == null)
-            return;
-        list.setLayoutManager(manager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        FragmentGroupingList.addPage(groupId, source.get(position).subject);
     }
 
     @Override
@@ -119,19 +70,14 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
             dialogProgres.closeProgresBar();
         source.clear();
         source.addAll(data);
-        GroupingListPages page = new GroupingListPages(data, pageId, pageGroupId, pageName);
-        FragmentGroupingList.pages.add(page);
         adapter = new AdapterGroupingListName(G.context, source, this);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(G.context, LinearLayoutManager.VERTICAL, false);
-        if (list == null)
+        if (view == null) {
             return;
+        }
         list.setLayoutManager(manager);
         list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        if (update) {
-            editePages.updatePage();
-            update = false;
-        }
     }
 
     @Override

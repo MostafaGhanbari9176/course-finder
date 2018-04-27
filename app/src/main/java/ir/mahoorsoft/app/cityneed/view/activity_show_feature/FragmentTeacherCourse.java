@@ -17,13 +17,10 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
-import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -99,13 +96,15 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
         }
     }
 
+
+
     @Override
-    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+    public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 
     @Override
-    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
+    public void onReceiveCustomCourseListForHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 

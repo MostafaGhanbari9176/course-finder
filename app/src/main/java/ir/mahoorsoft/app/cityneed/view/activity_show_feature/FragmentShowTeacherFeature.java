@@ -32,6 +32,7 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -133,9 +134,11 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     }
 
     @Override
-    public void onReceiveNewTeacher(ArrayList<StTeacher> users) {
+    public void onReceiveCustomeTeacherListData(ArrayList<StCustomTeacherListHome> data) {
 
     }
+
+
 
     @Override
     public void onReceiveSelectedTeacher(ArrayList<StTeacher> users) {

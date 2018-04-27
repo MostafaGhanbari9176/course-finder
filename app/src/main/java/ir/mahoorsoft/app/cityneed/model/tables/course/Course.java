@@ -9,7 +9,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,9 +25,9 @@ public class Course {
 
         void onReceiveData(ArrayList<StCourse> data, int listId);
 
-        void onReceiveNewCourse(ArrayList<StCourse> data);
+        void DataForHomeLists(ArrayList<StCustomCourseListHome> data);
 
-        void DataForHomeLists(ArrayList<StHomeListItems> data);
+        void DataForCustomCourseListHome(ArrayList<StCustomCourseListHome> data);
 
         void sendMessage(String message);
     }
@@ -106,17 +106,17 @@ public class Course {
         });
     }
 
-    public void getNewCourse() {
+    public void getCustomCourseListData() {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StCourse>> getAllCourse = api.getNewCourse();
-        getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
+        Call<ArrayList<StCustomCourseListHome>> get = api.getCustomCourseListData();
+        get.enqueue(new Callback<ArrayList<StCustomCourseListHome>>() {
             @Override
-            public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveNewCourse(response.body());
+            public void onResponse(Call<ArrayList<StCustomCourseListHome>> call, Response<ArrayList<StCustomCourseListHome>> response) {
+                onCourseLitener.DataForCustomCourseListHome(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<StCourse>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<StCustomCourseListHome>> call, Throwable t) {
                 onCourseLitener.sendMessage(t.getMessage());
             }
         });
@@ -140,15 +140,15 @@ public class Course {
 
     public void getCourseForListHome(int id) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StHomeListItems>> get = api.getCourseForListHome(id);
-        get.enqueue(new Callback<ArrayList<StHomeListItems>>() {
+        Call<ArrayList<StCustomCourseListHome>> get = api.getCourseForListHome(id);
+        get.enqueue(new Callback<ArrayList<StCustomCourseListHome>>() {
             @Override
-            public void onResponse(Call<ArrayList<StHomeListItems>> call, Response<ArrayList<StHomeListItems>> response) {
+            public void onResponse(Call<ArrayList<StCustomCourseListHome>> call, Response<ArrayList<StCustomCourseListHome>> response) {
                 onCourseLitener.DataForHomeLists(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<StHomeListItems>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<StCustomCourseListHome>> call, Throwable t) {
                 onCourseLitener.sendMessage(t.getMessage());
             }
         });

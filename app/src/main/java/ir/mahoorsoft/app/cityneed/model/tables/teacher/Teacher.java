@@ -8,9 +8,11 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by RCC1 on 12/21/2017.
@@ -90,17 +92,17 @@ public class Teacher {
         });
     }
 
-    public void getNewTeacher() {
+    public void getCustomTeacherListData() {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StTeacher>> getTeacher = api.newTeacher();
-        getTeacher.enqueue(new Callback<ArrayList<StTeacher>>() {
+        Call<ArrayList<StCustomTeacherListHome>> getCustomTeacherListData = api.getCustomTeacherListData();
+        getCustomTeacherListData.enqueue(new Callback<ArrayList<StCustomTeacherListHome>>() {
             @Override
-            public void onResponse(Call<ArrayList<StTeacher>> call, retrofit2.Response<ArrayList<StTeacher>> response) {
-                onTeacherListener.onReceiveNewTeacher(response.body());
+            public void onResponse(Call<ArrayList<StCustomTeacherListHome>> call, Response<ArrayList<StCustomTeacherListHome>> response) {
+                onTeacherListener.onReceiveCustomTeacherListData(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<StTeacher>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<StCustomTeacherListHome>> call, Throwable t) {
                 onTeacherListener.sendMessage(t.getMessage());
             }
         });
@@ -163,7 +165,7 @@ public class Teacher {
 
         void onReceiveSelectedTeacher(ArrayList<StTeacher> data);
 
-        void onReceiveNewTeacher(ArrayList<StTeacher> data);
+        void onReceiveCustomTeacherListData(ArrayList<StCustomTeacherListHome> data);
 
         void sendMessage(String message);
     }

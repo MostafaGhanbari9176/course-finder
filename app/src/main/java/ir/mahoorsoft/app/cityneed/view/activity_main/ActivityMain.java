@@ -117,7 +117,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()) {
                     case R.id.homeNaveDownHome:
                         if (fhome == null) {
@@ -139,6 +138,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                         return true;
 
                     case R.id.teacherListNavDownHome:
+                        return true;
+
+                    case R.id.profileNavDownHome:
+                        acountCheck();
 
                         return true;
                 }

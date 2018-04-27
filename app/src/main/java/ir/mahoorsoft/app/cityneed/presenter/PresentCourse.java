@@ -9,7 +9,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.model.tables.course.Course;
 
 /**
@@ -24,9 +24,9 @@ public class PresentCourse implements Course.OnCourseLitener {
 
         void onReceiveCourse(ArrayList<StCourse> course, int listId);
 
-        void onReceiveNewCourse(ArrayList<StCourse> course);
+        void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items);
 
-        void onReceiveCourseForListHome(ArrayList<StHomeListItems> items);
+        void onReceiveCustomCourseListForHome(ArrayList<StCustomCourseListHome> items);
 
     }
 
@@ -51,9 +51,9 @@ public class PresentCourse implements Course.OnCourseLitener {
         course.getAllCourse();
     }
 
-    public void getNewCourse() {
+    public void getCustomCourseListData() {
         Course course = new Course(this);
-        course.getNewCourse();
+        course.getCustomCourseListData();
     }
 
     public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days) {
@@ -114,19 +114,17 @@ public class PresentCourse implements Course.OnCourseLitener {
     }
 
     @Override
-    public void onReceiveNewCourse(ArrayList<StCourse> data) {
-        if (data == null || data.size() == 0)
-            sendMessage("خطا");
-        else
-            onPresentCourseLitener.onReceiveNewCourse(data);
-    }
-
-    @Override
-    public void DataForHomeLists(ArrayList<StHomeListItems> data) {
+    public void DataForHomeLists(ArrayList<StCustomCourseListHome> data) {
         if (data == null || data.size() == 0)
             sendMessage("خطا");
         else
             onPresentCourseLitener.onReceiveCourseForListHome(data);
+    }
+
+    @Override
+    public void DataForCustomCourseListHome(ArrayList<StCustomCourseListHome> data) {
+        if (!(data == null || data.size() == 0))
+            onPresentCourseLitener.onReceiveCustomCourseListForHome(data);
     }
 
     @Override

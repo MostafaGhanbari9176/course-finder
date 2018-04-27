@@ -30,7 +30,7 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
@@ -389,13 +389,14 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     }
 
+
     @Override
-    public void onReceiveNewCourse(ArrayList<StCourse> course) {
+    public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 
     @Override
-    public void onReceiveCourseForListHome(ArrayList<StHomeListItems> items) {
+    public void onReceiveCustomCourseListForHome(ArrayList<StCustomCourseListHome> items) {
 
     }
 

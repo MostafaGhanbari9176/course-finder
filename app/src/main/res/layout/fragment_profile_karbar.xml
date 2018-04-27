@@ -3,23 +3,190 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_eq"
+    android:background="@color/light"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgProfileUser"
+                android:layout_width="@dimen/img_fragment_karbar"
+                android:layout_height="@dimen/img_fragment_karbar"
+                android:layout_alignParentStart="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerVertical="false"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="30dp"
+                app:civ_border_color="@color/pink_tel"
+                app:civ_border_width="2dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/pink_tel"
+                        android:orientation="horizontal"></LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -27,26 +194,17 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/txtUserNameProfile"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtNAme_karbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="16dp"
-                            android:gravity="center"
-                            android:hint="لطفا برای تعیین نام کاربری کلیک کنید"
-                            android:textColor="@color/light"
-                            android:textColorHint="@color/blue_eq"
-                            android:textSize="@dimen/txt_size_smal" />
-
-                    </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/dark_eq"
+                        android:textSize="@dimen/txt_size_smal"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -56,26 +214,17 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/txtUserIdProfile"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:orientation="vertical">
-
-                        <EditText
-                            android:id="@+id/txtPhone_Karbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:enabled="false"
-                            android:gravity="center"
-                            android:inputType="textPersonName"
-                            android:textColor="@color/light"
-                            android:textColorHighlight="@color/blue"
-                            android:textSize="@dimen/txt_size_smal" />
-
-                    </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/dark_eq"
+                        android:textSize="@dimen/txt_size_smal"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -83,5 +232,12 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavProfileUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_tel"
+        app:menu="@menu/bottom_nav_menu_profile_user" />
 
 </LinearLayout>

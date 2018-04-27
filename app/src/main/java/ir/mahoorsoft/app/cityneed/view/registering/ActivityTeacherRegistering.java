@@ -24,6 +24,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
@@ -280,9 +281,10 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     }
 
     @Override
-    public void onReceiveNewTeacher(ArrayList<StTeacher> users) {
+    public void onReceiveCustomeTeacherListData(ArrayList<StCustomTeacherListHome> data) {
 
     }
+
 
     @Override
     public void onReceiveSelectedTeacher(ArrayList<StTeacher> users) {

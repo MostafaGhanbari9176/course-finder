@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/messageBoxBottomNavTeacher"
+        android:icon="@drawable/icon_message_box"
+        android:title="صندوق پیام" />
+
+    <item
+        android:id="@+id/addListBottomNavTeacher"
+        android:icon="@drawable/icon_list_sabtenam"
+        android:title="اضافه شده" />
+
+    <item
+        android:id="@+id/registerCourseBottomNavTeacher"
+        android:icon="@drawable/icon_list"
+        android:title="ثبتنام شده" />
+
+    <item
+        android:id="@+id/addedCourseBottomNavTeacher"
+        android:icon="@drawable/icon_add"
+        android:title="اضافه کردن" />
+
+    <item
+        android:id="@+id/logOutBottomNavTeacher"
+        android:icon="@drawable/icon_power"
+        android:title="خروج" />
+
+</menu>

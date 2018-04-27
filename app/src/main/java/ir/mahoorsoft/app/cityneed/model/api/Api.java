@@ -7,7 +7,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.model.struct.StHomeListItems;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StMahoorAppData;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
@@ -147,8 +148,8 @@ public interface Api {
             @Path("days") String days
     );
 
-    @GET("getNewCourse")
-    Call<ArrayList<StCourse>> getNewCourse();
+    @GET("getCustomCourseListForHome")
+    Call<ArrayList<StCustomCourseListHome>> getCustomCourseListData();
 
     @GET("getCourseById/{id}")
     Call<ArrayList<StCourse>> getCourseById(
@@ -156,7 +157,7 @@ public interface Api {
     );
 
     @GET("getCourseForListHome/{id}")
-    Call<ArrayList<StHomeListItems>> getCourseForListHome(
+    Call<ArrayList<StCustomCourseListHome>> getCourseForListHome(
             @Path("id") int id
     );
 
@@ -312,8 +313,8 @@ public interface Api {
     @GET("getSelectedTeacher")
     Call<ArrayList<StTeacher>> selectedTeacher();
 
-    @GET("getNewTeacher")
-    Call<ArrayList<StTeacher>> newTeacher();
+    @GET("getCustomTeacherListData")
+    Call<ArrayList<StCustomTeacherListHome>> getCustomTeacherListData();
 
     @GET("getMahoorAppData")
     Call<ArrayList<StMahoorAppData>> getMahoorAppData();
