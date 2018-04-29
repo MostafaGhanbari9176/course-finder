@@ -29,4 +29,6 @@ public class PrefKey {
     public static final String teacherImageHelp = "four";
     /////////////////////////
     public static final String hacked = "hacked";
+
+    public static final String smsListReady = "smslistready";
 }

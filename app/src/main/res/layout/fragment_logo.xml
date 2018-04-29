@@ -30,9 +30,10 @@
                 android:id="@+id/pbLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="false"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="false"
-                android:layout_centerInParent="true" />
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="64dp" />
 
         </RelativeLayout>
     </LinearLayout>

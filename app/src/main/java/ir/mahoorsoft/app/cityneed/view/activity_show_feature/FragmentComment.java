@@ -87,10 +87,10 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
         btnAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (FragmentShowcourseFeature.issabtenamed)
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
                     getCommentData();
                 else
-                    messageFromComment("شما در این دوره ثبتنام نکرده اید");
+                    messageFromComment("ابتدا وارد حساب کاربری خود شوید");
             }
         });
     }

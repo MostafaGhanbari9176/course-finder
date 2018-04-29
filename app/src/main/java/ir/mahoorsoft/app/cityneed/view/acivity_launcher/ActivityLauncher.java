@@ -8,8 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedStatuse;
@@ -31,8 +34,20 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         G.context = this;
         G.activity = this;
         dialogProgres = new DialogProgres(this);
+        //Pref.saveBollValue(PrefKey.smsListReady, false);
+        if (!Pref.getBollValue(PrefKey.smsListReady, false))
+            setSmsTextData();
         runLogo();
 
+    }
+
+    private void setSmsTextData() {
+        ArrayList<String> smsTexts = new ArrayList<>();
+        smsTexts.add("جهت تکمیل ثبت نام به آموزشگاه مراجعه کنید");
+        smsTexts.add("ثبت نام شما تایید شد.");
+        smsTexts.add("ثبت نام شما لغو شد.");
+        LocalDatabase.addSmsText(this, smsTexts);
+        Pref.saveBollValue(PrefKey.smsListReady, true);
     }
 
     private void runLogo() {

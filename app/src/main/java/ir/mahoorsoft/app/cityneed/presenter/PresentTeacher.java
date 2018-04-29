@@ -107,11 +107,11 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
 
         void confirmTeacher(boolean flag);
 
-        void onReceiveTeacher(ArrayList<StTeacher> users);
+        void onReceiveTeacher(ArrayList<StTeacher> teachers);
 
         void onReceiveCustomeTeacherListData(ArrayList<StCustomTeacherListHome> data);
 
-        void onReceiveSelectedTeacher(ArrayList<StTeacher> users);
+        void onReceiveSelectedTeacher(ArrayList<StTeacher> teachers);
 
         void responseForMadrak(ResponseOfServer res);
     }

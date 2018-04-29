@@ -46,6 +46,7 @@ import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListHome;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTeacherListHome;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByGroupingId;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByTeacherId;
+import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityShowMoreCourse;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -169,8 +170,14 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void moreCourse(int groupingId) {
-        Intent intent = new Intent(G.context, ActivityCoursesListByGroupingId.class);
-        intent.putExtra("groupingId", groupingId);
+        Intent intent;
+        if (btnDelete.getVisibility() == View.GONE) {
+            intent = new Intent(G.context, ActivityShowMoreCourse.class);
+            intent.putExtra("groupId", groupingId);
+        } else {
+            intent = new Intent(G.context, ActivityCoursesListByGroupingId.class);
+            intent.putExtra("groupingId", groupingId);
+        }
         startActivity(intent);
     }
 
@@ -518,7 +525,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void teacherListItemClick(int position) {
-
+    public void teacherListItemClick(String ac) {
+        Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
+        intent.putExtra("id", -1);
+        intent.putExtra("teacherId", ac);
+        startActivity(intent);
     }
+
+
 }

@@ -123,6 +123,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         builder.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Pref.saveBollValue(PrefKey.profileTeacherPage, false);
                 dialog.cancel();
             }
         });

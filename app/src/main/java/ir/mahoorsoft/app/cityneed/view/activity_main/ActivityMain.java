@@ -128,6 +128,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
                     case R.id.searchNanDownHome:
                         fhome = null;
+                        navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
                         replaceContentWith(new FragmentSearch());
                         return true;
 
@@ -138,11 +139,13 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                         return true;
 
                     case R.id.teacherListNavDownHome:
+                        fhome = null;
+                        navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
+                        replaceContentWith(new FragmentTeacherList());
                         return true;
 
                     case R.id.profileNavDownHome:
                         acountCheck();
-
                         return true;
                 }
                 return false;

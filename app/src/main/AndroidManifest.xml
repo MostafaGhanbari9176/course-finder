@@ -75,6 +75,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
+            android:name=".view.courseLists.ActivityShowMoreCourse"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+        <activity
             android:name=".view.courseLists.ActivityTeacherCoursesList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

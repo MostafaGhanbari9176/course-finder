@@ -25,10 +25,10 @@ import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherListHome.Holder> {
+public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.Holder> {
 
     public interface OnClickItemTeacherList {
-        void teacherListItemClick(String ac);
+        void teacherListItemClick(int position);
     }
 
     private OnClickItemTeacherList onClickItemTeacherList;
@@ -36,7 +36,7 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
     private ArrayList<StTeacher> surce = new ArrayList<>();
 
 
-    public AdapterTeacherListHome(Context context, ArrayList<StTeacher> surce, OnClickItemTeacherList onClickItemCourseList) {
+    public AdapterTeacherList(Context context, ArrayList<StTeacher> surce, OnClickItemTeacherList onClickItemCourseList) {
         this.context = context;
         this.surce = surce;
         this.onClickItemTeacherList = onClickItemCourseList;
@@ -52,24 +52,23 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
         public Holder(View itemView) {
             super(itemView);
 
-            img = (ImageView) itemView.findViewById(R.id.imgTeacherListHome);
-            txt = (TextView) itemView.findViewById(R.id.txtTeacherListHome);
-            item = (LinearLayout) itemView.findViewById(R.id.itemTeacherListHome);
+            img = (ImageView) itemView.findViewById(R.id.imgTeacherList);
+            txt = (TextView) itemView.findViewById(R.id.txtTeacherList);
+            item = (LinearLayout) itemView.findViewById(R.id.itemTeacherList);
 
 
             DisplayMetrics displayMetrics = new DisplayMetrics();
             G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
-            LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams((width-300),(int)((width-300)/1.5));
-            int dp = G.dpToPx(16);
-            params.setMargins(dp, dp, dp, dp);
+            width = (width-10)/2;
+            LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(width,(int)(width/1.5));
             item.setLayoutParams(params);
         }
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_teacher_list_home, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_teacher_list, parent, false);
         Holder holder = new Holder(view);
         return holder;
     }
@@ -80,14 +79,14 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
         holder.txt.setText("آموزشگاه "+items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + items.pictureId + ".png")
-                .centerCrop()
+                .fitCenter()
                 .error(R.drawable.university)
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .into(holder.img);
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemTeacherList.teacherListItemClick(items.ac);
+                onClickItemTeacherList.teacherListItemClick(position);
             }
         });
     }

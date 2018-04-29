@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.Stack;
+
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
@@ -20,21 +22,19 @@ import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
  * Created by M-gh on 08-Apr-18.
  */
 
-public class FragmentGroupingList extends Fragment {
+public class FragmentGroupingList extends Fragment implements FragmentChildGroupingList.ManagePages {
+
 
     View view;
-    static ViewPager viewPager;
-    static  TabLayout tabLayout;
-    public static AdapterViewPager adapterViewPager;
-
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    AdapterViewPager adapterViewPager;
     Button btnHelp;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_grouping_list, container, false);
-        adapterViewPager = null;
-
         pointers();
         tabLayout.setupWithViewPager(viewPager);
         settingUpViewPager();
@@ -44,7 +44,6 @@ public class FragmentGroupingList extends Fragment {
     private void pointers() {
         viewPager = (ViewPager) view.findViewById(R.id.vpFragmentGroupingList);
         viewPager.setOffscreenPageLimit(10);
-
         tabLayout = (TabLayout) view.findViewById(R.id.tabLFragmentGroupingList);
         btnHelp = (Button) view.findViewById(R.id.btnHelpMe);
         btnHelp.setOnClickListener(new View.OnClickListener() {
@@ -71,40 +70,45 @@ public class FragmentGroupingList extends Fragment {
     private void settingUpViewPager() {
         adapterViewPager = new AdapterViewPager(getChildFragmentManager());
         FragmentChildGroupingList child = new FragmentChildGroupingList();
-        child.queryForGroupList(-1);
         adapterViewPager.add(child, "شاخه اصلی");
         viewPager.setAdapter(adapterViewPager);
+        adapterViewPager.notifyDataSetChanged();
+        child.managePages = this;
+        child.queryForGroupList(-1);
     }
 
-    public static void addPage(int id, String name) {
-        int currentPage = FragmentGroupingList.viewPager.getCurrentItem();
-        int count = FragmentGroupingList.adapterViewPager.getCount();
-        if ((count - 1 > currentPage)) {
-            removePages(currentPage, count);
-            updatePageData(id);
-        } else {
-            FragmentChildGroupingList child = new FragmentChildGroupingList();
-            adapterViewPager.add(child, "شاخه " + name);
-            adapterViewPager.notifyDataSetChanged();
-            View v2 = adapterViewPager.getItem(adapterViewPager.getCount() - 1).getView();
-            ((FragmentChildGroupingList) adapterViewPager.getItem(adapterViewPager.getCount() - 1)).queryForGroupList(id);
-        }
-        viewPager.setCurrentItem(adapterViewPager.getCount() - 1);
-    }
-
-    private static void updatePageData(int id) {
+    private void updatePageData(int id) {
         ((FragmentChildGroupingList) adapterViewPager.getItem(adapterViewPager.getCount() - 1)).queryForGroupList(id);
 
     }
 
-    private static void removePages(int current, int count) {
-        for (int i = 1; i < count - current - 1; i++) {
-           // adapterViewPager.getItem(adapterViewPager.getCount() - 1).onDestroyView();
+    private void removePages(int current, int count) {
+        for (int i = 1; i < count - current; i++) {
             adapterViewPager.remove();
-            adapterViewPager.notifyDataSetChanged();
+         //   adapterViewPager.notifyDataSetChanged();
         }
-
+        Stack<Fragment> fragments = adapterViewPager.fragments;
+        Stack<String> titles = adapterViewPager.titles;
+        adapterViewPager = new AdapterViewPager(getChildFragmentManager());
+        adapterViewPager.fragments.addAll(fragments);
+        adapterViewPager.titles.addAll(titles);
+        viewPager.setAdapter(adapterViewPager);
+        adapterViewPager.notifyDataSetChanged();
 
     }
 
+
+    @Override
+    public void addPage(int id, String name) {
+        int currentPage = viewPager.getCurrentItem();
+        int count = adapterViewPager.getCount();
+        if ((count - 1 > currentPage))
+            removePages(currentPage, count);
+        FragmentChildGroupingList child = new FragmentChildGroupingList();
+        adapterViewPager.add(child, "شاخه " + name);
+        adapterViewPager.notifyDataSetChanged();
+        child.managePages = this;
+        ((FragmentChildGroupingList) adapterViewPager.getItem(adapterViewPager.getCount() - 1)).queryForGroupList(id);
+        viewPager.setCurrentItem(adapterViewPager.getCount() - 1);
+    }
 }

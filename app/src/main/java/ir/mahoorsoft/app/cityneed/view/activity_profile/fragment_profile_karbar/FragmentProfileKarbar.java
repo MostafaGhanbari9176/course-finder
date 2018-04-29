@@ -144,7 +144,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
                         }
                         return true;
 
-                    case R.id.registerCourseBottomNavTeacher:
+                    case R.id.registerCourseBottomNavUser:
                         starterActivity(ActivitySabtenamList.class);
                         return true;
 

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -38,6 +39,11 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
     ArrayList<StGrouping> source = new ArrayList<>();
     DialogProgres dialogProgres;
 
+    ManagePages managePages;
+
+    public interface ManagePages {
+        void addPage(int id, String name);
+    }
 
     @Nullable
     @Override
@@ -61,7 +67,7 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
 
     @Override
     public void tabagheListItemClick(int position, int groupId) {
-        FragmentGroupingList.addPage(groupId, source.get(position).subject);
+        managePages.addPage(groupId, source.get(position).subject);
     }
 
     @Override

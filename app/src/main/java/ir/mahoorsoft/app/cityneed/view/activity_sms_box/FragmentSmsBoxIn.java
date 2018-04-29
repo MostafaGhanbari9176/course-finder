@@ -40,7 +40,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 27-Feb-18.
  */
 
-public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListIn.OnClickItemSmsList, PresentReport.OnPresentReportListener {
+public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListIn.OnClickItemSmsList, PresentReport.OnPresentReportListener, DialogGetSmsText.DialogGetSmsTextListener {
     boolean isUserChanged = true;
     int deletedMessagePotision;
     View view;
@@ -49,6 +49,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     AdapterSmsListIn adapter;
     ArrayList<StSmsBox> source = new ArrayList<>();
     TextView txtEmpty;
+    int position;
 
     @Nullable
     @Override
@@ -127,8 +128,9 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
 
     @Override
     public void seenMessage(int position) {
-        upDateSeen(position);
-        showMessage(position);
+        upDateSeen();
+        showMessage();
+        this.position = position;
     }
 
     @Override
@@ -198,7 +200,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void upDateSeen(int position) {
+    private void upDateSeen() {
         if (source.get(position).seen == 0) {
             PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
             presenterSmsBox.upDateSeen(source.get(position).id);
@@ -231,7 +233,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         presenterSmsBox.deleteMessage(source.get(deletedMessagePotision).id);
     }
 
-    private void showMessage(final int position) {
+    private void showMessage() {
         AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
         builder.setTitle("متن پیام");
         builder.setMessage(source.get(position).text);
@@ -244,61 +246,22 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         builder.setNegativeButton("پاسخ دادن", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getTextMessage(position);
+                getTextMessage();
                 dialog.cancel();
             }
         });
         builder.show();
     }
 
-    private void getTextMessage(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
-        builder.setTitle("ارسالی به " + source.get(position).tsName);
-        final EditText editText = new EditText(G.context);
-        editText.setPadding(60, 60, 60, 60);
-        editText.setGravity(Gravity.RIGHT);
-        editText.setHint("متن پیام خود را وارد کنید");
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    editText.setTextKeepState(CharCheck.faCheck(editText.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        builder.setView(editText);
-        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("ارسال", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sendMessage(position, editText.getText().toString());
-                dialog.cancel();
-            }
-        });
-        builder.show();
+    private void getTextMessage(){
+        DialogGetSmsText dialogGetSmsText = new DialogGetSmsText(G.context, this);
+        dialogGetSmsText.showDialog();
     }
 
-    private void sendMessage(int position, String text) {
+
+
+    @Override
+    public void sendindSms(String smsText) {
         dialogProgres.showProgresBar();
         int type;
         if (Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 1 || Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 2)
@@ -306,6 +269,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         else
             type = 0;
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
-        presenterSmsBox.saveSms(text, Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).tsId, source.get(position).courseId, type);
+        presenterSmsBox.saveSms(smsText, Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).tsId, source.get(position).courseId, type);
+
     }
 }
