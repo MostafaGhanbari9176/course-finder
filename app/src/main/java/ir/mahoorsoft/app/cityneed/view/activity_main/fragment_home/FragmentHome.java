@@ -198,8 +198,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onPageClick(int position, Page page) {
-        Intent intent = new Intent(G.context, ActivityCoursesListByTeacherId.class);
-        intent.putExtra("apiCode", page.data);
+        Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
+        intent.putExtra("id", -1);
+        intent.putExtra("teacherId", page.data);
         startActivity(intent);
     }
 

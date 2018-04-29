@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityProfile extends AppCompatActivity implements PresentUpload.OnPresentUploadListener, PresentTeacher.OnPresentTeacherListener {
-
+    private Toolbar tlb;
     boolean isResponseForImage = false;
     static FragmentProfileAmozeshgah teacher;
     static FragmentProfileKarbar user;
@@ -44,6 +45,16 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         G.context = this;
         dialogProgres = new DialogProgres(this);
         setContentView(R.layout.activity_profile);
+        tlb = (Toolbar) findViewById(R.id.tlbProfile);
+        setSupportActionBar(tlb);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("حساب کاربری");
+        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

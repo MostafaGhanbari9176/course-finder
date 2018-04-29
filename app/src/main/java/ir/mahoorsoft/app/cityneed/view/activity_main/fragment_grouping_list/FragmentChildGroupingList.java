@@ -36,7 +36,7 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
     View view;
     RecyclerView list;
     AdapterGroupingListName adapter;
-    ArrayList<StGrouping> source = new ArrayList<>();
+    public ArrayList<StGrouping> source = new ArrayList<>();
     DialogProgres dialogProgres;
 
     ManagePages managePages;
@@ -63,6 +63,22 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
         dialogProgres.showProgresBar();
         PresentGrouping presentGrouping = new PresentGrouping(this);
         presentGrouping.getTabaghe(pageGroupId);
+    }
+
+
+    public void setSource(ArrayList<StGrouping> data) {
+        if (dialogProgres != null)
+            dialogProgres.closeProgresBar();
+        source.clear();
+        source.addAll(data);
+        adapter = new AdapterGroupingListName(G.context, source, this);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(G.context, LinearLayoutManager.VERTICAL, false);
+        if (view == null) {
+            return;
+        }
+        list.setLayoutManager(manager);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

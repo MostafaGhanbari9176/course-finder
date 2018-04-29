@@ -383,7 +383,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         } else if (txtUpload.getText().equals("مدرک شما در انتظار تایید است")) {
             showDialogForMadrakState("مدرک یا مجوز آموزشی", "مدرک شما در انتظار تایید است,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
         } else if (txtUpload.getText().equals("مدرک شما تایید شده")) {
-            //sendMessageFTT(txtUpload.getText().toString());
+            sendMessageFTT(txtUpload.getText().toString());
         }
     }
 

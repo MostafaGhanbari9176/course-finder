@@ -4,168 +4,173 @@
     android:id="@+id/itemCourseList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:background="@color/light"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_margin="8dp">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgItemCourseList"
+                android:layout_width="@dimen/img_item"
+                android:layout_height="@dimen/img_item"
+                android:layout_marginStart="16dp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imgItemCourseList"
-                    android:layout_width="@dimen/img_item"
-                    android:layout_height="@dimen/img_item"
-                    android:layout_marginEnd="16dp" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center"
+                        android:text="نام دوره : "
+                        android:textColor="@color/dark"
+                        android:textSize="@dimen/txt_size_smal" />
+
+                    <TextView
+                        android:id="@+id/txtCourseNameItem"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:textColor="@color/dark"
+                        android:textSize="@dimen/txt_size_smal" />
 
-                        <TextView
+                </LinearLayout>
 
-                            android:id="@+id/textView21"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right|center"
-                            android:text="نام دوره : "
-                            android:textColor="@color/dark"
-                            android:textSize="@dimen/txt_size_smal" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/txtCourseNameItem"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center|start"
-                            android:maxLines="1"
-                            android:textColor="@color/dark"
-                            android:textSize="@dimen/txt_size_smal" />
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center"
+                        android:text="نام آموزشگاه : "
+                        android:textColor="@color/dark"
+                        android:textSize="@dimen/txt_size_smal" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/txtMasterNameItem"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:textColor="@color/dark"
+                        android:textSize="@dimen/txt_size_smal" />
 
-                        <TextView
-                            android:id="@+id/textView23"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right|center"
-                            android:text="نام آموزشگاه : "
-                            android:textColor="@color/dark"
-                            android:textSize="@dimen/txt_size_smal" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/txtMasterNameItem"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center|start"
-                            android:maxLines="1"
-                            android:textColor="@color/dark"
-                            android:textSize="@dimen/txt_size_smal" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center"
+                        android:text="تاریخ شروع : "
+                        android:textColor="@color/dark"
+                        android:textSize="@dimen/txt_size_smal" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/txtStartDateItem"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView24"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right|center"
-                            android:text="تاریخ شروع : "
-                            android:textColor="@color/dark"
-                            android:textSize="@dimen/txt_size_smal" />
-
-                        <TextView
-                            android:id="@+id/txtStartDateItem"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center|start"
-                            android:maxLines="1"
-                            android:textColor="@color/dark"
-                            android:textSize="@dimen/txt_size_smal" />
-
-                    </LinearLayout>
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:textColor="@color/dark"
+                        android:textSize="@dimen/txt_size_smal" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rlDeletedCourseMessage"
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlDeletedCourseMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                android:alpha="0.85"
+                android:background="@color/red"
+                android:orientation="vertical"></LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.85"
-                    android:background="@color/red"
-                    android:orientation="vertical"></LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/txtDeletedCourseMessage"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="دوره مورد نظر از سمت مدرس حذف شده است"
+                    android:textColor="@color/light" />
 
-                    <TextView
-                        android:id="@+id/txtDeletedCourseMessage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center"
-                        android:text="دوره مورد نظر از سمت مدرس حذف شده است"
-                        android:textColor="@color/light" />
-
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
-                        android:background="@drawable/circle_background"
-                        android:gravity="center"
-                        android:text="خب"
-                        android:textColor="@color/light" />
-                </LinearLayout>
-            </RelativeLayout>
-
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/circle_background"
+                    android:gravity="center"
+                    android:text="خب"
+                    android:textColor="@color/light" />
+            </LinearLayout>
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/purple_tel"
+        android:orientation="horizontal"></LinearLayout>
 
 </LinearLayout>

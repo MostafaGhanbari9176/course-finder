@@ -46,7 +46,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
     View view;
     LinearLayout btnFilter;
-    CardView btnDeleteFilter;
+    LinearLayout btnDeleteFilter;
     RadioButton rbCourseName;
     RadioButton rbTeacherName;
     RecyclerView list;
@@ -270,7 +270,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         rbCourseName = (RadioButton) view.findViewById(R.id.rbBaseOnCourseNameSearch);
         rbTeacherName = (RadioButton) view.findViewById(R.id.rbBaseOnTeacherNameSearch);
         btnFilter = (LinearLayout) view.findViewById(R.id.llbtnFilter);
-        btnDeleteFilter = (CardView) view.findViewById(R.id.llDeleteFilter);
+        btnDeleteFilter = (LinearLayout) view.findViewById(R.id.llDeleteFilter);
         txtEmpty = (TextView) view.findViewById(R.id.txtEmptySearch);
         btnDeleteFilter.setVisibility(View.GONE);
         list = (RecyclerView) view.findViewById(R.id.RVSerarch);

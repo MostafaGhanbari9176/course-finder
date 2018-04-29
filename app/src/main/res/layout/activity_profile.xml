@@ -8,6 +8,21 @@
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tlbProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+    </android.support.design.widget.AppBarLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

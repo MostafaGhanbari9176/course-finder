@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
 
 /**
@@ -72,7 +74,7 @@ public class FragmentGroupingList extends Fragment implements FragmentChildGroup
         FragmentChildGroupingList child = new FragmentChildGroupingList();
         adapterViewPager.add(child, "شاخه اصلی");
         viewPager.setAdapter(adapterViewPager);
-        adapterViewPager.notifyDataSetChanged();
+       // adapterViewPager.notifyDataSetChanged();
         child.managePages = this;
         child.queryForGroupList(-1);
     }
@@ -83,18 +85,25 @@ public class FragmentGroupingList extends Fragment implements FragmentChildGroup
     }
 
     private void removePages(int current, int count) {
+       // pointers();
         for (int i = 1; i < count - current; i++) {
             adapterViewPager.remove();
-         //   adapterViewPager.notifyDataSetChanged();
         }
+        ArrayList<ArrayList<StGrouping>> groups = new ArrayList<>();
         Stack<Fragment> fragments = adapterViewPager.fragments;
-        Stack<String> titles = adapterViewPager.titles;
+        for (int i = 0; i < fragments.size(); i++) {
+            groups.add(((FragmentChildGroupingList) (fragments.get(i))).source);
+        }
         adapterViewPager = new AdapterViewPager(getChildFragmentManager());
-        adapterViewPager.fragments.addAll(fragments);
-        adapterViewPager.titles.addAll(titles);
+        for (int i = 0; i < fragments.size(); i++) {
+            FragmentChildGroupingList child = new FragmentChildGroupingList();
+            adapterViewPager.add(child, "شاخه اصلی");
+          //  adapterViewPager.notifyDataSetChanged();
+            child.managePages = this;
+            child.setSource(groups.get(i));
+        }
         viewPager.setAdapter(adapterViewPager);
-        adapterViewPager.notifyDataSetChanged();
-
+      //  adapterViewPager.notifyDataSetChanged();
     }
 
 
