@@ -39,7 +39,7 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
     private Button btnConfirm;
     private Button btnCancel;
     private boolean isUserChanged = false;
-
+    private String confirmText = "ارسال";
 
     public interface DialogGetSmsTextListener{
         void sendindSms(String smsText);
@@ -54,6 +54,14 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
 
     }
 
+    public DialogGetSmsText(Context context, DialogGetSmsTextListener dialogGetSmsTextListener, String confirmText)
+    {
+        this.confirmText = confirmText;
+        this.context = context;
+        this.dialogGetSmsTextListener = dialogGetSmsTextListener;
+        dialog = new Dialog(context);
+    }
+
     public void showDialog() {
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = li.inflate(R.layout.dialog_get_sms_text, null, true);
@@ -61,6 +69,7 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
         btnAdd = (TextView) view.findViewById(R.id.btnAddReadySmsText);
         txtMessage = (TextView) view.findViewById(R.id.txtDialogGetSmsText);
         btnConfirm = (Button) view.findViewById(R.id.btnConfirmDialogGetSmsText);
+        btnConfirm.setText(confirmText);
         btnCancel = (Button) view.findViewById(R.id.btnCancelDialogGetSmsText);
         btnCancel.setOnClickListener(this);
         btnAdd.setOnClickListener(this);

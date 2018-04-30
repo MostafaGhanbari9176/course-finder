@@ -76,11 +76,4 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottomNavProfileUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/pink_tel"
-        app:menu="@menu/bottom_nav_menu_profile_user" />
-
 </LinearLayout>

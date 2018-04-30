@@ -30,7 +30,6 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.view.ActivityAboutUs;
-import ir.mahoorsoft.app.cityneed.view.RandomColor;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_grouping_list.FragmentGroupingList;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
@@ -96,7 +95,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         rbSelf = (RadioButton) findViewById(R.id.rbSelfMain);
         rbOther = (RadioButton) findViewById(R.id.rbOtherMain);
         llRadioGroup = (LinearLayout) findViewById(R.id.llRadioGroupMain);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.tlbProfile);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         viewNavHeder = navigationView.inflateHeaderView(R.layout.nav_header_main);

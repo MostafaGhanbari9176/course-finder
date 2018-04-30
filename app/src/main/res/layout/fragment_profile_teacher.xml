@@ -330,10 +330,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottomNavProfileTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light"
-        app:menu="@menu/bottom_nav_menu_profile_teacher" />
 </LinearLayout>

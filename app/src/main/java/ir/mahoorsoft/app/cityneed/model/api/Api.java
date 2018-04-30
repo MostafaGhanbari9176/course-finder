@@ -310,6 +310,12 @@ public interface Api {
             @Path("ac") String apiCode
     );
 
+    @FormUrlEncoded
+    @POST("confirmMoreStudent")
+    Call<ArrayList<ResponseOfServer>> confirmMoreStudent(
+            @Field("table_name") String tableName,
+            @Field("phone") String phone);
+
     @GET("getSelectedTeacher")
     Call<ArrayList<StTeacher>> selectedTeacher();
 

@@ -238,6 +238,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         txtSubscribe_down = (TextView) view.findViewById(R.id.txtSubscribe_down);
         bottomNav = (BottomNavigationView) view.findViewById(R.id.bottomNavProfileTeacher);
         bottomNav.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
+
         G.disableShiftModeNavigation(bottomNav);
         setNavigationItemListener();
         txtname = (TextView) view.findViewById(R.id.txtNameProfileTeacher);
@@ -263,7 +264,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     }
 
     private void setNavigationItemListener() {
-
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -303,8 +303,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardViewMaster.setLayoutParams(cardViewMasterParam);
-            dp = G.dpToPx(2);
-            cardViewMasterParam.setMargins(dp, dp, dp, G.dpToPx(8));
+            dp = G.dpToPx(8);
+            cardViewMasterParam.setMargins(dp, dp, dp, dp);
             cardViewMaster.addView(masterLayout);
             llCustomTeacherList.addView(cardViewMaster, cardViewMasterParam);
         }
@@ -358,8 +358,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardViewMaster.setLayoutParams(cardViewMasterParam);
-            dp = G.dpToPx(2);
-            cardViewMasterParam.setMargins(dp, dp, dp, G.dpToPx(8));
+            dp = G.dpToPx(8);
+            cardViewMasterParam.setMargins(dp, dp, dp, dp);
             cardViewMaster.addView(masterLayout);
             llCustomeCourseList.addView(cardViewMaster, cardViewMasterParam);
         }
@@ -424,8 +424,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardViewMaster.setLayoutParams(cardViewMasterParam);
-            dp = G.dpToPx(2);
-            cardViewMasterParam.setMargins(dp, dp, dp, G.dpToPx(8));
+            dp = G.dpToPx(8);
+            cardViewMasterParam.setMargins(dp, dp, dp, dp);
             cardViewMaster.addView(masterLayout);
             llitems.addView(cardViewMaster, cardViewMasterParam);
         }

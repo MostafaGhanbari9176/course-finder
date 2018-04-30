@@ -4,7 +4,6 @@ package ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +11,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,12 +39,10 @@ import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
-import ir.mahoorsoft.app.cityneed.view.acivity_launcher.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
-import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 
@@ -63,7 +59,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     DialogProgres dialogProgres;
     Typeface typeface;
     String name;
-    BottomNavigationView bottomNav;
+
     ImageView imgProfile;
     @Nullable
     @Override
@@ -93,10 +89,6 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     private void pointers() {
         imgProfile = (ImageView) view.findViewById(R.id.imgProfileUser);
         setUserImage();
-        bottomNav = (BottomNavigationView) view.findViewById(R.id.bottomNavProfileUser);
-        bottomNav.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
-        G.disableShiftModeNavigation(bottomNav);
-        setNavigationItemListener();
         dialogProgres = new DialogProgres(G.context);
         txtName = (TextView) view.findViewById(R.id.txtUserNameProfile);
         txtPhone = (TextView) view.findViewById(R.id.txtUserIdProfile);
@@ -123,45 +115,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
                 .into(imgProfile);
     }
 
-    private void setNavigationItemListener() {
 
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.messageBoxBottomNavUser:
-                        starterActivity(ActivitySmsBox.class);
-                        return true;
-
-                    case R.id.mapBottomNavUser:
-                        if (!mapIsShow) {
-                            ActivityProfile.replaceContentWith(new FragmentMap());
-                            mapIsShow = true;
-                        } else {
-                            mapIsShow = false;
-                            ActivityProfile.checkUserType();
-                        }
-                        return true;
-
-                    case R.id.registerCourseBottomNavUser:
-                        starterActivity(ActivitySabtenamList.class);
-                        return true;
-
-                    case R.id.trendingUpBottomNavUser:
-                        starterActivity(ActivityTeacherRegistering.class);
-                        return true;
-
-                    case R.id.logOutBottomNavUser:
-                        showAlertDialog("خروج از حساب", "آیا می خواهید از حساب کاربری خود خارج شوید", "بله", "خیر");
-                        return true;
-                }
-
-                return false;
-            }
-        });
-    }
 
     private void showAlertDialog(String title, String message, String buttonTrue, String btnFalse) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(G.context);

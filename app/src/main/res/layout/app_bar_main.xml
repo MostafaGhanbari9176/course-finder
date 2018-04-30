@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/tlbProfile"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:background="@color/light"
         app:itemTextColor="@color/light"
-
+        app:itemIconTint="@color/light"
         style="@style/AlertDialog.AppCompat.Light"
         app:menu="@menu/bottom_nav_menu_down_home" />
 

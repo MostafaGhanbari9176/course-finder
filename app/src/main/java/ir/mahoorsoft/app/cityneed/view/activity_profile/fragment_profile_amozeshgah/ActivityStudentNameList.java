@@ -35,6 +35,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
+import ir.mahoorsoft.app.cityneed.view.activity_sms_box.DialogGetSmsText;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSdudentNameList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -42,7 +43,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivityStudentNameList extends AppCompatActivity implements AdapterSdudentNameList.OnClickItemSdutentNameList, PresentUser.OnPresentUserLitener, PresenterSmsBox.OnPresentSmsBoxListener, PresentSabtenam.OnPresentSabtenamListaener, View.OnClickListener {
+public class ActivityStudentNameList extends AppCompatActivity implements AdapterSdudentNameList.OnClickItemSdutentNameList, PresentUser.OnPresentUserLitener, PresenterSmsBox.OnPresentSmsBoxListener, PresentSabtenam.OnPresentSabtenamListaener, View.OnClickListener, DialogGetSmsText.DialogGetSmsTextListener {
     boolean isUserChanged = true;
     AdapterSdudentNameList adapter;
     RecyclerView list;
@@ -601,5 +602,10 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         for (int i = 0; i < size; i++) {
             queryForConfirm(checkedUser.pop());
         }
+    }
+
+    @Override
+    public void sendindSms(String smsText) {
+
     }
 }

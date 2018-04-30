@@ -3,10 +3,14 @@ package ir.mahoorsoft.app.cityneed.view.activity_profile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,9 +27,13 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
+import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
+import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
+import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 
 /**
  * Created by MAHNAZ on 10/16/2017.
@@ -37,6 +45,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     static FragmentProfileAmozeshgah teacher;
     static FragmentProfileKarbar user;
     DialogProgres dialogProgres;
+    BottomNavigationView bottomNavUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +54,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         G.context = this;
         dialogProgres = new DialogProgres(this);
         setContentView(R.layout.activity_profile);
-        tlb = (Toolbar) findViewById(R.id.tlbProfile);
+        pointers();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("حساب کاربری");
@@ -53,6 +62,54 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    private void pointers(){
+        tlb = (Toolbar) findViewById(R.id.tlbProfile);
+        bottomNavUser = (BottomNavigationView)findViewById(R.id.bottomNavProfileUser);
+        bottomNavUser.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
+        G.disableShiftModeNavigation(bottomNavUser);
+        setNavigationItemListener();
+    }
+
+    private void setNavigationItemListener() {
+
+        bottomNavUser.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+
+                    case R.id.messageBoxBottomNavUser:
+                        starterActivity(ActivitySmsBox.class);
+                        return true;
+
+                    case R.id.mapBottomNavUser:
+                        if (!mapIsShow) {
+                            ActivityProfile.replaceContentWith(new FragmentMap());
+                            mapIsShow = true;
+                        } else {
+                            mapIsShow = false;
+                            ActivityProfile.checkUserType();
+                        }
+                        return true;
+
+                    case R.id.registerCourseBottomNavUser:
+                        starterActivity(ActivitySabtenamList.class);
+                        return true;
+
+                    case R.id.trendingUpBottomNavUser:
+                        starterActivity(ActivityTeacherRegistering.class);
+                        return true;
+
+                    case R.id.logOutBottomNavUser:
+                        showAlertDialog("خروج از حساب", "آیا می خواهید از حساب کاربری خود خارج شوید", "بله", "خیر");
+                        return true;
+                }
+
+                return false;
             }
         });
     }

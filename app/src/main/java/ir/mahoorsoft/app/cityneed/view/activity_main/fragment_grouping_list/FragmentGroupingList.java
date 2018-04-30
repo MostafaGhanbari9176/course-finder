@@ -45,6 +45,7 @@ public class FragmentGroupingList extends Fragment implements FragmentChildGroup
 
     private void pointers() {
         viewPager = (ViewPager) view.findViewById(R.id.vpFragmentGroupingList);
+        viewPager.setSaveFromParentEnabled(false);
         viewPager.setOffscreenPageLimit(10);
         tabLayout = (TabLayout) view.findViewById(R.id.tabLFragmentGroupingList);
         btnHelp = (Button) view.findViewById(R.id.btnHelpMe);
