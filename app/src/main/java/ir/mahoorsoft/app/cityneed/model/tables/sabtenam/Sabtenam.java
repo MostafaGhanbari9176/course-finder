@@ -18,6 +18,8 @@ public class Sabtenam {
     public interface OnSabtenamListener {
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
 
+        void onReceiveFlagForDelete(ArrayList<ResponseOfServer> res);
+
         void sendMessage(String message);
 
         void checkSabtenam(ArrayList<ResponseOfServer> res);
@@ -68,7 +70,24 @@ public class Sabtenam {
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
-                onSabtenamListener.onReceiveFlag(response.body());
+                onSabtenamListener.onReceiveFlagForDelete(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onSabtenamListener.sendMessage(Message.convertRetrofitMessage(t.toString()));
+            }
+        });
+    }
+
+    public void updateMoreCanceledFlag(String jsonData) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> methode = api.updateMoreCanceledFlag(jsonData);
+        methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
+                onSabtenamListener.onReceiveFlagForDelete(response.body());
             }
 
             @Override
@@ -82,6 +101,23 @@ public class Sabtenam {
 
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<ResponseOfServer>> methode = api.confirmStudent(sabtenamId, courseId, apiCode);
+        methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
+                onSabtenamListener.onReceiveFlag(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onSabtenamListener.sendMessage(Message.convertRetrofitMessage(t.toString()));
+            }
+        });
+    }
+
+    public void confirmMoreStudent(String jsonData) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> methode = api.confirmMoreStudent(jsonData);
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {

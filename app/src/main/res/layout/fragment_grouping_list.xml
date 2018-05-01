@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layoutDirection="rtl"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/btnHelpMe"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.02"
+            android:background="@color/orange_tel"
+            android:orientation="horizontal"></LinearLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLFragmentGroupingList"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RVFragmentGroupingList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
-            app:tabMode="scrollable" />
-    </android.support.design.widget.AppBarLayout>
+            android:layout_centerHorizontal="true" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpFragmentGroupingList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <ProgressBar
+            android:id="@+id/pbarFragmentGroupingList"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
 </LinearLayout>

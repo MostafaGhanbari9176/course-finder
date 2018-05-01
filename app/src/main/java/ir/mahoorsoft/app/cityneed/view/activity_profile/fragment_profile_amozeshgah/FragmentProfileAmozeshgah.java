@@ -71,7 +71,7 @@ import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
  */
 
 public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCallback, PresentUser.OnPresentUserLitener, View.OnClickListener, PresentTeacher.OnPresentTeacherListener {
-    ImageView imgProfile;
+
     TextView txtUpload;
     GoogleMap mMap;
     SupportMapFragment supportMapFragment;
@@ -83,10 +83,8 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     TextView txtSubject;
     DialogProgres dialogProgres;
     View view;
-    BottomNavigationView bottomNav;
     LinearLayout btnUpload;
     LinearLayout btnSubscribe;
-    RatingBar ratingBar;
 
     public int flagMadrak = 0;
     boolean haveASubscribe = false;
@@ -104,8 +102,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         settingUpMap();
         pointers();
         checkMadrak();
-        setImageSize();
-        setImgUrl();
         if (Pref.getBollValue(PrefKey.profileTeacherPage, true))
             showDialogForHelper();
         txtSubject.setText(Pref.getStringValue(PrefKey.subject, ""));
@@ -175,18 +171,18 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
                 .setTitle("خروج")
                 .setDescription("خروج از حساب کاربری")
                 .build();
-        SimpleTarget img = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.imgProfileTeacher))
+/*        SimpleTarget img = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.imgProfileTeacher))
                 .setRadius(300f)
                 .setTitle("تصویر آموزشگاه")
                 .setDescription("برای تغییر لمس کرده و نگه دارید")
-                .build();
+                .build();*/
 
 
         Spotlight.with(G.activity)
                 .setOverlayColor(ContextCompat.getColor(G.context, R.color.blue_ios))
                 .setDuration(500L)
                 .setAnimation(new DecelerateInterpolator(4f))
-                .setTargets(starter, sabtenam, add, sms, madrak, addList, logout, img)
+                .setTargets(starter, sabtenam, add, sms, madrak, addList, logout)
                 .setClosedOnTouchedOutside(true)
                 .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
                     @Override
@@ -221,26 +217,13 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     }
 
     private void pointers() {
-        ratingBar = (RatingBar) view.findViewById(R.id.ratBarTeacher);
+
         btnUpload = (LinearLayout) view.findViewById(R.id.btnUpload);
         btnSubscribe = (LinearLayout) view.findViewById(R.id.btnSubscribe);
-        imgProfile = (ImageView) view.findViewById(R.id.imgProfileTeacher);
-        imgProfile.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (Pref.getIntegerValue(PrefKey.userTypeMode, 0) != 0)
-                    selectImage();
-                return false;
-            }
-        });
         txtUpload = (TextView) view.findViewById(R.id.txtUpload);
         txtSubscribe_up = (TextView) view.findViewById(R.id.txtSubscribt_up);
         txtSubscribe_down = (TextView) view.findViewById(R.id.txtSubscribe_down);
-        bottomNav = (BottomNavigationView) view.findViewById(R.id.bottomNavProfileTeacher);
-        bottomNav.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
 
-        G.disableShiftModeNavigation(bottomNav);
-        setNavigationItemListener();
         txtname = (TextView) view.findViewById(R.id.txtNameProfileTeacher);
         txtPhone = (TextView) view.findViewById(R.id.txtPhoneProfileTeacher);
         txtLandPhone = (TextView) view.findViewById(R.id.txtLandPhoneProfileTeacher);
@@ -250,20 +233,8 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         btnSubscribe.setOnClickListener(this);
     }
 
-    private void setImageSize() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-        imgProfile.getLayoutParams().height = (int) (width / 1.5);
-    }
+    public void setNavigationItemListener(BottomNavigationView bottomNav) {
 
-    private void selectImage() {
-        Intent intent = new Intent(G.context, ActivityFiles.class);
-        intent.putExtra("isImage", true);
-        startActivityForResult(intent, 2);
-    }
-
-    private void setNavigationItemListener() {
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -411,15 +382,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         mMap.getUiSettings().setAllGesturesEnabled(false);
     }
 
-    public  void setImgUrl() {
-        Glide.with(G.context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + Pref.getStringValue(PrefKey.pictureId, "") + ".png")
-                .fitCenter()
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-                .error(R.drawable.university)
-                .into(imgProfile);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -506,22 +468,22 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     @Override
     public void responseForMadrak(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
-        ratingBar.setRating(res.code);
+        ActivityProfile.ratingBar.setRating(res.code);
         if ((new String(Base64.decode(Base64.decode(res.bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS"))
             haveASubscribe = true;
         else
             haveASubscribe = false;
 
         if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("error")) {
-            ActivityProfile.replaceContentWith(new FragmentErrorServer());
+            ActivityProfile.replaceContentWith(new FragmentErrorServer(), R.id.contentProfileTeacher);
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {
-              txtUpload.setText("بارگذاری مدرک آموزشی");
+            txtUpload.setText("بارگذاری مدرک آموزشی");
             flagMadrak = 0;
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("yesbarnotok")) {
-               txtUpload.setText("مدرک شما در انتظار تایید است");
+            txtUpload.setText("مدرک شما در انتظار تایید است");
             flagMadrak = 1;
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("barok")) {
-              txtUpload.setText("مدرک شما تایید شده");
+            txtUpload.setText("مدرک شما تایید شده");
             flagMadrak = 2;
         }
     }

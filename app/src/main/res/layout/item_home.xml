@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="100dp"
-        android:layout_height="170dp"
+        android:layout_height="150dp"
         android:layout_margin="8dp">
 
         <RelativeLayout
@@ -40,17 +40,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="2dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txtNameCourseHomeItem"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="3dp"
                         android:gravity="center"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:textSize="@dimen/txt_item_home" />
                 </LinearLayout>
 
@@ -58,17 +57,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="2dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txtMasterNameHomeItem"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="3dp"
+                        android:ellipsize="end"
                         android:gravity="center"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:textSize="@dimen/txt_item_home" />
                 </LinearLayout>
             </LinearLayout>
@@ -87,7 +86,7 @@
                     android:id="@+id/textView30"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="موارد بیشتر>>"
+                    android:text="موارد بیشتر"
                     android:textColor="@color/green_tel"
                     android:textSize="14dp"
                     android:textStyle="bold" />

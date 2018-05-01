@@ -125,7 +125,7 @@
         <RelativeLayout
             android:id="@+id/rlDeletedCourseMessage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
             android:visibility="gone">
 
             <LinearLayout
@@ -170,7 +170,7 @@
         android:layout_height="1dp"
         android:layout_marginStart="126dp"
         android:layout_marginTop="16dp"
-        android:background="@color/purple_tel"
+        android:background="@color/light_one"
         android:orientation="horizontal"></LinearLayout>
 
 </LinearLayout>

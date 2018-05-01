@@ -16,6 +16,8 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
 
         void confirmSabtenam(boolean flag);
 
+        void confirmDelete(boolean flag);
+
         void checkSabtenam(float ratBarValue);
 
 
@@ -42,9 +44,19 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
         sabtenam.updateCanceledFlag(sabtenamId, code);
     }
 
+    public void updateMoreCanceledFlag(String jsonData) {
+        Sabtenam sabtenam = new Sabtenam(this);
+        sabtenam.updateMoreCanceledFlag(jsonData);
+    }
+
     public void confirmStudent(int sabtenamId, String apiCode, int courseId) {
         Sabtenam sabtenam = new Sabtenam(this);
         sabtenam.confirmStudent(sabtenamId, apiCode, courseId);
+    }
+
+    public void confirmMoreStudent(String jsonData) {
+        Sabtenam sabtenam = new Sabtenam(this);
+        sabtenam.confirmMoreStudent(jsonData);
     }
 
     @Override
@@ -53,6 +65,14 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
             sendMessage("خطا");
         else
             onPresentSabtenamListaener.confirmSabtenam(res.get(0).code == 0 ? false : true);
+    }
+
+    @Override
+    public void onReceiveFlagForDelete(ArrayList<ResponseOfServer> res) {
+        if (res == null || res.size() == 0)
+            sendMessage("خطا");
+        else
+            onPresentSabtenamListaener.confirmDelete(res.get(0).code == 0 ? false : true);
     }
 
     @Override

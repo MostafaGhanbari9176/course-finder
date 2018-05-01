@@ -169,11 +169,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void moreCourse(int groupingId) {
+    public void moreCourse(int groupingId, String groupName) {
         Intent intent;
         if (btnDelete.getVisibility() == View.GONE) {
             intent = new Intent(G.context, ActivityShowMoreCourse.class);
             intent.putExtra("groupId", groupingId);
+            intent.putExtra("groupName", groupName);
         } else {
             intent = new Intent(G.context, ActivityCoursesListByGroupingId.class);
             intent.putExtra("groupingId", groupingId);
@@ -403,7 +404,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
             if (items.get(i).empty == 0) {
                 RecyclerView list = new RecyclerView(G.context);
-                AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this);
+                AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this, items.get(i).groupSubject);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                         , LinearLayoutManager.HORIZONTAL, false);
                 list.setLayoutManager(layoutManager);
@@ -447,10 +448,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     }
 
-    @Override
-    public void tabagheNahaei() {
-        dialogProgres.closeProgresBar();
-    }
 
     @Override
     public void sendMessageFTabagheT(String message) {

@@ -38,19 +38,28 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
 
         void itemClick(int id, String teacherId);
 
-        void moreCourse(int groupingId);
+        void moreCourse(int groupingId, String groupName);
 
     }
 
     setOnClickItem setOnClickItem;
     Context context;
     ArrayList<StCourse> surce = new ArrayList<>();
+    String groupName = "";
 
     public AdapterHomeLists(Context context, ArrayList<StCourse> surce
             , setOnClickItem setOnClickItem) {
         this.context = context;
         this.surce = surce;
         this.setOnClickItem = setOnClickItem;
+    }
+
+    public AdapterHomeLists(Context context, ArrayList<StCourse> surce
+            , setOnClickItem setOnClickItem, String groupName) {
+        this.context = context;
+        this.surce = surce;
+        this.setOnClickItem = setOnClickItem;
+        this.groupName = groupName;
     }
 
     public class Holder extends RecyclerView.ViewHolder {
@@ -106,7 +115,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                     if (items.endOfList == 0)
                         setOnClickItem.itemClick(items.id, items.idTeacher);
                     else
-                        setOnClickItem.moreCourse(items.idTabaghe);
+                        setOnClickItem.moreCourse(items.idTabaghe, groupName);
                 }
             });
 

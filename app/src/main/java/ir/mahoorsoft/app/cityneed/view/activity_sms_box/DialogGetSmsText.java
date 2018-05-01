@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,7 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
+
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
@@ -41,21 +44,20 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
     private boolean isUserChanged = false;
     private String confirmText = "ارسال";
 
-    public interface DialogGetSmsTextListener{
+    public interface DialogGetSmsTextListener {
         void sendindSms(String smsText);
     }
 
     DialogGetSmsTextListener dialogGetSmsTextListener;
 
-   public DialogGetSmsText(Context context, DialogGetSmsTextListener dialogGetSmsTextListener) {
+    public DialogGetSmsText(Context context, DialogGetSmsTextListener dialogGetSmsTextListener) {
         this.context = context;
         this.dialogGetSmsTextListener = dialogGetSmsTextListener;
         dialog = new Dialog(context);
 
     }
 
-    public DialogGetSmsText(Context context, DialogGetSmsTextListener dialogGetSmsTextListener, String confirmText)
-    {
+    public DialogGetSmsText(Context context, DialogGetSmsTextListener dialogGetSmsTextListener, String confirmText) {
         this.confirmText = confirmText;
         this.context = context;
         this.dialogGetSmsTextListener = dialogGetSmsTextListener;
@@ -113,16 +115,21 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnAddReadySmsText :
+        switch (v.getId()) {
+            case R.id.btnAddReadySmsText:
                 getTextMessage();
                 break;
 
-            case R.id.btnConfirmDialogGetSmsText :
-                dialogGetSmsTextListener.sendindSms(txtMessage.getText().toString());
+            case R.id.btnConfirmDialogGetSmsText:
+                if (TextUtils.isEmpty(txtMessage.getText().toString().trim()))
+                    txtMessage.setError("لطفا متن پیام خود را وارد کنید.");
+                else {
+                    dialogGetSmsTextListener.sendindSms(txtMessage.getText().toString());
+                    closeDialog();
+                }
                 break;
 
-            case R.id.btnCancelDialogGetSmsText :
+            case R.id.btnCancelDialogGetSmsText:
                 closeDialog();
                 break;
         }
@@ -175,7 +182,7 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
         builder.show();
     }
 
-    private void addSmsText(String smsText){
+    private void addSmsText(String smsText) {
         LocalDatabase.addSmsText(context, smsText);
         source.add(smsText);
         adapter.notifyDataSetChanged();

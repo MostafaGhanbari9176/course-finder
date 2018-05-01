@@ -14,7 +14,6 @@ public class PresentGrouping implements Grouping.OnTabagheListener {
     public interface OnPresentTabagheListener {
         void onResiveTabaghe(ArrayList<StGrouping> data);
 
-        void tabagheNahaei();
 
         void sendMessageFTabagheT(String message);
     }
@@ -34,8 +33,6 @@ public class PresentGrouping implements Grouping.OnTabagheListener {
     public void resiveData(ArrayList<StGrouping> data) {
         if (data == null || data.size() == 0)
             sendMessage("خطا");
-        else if (data.get(0).empty == 1)
-            onPresentTabagheListener.tabagheNahaei();
         else
             onPresentTabagheListener.onResiveTabaghe(data);
     }

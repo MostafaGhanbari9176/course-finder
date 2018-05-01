@@ -87,6 +87,9 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
         if (items.status == 0) {
             holder.cardView.setCardBackgroundColor(Color.argb(100, 255, 118, 144));
         }
+        else{
+            holder.btnConfirm.setVisibility(View.GONE);
+        }
         holder.txtName.setText(items.name);
         if (showCheckBox) {
             holder.cbx.setVisibility(View.VISIBLE);

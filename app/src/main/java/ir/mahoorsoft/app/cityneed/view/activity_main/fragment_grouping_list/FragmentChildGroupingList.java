@@ -58,12 +58,7 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
         list = (RecyclerView) view.findViewById(R.id.RVFragmentGroupingList);
     }
 
-    public void queryForGroupList(int pageGroupId) {
-        dialogProgres = new DialogProgres(G.context);
-        dialogProgres.showProgresBar();
-        PresentGrouping presentGrouping = new PresentGrouping(this);
-        presentGrouping.getTabaghe(pageGroupId);
-    }
+
 
 
     public void setSource(ArrayList<StGrouping> data) {
@@ -102,11 +97,7 @@ public class FragmentChildGroupingList extends Fragment implements AdapterGroupi
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void tabagheNahaei() {
-        dialogProgres.closeProgresBar();
-        Toast.makeText(G.context, "ok", Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public void sendMessageFTabagheT(String message) {

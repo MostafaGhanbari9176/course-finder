@@ -22,6 +22,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -47,7 +50,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     boolean isUserChanged = true;
     AdapterSdudentNameList adapter;
     RecyclerView list;
-    ArrayList<StUser> surce;
+    ArrayList<StUser> source = new ArrayList<>();
     DialogProgres dialogProgres;
     TextView txt;
     int courseId;
@@ -64,7 +67,8 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     private Stack<Integer> checkedUser = new Stack<>();
     private CardView cardView;
     private int position = -1;
-    boolean queryForDelete = false;
+    String needToBeDown = "";
+    DialogGetSmsText dialogGetSmsText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,19 +89,9 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
                 onBackPressed();
             }
         });
-
         dialogProgres = new DialogProgres(this);
-        surce = new ArrayList<>();
-
-        adapter = new AdapterSdudentNameList(this, surce, this, false);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
-                , LinearLayoutManager.VERTICAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        setSource();
-
-
+        dialogGetSmsText = new DialogGetSmsText(this, this);
+        queryForData();
     }
 
     private void pointers() {
@@ -141,7 +135,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         fltbMenu.setVisibility(View.VISIBLE);
         fltbConfirm.setImageResource(R.drawable.icon_delete_red);
         if (!(smsMore || deleteMore || confirmMore)) {
-            adapter = new AdapterSdudentNameList(this, surce, this, true);
+            adapter = new AdapterSdudentNameList(this, source, this, true);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -154,7 +148,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         fltbMenu.setVisibility(View.VISIBLE);
         fltbConfirm.setImageResource(R.drawable.icon_message_box);
         if (!(smsMore || deleteMore || confirmMore)) {
-            adapter = new AdapterSdudentNameList(this, surce, this, true);
+            adapter = new AdapterSdudentNameList(this, source, this, true);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -166,7 +160,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         fltbMenu.setVisibility(View.VISIBLE);
         fltbConfirm.setImageResource(R.drawable.icon_checked);
         if (!(smsMore || deleteMore || confirmMore)) {
-            adapter = new AdapterSdudentNameList(this, surce, this, true);
+            adapter = new AdapterSdudentNameList(this, source, this, true);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -174,12 +168,11 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         smsMore = deleteMore = false;
     }
 
-    private void setSource() {
+    private void queryForData() {
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
         presentUser.getRegistrationsName(courseId);
     }
-
 
     @Override
     public void sendMessageFUT(String message) {
@@ -210,8 +203,11 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
             txt.setText("هیچ محصلی موجود نیست");
         } else {
             txt.setVisibility(View.GONE);
-            surce.addAll(students);
-            adapter = new AdapterSdudentNameList(this, surce, this, false);
+            source.addAll(students);
+            adapter = new AdapterSdudentNameList(this, source, this, false);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
+                    , LinearLayoutManager.VERTICAL, false);
+            list.setLayoutManager(layoutManager);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -219,219 +215,65 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     @Override
     public void sendSms(int position) {
-        getTextMessage(position);
+        dialogGetSmsText = new DialogGetSmsText(this, this, "ارسال پیام");
+        dialogGetSmsText.showDialog();
+        needToBeDown = "sendSms";
+        this.position = position;
     }
 
     @Override
     public void deleteSabtenam(int position) {
-        answerForDelete(position);
+        dialogGetSmsText = new DialogGetSmsText(this, this, "لغو ثبت نام");
+        dialogGetSmsText.showDialog();
+        needToBeDown = "deleteStudent";
+        this.position = position;
     }
 
     @Override
     public void confirmStudent(int position, CardView cardView) {
         this.cardView = cardView;
-        qustionForConfirm(position);
-    }
-
-    private void qustionForConfirm(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("تایید " + surce.get(position).name);
-        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("تایید", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ActivityStudentNameList.this.position = position;
-                queryForConfirm(position);
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
-
-    private void qustionForMoreConfirm() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("تایید چندین محصل");
-        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("تایید", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                confirmMoreStudent();
-                dialog.cancel();
-            }
-        });
-        builder.show();
+        dialogGetSmsText = new DialogGetSmsText(this, this, "تایید ثبت نام");
+        dialogGetSmsText.showDialog();
+        needToBeDown = "confirmStudent";
+        this.position = position;
     }
 
     private void queryForConfirm(int position) {
-        queryForDelete = false;
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.confirmStudent(surce.get(position).sabtenamId, Pref.getStringValue(PrefKey.apiCode, ""), courseId);
-    }
-
-    private void getTextMessage(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ارسالی به " + surce.get(position).name);
-        final EditText editText = new EditText(this);
-        editText.setPadding(60, 60, 60, 60);
-        editText.setGravity(Gravity.RIGHT);
-        editText.setHint("متن پیام خود را وارد کنید");
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    editText.setTextKeepState(CharCheck.faCheck(editText.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        builder.setView(editText);
-        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("ارسال", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sendMessage(position, editText.getText().toString());
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
-
-    private void getTextMessageForMoreUser() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ارسالی به چندین نفر");
-        final EditText editText = new EditText(this);
-        editText.setPadding(60, 60, 60, 60);
-        editText.setGravity(Gravity.RIGHT);
-        editText.setHint("متن پیام خود را وارد کنید");
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    editText.setTextKeepState(CharCheck.faCheck(editText.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        builder.setView(editText);
-        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("ارسال", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sendMoreMessage(editText.getText().toString());
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
-
-    private void answerForDelete(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("لغو ثبت نام " + surce.get(position).name);
-        builder.setMessage("آیا از ادامه این کار مطمعن هستید؟؟");
-        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("لغو ثبت نام", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ActivityStudentNameList.this.position = position;
-                queryForDelete(position);
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
-
-    private void answerForMoreDelete() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("حذف ثبت نام ");
-        builder.setMessage("آیا از ادامه این کار مطمعن هستید؟؟");
-        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("لغو ثبت نام", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                deleteMore();
-                dialog.cancel();
-            }
-        });
-        builder.show();
+        presentSabtenam.confirmStudent(source.get(position).sabtenamId, Pref.getStringValue(PrefKey.apiCode, ""), courseId);
     }
 
     private void deleteMore() {
         checkedUser.clear();
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        JSONObject dataJson = new JSONObject();
         int size = AdapterSdudentNameList.checkedUser.size();
         for (int i = 0; i < size; i++) {
-            queryForDelete(checkedUser.pop());
+            JSONObject studentJson = new JSONObject();
+            try {
+                studentJson.put("sabtenamId", source.get(position).sabtenamId);
+                studentJson.put("courseId", courseId);
+                studentJson.put("ac",  Pref.getStringValue(PrefKey.apiCode, ""));
+                dataJson.put(""+i, dataJson.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+
+        queryForMoreDelete(dataJson.toString());
+    }
+
+    private void queryForMoreDelete(String jsonData){
+        dialogProgres.showProgresBar();
+        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+        presentSabtenam.updateMoreCanceledFlag(jsonData);
     }
 
     private void queryForDelete(int position) {
-        queryForDelete = true;
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.updateCanceledFlag(surce.get(position).sabtenamId, 1);
+        presentSabtenam.updateCanceledFlag(source.get(position).sabtenamId, 1);
     }
 
     private void sendMessage(int position, String text) {
@@ -442,7 +284,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         else
             type = 0;
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
-        presenterSmsBox.saveSms(text, Pref.getStringValue(PrefKey.apiCode, ""), surce.get(position).apiCode, courseId, type);
+        presenterSmsBox.saveSms(text, Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).apiCode, courseId, type);
     }
 
     @Override
@@ -486,11 +328,20 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
         dialogProgres.closeProgresBar();
         if (flag) {
-            if (queryForDelete)
-                deleteItems();
-            else
-                changeClorItems();
-           removeWaiting = true;
+            changeClorItems();
+            removeWaiting = true;
+            sendMessageFUT("انجام شد");
+        } else
+            sendMessageFUT("خطا!!!");
+        position = -1;
+    }
+
+    @Override
+    public void confirmDelete(boolean flag) {
+        dialogProgres.closeProgresBar();
+        if (flag) {
+            deleteItems();
+            removeWaiting = true;
             sendMessageFUT("انجام شد");
         } else
             sendMessageFUT("خطا!!!");
@@ -502,13 +353,13 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
         int size = AdapterSdudentNameList.checkedUser.size();
         if (size == 0 && position != -1) {
-            surce.remove(position);
+            source.remove(position);
             adapter.notifyItemRemoved(position);
             adapter.notifyItemRangeChanged(position, adapter.getItemCount());
         } else if (size != 0) {
             for (int i = 0; i < size; i++) {
                 int position = checkedUser.pop();
-                surce.remove(position);
+                source.remove(position);
                 adapter.notifyItemRemoved(position);
                 adapter.notifyItemRangeChanged(position, adapter.getItemCount());
             }
@@ -569,7 +420,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     }
 
     private void removeCheckBox() {
-        adapter = new AdapterSdudentNameList(this, surce, this, false);
+        adapter = new AdapterSdudentNameList(this, source, this, false);
         confirmMore = deleteMore = smsMore = false;
         smallFltbIsShow = false;
         list.setAdapter(adapter);
@@ -578,11 +429,17 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     private void confirmAction() {
         if (smsMore) {
-            getTextMessageForMoreUser();
+            dialogGetSmsText = new DialogGetSmsText(this, this, "ازسال پیام");
+            dialogGetSmsText.showDialog();
+            needToBeDown = "sendMoreSms";
         } else if (deleteMore) {
-            answerForMoreDelete();
+            dialogGetSmsText = new DialogGetSmsText(this, this, "لغو ثبت نام");
+            dialogGetSmsText.showDialog();
+            needToBeDown = "deleteMoreStudent";
         } else if (confirmMore) {
-            qustionForMoreConfirm();
+            dialogGetSmsText = new DialogGetSmsText(this, this, "تایید ثبت نام");
+            dialogGetSmsText.showDialog();
+            needToBeDown = "confirmMoreStudent";
         }
     }
 
@@ -598,14 +455,51 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     private void confirmMoreStudent() {
         checkedUser.clear();
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        JSONObject dataJson = new JSONObject();
         int size = AdapterSdudentNameList.checkedUser.size();
         for (int i = 0; i < size; i++) {
-            queryForConfirm(checkedUser.pop());
+            JSONObject studentJson = new JSONObject();
+            try {
+                studentJson.put("sabtenamId", source.get(position).sabtenamId);
+                studentJson.put("courseId", courseId);
+                studentJson.put("ac",  Pref.getStringValue(PrefKey.apiCode, ""));
+                dataJson.put(""+i, dataJson.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+
+        queryForMoreConfirm(dataJson.toString());
+    }
+
+    private void queryForMoreConfirm(String jsonData){
+        dialogProgres.showProgresBar();
+        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+        presentSabtenam.confirmMoreStudent(jsonData);
     }
 
     @Override
     public void sendindSms(String smsText) {
-
+        switch (needToBeDown) {
+            case "confirmStudent":
+                queryForConfirm(position);
+                break;
+            case "confirmMoreStudent":
+                confirmMoreStudent();
+                break;
+            case "deleteStudent":
+                queryForDelete(position);
+                break;
+            case "deleteMoreStudent":
+                deleteMore();
+                break;
+            case "sendSms":
+                sendMessage(position, smsText);
+                break;
+            case "sendMoreSms":
+                sendMoreMessage(smsText);
+                break;
+        }
     }
 }
+

@@ -3,21 +3,29 @@ package ir.mahoorsoft.app.cityneed.view.activity_profile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
@@ -27,13 +35,10 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
+import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
-import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
-import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
-import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 
 /**
  * Created by MAHNAZ on 10/16/2017.
@@ -45,19 +50,24 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     static FragmentProfileAmozeshgah teacher;
     static FragmentProfileKarbar user;
     DialogProgres dialogProgres;
-    BottomNavigationView bottomNavUser;
+    ImageView imgAppBar;
+    static BottomNavigationView bottomNav;
+    static AppBarLayout appBarLayout;
+    static NestedScrollView scrollView;
+    public static RatingBar ratingBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
         G.activity = this;
         G.context = this;
         dialogProgres = new DialogProgres(this);
-        setContentView(R.layout.activity_profile);
         pointers();
+        checkUserType();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("حساب کاربری");
+        getSupportActionBar().setTitle("");
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,69 +76,63 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         });
     }
 
-    private void pointers(){
-        tlb = (Toolbar) findViewById(R.id.tlbProfile);
-        bottomNavUser = (BottomNavigationView)findViewById(R.id.bottomNavProfileUser);
-        bottomNavUser.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
-        G.disableShiftModeNavigation(bottomNavUser);
-        setNavigationItemListener();
-    }
-
-    private void setNavigationItemListener() {
-
-        bottomNavUser.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private void pointers() {
+        ratingBar = (RatingBar) findViewById(R.id.ratBarProfile);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbarProfile);
+        scrollView = (NestedScrollView) findViewById(R.id.nestedScrollview);
+        bottomNav = (BottomNavigationView) findViewById(R.id.bottomNavProfileTeacher);
+        bottomNav.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
+        G.disableShiftModeNavigation(bottomNav);
+        imgAppBar = (ImageView) findViewById(R.id.app_bar_image);
+        imgAppBar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.messageBoxBottomNavUser:
-                        starterActivity(ActivitySmsBox.class);
-                        return true;
-
-                    case R.id.mapBottomNavUser:
-                        if (!mapIsShow) {
-                            ActivityProfile.replaceContentWith(new FragmentMap());
-                            mapIsShow = true;
-                        } else {
-                            mapIsShow = false;
-                            ActivityProfile.checkUserType();
-                        }
-                        return true;
-
-                    case R.id.registerCourseBottomNavUser:
-                        starterActivity(ActivitySabtenamList.class);
-                        return true;
-
-                    case R.id.trendingUpBottomNavUser:
-                        starterActivity(ActivityTeacherRegistering.class);
-                        return true;
-
-                    case R.id.logOutBottomNavUser:
-                        showAlertDialog("خروج از حساب", "آیا می خواهید از حساب کاربری خود خارج شوید", "بله", "خیر");
-                        return true;
-                }
-
+            public boolean onLongClick(View v) {
+                if (Pref.getIntegerValue(PrefKey.userTypeMode, 0) != 0)
+                    selectImage();
                 return false;
             }
         });
+        setImgUrl();
+        tlb = (Toolbar) findViewById(R.id.tlbProfile);
+        setPaletteSize();
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent(G.context, ActivityFiles.class);
+        intent.putExtra("isImage", true);
+        startActivityForResult(intent, 2);
+    }
+
+    private void setPaletteSize() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        appBarLayout.getLayoutParams().height = (int) (width / 1.5);
+    }
+
+    public void setImgUrl() {
+        Glide.with(G.context)
+                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + Pref.getStringValue(PrefKey.pictureId, "") + ".png")
+                .fitCenter()
+                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                .error(R.drawable.university)
+                .into(imgAppBar);
     }
 
     @Override
     public void onBackPressed() {
         if (user != null && user.mapIsShow) {
             user.mapIsShow = false;
-            replaceContentWith(user);
-        }
-        else {
+            replaceContentWith(user, R.id.contentProfileUser);
+        } else {
             this.finish();
             super.onBackPressed();
         }
     }
 
-    public static void replaceContentWith(Fragment fragment) {
+    public static void replaceContentWith(Fragment fragment, int contentId) {
         G.activity.getSupportFragmentManager().beginTransaction().
-                replace(R.id.contentProfile, fragment).commit();
+                replace(contentId, fragment).commit();
 
     }
 
@@ -136,7 +140,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     protected void onResume() {
         G.activity = this;
         G.context = this;
-        checkUserType();
+        //checkUserType();
         super.onResume();
     }
 
@@ -144,12 +148,16 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         switch (Pref.getIntegerValue(PrefKey.userTypeMode, 0)) {
             case 0:
                 user = new FragmentProfileKarbar();
-                replaceContentWith(user);
+                replaceContentWith(user, R.id.contentProfileUser);
+                scrollView.setVisibility(View.GONE);
+                appBarLayout.setVisibility(View.GONE);
+                bottomNav.setVisibility(View.GONE);
                 break;
             case 1:
             case 2:
                 teacher = new FragmentProfileAmozeshgah();
-                replaceContentWith(teacher);
+                replaceContentWith(teacher, R.id.contentProfileTeacher);
+                teacher.setNavigationItemListener(bottomNav);
                 break;
         }
     }
@@ -207,7 +215,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
             presentTeacher.upMs();
         } else if (res.code == 1) {
             if (teacher != null)
-                teacher.setImgUrl();
+                setImgUrl();
         } else {
             showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
         }
@@ -272,7 +280,16 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         dialogProgres.closeProgresBar();
     }
 
-
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                // if we can scroll pass the event to the superclass
+                return false;
+            default:
+                return super.onTouchEvent(ev);
+        }
+    }
 }
 
 

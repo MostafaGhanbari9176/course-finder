@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light"
+    android:background="@color/light_two"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
@@ -21,6 +21,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerHorizontal="false"
             android:layout_centerVertical="false"
+            android:layout_marginBottom="30dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="30dp"
@@ -47,7 +48,7 @@
                     android:gravity="center"
                     android:inputType="textPersonName"
                     android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_size_smal"
+                    android:textSize="@dimen/txt_size_big"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -67,7 +68,7 @@
                     android:gravity="center"
                     android:inputType="textPersonName"
                     android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_size_smal"
+                    android:textSize="@dimen/txt_size_big"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -75,5 +76,14 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavProfileUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_tel"
+        app:menu="@menu/bottom_nav_menu_profile_user"
+        app:itemIconTint="@color/light"
+        app:itemTextColor="@color/light"/>
 
 </LinearLayout>

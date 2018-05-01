@@ -33,7 +33,7 @@ import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 
 public class ActivityShowMoreCourse extends AppCompatActivity implements PresentCourse.OnPresentCourseLitener, AdapterHomeLists.setOnClickItem{
     int groupId = -1;
-    String groupingRootName;
+    String groupingRootName = "";
     ProgressBar pbar;
     LinearLayout llScrollView;
     Toolbar toolBar;
@@ -54,7 +54,7 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
                 onBackPressed();
             }
         });
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle(groupingRootName);
         getData();
     }
 
@@ -149,8 +149,8 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
             LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardViewMaster.setLayoutParams(cardViewMasterParam);
-            dp = G.dpToPx(2);
-            cardViewMasterParam.setMargins(dp, dp, dp, G.dpToPx(8));
+            dp =  G.dpToPx(8);
+            cardViewMasterParam.setMargins(dp, dp, dp, dp);
             cardViewMaster.addView(masterLayout);
             llScrollView.addView(cardViewMaster, cardViewMasterParam);
         }
@@ -170,7 +170,7 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
     }
 
     @Override
-    public void moreCourse(int groupingId) {
+    public void moreCourse(int groupingId, String groupName) {
         Intent intent = new Intent(G.context, ActivityCoursesListByGroupingId.class);
         intent.putExtra("groupingId", groupingId);
         startActivity(intent);

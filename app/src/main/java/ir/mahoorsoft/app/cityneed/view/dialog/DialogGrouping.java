@@ -136,12 +136,12 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
         dialog.show();
     }
 
-    @Override
+/*    @Override
     public void tabagheNahaei() {
         closeProgresBar();
         idSaver.pop();
         txtToolBar.setText("زیر دسته ایی موجود نیست");
-    }
+    }*/
 
     @Override
     public void sendMessageFTabagheT(String message) {

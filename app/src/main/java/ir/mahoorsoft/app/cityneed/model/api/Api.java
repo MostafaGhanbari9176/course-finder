@@ -254,6 +254,11 @@ public interface Api {
             @Path("code") int code
     );
 
+    @GET("updateCanceledFlag/{data}")
+    Call<ArrayList<ResponseOfServer>> updateMoreCanceledFlag(
+            @Path("data") String data
+    );
+
     @GET("saveComment/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}")
     Call<ArrayList<ResponseOfServer>> saveComment(
             @Path("commentText") String commentText,
@@ -310,11 +315,10 @@ public interface Api {
             @Path("ac") String apiCode
     );
 
-    @FormUrlEncoded
-    @POST("confirmMoreStudent")
+    @GET("confirmMoreStudent/{data}")
     Call<ArrayList<ResponseOfServer>> confirmMoreStudent(
-            @Field("table_name") String tableName,
-            @Field("phone") String phone);
+            @Path("data") String jsonData
+            );
 
     @GET("getSelectedTeacher")
     Call<ArrayList<StTeacher>> selectedTeacher();
