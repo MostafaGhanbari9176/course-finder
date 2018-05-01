@@ -254,7 +254,7 @@ public interface Api {
             @Path("code") int code
     );
 
-    @GET("updateCanceledFlag/{data}")
+    @GET("updateMoreCanceledFlag/{data}")
     Call<ArrayList<ResponseOfServer>> updateMoreCanceledFlag(
             @Path("data") String data
     );

@@ -3,6 +3,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozes
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -247,24 +249,23 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     private void deleteMore() {
         checkedUser.clear();
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
-        JSONObject dataJson = new JSONObject();
+        JSONArray array = new JSONArray();
         int size = AdapterSdudentNameList.checkedUser.size();
         for (int i = 0; i < size; i++) {
-            JSONObject studentJson = new JSONObject();
             try {
-                studentJson.put("sabtenamId", source.get(position).sabtenamId);
-                studentJson.put("courseId", courseId);
-                studentJson.put("ac",  Pref.getStringValue(PrefKey.apiCode, ""));
-                dataJson.put(""+i, dataJson.toString());
+                JSONObject object = new JSONObject();
+                object.put("sabtenamId", source.get(checkedUser.pop()).sabtenamId);
+                object.put("courseId", courseId);
+                object.put("ac", Pref.getStringValue(PrefKey.apiCode, ""));
+                array.put(object);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
-        queryForMoreDelete(dataJson.toString());
+        queryForMoreDelete(array.toString());
     }
 
-    private void queryForMoreDelete(String jsonData){
+    private void queryForMoreDelete(String jsonData) {
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.updateMoreCanceledFlag(jsonData);
@@ -334,6 +335,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         } else
             sendMessageFUT("خطا!!!");
         position = -1;
+        onClick(findViewById(R.id.fltbCancelActivityList));
     }
 
     @Override
@@ -346,6 +348,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         } else
             sendMessageFUT("خطا!!!");
         position = -1;
+        onClick(findViewById(R.id.fltbCancelActivityList));
     }
 
     private void deleteItems() {
@@ -455,24 +458,24 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     private void confirmMoreStudent() {
         checkedUser.clear();
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
-        JSONObject dataJson = new JSONObject();
+        JSONArray array = new JSONArray();
         int size = AdapterSdudentNameList.checkedUser.size();
         for (int i = 0; i < size; i++) {
-            JSONObject studentJson = new JSONObject();
             try {
-                studentJson.put("sabtenamId", source.get(position).sabtenamId);
-                studentJson.put("courseId", courseId);
-                studentJson.put("ac",  Pref.getStringValue(PrefKey.apiCode, ""));
-                dataJson.put(""+i, dataJson.toString());
+                JSONObject object = new JSONObject();
+                object.put("sabtenamId", source.get(checkedUser.pop()).sabtenamId);
+                object.put("courseId", courseId);
+                object.put("ac", Pref.getStringValue(PrefKey.apiCode, ""));
+                array.put(object);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
-        queryForMoreConfirm(dataJson.toString());
+        queryForMoreConfirm(array.toString());
     }
 
-    private void queryForMoreConfirm(String jsonData){
+    private void queryForMoreConfirm(String jsonData) {
+
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.confirmMoreStudent(jsonData);

@@ -318,6 +318,11 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     @Override
+    public void confirmDelete(boolean flag) {
+
+    }
+
+    @Override
     public void checkSabtenam(float ratBarValue) {
         if (ratBarValue == -1) {
             txtNews.setVisibility(View.GONE);

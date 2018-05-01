@@ -229,6 +229,11 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
     }
 
     @Override
+    public void confirmDelete(boolean flag) {
+
+    }
+
+    @Override
     public void checkSabtenam(float ratBarValue) {
 
     }

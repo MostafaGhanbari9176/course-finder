@@ -21,6 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 
 import ir.mahoorsoft.app.cityneed.view.BlurBuilder;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityStudentNameList;
+import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSdudentNameList;
 
 /**
  * Created by M-gh on 07-Oct-17.
@@ -38,6 +40,7 @@ public class G extends Application {
         super.onCreate();
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
+
 
     }
 
