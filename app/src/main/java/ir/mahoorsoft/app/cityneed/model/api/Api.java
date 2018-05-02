@@ -248,15 +248,20 @@ public interface Api {
             @Path("courseId") int code
     );
 
-    @GET("updateCanceledFlag/{sabtenamId}/{code}")
+    @GET("updateCanceledFlag/{sabtenamId}/{code}/{courseId}/{message}/{tsId}/{rsId}")
     Call<ArrayList<ResponseOfServer>> updateCanceledFlag(
             @Path("sabtenamId") int sabtenamId,
-            @Path("code") int code
+            @Path("code") int code,
+            @Path("courseId") int courseId,
+            @Path("message") String message,
+            @Path("tsId") String tsId,
+            @Path("rsId") String rsId
     );
 
-    @GET("updateMoreCanceledFlag/{data}")
+    @GET("updateMoreCanceledFlag/{data}/{message}")
     Call<ArrayList<ResponseOfServer>> updateMoreCanceledFlag(
-            @Path("data") String data
+            @Path("data") String data,
+            @Path("message") String message
     );
 
     @GET("saveComment/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}")
@@ -308,17 +313,20 @@ public interface Api {
             @Path("reporterId") String reporterId
     );
 
-    @GET("confirmStudent/{sabtenamId}/{ac}/{courseId}")
+    @GET("confirmStudent/{sabtenamId}/{courseId}/{message}/{tsId}/{rsId}")
     Call<ArrayList<ResponseOfServer>> confirmStudent(
             @Path("sabtenamId") int sabtenamId,
             @Path("courseId") int courseId,
-            @Path("ac") String apiCode
+            @Path("message") String message,
+            @Path("tsId") String tsId,
+            @Path("rsId") String rsId
     );
 
-    @GET("confirmMoreStudent/{data}")
+    @GET("confirmMoreStudent/{data}/{message}")
     Call<ArrayList<ResponseOfServer>> confirmMoreStudent(
-            @Path("data") String jsonData
-            );
+            @Path("data") String jsonData,
+            @Path("message") String message
+    );
 
     @GET("getSelectedTeacher")
     Call<ArrayList<StTeacher>> selectedTeacher();

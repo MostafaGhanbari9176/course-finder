@@ -31,10 +31,14 @@ public class PresentGrouping implements Grouping.OnTabagheListener {
 
     @Override
     public void resiveData(ArrayList<StGrouping> data) {
-        if (data == null || data.size() == 0)
+        if (data == null || data.size() == 0) {
             sendMessage("خطا");
-        else
+            return;
+        }
+        if (data.get(0).empty == 0)
             onPresentTabagheListener.onResiveTabaghe(data);
+        else
+            sendMessage("زیر دسته ایی موجود نیست");
     }
 
     @Override

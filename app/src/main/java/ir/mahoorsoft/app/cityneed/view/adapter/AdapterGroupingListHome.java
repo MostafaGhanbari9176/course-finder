@@ -28,7 +28,7 @@ import ir.mahoorsoft.app.cityneed.view.RandomColor;
 public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupingListHome.Holder> {
 
     public interface OnClickItemTabagheList {
-        void tabagheListItemClick(int position, int sourceNumber, int groupId);
+        void tabagheListItemClick(int position, int groupId);
     }
 
     private OnClickItemTabagheList onClickItemTabagheList;
@@ -82,7 +82,7 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
             @Override
             public void onClick(View v) {
                 setSelectedItem(holder);
-                onClickItemTabagheList.tabagheListItemClick(position, items.sourceNumber, items.id);
+                onClickItemTabagheList.tabagheListItemClick(position, items.id);
             }
         });
     }

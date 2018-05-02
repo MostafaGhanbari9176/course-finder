@@ -260,9 +260,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 else
                     Toast.makeText(this, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.btnGroupingMenu:
-                new DialogGrouping(this, this).Show();
-                break;
             case R.id.btnAboutUsMenu:
                 starterActivity(ActivityAboutUs.class);
                 break;

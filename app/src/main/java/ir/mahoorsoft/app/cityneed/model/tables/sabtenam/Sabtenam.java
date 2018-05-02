@@ -63,10 +63,10 @@ public class Sabtenam {
         });
     }
 
-    public void updateCanceledFlag(int sabtenamId, int code) {
+    public void updateCanceledFlag(int sabtenamId, int code, int courseId, String message, String tsId, String rsId) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> methode = api.updateCanceledFlag(sabtenamId, code);
+        Call<ArrayList<ResponseOfServer>> methode = api.updateCanceledFlag(sabtenamId, code, courseId, message, tsId, rsId);
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
@@ -80,10 +80,10 @@ public class Sabtenam {
         });
     }
 
-    public void updateMoreCanceledFlag(String jsonData) {
+    public void updateMoreCanceledFlag(String jsonData, String message) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> methode = api.updateMoreCanceledFlag(jsonData);
+        Call<ArrayList<ResponseOfServer>> methode = api.updateMoreCanceledFlag(jsonData, message);
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
@@ -97,10 +97,10 @@ public class Sabtenam {
         });
     }
 
-    public void confirmStudent(int sabtenamId, String apiCode, int courseId) {
+    public void confirmStudent(int sabtenamId, int courseId, String message, String tsId, String rsId) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> methode = api.confirmStudent(sabtenamId, courseId, apiCode);
+        Call<ArrayList<ResponseOfServer>> methode = api.confirmStudent(sabtenamId, courseId, message, tsId, rsId);
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
@@ -114,10 +114,10 @@ public class Sabtenam {
         });
     }
 
-    public void confirmMoreStudent(String jsonData) {
+    public void confirmMoreStudent(String jsonData, String message) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> methode = api.confirmMoreStudent(jsonData);
+        Call<ArrayList<ResponseOfServer>> methode = api.confirmMoreStudent(jsonData, message);
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {

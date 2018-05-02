@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
-import ir.mahoorsoft.app.cityneed.view.RandomColor;
 
 /**
  * Created by RCC1 on 1/30/2018.
@@ -28,19 +27,18 @@ import ir.mahoorsoft.app.cityneed.view.RandomColor;
 public class AdapterGroupingListDialog extends RecyclerView.Adapter<AdapterGroupingListDialog.Holder> {
 
     public interface OnClickItemTabagheList {
-        void tabagheListItemClick(int position, int sourceNumber, int groupId);
+        void tabagheListItemClick(int position);
     }
 
     private OnClickItemTabagheList onClickItemTabagheList;
     private Context context;
-    private ArrayList<StGrouping> surce = new ArrayList<>();
+    private ArrayList<StGrouping> source = new ArrayList<>();
     private Holder selectedItem;
 
-    public AdapterGroupingListDialog(Context context, ArrayList<StGrouping> surce, OnClickItemTabagheList onClickItemTabagheList) {
+    public AdapterGroupingListDialog(Context context, ArrayList<StGrouping> source, OnClickItemTabagheList onClickItemTabagheList) {
         this.context = context;
-        this.surce = surce;
+        this.source = source;
         this.onClickItemTabagheList = onClickItemTabagheList;
-
     }
 
     public class Holder extends RecyclerView.ViewHolder {
@@ -68,7 +66,7 @@ public class AdapterGroupingListDialog extends RecyclerView.Adapter<AdapterGroup
 
     @Override
     public void onBindViewHolder(final AdapterGroupingListDialog.Holder holder, final int position) {
-        final StGrouping items = surce.get(position);
+        final StGrouping items = source.get(position);
         holder.txtTabagheName.setText(items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
@@ -80,7 +78,7 @@ public class AdapterGroupingListDialog extends RecyclerView.Adapter<AdapterGroup
             @Override
             public void onClick(View v) {
                 setSelectedItem(holder);
-                onClickItemTabagheList.tabagheListItemClick(position, items.sourceNumber, items.id);
+                onClickItemTabagheList.tabagheListItemClick(position);
             }
         });
     }
@@ -102,7 +100,7 @@ public class AdapterGroupingListDialog extends RecyclerView.Adapter<AdapterGroup
     @Override
     public int getItemCount() {
 
-        return surce.size();
+        return source.size();
     }
 
 

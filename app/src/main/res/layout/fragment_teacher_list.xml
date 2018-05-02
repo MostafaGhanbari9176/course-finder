@@ -4,8 +4,31 @@
     android:layout_height="match_parent"
     android:layoutDirection="rtl">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/RVTeacherList"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RVTeacherList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/txtEmptyFragmentTeacherList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="هیچ آموزشگاهی موجود نیست"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/pbarFragmentTeacherList"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
 </LinearLayout>

@@ -38,25 +38,24 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
         Sabtenam sabtenam = new Sabtenam(this);
         sabtenam.checkSabtenam(idCourse, iduser);
     }
-
-    public void updateCanceledFlag(int sabtenamId, int code) {
+    public void updateCanceledFlag(int sabtenamId, int code, int courseId, String message, String tsId, String rsId) {
         Sabtenam sabtenam = new Sabtenam(this);
-        sabtenam.updateCanceledFlag(sabtenamId, code);
+        sabtenam.updateCanceledFlag(sabtenamId, code, courseId, message, tsId, rsId);
     }
 
-    public void updateMoreCanceledFlag(String jsonData) {
+    public void updateMoreCanceledFlag(String jsonData, String message) {
         Sabtenam sabtenam = new Sabtenam(this);
-        sabtenam.updateMoreCanceledFlag(jsonData);
+        sabtenam.updateMoreCanceledFlag(jsonData, message);
     }
 
-    public void confirmStudent(int sabtenamId, String apiCode, int courseId) {
+    public void confirmStudent(int sabtenamId, int courseId, String message, String tsId, String rsId) {
         Sabtenam sabtenam = new Sabtenam(this);
-        sabtenam.confirmStudent(sabtenamId, apiCode, courseId);
+        sabtenam.confirmStudent(sabtenamId, courseId, message, tsId, rsId);
     }
 
-    public void confirmMoreStudent(String jsonData) {
+    public void confirmMoreStudent(String jsonData, String message) {
         Sabtenam sabtenam = new Sabtenam(this);
-        sabtenam.confirmMoreStudent(jsonData);
+        sabtenam.confirmMoreStudent(jsonData, message);
     }
 
     @Override

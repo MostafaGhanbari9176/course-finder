@@ -24,7 +24,6 @@ public class DialogProgres {
         this.context = context;
         this.message = messqge;
         dialog = new Dialog(context);
-
     }
 
     public DialogProgres(Context context) {
@@ -44,7 +43,7 @@ public class DialogProgres {
         dialog.setContentView(view);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
-        dialog.setCancelable(false);
+        //dialog.setCancelable(false);
     }
 
     public void closeProgresBar() {

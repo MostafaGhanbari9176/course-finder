@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,10 +54,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     ArrayList<StCourse> source = new ArrayList<>();
     ArrayList<StCourse> helpSource = new ArrayList<>();
     AdapterCourseList adapter;
-    DialogProgres dialogProgres;
     TextView txtSearch;
     TextView txtEmpty;
-
+    ProgressBar pbar;
     private View dialogView;
     private Dialog dialog;
     private Button btnStartDate;
@@ -85,7 +85,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void init() {
-        dialogProgres = new DialogProgres(G.context);
         pointers();
         getDataFromServer();
         runTxtSerachListener();
@@ -119,7 +118,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void getDataFromServer() {
-        dialogProgres.showProgresBar();
+        pbar.setVisibility(View.VISIBLE);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getAllCourse();
     }
@@ -182,7 +181,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void sendFilterForServer() {
-        dialogProgres.showProgresBar();
+        pbar.setVisibility(View.VISIBLE);
         isFilterRes = true;
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseByFilter(minOld, maxOld, sD, eD, groupId == 0 ? -1 : groupId, day.length() == 0 ? "-1" : day);
@@ -265,6 +264,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void pointers() {
+        pbar = (ProgressBar) view.findViewById(R.id.pbarFragmentSearch);
         dialog = new Dialog(G.context);
         txtSearch = (TextView) view.findViewById(R.id.txtSearch);
         rbCourseName = (RadioButton) view.findViewById(R.id.rbBaseOnCourseNameSearch);
@@ -307,7 +307,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
     @Override
     public void sendMessageFCT(String message) {
-        dialogProgres.closeProgresBar();
+        pbar.setVisibility(View.GONE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -318,7 +318,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        dialogProgres.closeProgresBar();
+        pbar.setVisibility(View.GONE);
         dialog.cancel();
         txtSearch.setBackgroundResource(R.drawable.txt_search);
         txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));

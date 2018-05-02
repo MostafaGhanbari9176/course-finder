@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,7 +36,8 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     RecyclerView list;
     AdapterTeacherList adapter;
     ArrayList<StTeacher> source = new ArrayList<>();
-    DialogProgres dialogProgres;
+    TextView txtEmpty;
+    ProgressBar pbar;
 
     @Nullable
     @Override
@@ -46,20 +49,22 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     }
 
     private void inite() {
-        dialogProgres = new DialogProgres(G.context);
+
         list = (RecyclerView) view.findViewById(R.id.RVTeacherList);
+        txtEmpty = (TextView) view.findViewById(R.id.txtEmptyFragmentTeacherList);
+        pbar = (ProgressBar) view.findViewById(R.id.pbarFragmentTeacherList);
         getData();
     }
 
     private void getData() {
-        dialogProgres.showProgresBar();
+        pbar.setVisibility(View.VISIBLE);
         PresentTeacher presentTeacher = new PresentTeacher(this);
         presentTeacher.getAllTeacher();
     }
 
     @Override
     public void sendMessageFTT(String message) {
-        dialogProgres.closeProgresBar();
+        pbar.setVisibility(View.GONE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -70,7 +75,11 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
 
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> teachers) {
-        dialogProgres.closeProgresBar();
+        pbar.setVisibility(View.GONE);
+        if (teachers.get(0).empty == 1) {
+            txtEmpty.setVisibility(View.VISIBLE);
+            return;
+        }
         source.clear();
         source.addAll(teachers);
         adapter = new AdapterTeacherList(G.context, source, this);

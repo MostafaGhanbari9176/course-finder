@@ -457,7 +457,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
 
     @Override
-    public void tabagheListItemClick(int position, int sourceNumber, int groupId) {
+    public void tabagheListItemClick(int position, int groupId) {
         dialogProgres.showProgresBar();
         queryForCourses(groupId);
     }

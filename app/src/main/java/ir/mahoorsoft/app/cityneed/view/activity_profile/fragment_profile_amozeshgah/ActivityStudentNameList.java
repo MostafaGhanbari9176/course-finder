@@ -28,6 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Stack;
 
 import ir.mahoorsoft.app.cityneed.R;
@@ -71,7 +74,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     private int position = -1;
     String needToBeDown = "";
     DialogGetSmsText dialogGetSmsText;
-
+    String ac = Pref.getStringValue(PrefKey.apiCode, "");
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,41 +243,43 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         this.position = position;
     }
 
-    private void queryForConfirm(int position) {
+    private void queryForConfirm(int position, String message) {
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.confirmStudent(source.get(position).sabtenamId, Pref.getStringValue(PrefKey.apiCode, ""), courseId);
+        presentSabtenam.confirmStudent(source.get(position).sabtenamId, courseId, message, ac, source.get(position).apiCode);
     }
 
-    private void deleteMore() {
+    private void deleteMore(String message) {
         checkedUser.clear();
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
         JSONArray array = new JSONArray();
         int size = AdapterSdudentNameList.checkedUser.size();
         for (int i = 0; i < size; i++) {
+            int position = checkedUser.pop();
             try {
                 JSONObject object = new JSONObject();
-                object.put("sabtenamId", source.get(checkedUser.pop()).sabtenamId);
+                object.put("sabtenamId", source.get(position).sabtenamId);
                 object.put("courseId", courseId);
-                object.put("ac", Pref.getStringValue(PrefKey.apiCode, ""));
+                object.put("userId", source.get(position).apiCode);
+                object.put("ac", ac);
                 array.put(object);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        queryForMoreDelete(array.toString());
+        queryForMoreDelete(array.toString(), message);
     }
 
-    private void queryForMoreDelete(String jsonData) {
+    private void queryForMoreDelete(String jsonData, String message) {
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.updateMoreCanceledFlag(jsonData);
+        presentSabtenam.updateMoreCanceledFlag(jsonData, message);
     }
 
-    private void queryForDelete(int position) {
+    private void queryForDelete(int position, String message) {
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.updateCanceledFlag(source.get(position).sabtenamId, 1);
+        presentSabtenam.updateCanceledFlag(source.get(position).sabtenamId, 1, courseId, message, ac, source.get(position).apiCode);
     }
 
     private void sendMessage(int position, String text) {
@@ -285,7 +290,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         else
             type = 0;
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
-        presenterSmsBox.saveSms(text, Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).apiCode, courseId, type);
+        presenterSmsBox.saveSms(text, ac, source.get(position).apiCode, courseId, type);
     }
 
     @Override
@@ -354,6 +359,8 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     private void deleteItems() {
         checkedUser.clear();
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        Collections.sort(checkedUser);
+        Collections.reverse(checkedUser);
         int size = AdapterSdudentNameList.checkedUser.size();
         if (size == 0 && position != -1) {
             source.remove(position);
@@ -362,9 +369,9 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         } else if (size != 0) {
             for (int i = 0; i < size; i++) {
                 int position = checkedUser.pop();
-                source.remove(position);
-                adapter.notifyItemRemoved(position);
-                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+                source.remove(position - i);
+                adapter.notifyItemRemoved(position - i);
+                adapter.notifyItemRangeChanged(position - i, adapter.getItemCount());
             }
         }
     }
@@ -455,46 +462,48 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         }
     }
 
-    private void confirmMoreStudent() {
+    private void confirmMoreStudent(String message) {
         checkedUser.clear();
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
         JSONArray array = new JSONArray();
         int size = AdapterSdudentNameList.checkedUser.size();
         for (int i = 0; i < size; i++) {
+            int position = checkedUser.pop();
             try {
                 JSONObject object = new JSONObject();
-                object.put("sabtenamId", source.get(checkedUser.pop()).sabtenamId);
+                object.put("sabtenamId", source.get(position).sabtenamId);
                 object.put("courseId", courseId);
-                object.put("ac", Pref.getStringValue(PrefKey.apiCode, ""));
+                object.put("userId", source.get(position).apiCode);
+                object.put("ac", ac);
                 array.put(object);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        queryForMoreConfirm(array.toString());
+        queryForMoreConfirm(array.toString(), message);
     }
 
-    private void queryForMoreConfirm(String jsonData) {
+    private void queryForMoreConfirm(String jsonData, String message) {
 
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.confirmMoreStudent(jsonData);
+        presentSabtenam.confirmMoreStudent(jsonData, message);
     }
 
     @Override
     public void sendindSms(String smsText) {
         switch (needToBeDown) {
             case "confirmStudent":
-                queryForConfirm(position);
+                queryForConfirm(position, smsText);
                 break;
             case "confirmMoreStudent":
-                confirmMoreStudent();
+                confirmMoreStudent(smsText);
                 break;
             case "deleteStudent":
-                queryForDelete(position);
+                queryForDelete(position, smsText);
                 break;
             case "deleteMoreStudent":
-                deleteMore();
+                deleteMore(smsText);
                 break;
             case "sendSms":
                 sendMessage(position, smsText);

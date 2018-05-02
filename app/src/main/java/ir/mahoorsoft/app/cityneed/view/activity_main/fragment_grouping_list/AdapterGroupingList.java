@@ -57,7 +57,7 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
             DisplayMetrics displayMetrics = new DisplayMetrics();
             G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
-            width = (width-500)/2;
+            width = (width-400)/2;
             LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(width, width);
             int dp = G.dpToPx(16);
             params.setMargins(dp, dp, dp, dp);
