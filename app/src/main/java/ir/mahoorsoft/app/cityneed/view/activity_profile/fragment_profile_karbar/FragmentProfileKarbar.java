@@ -285,6 +285,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
         builder.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Pref.saveBollValue(PrefKey.profileUserPage, false);
                 dialog.cancel();
             }
         });

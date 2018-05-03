@@ -137,6 +137,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
 
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> users) {
+        if (users.get(0).empty == 1) {
+            sendMessageFTT("هیچ آموزشگاهی موجود نیست !");
+            return;
+        }
         dialogProgres.closeProgresBar();
         source.addAll(users);
         dataSaved = true;
@@ -148,7 +152,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     public void onReceiveCustomeTeacherListData(ArrayList<StCustomTeacherListHome> data) {
 
     }
-
 
 
     @Override

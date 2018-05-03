@@ -164,7 +164,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             try {
                 minOld = Integer.parseInt(txtMinOld.getText().toString().trim());
                 maxOld = Integer.parseInt(txtMaxOld.getText().toString().trim());
-            }catch (Exception e){
+            } catch (Exception e) {
                 throw new Exception("لطفا رنج سنی را صحیح وارد کنید");
             }
 
@@ -196,10 +196,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
                      public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
                          if (isStartDate) {
-                             sD = year + "-" + (((monthOfYear+1)+"").length() == 1 ? "0"+(monthOfYear+1) : (monthOfYear+1)+"") + "-" + ((dayOfMonth+"").length() == 1 ? "0"+dayOfMonth : dayOfMonth+"");
+                             sD = year + "-" + (((monthOfYear + 1) + "").length() == 1 ? "0" + (monthOfYear + 1) : (monthOfYear + 1) + "") + "-" + ((dayOfMonth + "").length() == 1 ? "0" + dayOfMonth : dayOfMonth + "");
                              btnStartDate.setText(sD);
                          } else {
-                             eD = year + "-" + (((monthOfYear+1)+"").length() == 1 ? "0"+(monthOfYear+1) : (monthOfYear+1)+"") + "-" + ((dayOfMonth+"").length() == 1 ? "0"+dayOfMonth : dayOfMonth+"");
+                             eD = year + "-" + (((monthOfYear + 1) + "").length() == 1 ? "0" + (monthOfYear + 1) : (monthOfYear + 1) + "") + "-" + ((dayOfMonth + "").length() == 1 ? "0" + dayOfMonth : dayOfMonth + "");
                              btnEndDate.setText(eD);
                          }
                      }
@@ -318,40 +318,42 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        pbar.setVisibility(View.GONE);
-        dialog.cancel();
-        txtSearch.setBackgroundResource(R.drawable.txt_search);
-        txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
-        if (isFilterRes) {
-            btnDeleteFilter.setVisibility(View.VISIBLE);
-            isFilterRes = false;
-        }
-        if (course.size() == 0 || course.get(0).empty == 1) {
-            txtEmpty.setVisibility(View.VISIBLE);
-            source.clear();
+        try {
+            pbar.setVisibility(View.GONE);
+            dialog.cancel();
+            txtSearch.setBackgroundResource(R.drawable.txt_search);
+            txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
+            if (isFilterRes) {
+                btnDeleteFilter.setVisibility(View.VISIBLE);
+                isFilterRes = false;
+            }
+            if (course.size() == 0 || course.get(0).empty == 1) {
+                txtEmpty.setVisibility(View.VISIBLE);
+                source.clear();
+                adapter = new AdapterCourseList(G.context, source, this);
+                list.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                return;
+            } else
+                txtEmpty.setVisibility(View.GONE);
+            if (source != course) {
+                source.clear();
+                source.addAll(course);
+
+            }
+            if (helpSource != course) {
+                helpSource.clear();
+                helpSource.addAll(course);
+            }
             adapter = new AdapterCourseList(G.context, source, this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                    , LinearLayoutManager.VERTICAL, false);
+            list.setLayoutManager(layoutManager);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-            return;
-        } else
-            txtEmpty.setVisibility(View.GONE);
-        if (source != course) {
-            source.clear();
-            source.addAll(course);
-
+        } catch (Exception e) {
         }
-        if (helpSource != course) {
-            helpSource.clear();
-            helpSource.addAll(course);
-        }
-        adapter = new AdapterCourseList(G.context, source, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.VERTICAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
-
 
 
     @Override
