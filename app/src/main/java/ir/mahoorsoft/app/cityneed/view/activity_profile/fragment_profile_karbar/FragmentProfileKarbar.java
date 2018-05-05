@@ -141,7 +141,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
                             mapIsShow = true;
                         } else {
                             mapIsShow = false;
-                            ActivityProfile.checkUserType();
+                            ActivityProfile.replaceContentWith(new FragmentProfileKarbar(), R.id.contentProfileUser);
                         }
                         return true;
 

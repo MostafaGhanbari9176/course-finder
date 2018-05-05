@@ -76,7 +76,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         setContentView(R.layout.activity_registery_course);
         G.activity = this;
         G.context = this;
-        dialogProgres = new DialogProgres(this);
+        dialogProgres = new DialogProgres(this, false);
         pointers();
         setFont();
         checkTxtInput();
@@ -288,6 +288,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
                     }
                 }, 2, 2, true);
+
         timePickerDialog.show();
     }
 
@@ -401,7 +402,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     }
 
     private void uploadImage(String path) {
-        dialogProgres = new DialogProgres(this, "درحال بارگذاری");
+        dialogProgres = new DialogProgres(this, "درحال بارگذاری", false);
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
         presentUpload.uploadFile("course", id + ".png", path);

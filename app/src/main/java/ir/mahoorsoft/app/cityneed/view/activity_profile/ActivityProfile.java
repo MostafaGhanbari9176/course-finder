@@ -14,12 +14,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
+import com.takusemba.spotlight.OnSpotlightEndedListener;
+import com.takusemba.spotlight.OnSpotlightStartedListener;
+import com.takusemba.spotlight.SimpleTarget;
+import com.takusemba.spotlight.Spotlight;
 
 import java.util.ArrayList;
 
@@ -144,7 +149,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         super.onResume();
     }
 
-    public static void checkUserType() {
+    public void checkUserType() {
         switch (Pref.getIntegerValue(PrefKey.userTypeMode, 0)) {
             case 0:
                 user = new FragmentProfileKarbar();
@@ -156,6 +161,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
             case 1:
             case 2:
                 teacher = new FragmentProfileAmozeshgah();
+                teacher.object = this;
                 replaceContentWith(teacher, R.id.contentProfileTeacher);
                 teacher.setNavigationItemListener(bottomNav);
                 break;
@@ -172,7 +178,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
             }
             if (resultCode == RESULT_OK) {
                 if (requestCode == 1)
-                    uploadFile(data.getStringExtra("path"));
+                    teacher.uploadFile(data.getStringExtra("path"));
                 else if (requestCode == 2)
                     uploadImage(data.getStringExtra("path"));
             }
@@ -181,15 +187,6 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
             Toast.makeText(ActivityProfile.this, ex.toString(),
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void uploadFile(String path) {
-        isResponseForImage = false;
-        dialogProgres = new DialogProgres(this, "درحال بارگذاری");
-        dialogProgres.showProgresBar();
-        PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.phone, "") + ".pdf", path);
-
     }
 
     private void uploadImage(String path) {
@@ -221,6 +218,12 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         }
     }
 
+    public void getFilesPath(){
+        Intent intent = new Intent(G.context, ActivityFiles.class);
+        intent.putExtra("isImage", false);
+        startActivityForResult(intent, 1);
+    }
+
     private void showAlertDialog(String title, String message, String buttonTrue, String btnFalse) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(G.context);
         alertDialog.setTitle(title);
@@ -240,6 +243,80 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
             }
         });
         alertDialog.show();
+    }
+
+    public void runHelperForTeacher() {
+
+        SimpleTarget starter = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.registerCourseBottomNavTeacher))
+                .setRadius(1f)
+                .setTitle("تبریک و تشکر از اینکه به ما در جهت توسعه کسب و کار خود اعتماد کردید")
+                .setDescription("در ابتدا باید شما از سمت ما تایید اعتبار شوید سپس می توانید دوره های خود را ثبت کنید پس از ثیت هر دوره محصلین می توانند درخواست ثبتنام دهند و پس از تایید از جانب شما از طریق برنامه و مراجعه حضوری محصل ثبتنام نهایی می شود.")
+                .build();
+
+        SimpleTarget sabtenam = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.registerCourseBottomNavTeacher))
+                .setRadius(100f)
+                .setTitle("لیست")
+                .setDescription("لیست دوره های ثبتنام شده")
+                .build();
+        SimpleTarget add = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.addedCourseBottomNavTeacher))
+                .setRadius(100f)
+                .setTitle("دوره")
+                .setDescription("اضافه کردن دوره")
+                .build();
+        SimpleTarget sms = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.messageBoxBottomNavTeacher))
+                .setRadius(100f)
+                .setTitle("صندوق پیام")
+                .setDescription("پیام های ارسالی و دریافتی برای شما")
+                .build();
+
+        SimpleTarget madrak = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.btnUpload))
+                .setRadius(300f)
+                .setTitle("مدرک یا مجوز آموزشی")
+                .setDescription("جهت بارگزاری مدرک از این قسمت اقدام کنید")
+                .build();
+
+        SimpleTarget subscribe = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.btnSubscribe))
+                .setRadius(300f)
+                .setTitle("مدرک یا مجوز آموزشی")
+                .setDescription("جهت بارگزاری مدرک از این قسمت اقدام کنید")
+                .build();
+
+        SimpleTarget addList = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.addListBottomNavTeacher))
+                .setRadius(100f)
+                .setTitle("لیست دوره")
+                .setDescription("لیست دوره های اضافه شده توسط شما")
+                .build();
+        SimpleTarget logout = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.logOutBottomNavTeacher))
+                .setRadius(100f)
+                .setTitle("خروج")
+                .setDescription("خروج از حساب کاربری")
+                .build();
+
+        SimpleTarget img = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.app_bar_image))
+                .setRadius(300f)
+                .setTitle("تصویر آموزشگاه")
+                .setDescription("برای تغییر لمس کرده و نگه دارید")
+                .build();
+
+        Spotlight.with(G.activity)
+                .setOverlayColor(ContextCompat.getColor(G.context, R.color.blue_ios))
+                .setDuration(500L)
+                .setAnimation(new DecelerateInterpolator(4f))
+                .setTargets(starter, sabtenam, add, sms, addList, logout, madrak, subscribe, img)
+                .setClosedOnTouchedOutside(true)
+                .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
+                    @Override
+                    public void onStarted() {
+
+                    }
+                })
+                .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
+                    @Override
+                    public void onEnded() {
+                        Pref.saveBollValue(PrefKey.profileTeacherPage, false);
+                    }
+                })
+                .start();
     }
 
     @Override

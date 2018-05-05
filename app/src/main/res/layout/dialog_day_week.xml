@@ -218,14 +218,22 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btnConfirmDayDialog"
+                <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:background="@drawable/btn_dark_eq"
-                    android:text="تایید"
-                    android:textColor="@color/light" />
+                    app:cardBackgroundColor="@color/dark_eq"
+                    app:cardCornerRadius="20dp">
+
+                    <Button
+                        android:id="@+id/btnConfirmDayDialog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:text="تایید"
+                        android:textColor="@color/light" />
+                </android.support.v7.widget.CardView>
+
             </LinearLayout>
 
         </LinearLayout>

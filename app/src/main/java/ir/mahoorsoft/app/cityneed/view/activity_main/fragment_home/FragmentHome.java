@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,11 +66,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     private InfiniteIndicator mAnimCircleIndicator;
     View view;
     RecyclerView groupingList;
-    DialogProgres dialogProgres;
     TextView txtEmpty;
     public static int id = -1;
     ProgressBar pbarSelectedTeacherList;
     TextView txtEmptySelectedTeacherList;
+    RelativeLayout rlPbar;
+
 
     @Nullable
     @Override
@@ -80,13 +82,11 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void init() {
-        dialogProgres = new DialogProgres(G.context);
         pointer();
         getCustomCourseListData();
         getSelectedTeacher();
         getCustomTeacherListData();
         queeyForGroupingListData();
-        dialogProgres.showProgresBar();
         queryForCourses(id);
 
     }
@@ -123,13 +123,14 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             btnDelete.setVisibility(View.GONE);
         else
             btnDelete.setVisibility(View.VISIBLE);
-        dialogProgres.showProgresBar();
+        rlPbar.setVisibility(View.VISIBLE);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseForListHome(groupId);
     }
 
     private void pointer() {
         // (view.findViewById(R.id.llViewPager)).setBackgroundColor(RandomColor.randomColor(G.context));
+        rlPbar = (RelativeLayout) view.findViewById(R.id.rlPbarFragmentHome);
         btnDelete = (CardView) view.findViewById(R.id.btnDeletGroupingHome);
         llViewPager = (LinearLayout) view.findViewById(R.id.llViewPager);
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +232,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void sendMessageFCT(String message) {
-        dialogProgres.closeProgresBar();
+        rlPbar.setVisibility(View.GONE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -247,7 +248,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
-        dialogProgres.closeProgresBar();
+        rlPbar.setVisibility(View.GONE);
         creatListsByGrouping(items);
     }
 
@@ -416,7 +417,13 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
                 textEmpty.setTextColor(ContextCompat.getColor(G.context, R.color.pink_tel));
                 textEmpty.setTypeface(textView.getTypeface(), Typeface.BOLD);
                 textEmpty.setText("موجود نیست");
-                cardView.addView(textEmpty, textParams);
+
+                LinearLayout.LayoutParams textEmptyParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                textEmptyParams.setMargins(dp, dp, dp, dp);
+                textEmpty.setLayoutParams(textEmptyParams);
+                textEmpty.setGravity(Gravity.CENTER);
+                cardView.addView(textEmpty);
             }
 
 
@@ -451,20 +458,17 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void sendMessageFTabagheT(String message) {
-        dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void tabagheListItemClick(int position, int groupId) {
-        dialogProgres.showProgresBar();
         queryForCourses(groupId);
     }
 
     @Override
     public void sendMessageFTT(String message) {
-        dialogProgres.closeProgresBar();
         pbarSelectedTeacherList.setVisibility(View.GONE);
         txtEmptySelectedTeacherList.setVisibility(View.VISIBLE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
@@ -477,9 +481,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> data) {
-        dialogProgres.closeProgresBar();
-        if (data == null || data.size() == 0 || data.get(0).empty == 1)
-            return;
 
     }
 
@@ -506,15 +507,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             pageViews.add(new Page(data.get(i).ac, ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + data.get(i).pictureId + ".png", this));
         }
         settingUpVPager();
-
-
-/*        RecyclerView list = (RecyclerView) view.findViewById(R.id.RVSelectedTeacherHome);
-        AdapterTeacherListHome adapter = new AdapterTeacherListHome(G.context, data, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                , LinearLayoutManager.HORIZONTAL, false);
-        list.setLayoutManager(layoutManager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();*/
     }
 
     @Override

@@ -85,7 +85,6 @@
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/circleImageView2"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_alignParentStart="false"

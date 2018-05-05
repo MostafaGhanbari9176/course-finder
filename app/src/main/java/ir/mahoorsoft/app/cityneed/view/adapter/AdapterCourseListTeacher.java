@@ -77,7 +77,7 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
         final StCourse items = surce.get(position);
         if(position == 0 && !Pref.getBollValue(PrefKey.courseImageHelp,false)){
             holder.helpMessage.setVisibility(View.VISIBLE);
-            Pref.saveBollValue(PrefKey.courseImageHelp,true);
+
         }
         if (items.vaziat == 0)
             holder.unValidMessage.setVisibility(View.VISIBLE);
@@ -109,6 +109,7 @@ public class AdapterCourseListTeacher extends RecyclerView.Adapter<AdapterCourse
         holder.imgItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                Pref.saveBollValue(PrefKey.courseImageHelp,true);
                 onClickItemCourseList.changeImage(position);
                 return false;
             }

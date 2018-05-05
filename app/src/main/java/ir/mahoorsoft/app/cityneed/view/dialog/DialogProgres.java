@@ -18,12 +18,29 @@ public class DialogProgres {
     private Context context;
     private String message;
     private Dialog dialog;
+    private boolean isCanseled = true;
 
     public DialogProgres(Context context, String messqge) {
         //Context appContext = context.getApplicationContext();
         this.context = context;
         this.message = messqge;
         dialog = new Dialog(context);
+    }
+
+    public DialogProgres(Context context, String messqge, boolean isCanseled) {
+        //Context appContext = context.getApplicationContext();
+        this.context = context;
+        this.message = messqge;
+        dialog = new Dialog(context);
+        this.isCanseled = isCanseled;
+    }
+
+    public DialogProgres(Context context, boolean isCanseled) {
+        //Context appContext = context.getApplicationContext();
+        this.context = context;
+        this.message = "لطفا منتظر بمانید.....";
+        dialog = new Dialog(context);
+        this.isCanseled = isCanseled;
     }
 
     public DialogProgres(Context context) {
@@ -43,7 +60,7 @@ public class DialogProgres {
         dialog.setContentView(view);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
-        //dialog.setCancelable(false);
+        dialog.setCancelable(isCanseled);
     }
 
     public void closeProgresBar() {

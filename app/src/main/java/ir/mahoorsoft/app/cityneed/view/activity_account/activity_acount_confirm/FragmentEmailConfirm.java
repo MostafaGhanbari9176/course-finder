@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,10 +55,10 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     TextView txtEmail;
     TextView txtName;
     TextView txtCode;
-    DialogProgres dialogProgres;
     boolean isLogIn;
     RadioButton rbLogIn;
     RadioButton rbLogUp;
+    RelativeLayout rlPbar;
 
     @Nullable
     @Override
@@ -68,7 +69,6 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     private void init() {
-        dialogProgres = new DialogProgres(G.context);
         pointers();
         setFont();
     }
@@ -82,6 +82,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     private void pointers() {
+        rlPbar = (RelativeLayout) view.findViewById(R.id.rlPbarFragmentConfirmEmail);
         txtCode = (TextView) view.findViewById(R.id.txtSmsCodeConfirmEmail);
         txtCode.setEnabled(false);
         (rbLogIn = (RadioButton) view.findViewById(R.id.rbLogInWithEmail)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -169,6 +170,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         }
         try {
             Integer.parseInt(txtCode.getText().toString().trim());
+            (new DialogProgres(G.context)).showProgresBar();
             PresentUser presentUser = new PresentUser(this);
             if (!isLogIn)
                 presentUser.logUp(txtEmail.getText().toString().trim(), txtName.getText().toString().trim(), Integer.parseInt(txtCode.getText().toString().trim()));
@@ -181,14 +183,14 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     private void sendEmailForserver(String phone) {
-        dialogProgres.showProgresBar();
+        rlPbar.setVisibility(View.VISIBLE);
         PresentSmsCode p = new PresentSmsCode(this);
         p.createAndSaveSmsCode(phone);
     }
 
     @Override
     public void confirmSmsCode(boolean flag) {
-        dialogProgres.closeProgresBar();
+        rlPbar.setVisibility(View.GONE);
         if (!flag)
             showAlertDialog("با ارز پوزش", "خطایی رخ داده لطفا دوباره تلاش کنید", "", "خب");
 
@@ -204,20 +206,20 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     @Override
     public void sendMessageFScT(String message) {
-        dialogProgres.closeProgresBar();
+        rlPbar.setVisibility(View.GONE);
         Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
         btnConfirmEmail.setText("تغیر آدرس ایمیل");
         txtEmail.setEnabled(false);
         txtName.setEnabled(false);
         txtCode.setEnabled(true);
         btnConfirmCode.setEnabled(true);
-       // Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void sendMessageFUT(String message) {
-        dialogProgres.closeProgresBar();
+        rlPbar.setVisibility(View.GONE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -228,7 +230,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     @Override
     public void LogIn(ResponseOfServer res) {
-        dialogProgres.closeProgresBar();
+        rlPbar.setVisibility(View.GONE);
         if (res.code == 1) {
             Pref.saveStringValue(PrefKey.userName, res.name);
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
@@ -249,7 +251,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     @Override
     public void LogUp(ResponseOfServer res) {
-        dialogProgres.closeProgresBar();
+        rlPbar.setVisibility(View.GONE);
         if (res.code == 1) {
             Pref.saveStringValue(PrefKey.userName, txtName.getText().toString().trim());
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
@@ -282,7 +284,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> teacher) {
 
-        dialogProgres.closeProgresBar();
+        rlPbar.setVisibility(View.GONE);
         Pref.saveBollValue(PrefKey.IsLogin, true);
         Pref.saveStringValue(PrefKey.landPhone, teacher.get(0).landPhone);
         Pref.saveStringValue(PrefKey.subject, teacher.get(0).subject);
@@ -298,7 +300,6 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     public void onReceiveCustomeTeacherListData(ArrayList<StCustomTeacherListHome> data) {
 
     }
-
 
 
     @Override

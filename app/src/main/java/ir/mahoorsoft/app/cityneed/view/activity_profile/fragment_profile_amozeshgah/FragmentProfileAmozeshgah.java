@@ -7,30 +7,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -38,17 +28,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.takusemba.spotlight.OnSpotlightEndedListener;
-import com.takusemba.spotlight.OnSpotlightStartedListener;
-import com.takusemba.spotlight.SimpleTarget;
-import com.takusemba.spotlight.Spotlight;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
@@ -56,6 +40,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
+import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.acivity_launcher.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
@@ -70,7 +55,7 @@ import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
  * Created by MAHNAZ on 10/23/2017.
  */
 
-public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCallback, PresentUser.OnPresentUserLitener, View.OnClickListener, PresentTeacher.OnPresentTeacherListener {
+public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCallback, PresentUser.OnPresentUserLitener, View.OnClickListener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
 
     TextView txtUpload;
     GoogleMap mMap;
@@ -85,7 +70,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     View view;
     LinearLayout btnUpload;
     LinearLayout btnSubscribe;
-
+    public Object object;
     public int flagMadrak = 0;
     boolean haveASubscribe = false;
 
@@ -127,77 +112,12 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                runHelperForTeacher();
+                ((ActivityProfile) object).runHelperForTeacher();
             }
         });
         builder.show();
     }
 
-    private void runHelperForTeacher() {
-
-        SimpleTarget starter = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.registerCourseBottomNavTeacher))
-                .setRadius(1f)
-                .setTitle("تبریک و تشکر از اینکه به ما در جهت توسعه کسب و کار خود اعتماد کردید")
-                .setDescription("در ابتدا باید شما از سمت ما تایید اعتبار شوید سپس می توانید دوره های خود را ثبت کنید پس از ثیت هر دوره محصلین می توانند درخواست ثبتنام دهند و پس از تایید از جانب شما از طریق برنامه و مراجعه حضوری محصل ثبتنام نهایی می شود.")
-                .build();
-
-        SimpleTarget sabtenam = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.registerCourseBottomNavTeacher))
-                .setRadius(100f)
-                .setTitle("لیست")
-                .setDescription("لیست دوره های ثبتنام شده")
-                .build();
-        SimpleTarget add = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.addedCourseBottomNavTeacher))
-                .setRadius(100f)
-                .setTitle("دوره")
-                .setDescription("اضافه کردن دوره")
-                .build();
-        SimpleTarget sms = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.messageBoxBottomNavTeacher))
-                .setRadius(100f)
-                .setTitle("صندوق پیام")
-                .setDescription("پیام های ارسالی و دریافتی برای شما")
-                .build();
-        SimpleTarget madrak = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.btnUpload))
-                .setRadius(300f)
-                .setTitle("مدرک یا مجوز آموزشی")
-                .setDescription("جهت بارگزاری مدرک از این قسمت اقدام کنید")
-                .build();
-        SimpleTarget addList = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.addListBottomNavTeacher))
-                .setRadius(100f)
-                .setTitle("لیست دوره")
-                .setDescription("لیست دوره های اضافه شده توسط شما")
-                .build();
-        SimpleTarget logout = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.logOutBottomNavTeacher))
-                .setRadius(100f)
-                .setTitle("خروج")
-                .setDescription("خروج از حساب کاربری")
-                .build();
-/*        SimpleTarget img = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.imgProfileTeacher))
-                .setRadius(300f)
-                .setTitle("تصویر آموزشگاه")
-                .setDescription("برای تغییر لمس کرده و نگه دارید")
-                .build();*/
-
-
-        Spotlight.with(G.activity)
-                .setOverlayColor(ContextCompat.getColor(G.context, R.color.blue_ios))
-                .setDuration(500L)
-                .setAnimation(new DecelerateInterpolator(4f))
-                .setTargets(starter, sabtenam, add, sms, madrak, addList, logout)
-                .setClosedOnTouchedOutside(true)
-                .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
-                    @Override
-                    public void onStarted() {
-
-                    }
-                })
-                .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
-                    @Override
-                    public void onEnded() {
-                        Pref.saveBollValue(PrefKey.profileTeacherPage, false);
-                    }
-                })
-                .start();
-    }
 
     private void checkMadrak() {
         dialogProgres.showProgresBar();
@@ -314,7 +234,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         alertDialog.setPositiveButton(buttonTrue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                uploalMadrak();
+                uploadMadrak();
                 dialog.cancel();
 
             }
@@ -346,16 +266,23 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         }
     }
 
-    private void uploalMadrak() {
+    private void uploadMadrak() {
         if (txtUpload.getText().equals("بارگذاری مدرک آموزشی")) {
-            Intent intent = new Intent(G.context, ActivityFiles.class);
-            intent.putExtra("isImage", false);
-            startActivityForResult(intent, 1);
+            ((ActivityProfile) object).getFilesPath();
         } else if (txtUpload.getText().equals("مدرک شما در انتظار تایید است")) {
             showDialogForMadrakState("مدرک یا مجوز آموزشی", "مدرک شما در انتظار تایید است,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
         } else if (txtUpload.getText().equals("مدرک شما تایید شده")) {
             sendMessageFTT(txtUpload.getText().toString());
         }
+    }
+
+    public void uploadFile(String path) {
+        //isResponseForImage = false;
+        dialogProgres = new DialogProgres(G.context, "درحال بارگذاری");
+        dialogProgres.showProgresBar();
+        PresentUpload presentUpload = new PresentUpload(this);
+        presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.phone, "") + ".pdf", path);
+
     }
 
     private void starterActivity(Class aClass) {
@@ -386,7 +313,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnUpload:
-                uploalMadrak();
+                uploadMadrak();
                 break;
 
             case R.id.btnSubscribe:
@@ -485,6 +412,25 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("barok")) {
             txtUpload.setText("مدرک شما تایید شده");
             flagMadrak = 2;
+        }
+    }
+
+    @Override
+    public void messageFromUpload(String message) {
+        dialogProgres.closeProgresBar();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void flagFromUpload(ResponseOfServer res) {
+        dialogProgres.closeProgresBar();
+
+        if (res.code == 1) {
+            dialogProgres.showProgresBar();
+            PresentTeacher presentTeacher = new PresentTeacher(this);
+            presentTeacher.upMs();
+        } else {
+            showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
         }
     }
 }

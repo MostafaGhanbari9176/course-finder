@@ -9,7 +9,7 @@
     <item
         android:id="@+id/registerCourseBottomNavUser"
         android:icon="@drawable/icon_list"
-        android:title="ثبتنام شده" />
+        android:title="ثبت نام شده" />
 
     <item
         android:id="@+id/mapBottomNavUser"
@@ -19,7 +19,7 @@
     <item
         android:id="@+id/trendingUpBottomNavUser"
         android:icon="@drawable/icon_trending_up"
-        android:title="اتقاء به مدرس" />
+        android:title="ارتقاء به مدرس" />
 
     <item
         android:id="@+id/logOutBottomNavUser"
