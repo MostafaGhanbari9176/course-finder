@@ -70,7 +70,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     String eD = "";
     String day = "";
     String groupName = "";
-    int groupId;
+    int groupId = 0;
     int minOld;
     int maxOld;
     boolean isFilterRes = false;
@@ -354,7 +354,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         } catch (Exception e) {
         }
     }
-
 
     @Override
     public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {

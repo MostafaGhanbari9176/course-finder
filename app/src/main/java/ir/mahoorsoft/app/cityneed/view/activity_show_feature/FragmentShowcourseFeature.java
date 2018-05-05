@@ -71,6 +71,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     String startDate;
     String idUser = Pref.getStringValue(PrefKey.apiCode, "");
     DialogProgres dialogProgres;
+    TextView txtConfirmRegistery;
 
     @Nullable
     @Override
@@ -99,7 +100,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     private void checkedSabtenamCourse() {
-
         dialogProgres.showProgresBar();
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.checkSabtenam(courseId, idUser);
@@ -133,6 +133,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtMasterName = (TextView) view.findViewById(R.id.txtMasterNameFeature);
         txtDay = (TextView) view.findViewById(R.id.txtDayFeature);
         txtNews = (TextView) view.findViewById(R.id.txtNewsCourseFeature);
+        txtConfirmRegistery = (TextView) view.findViewById(R.id.txtConfirmRegistry);
         txtEndDate = (TextView) view.findViewById(R.id.txtEndDateFeature);
         txtHours = (TextView) view.findViewById(R.id.txtHoursFeature);
         txtType = (TextView) view.findViewById(R.id.txtTypeFeature);
@@ -273,8 +274,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     }
 
-
-
     private void checkCourseData() {
         if (!checkDate()) {
             btnRegister.setVisibility(View.GONE);
@@ -327,6 +326,11 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         if (ratBarValue == -1) {
             txtNews.setVisibility(View.GONE);
             llRatBar.setVisibility(View.GONE);
+        } else if (ratBarValue == -3) {
+            btnRegister.setVisibility(View.GONE);
+            txtNews.setVisibility(View.VISIBLE);
+            llRatBar.setVisibility(View.GONE);
+            txtNews.setText("ثبت نام شما لغو شده است.");
         } else if (ratBarValue == -2) {
             btnRegister.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);
@@ -336,6 +340,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             btnRegister.setVisibility(View.GONE);
             llRatBar.setVisibility(View.VISIBLE);
             ratBar.setRating(ratBarValue);
+            txtConfirmRegistery.setVisibility(View.VISIBLE);
             setUpRatBar();
         }
 
