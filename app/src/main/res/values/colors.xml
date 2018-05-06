@@ -32,6 +32,8 @@
     <color name="blue_eq">#41cdb0</color>
     <color name="dark_eq">#263238</color>
     <color name="light_eq">#384248</color>
+    <color name="silver">#e6eaec</color>
+    <color name="brown">#ce5a30</color>
     <!--apple ios color  -->
     <color name="red_ios">#ff3b30</color>
     <color name="blue_ios">#007aff</color>

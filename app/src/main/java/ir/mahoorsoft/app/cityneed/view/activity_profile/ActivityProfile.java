@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -72,7 +73,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         checkUserType();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle(Pref.getStringValue(PrefKey.subject, ""));
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +107,10 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         Intent intent = new Intent(G.context, ActivityFiles.class);
         intent.putExtra("isImage", true);
         startActivityForResult(intent, 2);
+    }
+
+    public void setToolbarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
     private void setPaletteSize() {
@@ -218,7 +223,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         }
     }
 
-    public void getFilesPath(){
+    public void getFilesPath() {
         Intent intent = new Intent(G.context, ActivityFiles.class);
         intent.putExtra("isImage", false);
         startActivityForResult(intent, 1);

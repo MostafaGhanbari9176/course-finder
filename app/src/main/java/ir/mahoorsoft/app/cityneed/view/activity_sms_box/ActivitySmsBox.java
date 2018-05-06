@@ -53,6 +53,7 @@ public class ActivitySmsBox extends AppCompatActivity {
         adapterViewPager.add(new FragmentSmsBoxIn(), "صندوق ورودی");
         viewPager.setAdapter(adapterViewPager);
         viewPager.setCurrentItem(1);
+        viewPager.setOffscreenPageLimit(3);
 
     }
 

@@ -330,7 +330,8 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             btnRegister.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);
             llRatBar.setVisibility(View.GONE);
-            txtNews.setText("ثبت نام شما لغو شده است.");
+            txtConfirmRegistery.setVisibility(View.VISIBLE);
+            txtConfirmRegistery.setText("ثبت نام شما لغو شده است.");
         } else if (ratBarValue == -2) {
             btnRegister.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);

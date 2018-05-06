@@ -65,6 +65,7 @@ public class ActivityOptionalCourse extends AppCompatActivity {
             adapterViewPager.add(new FragmentShowcourseFeature(), "مشخصات");
         viewPager.setAdapter(adapterViewPager);
         viewPager.setCurrentItem(3);
+        viewPager.setOffscreenPageLimit(5);
 
     }
 
