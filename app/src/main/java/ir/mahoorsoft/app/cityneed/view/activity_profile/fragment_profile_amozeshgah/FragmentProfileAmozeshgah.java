@@ -42,8 +42,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
+import ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.ActivitySubscribe;
 import ir.mahoorsoft.app.cityneed.view.acivity_launcher.FragmentErrorServer;
-import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
@@ -317,6 +317,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
                 break;
 
             case R.id.btnSubscribe:
+                starterActivity(ActivitySubscribe.class);
                 break;
         }
     }
@@ -396,11 +397,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     public void responseForMadrak(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
         ActivityProfile.ratingBar.setRating(res.code);
-        if ((new String(Base64.decode(Base64.decode(res.bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS"))
-            haveASubscribe = true;
-        else
-            haveASubscribe = false;
-
+        haveASubscribe = !(new String(Base64.decode(Base64.decode(res.bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS");
         if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("error")) {
             ActivityProfile.replaceContentWith(new FragmentErrorServer(), R.id.contentProfileTeacher);
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {

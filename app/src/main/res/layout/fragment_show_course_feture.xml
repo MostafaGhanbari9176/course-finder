@@ -741,7 +741,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="32dp"
                         android:layout_marginTop="8dp"
-                        android:text="ثبت نام شما در انتظار تایید مدرس است"
                         android:textColor="@color/red_ios"
                         android:visibility="gone" />
                 </LinearLayout>

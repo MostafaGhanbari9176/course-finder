@@ -7,14 +7,17 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
  */
 
 public class Message {
-    public static String getCodeMessage(int i) {
+    public static String getMessage(int i) {
         String response;
         switch (i) {
             case 0:
                 response ="ثبت شماره همراه با مشکل مواجه شد.";
                 break;
+            case 1:
+                response ="خطا, در ارتباط با سرور!";
+                break;
             default:
-                response = "خطا!!!!";
+                response = "خطا!";
         }
         return response;
     }

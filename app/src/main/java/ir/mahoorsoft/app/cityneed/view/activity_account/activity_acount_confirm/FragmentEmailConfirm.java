@@ -59,7 +59,6 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     RadioButton rbLogIn;
     RadioButton rbLogUp;
     RelativeLayout rlPbar;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -170,7 +169,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         }
         try {
             Integer.parseInt(txtCode.getText().toString().trim());
-            (new DialogProgres(G.context)).showProgresBar();
+            rlPbar.setVisibility(View.VISIBLE);
             PresentUser presentUser = new PresentUser(this);
             if (!isLogIn)
                 presentUser.logUp(txtEmail.getText().toString().trim(), txtName.getText().toString().trim(), Integer.parseInt(txtCode.getText().toString().trim()));
@@ -207,7 +206,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     @Override
     public void sendMessageFScT(String message) {
         rlPbar.setVisibility(View.GONE);
-        Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
         btnConfirmEmail.setText("تغیر آدرس ایمیل");
         txtEmail.setEnabled(false);
         txtName.setEnabled(false);

@@ -311,6 +311,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             setUpRatBar();
             sendMessageFCT("انجام شد");
             txtNews.setVisibility(View.VISIBLE);
+            txtNews.setText("ثبت نام شما در انتظار تایید مدرس است");
             btnRegister.setVisibility(View.GONE);
         } else
             sendMessageFCT("خطا");
@@ -323,20 +324,15 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     @Override
     public void checkSabtenam(float ratBarValue) {
-        if (ratBarValue == -1) {
-            txtNews.setVisibility(View.GONE);
-            llRatBar.setVisibility(View.GONE);
-        } else if (ratBarValue == -3) {
+        if (ratBarValue == -3) {
             btnRegister.setVisibility(View.GONE);
-            txtNews.setVisibility(View.VISIBLE);
-            llRatBar.setVisibility(View.GONE);
             txtConfirmRegistery.setVisibility(View.VISIBLE);
             txtConfirmRegistery.setText("ثبت نام شما لغو شده است.");
         } else if (ratBarValue == -2) {
             btnRegister.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);
-        } else {
-            txtNews.setVisibility(View.GONE);
+            txtNews.setText("ثبت نام شما در انتظار تایید مدرس است");
+        } else if(ratBarValue != -1){
             issabtenamed = true;
             btnRegister.setVisibility(View.GONE);
             llRatBar.setVisibility(View.VISIBLE);

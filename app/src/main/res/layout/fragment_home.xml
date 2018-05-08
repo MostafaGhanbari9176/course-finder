@@ -88,7 +88,8 @@
                             android:layout_centerInParent="true"
                             android:gravity="center"
                             android:text="موجود نیست"
-                            android:textColor="@color/pink_tel" />
+                            android:textColor="@color/pink_tel"
+                            android:visibility="gone" />
 
                     </RelativeLayout>
 

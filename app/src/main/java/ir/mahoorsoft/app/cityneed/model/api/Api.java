@@ -13,6 +13,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StMahoorAppData;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
+import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import okhttp3.MultipartBody;
@@ -336,6 +337,9 @@ public interface Api {
 
     @GET("getMahoorAppData")
     Call<ArrayList<StMahoorAppData>> getMahoorAppData();
+
+    @GET("getSubscribeList")
+    Call<ArrayList<StSubscribe>> getSubscribeList();
 
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(
