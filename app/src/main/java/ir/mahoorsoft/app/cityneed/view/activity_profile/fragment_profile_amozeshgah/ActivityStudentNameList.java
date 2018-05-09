@@ -1,25 +1,18 @@
 package ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Stack;
 
 import ir.mahoorsoft.app.cityneed.R;
@@ -42,7 +33,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
-import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.DialogGetSmsText;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSdudentNameList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -75,6 +65,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     String needToBeDown = "";
     DialogGetSmsText dialogGetSmsText;
     String ac = Pref.getStringValue(PrefKey.apiCode, "");
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -311,6 +302,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     @Override
     public void sendingMessageFlag(boolean flag) {
         dialogProgres.closeProgresBar();
+        onClick(findViewById(R.id.fltbCancelActivityList));
         if (flag)
             messageFromSmsBox("پیام ارسال شد");
         else
@@ -334,7 +326,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
         dialogProgres.closeProgresBar();
         if (flag) {
-            changeClorItems();
+            changeColorItems();
             removeWaiting = true;
             sendMessageFUT("انجام شد");
         } else
@@ -376,7 +368,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
         }
     }
 
-    private void changeClorItems() {
+    private void changeColorItems() {
         int size = AdapterSdudentNameList.selectedItems.size();
         if (size == 0 && cardView != null) {
             cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
@@ -456,10 +448,28 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     private void sendMoreMessage(String message) {
         checkedUser.clear();
         checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        JSONArray array = new JSONArray();
         int size = AdapterSdudentNameList.checkedUser.size();
         for (int i = 0; i < size; i++) {
-            sendMessage(checkedUser.pop(), message);
+            int position = checkedUser.pop();
+            try {
+                JSONObject object = new JSONObject();
+                object.put("sabtenamId", source.get(position).sabtenamId);
+                object.put("courseId", courseId);
+                object.put("userId", source.get(position).apiCode);
+                object.put("ac", ac);
+                array.put(object);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+        queryForMoreSms(array.toString(), message);
+    }
+
+    private void queryForMoreSms(String data, String message) {
+        dialogProgres.showProgresBar();
+        PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
+        presenterSmsBox.sendMoreSms(data, message);
     }
 
     private void confirmMoreStudent(String message) {

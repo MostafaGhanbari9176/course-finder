@@ -41,7 +41,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListIn.OnClickItemSmsList, PresentReport.OnPresentReportListener, DialogGetSmsText.DialogGetSmsTextListener {
-    boolean isUserChanged = true;
+
     int deletedMessagePotision;
     View view;
     DialogProgres dialogProgres;
@@ -81,8 +81,6 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
             txtEmpty.setVisibility(View.VISIBLE);
             return;
         }
-
-
         source.clear();
         source.addAll(sms);
         adapter = new AdapterSmsListIn(G.context, source, this);
@@ -129,8 +127,8 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     @Override
     public void seenMessage(int position) {
         upDateSeen();
-        showMessage();
         this.position = position;
+        showMessage();
     }
 
     @Override
@@ -253,11 +251,10 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         builder.show();
     }
 
-    private void getTextMessage(){
+    private void getTextMessage() {
         DialogGetSmsText dialogGetSmsText = new DialogGetSmsText(G.context, this);
         dialogGetSmsText.showDialog();
     }
-
 
 
     @Override

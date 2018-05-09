@@ -17,7 +17,7 @@ public class PresentSubscribe implements Subscribe.OnSubscribeListener {
     }
 
     @Override
-    public void onResiveSubscribeList(ArrayList<StSubscribe> data) {
+    public void onReceiveSubscribeList(ArrayList<StSubscribe> data) {
         if (data == null || data.size() == 0)
             sendMessage(Message.getMessage(1));
         else

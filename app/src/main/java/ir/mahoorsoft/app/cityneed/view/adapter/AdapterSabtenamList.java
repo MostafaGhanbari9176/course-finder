@@ -85,11 +85,12 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
         final StCourse items = surce.get(position);
         if (items.isDeleted == 1 || items.isCanceled == 1 || items.vaziat == 0) {
             holder.rlDeletedMessage.setVisibility(View.VISIBLE);
-            if (items.vaziat == 0) {
+            if (items.isCanceled == 1)
+                holder.txtDeleted.setText("دوره مورد نظر از سمت مدرس لغو ثبت نام شده است");
+            else if (items.vaziat == 0) {
                 holder.txtDeleted.setText("ثبت نام شما در انتظار تایید مدرس است");
                 holder.btnOk.setVisibility(View.GONE);
-            } else if (items.isCanceled == 1)
-                holder.txtDeleted.setText("دوره مورد نظر از سمت مدرس لغو ثبت نام شده است");
+            }
         }
 
         holder.txtCourseName.setText(items.CourseName);

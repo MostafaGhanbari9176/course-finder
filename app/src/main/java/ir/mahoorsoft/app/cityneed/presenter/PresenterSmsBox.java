@@ -36,6 +36,11 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener {
         smsBox.saveSms(smsText, tsId, rsId, courseId, howSending);
     }
 
+    public void sendMoreSms(String data, String message) {
+        SmsBox smsBox = new SmsBox(this);
+        smsBox.sendMoreSms(data, message);
+    }
+
     public void getRsSms(String rsId) {
         SmsBox smsBox = new SmsBox(this);
         smsBox.getRsSms(rsId);

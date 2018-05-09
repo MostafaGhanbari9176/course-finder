@@ -223,6 +223,12 @@ public interface Api {
             @Path("howSending") int howSending
     );
 
+    @GET("sendMoreSms/{data}/{message}")
+    Call<ArrayList<ResponseOfServer>> sendMoreSms(
+            @Path("data") String data,
+            @Path("message") String message
+    );
+
     @GET("getRsSms/{rsId}")
     Call<ArrayList<StSmsBox>> getRsSms(
             @Path("rsId") String rsId
@@ -246,7 +252,7 @@ public interface Api {
     @GET("updateDeletedFlag/{courseId}/{code}")
     Call<ArrayList<ResponseOfServer>> updateDeletedFlag(
             @Path("courseId") int courseId,
-            @Path("courseId") int code
+            @Path("code") int code
     );
 
     @GET("updateCanceledFlag/{sabtenamId}/{code}/{courseId}/{message}/{tsId}/{rsId}")
@@ -340,6 +346,19 @@ public interface Api {
 
     @GET("getSubscribeList")
     Call<ArrayList<StSubscribe>> getSubscribeList();
+
+    @FormUrlEncoded
+    @POST("saveUserBuy")
+    Call<ArrayList<ResponseOfServer>> saveUserBuy(
+            @Field("ac") String ac,
+            @Field("token") String token,
+            @Field("subscribeId") int subscribeId
+    );
+
+    @GET("getUserSubscribe/{ac}")
+    Call<ArrayList<StSubscribe>> getUserSubscribe(
+            @Path("ac") String ac
+    );
 
     @GET("remaining_credit/{tableName}/{phone}")
     Call<String> remainCredit(

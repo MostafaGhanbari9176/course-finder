@@ -50,6 +50,22 @@ public class SmsBox {
         });
     }
 
+    public void sendMoreSms(String data, String message) {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> save = api.sendMoreSms(data, message);
+        save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
+                onSmsBoxResponseListener.sendingMessageFlag(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onSmsBoxResponseListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
     public void getRsSms(String rsId) {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StSmsBox>> save = api.getRsSms(rsId);
