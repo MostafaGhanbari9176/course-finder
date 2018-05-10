@@ -11,5 +11,5 @@ public class ResponseOfServer {
     public String name;
     public String apiCode;
     public String ms;
-    public String bus;
+    public String sub;
 }

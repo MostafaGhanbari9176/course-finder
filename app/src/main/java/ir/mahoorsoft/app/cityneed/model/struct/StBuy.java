@@ -8,5 +8,14 @@ public class StBuy {
 
     public int id;
     public String userId;
-    //public
+    public int subscribeId;
+    public String subjectSubscribe;
+    public String buyDate;
+    public String endBuyDate;
+    public String price;
+    public String description;
+    public int remainingCourses;
+    public int empty;
+    public int vaziat;
+
 }

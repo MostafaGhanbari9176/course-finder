@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
 
@@ -67,6 +68,11 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
     public void sendMessageFromSubscribe(String message) {
         pbar.setVisibility(View.GONE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onReceiveUserBuy(ArrayList<StBuy> data) {
+
     }
 
     @Override

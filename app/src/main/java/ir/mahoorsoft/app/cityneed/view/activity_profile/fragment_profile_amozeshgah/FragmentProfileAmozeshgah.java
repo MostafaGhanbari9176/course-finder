@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,9 +37,12 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
+import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
+import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
@@ -48,6 +52,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
+import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
 
@@ -55,7 +60,7 @@ import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
  * Created by MAHNAZ on 10/23/2017.
  */
 
-public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCallback, PresentUser.OnPresentUserLitener, View.OnClickListener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener {
+public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCallback, PresentUser.OnPresentUserLitener, View.OnClickListener, PresentTeacher.OnPresentTeacherListener, PresentUpload.OnPresentUploadListener, PresentSubscribe.OnPresentSubscribeListener {
 
     TextView txtUpload;
     GoogleMap mMap;
@@ -73,6 +78,8 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     public Object object;
     public int flagMadrak = 0;
     boolean haveASubscribe = false;
+    ProgressBar pbarSubscribeData;
+    public static StBuy subscribeData;
 
     @Nullable
     @Override
@@ -87,6 +94,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         settingUpMap();
         pointers();
         checkMadrak();
+        getUserSubscribeData();
         if (Pref.getBollValue(PrefKey.profileTeacherPage, true))
             showDialogForHelper();
         txtSubject.setText(Pref.getStringValue(PrefKey.subject, ""));
@@ -94,6 +102,11 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         txtPhone.setText(Pref.getStringValue(PrefKey.phone, ""));
         txtLandPhone.setText(Pref.getStringValue(PrefKey.landPhone, ""));
 
+    }
+
+    private void getUserSubscribeData() {
+
+        (new PresentSubscribe(this)).getUserBuy();
     }
 
     private void showDialogForHelper() {
@@ -143,7 +156,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         txtUpload = (TextView) view.findViewById(R.id.txtUpload);
         txtSubscribe_up = (TextView) view.findViewById(R.id.txtSubscribt_up);
         txtSubscribe_down = (TextView) view.findViewById(R.id.txtSubscribe_down);
-
+        pbarSubscribeData = (ProgressBar) view.findViewById(R.id.pbarUserSubscribeData);
         txtname = (TextView) view.findViewById(R.id.txtNameProfileTeacher);
         txtPhone = (TextView) view.findViewById(R.id.txtPhoneProfileTeacher);
         txtLandPhone = (TextView) view.findViewById(R.id.txtLandPhoneProfileTeacher);
@@ -317,9 +330,15 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
                 break;
 
             case R.id.btnSubscribe:
-                starterActivity(ActivitySubscribe.class);
+                checkSubscribe();
                 break;
         }
+    }
+
+    private void checkSubscribe() {
+        Intent intent = new Intent(G.context, ActivitySubscribe.class);
+        intent.putExtra("haveASubscribe", !(txtSubscribe_up.getText().toString().equals("خرید اشتراک")));
+        startActivity(intent);
     }
 
     @Override
@@ -397,7 +416,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     public void responseForMadrak(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
         ActivityProfile.ratingBar.setRating(res.code);
-        haveASubscribe = !(new String(Base64.decode(Base64.decode(res.bus, Base64.DEFAULT), Base64.DEFAULT))).equals("YoEkS");
         if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("error")) {
             ActivityProfile.replaceContentWith(new FragmentErrorServer(), R.id.contentProfileTeacher);
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {
@@ -430,4 +448,34 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
             showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
         }
     }
+
+    @Override
+    public void onResiveSubscribeList(ArrayList<StSubscribe> data) {
+
+    }
+
+    @Override
+    public void sendMessageFromSubscribe(String message) {
+        pbarSubscribeData.setVisibility(View.GONE);
+        txtSubscribe_up.setText(message);
+    }
+
+    @Override
+    public void onReceiveUserBuy(ArrayList<StBuy> data) {
+        pbarSubscribeData.setVisibility(View.GONE);
+        if (data.get(0).empty == 1) {
+            txtSubscribe_up.setText("خرید اشتراک");
+            txtSubscribe_down.setText("برای ثبت دوره ابتدا اشتراک خود را فعال کنید");
+        } else {
+            subscribeData = data.get(0);
+            txtSubscribe_up.setText("اشتراک " + data.get(0).subjectSubscribe);
+            if (data.get(0).vaziat == 1) {
+                txtSubscribe_down.setText(data.get(0).remainingCourses + " دوره باقی مانده");
+                haveASubscribe = true;
+            } else
+                txtSubscribe_down.setText("اشتراک شما به پایان رسیده");
+
+        }
+    }
+
 }

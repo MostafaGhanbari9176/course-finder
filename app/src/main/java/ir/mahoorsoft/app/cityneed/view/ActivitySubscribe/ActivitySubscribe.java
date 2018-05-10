@@ -5,12 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.fragment_chose_subscribe.FragmentChoseSubscrib;
+import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 
 /**
  * Created by RCC1 on 3/11/2018.
@@ -19,12 +19,22 @@ import ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.fragment_chose_subscrib
 public class ActivitySubscribe extends AppCompatActivity {
 
     Toolbar tlb;
+    boolean haveSubscribe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_purchase);
+        setContentView(R.layout.activity_subscribe);
         G.context = this;
         G.activity = this;
+        if (getIntent().getExtras() != null)
+            haveSubscribe = getIntent().getBooleanExtra("haveASubscribe", false);
+        if (haveSubscribe) {
+            FragmentShowSubscribeFeture fragment = new FragmentShowSubscribeFeture();
+            replaceContentWith(fragment);
+            fragment.buyData = FragmentProfileAmozeshgah.subscribeData;
+        } else
+            replaceContentWith(new FragmentChoseSubscrib());
         pointers();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,24 +45,9 @@ public class ActivitySubscribe extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        replaceContentWith(new FragmentChoseSubscrib());
-        ((Button) findViewById(R.id.btn1)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceContentWith(new FragmentChoseSubscrib());
-            }
-        });
-
-        ((Button) findViewById(R.id.btn2)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceContentWith(new FragmentShowSubscribeFeture());
-            }
-        });
-
     }
 
-    private void pointers(){
+    private void pointers() {
         tlb = (Toolbar) findViewById(R.id.tlbSubscribe);
     }
 

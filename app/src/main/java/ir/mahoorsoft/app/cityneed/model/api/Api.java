@@ -4,6 +4,7 @@ package ir.mahoorsoft.app.cityneed.model.api;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
@@ -355,8 +356,8 @@ public interface Api {
             @Field("subscribeId") int subscribeId
     );
 
-    @GET("getUserSubscribe/{ac}")
-    Call<ArrayList<StSubscribe>> getUserSubscribe(
+    @GET("getUserBuySubscribe/{ac}")
+    Call<ArrayList<StBuy>> getUserSubscribe(
             @Path("ac") String ac
     );
 

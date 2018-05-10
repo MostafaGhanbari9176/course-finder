@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,18 +49,18 @@ public class Subscribe {
         });
     }
 
-    public void getUserSubscribe(String ac){
+    public void getUserBuy(String ac){
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StSubscribe>> getData = api.getUserSubscribe(ac);
-        getData.enqueue(new Callback<ArrayList<StSubscribe>>() {
+        Call<ArrayList<StBuy>> getData = api.getUserSubscribe(ac);
+        getData.enqueue(new Callback<ArrayList<StBuy>>() {
             @Override
-            public void onResponse(Call<ArrayList<StSubscribe>> call, Response<ArrayList<StSubscribe>> response) {
-
+            public void onResponse(Call<ArrayList<StBuy>> call, Response<ArrayList<StBuy>> response) {
+                onSubscribeListener.onReceiveUserBuy(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<StSubscribe>> call, Throwable t) {
-
+            public void onFailure(Call<ArrayList<StBuy>> call, Throwable t) {
+                onSubscribeListener.sendMessage(t.getMessage());
             }
         });
     }
@@ -75,7 +76,7 @@ public class Subscribe {
     OnSubscribeListener onSubscribeListener;
     public interface OnSubscribeListener{
         void onReceiveSubscribeList(ArrayList<StSubscribe> data);
-        void onReceiveUserBuy(ArrayList<StSubscribe> data);
+        void onReceiveUserBuy(ArrayList<StBuy> data);
         void sendMessage(String message);
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
     }

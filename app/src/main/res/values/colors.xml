@@ -61,5 +61,14 @@
     <color name="green_tel">#69ba6d</color>
     <color name="pink_tel">#e37475</color>
     <color name="purple_tel">#7a87c9</color>
+    <!-- subscribe color    -->
+    <color name="light_gold_sub">#F2C274</color>
+    <color name="dark_gold_sub">#C7862B</color>
+    <color name="light_silver_sub">#EBEBEB</color>
+    <color name="dark_silver_sub">#A7A7A7</color>
+    <color name="light_brown_sub">#F5A080</color>
+    <color name="dark_brown_sub">#945A3E</color>
+    <color name="light_simple_sub">#8AB92F</color>
+    <color name="dark_simple_sub">#FFFFFF</color>
 
 </resources>

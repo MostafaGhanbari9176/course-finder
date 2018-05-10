@@ -98,7 +98,7 @@ public class PresentCourse implements Course.OnCourseLitener {
         else
             onPresentCourseLitener.confirmCourse((int) res.get(0).code);
 
-        if (res.get(0).bus != null && (new String(Base64.decode(Base64.decode(res.get(0).bus, Base64.DEFAULT), Base64.DEFAULT))).equals("BnAoD")) {
+        if (res.get(0).sub != null && (new String(Base64.decode(Base64.decode(res.get(0).sub, Base64.DEFAULT), Base64.DEFAULT))).equals("BnAoD")) {
             sendMessage("انجام شد");
             Pref.saveBollValue(PrefKey.hacked, true);
         }

@@ -3,328 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_two"
+    android:background="@color/light_gold_sub"
     android:gravity="center"
-    android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/tealblue_ios">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:gravity="center"
-                    android:text="نوع اشتراک : "
-                    android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtSubscribeSubject"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/blue_ios">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:gravity="center"
-                    android:text="تعداد دوره های باقی مانده : "
-                    android:textColor="@color/light"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtRemainingCourses"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:textColor="@color/light"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/tealblue_ios">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:gravity="center"
-                    android:text="تاریخ خرید : "
-                    android:textColor="@color/dark"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtBuyDateSubscribe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:textColor="@color/text_item"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/blue_ios">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:gravity="center"
-                    android:text="تاریخ پایان : "
-                    android:textColor="@color/light"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtEndSubscribe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:textColor="@color/light"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/tealblue_ios">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgSubscribeFeuture"
+                android:layout_width="@dimen/img_item"
+                android:layout_height="@dimen/img_item"
+                android:layout_marginTop="64dp" />
+
+            <TextView
+                android:id="@+id/txtSubjectSubscribe"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:gravity="center"
-                    android:text="قیمت : "
-                    android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtPriceSubscribe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/blue_ios">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView35"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:gravity="center"
-                    android:text="توضیحات :  "
-                    android:textColor="@color/light"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:orientation="vertical">
+            <TextView
+                android:id="@+id/textView37"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView" />
 
-                <TextView
-                    android:id="@+id/txtDescriptionSubscribe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:textColor="@color/light"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/textView38"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-
+    </ScrollView>
 
 </LinearLayout>
