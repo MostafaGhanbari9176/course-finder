@@ -1,6 +1,7 @@
 package ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.fragment_chose_subscribe;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
+
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 
 /**
@@ -49,6 +55,9 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
         ImageView imgDropDown;
         Button btnBuy;
         CardView showMoreFeature;
+        CardView heder;
+        CardView confirm;
+
         public Holder(View itemView) {
             super(itemView);
             txtSubject = (TextView) itemView.findViewById(R.id.txtSubscribeSubject);
@@ -59,6 +68,8 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
             imgDropDown = (ImageView) itemView.findViewById(R.id.imgDropDownItemSubscribe);
             btnBuy = (Button) itemView.findViewById(R.id.btnBuySubscribe);
             showMoreFeature = (CardView) itemView.findViewById(R.id.CVShowMoreFetureSubscribe);
+            heder = (CardView) itemView.findViewById(R.id.CVHederItemChoseSubscribe);
+            confirm = (CardView) itemView.findViewById(R.id.CVConfirmItemChoseSubscribe);
         }
     }
 
@@ -71,26 +82,60 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
     }
 
     @Override
-    public void onBindViewHolder(final Holder holder, int position) {
+    public void onBindViewHolder(final Holder holder, final int position) {
 
         StSubscribe subscribeItem = source.get(position);
+
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.showMoreFeature.getVisibility() == View.GONE) {
+                if (holder.showMoreFeature.getVisibility() == View.GONE) {
                     holder.showMoreFeature.setVisibility(View.VISIBLE);
-                    holder.imgDropDown.setImageResource(R.drawable.icon_drop_up);
-                }
-                else {
+                    holder.imgDropDown.setImageResource(R.drawable.icon_drop_up_light);
+                } else {
                     holder.showMoreFeature.setVisibility(View.GONE);
-                    holder.imgDropDown.setImageResource(R.drawable.icon_drop_down);
+                    holder.imgDropDown.setImageResource(R.drawable.icon_drop_down_light);
                 }
             }
         });
-        holder.txtDescription.setText(subscribeItem.description);
-        holder.txtPrice.setText(subscribeItem.price+"تومان");
-        holder.txtSubject.setText(subscribeItem.subject);
+        holder.btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subscribeClick.subscribeItemClick(position);
+            }
+        });
 
+        holder.txtDescription.setText(subscribeItem.description);
+        holder.txtPrice.setText(subscribeItem.price + "تومان");
+        holder.txtSubject.setText(subscribeItem.subject);
+        setColor(holder, position);
+        setImage(holder.img, position);
+    }
+
+    private void setColor(Holder holder, int position) {
+        if (source.get(position).id == 3) {
+            holder.heder.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+            holder.confirm.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+            holder.txtDescription.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+            holder.showMoreFeature.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_brown_sub));
+
+        } else if (source.get(position).id == 2) {
+            holder.heder.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            holder.confirm.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            holder.txtDescription.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            holder.showMoreFeature.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
+
+        }
+    }
+
+
+    private void setImage(ImageView img, int position) {
+        Glide.with(G.context)
+                .load(ApiClient.serverAddress + "/city_need/v1/uploads/subscribe/" + source.get(position).id + ".png")
+                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                .error(R.drawable.university)
+                .fitCenter()
+                .into(img);
     }
 
     @Override

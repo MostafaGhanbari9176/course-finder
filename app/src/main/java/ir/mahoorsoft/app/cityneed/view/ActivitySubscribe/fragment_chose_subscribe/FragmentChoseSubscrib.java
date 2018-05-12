@@ -1,5 +1,7 @@
 package ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.fragment_chose_subscribe;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.zarinpal.ewallets.purchase.OnCallbackRequestPaymentListener;
+import com.zarinpal.ewallets.purchase.PaymentRequest;
+import com.zarinpal.ewallets.purchase.ZarinPal;
 
 import java.util.ArrayList;
 
@@ -23,13 +29,14 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
  * Created by RCC1 on 5/7/2018.
  */
 
-public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.OnPresentSubscribeListener, AdapterChoseSubscribe.SubscribeClick{
+public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.OnPresentSubscribeListener, AdapterChoseSubscribe.SubscribeClick {
 
     View view;
     ArrayList<StSubscribe> source = new ArrayList<>();
     RecyclerView list;
     AdapterChoseSubscribe adapter;
     RelativeLayout pbar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,17 +45,21 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
         return view;
     }
 
-    private void init(){
+    private void init() {
         pointers();
         queryForSubscribes();
     }
 
-    private void pointers(){
+    private void pointers() {
         pbar = (RelativeLayout) view.findViewById(R.id.RLPbarSubscribeList);
         list = (RecyclerView) view.findViewById(R.id.RVSubscribeList);
     }
 
-    private void queryForSubscribes(){
+    public void cancelPbar(){
+        pbar.setVisibility(View.GONE);
+    }
+
+    private void queryForSubscribes() {
         (new PresentSubscribe(this)).getSubscribeList();
     }
 
@@ -77,6 +88,39 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
 
     @Override
     public void subscribeItemClick(int position) {
+        requestPayment(position);
+    }
 
+    private void requestPayment(int position) {
+
+        pbar.setVisibility(View.VISIBLE);
+
+        ZarinPal purchase = ZarinPal.getPurchase(G.context);
+        PaymentRequest payment = ZarinPal.getPaymentRequest();
+
+        payment.setMerchantID("71c705f8-bd37-11e6-aa0c-000c295eb8fc");
+        payment.setAmount(source.get(position).price);
+        payment.setDescription("خرید اشتراک " + source.get(position).subject + " به قیمت " + source.get(position).price + " تومان ");
+        payment.setCallbackURL("ir.mahoorsoft.app.cityneed://app");     /* Your App Scheme */
+        payment.setEmail("godhelot1@gmail.com");     /* Optional Parameters */
+
+
+        purchase.startPayment(payment, new OnCallbackRequestPaymentListener() {
+            @Override
+            public void onCallbackResultPaymentRequest(int status, String authority, Uri paymentGatewayUri, Intent intent) {
+
+
+                if (status == 100) {
+                    /*
+                    When Status is 100 Open Zarinpal PG on Browser
+                    */
+                    startActivity(intent);
+                } else {
+                    pbar.setVisibility(View.GONE);
+                    Toast.makeText(G.context, "خطا,لطفا دوباره تلاش کنید.", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
     }
 }

@@ -115,7 +115,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="yourapp" />
+                <data android:scheme="ir.mahoorsoft.app.cityneed" />
             </intent-filter>
         </activity>
 

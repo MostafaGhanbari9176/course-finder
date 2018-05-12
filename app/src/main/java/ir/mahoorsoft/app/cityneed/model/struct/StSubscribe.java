@@ -10,7 +10,7 @@ public class StSubscribe {
    public int empty;
    public String subject;
    public String description;
-   public int price;
+   public long price;
    public int period;
    public int remainingCourses;
 }

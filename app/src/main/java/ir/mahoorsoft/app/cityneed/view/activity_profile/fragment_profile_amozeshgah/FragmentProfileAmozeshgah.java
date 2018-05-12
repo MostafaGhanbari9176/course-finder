@@ -474,7 +474,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
                 haveASubscribe = true;
             } else
                 txtSubscribe_down.setText("اشتراک شما به پایان رسیده");
-
         }
     }
 

@@ -9,10 +9,18 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 
 /**
@@ -27,14 +35,14 @@ public class FragmentShowSubscribeFeture extends Fragment {
     TextView txtRemainingCourse;
     TextView txtBuyDate;
     TextView txtEndBuyDate;
-    TextView txtPrice;
     TextView txtDescription;
-    CardView cv1;
-    CardView cv2;
-    CardView cv3;
-    CardView cv4;
-    CardView cv5;
-    CardView cv6;
+    TextView txtRemainingCourse_2;
+    TextView txtBuyDate_2;
+    TextView txtEndBuyDate_2;
+    TextView txtDescription_2;
+    CardView PCV;
+    ImageView img;
+
 
     @Nullable
     @Override
@@ -50,63 +58,60 @@ public class FragmentShowSubscribeFeture extends Fragment {
     }
 
     private void pointers() {
-        txtPrice = (TextView) view.findViewById(R.id.txtPriceSubscribe);
-        txtSubject = (TextView) view.findViewById(R.id.txtSubscribeSubject);
-        txtRemainingCourse = (TextView) view.findViewById(R.id.txtRemainingCourses);
-        txtBuyDate = (TextView) view.findViewById(R.id.txtBuyDateSubscribe);
-        txtEndBuyDate = (TextView) view.findViewById(R.id.txtEndBuyDateSubscribe);
-        txtDescription = (TextView) view.findViewById(R.id.txtDescriptionSubscribe);
-
-        cv1 = (CardView) view.findViewById(R.id.CVSubjectSubscribe);
-        cv2 = (CardView) view.findViewById(R.id.CVRemainingCourseSubscribe);
-        cv3 = (CardView) view.findViewById(R.id.CVBuyDasteSubscribe);
-        cv4 = (CardView) view.findViewById(R.id.CVEndBuyDateSubscribe);
-        cv5 = (CardView) view.findViewById(R.id.CVPriceSubscribe);
-        cv6 = (CardView) view.findViewById(R.id.CVDescriptionSubscribe);
+        img = (ImageView) view.findViewById(R.id.imgSubscribeFeuture);
+        PCV = (CardView) view.findViewById(R.id.PCVSubscribeFeuture);
+        txtSubject = (TextView) view.findViewById(R.id.txtSubscribeFutureSubject);
+        txtRemainingCourse = (TextView) view.findViewById(R.id.txtRemainingCourseFeuture);
+        txtBuyDate = (TextView) view.findViewById(R.id.txtBuyDateFeuture);
+        txtEndBuyDate = (TextView) view.findViewById(R.id.txtEndBuyDateFeuture);
+        txtDescription = (TextView) view.findViewById(R.id.txtDescriptionFeutureSubscribe);
+        txtRemainingCourse_2 = (TextView) view.findViewById(R.id.txtRemainingCourseFeuture_2);
+        txtBuyDate_2 = (TextView) view.findViewById(R.id.txtBuyDateFeuture_2);
+        txtEndBuyDate_2 = (TextView) view.findViewById(R.id.txtEndBuyDateFeuture_2);
+        txtDescription_2 = (TextView) view.findViewById(R.id.txtDescriptionFeutureSubscribe_2);
     }
 
     private void setData() {
-        txtPrice.setText(buyData.price + "");
         txtSubject.setText(buyData.subjectSubscribe);
         txtRemainingCourse.setText(buyData.remainingCourses + "");
         txtEndBuyDate.setText(new String(Base64.decode(Base64.decode(buyData.endBuyDate, Base64.DEFAULT), Base64.DEFAULT)));
         txtDescription.setText(buyData.description);
         txtBuyDate.setText(new String(Base64.decode(Base64.decode(buyData.buyDate, Base64.DEFAULT), Base64.DEFAULT)));
         setColor();
+        setImage();
+    }
+
+    private void setImage() {
+        Glide.with(G.context)
+                .load(ApiClient.serverAddress + "/city_need/v1/uploads/subscribe/" + buyData.subscribeId + ".png")
+                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                .error(R.drawable.university)
+                .fitCenter()
+                .into(img);
     }
 
     private void setColor() {
-        if(buyData.vaziat == 0){
-            cv1.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
-            cv2.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
-            cv3.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
-            cv4.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
-            cv5.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
-            cv6.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
-        }
-        else if(buyData.subscribeId == 1){
-            cv1.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_brown_sub));
-            cv2.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
-            cv3.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_brown_sub));
-            cv4.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
-            cv5.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_brown_sub));
-            cv6.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
-        }
-        else if(buyData.subscribeId == 2){
-            cv1.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
-            cv2.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
-            cv3.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
-            cv4.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
-            cv5.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
-            cv6.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
-        }
-        else if(buyData.subscribeId == 3){
-            cv1.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_gold_sub));
-            cv2.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_gold_sub));
-            cv3.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_gold_sub));
-            cv4.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_gold_sub));
-            cv5.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_gold_sub));
-            cv6.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_gold_sub));
+        if (buyData.subscribeId == 3) {
+            PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_brown_sub));
+            txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+            txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+            txtDescription_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+            txtEndBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+            txtRemainingCourse_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+        } else if (buyData.subscribeId == 2) {
+            PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
+            txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            txtDescription_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            txtEndBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            txtRemainingCourse_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+
+            txtBuyDate.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
+            txtDescription.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
+            txtEndBuyDate.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
+            txtRemainingCourse.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
+            txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
+
         }
     }
 }
