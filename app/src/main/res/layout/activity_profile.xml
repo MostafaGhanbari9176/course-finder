@@ -123,13 +123,6 @@
                     android:padding="8dp"
                     android:visibility="gone">
 
-                    <Button
-                        android:id="@+id/btnHelp"
-                        android:layout_width="@dimen/btn_nav"
-                        android:layout_height="@dimen/btn_nav"
-                        android:alpha="0.5"
-                        android:background="@drawable/icon_help_blue_eq_32dp" />
-
                 </LinearLayout>
 
             </RelativeLayout>

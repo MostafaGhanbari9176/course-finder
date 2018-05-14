@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
@@ -55,7 +57,7 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
         list = (RecyclerView) view.findViewById(R.id.RVSubscribeList);
     }
 
-    public void cancelPbar(){
+    public void cancelPbar() {
         pbar.setVisibility(View.GONE);
     }
 
@@ -87,11 +89,16 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
     }
 
     @Override
+    public void onReceiveFlagFromSubscribe(boolean flag) {
+
+    }
+
+    @Override
     public void subscribeItemClick(int position) {
         requestPayment(position);
     }
 
-    private void requestPayment(int position) {
+    private void requestPayment(final int position) {
 
         pbar.setVisibility(View.VISIBLE);
 
@@ -114,7 +121,10 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
                     /*
                     When Status is 100 Open Zarinpal PG on Browser
                     */
+                    Pref.saveIntegerValue(PrefKey.SubId, source.get(position).id);
                     startActivity(intent);
+                    G.activity.finish();
+
                 } else {
                     pbar.setVisibility(View.GONE);
                     Toast.makeText(G.context, "خطا,لطفا دوباره تلاش کنید.", Toast.LENGTH_LONG).show();

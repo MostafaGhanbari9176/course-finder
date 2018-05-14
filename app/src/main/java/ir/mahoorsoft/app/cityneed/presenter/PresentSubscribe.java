@@ -24,6 +24,11 @@ public class PresentSubscribe implements Subscribe.OnSubscribeListener {
         (new Subscribe(this)).getUserBuy(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
+    public void saveUserBuy(String refId) {
+
+        (new Subscribe(this)).saveUserBuy(Pref.getStringValue(PrefKey.apiCode, ""), refId, Pref.getIntegerValue(PrefKey.SubId, -1));
+    }
+
     @Override
     public void onReceiveSubscribeList(ArrayList<StSubscribe> data) {
         if (data == null || data.size() == 0)
@@ -48,14 +53,17 @@ public class PresentSubscribe implements Subscribe.OnSubscribeListener {
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-
+        if (res == null || res.size() == 0)
+            sendMessage(Message.getMessage(1));
+        else
+            onPresentSubscribeListener.onReceiveFlagFromSubscribe(res.get(0).code != 0);
     }
 
     public PresentSubscribe(OnPresentSubscribeListener onPresentSubscribeListener) {
         this.onPresentSubscribeListener = onPresentSubscribeListener;
     }
 
-    OnPresentSubscribeListener onPresentSubscribeListener;
+    private OnPresentSubscribeListener onPresentSubscribeListener;
 
     public interface OnPresentSubscribeListener {
         void onResiveSubscribeList(ArrayList<StSubscribe> data);
@@ -63,5 +71,7 @@ public class PresentSubscribe implements Subscribe.OnSubscribeListener {
         void sendMessageFromSubscribe(String message);
 
         void onReceiveUserBuy(ArrayList<StBuy> data);
+
+        void onReceiveFlagFromSubscribe(boolean flag);
     }
 }

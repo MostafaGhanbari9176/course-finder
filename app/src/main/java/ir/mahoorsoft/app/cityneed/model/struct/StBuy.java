@@ -17,5 +17,6 @@ public class StBuy {
     public int remainingCourses;
     public int empty;
     public int vaziat;
+    public String refId;
 
 }

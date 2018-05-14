@@ -35,9 +35,12 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
+import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
+import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
@@ -50,27 +53,28 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by MAHNAZ on 10/16/2017.
  */
 
-public class ActivityProfile extends AppCompatActivity implements PresentUpload.OnPresentUploadListener, PresentTeacher.OnPresentTeacherListener {
+public class ActivityProfile extends AppCompatActivity implements PresentUpload.OnPresentUploadListener, PresentTeacher.OnPresentTeacherListener, PresentSubscribe.OnPresentSubscribeListener {
     private Toolbar tlb;
     boolean isResponseForImage = false;
-    static FragmentProfileAmozeshgah teacher;
-    static FragmentProfileKarbar user;
+    FragmentProfileAmozeshgah teacher;
+    FragmentProfileKarbar user;
     DialogProgres dialogProgres;
     ImageView imgAppBar;
-    static BottomNavigationView bottomNav;
-    static AppBarLayout appBarLayout;
-    static NestedScrollView scrollView;
+    BottomNavigationView bottomNav;
+    AppBarLayout appBarLayout;
+    NestedScrollView scrollView;
     public static RatingBar ratingBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        checkSubInventory();
         G.activity = this;
         G.context = this;
         dialogProgres = new DialogProgres(this);
         pointers();
-        checkUserType();
+        //checkUserType();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(Pref.getStringValue(PrefKey.subject, ""));
@@ -80,6 +84,12 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                 finish();
             }
         });
+    }
+
+    private void checkSubInventory() {
+        if (Pref.getBollValue(PrefKey.isPaymentSuccess, false) && !(Pref.getBollValue(PrefKey.isPaymentSaved, false))) {
+            (new PresentSubscribe(this)).saveUserBuy(Pref.getStringValue(PrefKey.refId, "NOK"));
+        }
     }
 
     private void pointers() {
@@ -107,10 +117,6 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         Intent intent = new Intent(G.context, ActivityFiles.class);
         intent.putExtra("isImage", true);
         startActivityForResult(intent, 2);
-    }
-
-    public void setToolbarTitle(String title) {
-        getSupportActionBar().setTitle(title);
     }
 
     private void setPaletteSize() {
@@ -150,7 +156,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     protected void onResume() {
         G.activity = this;
         G.context = this;
-        //checkUserType();
+        checkUserType();
         super.onResume();
     }
 
@@ -177,15 +183,15 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            if (data == null) {
-                sendMessageFTT("خطا!!!");
-                return;
-            }
             if (resultCode == RESULT_OK) {
                 if (requestCode == 1)
                     teacher.uploadFile(data.getStringExtra("path"));
                 else if (requestCode == 2)
                     uploadImage(data.getStringExtra("path"));
+
+            } else if (Pref.getBollValue(PrefKey.isPaymentSaved, false)) {
+                Pref.removeValue(PrefKey.isPaymentSaved);
+                onResume();
             }
 
         } catch (Exception ex) {
@@ -370,6 +376,31 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                 return false;
             default:
                 return super.onTouchEvent(ev);
+        }
+    }
+
+    @Override
+    public void onResiveSubscribeList(ArrayList<StSubscribe> data) {
+
+    }
+
+    @Override
+    public void sendMessageFromSubscribe(String message) {
+
+    }
+
+    @Override
+    public void onReceiveUserBuy(ArrayList<StBuy> data) {
+
+    }
+
+    @Override
+    public void onReceiveFlagFromSubscribe(boolean flag) {
+        Pref.saveBollValue(PrefKey.isPaymentSaved, flag);
+        if (flag) {
+            Pref.removeValue(PrefKey.SubId);
+            Pref.removeValue(PrefKey.isPaymentSuccess);
+            Pref.removeValue(PrefKey.refId);
         }
     }
 }

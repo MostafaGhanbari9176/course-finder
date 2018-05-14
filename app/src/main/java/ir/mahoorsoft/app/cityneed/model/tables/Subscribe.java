@@ -33,9 +33,9 @@ public class Subscribe {
         });
     }
 
-    public void saveUserBuy(String ac, String token, int subscribeId){
+    public void saveUserBuy(String ac, String refId, int subscribeId){
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> saveData = api.saveUserBuy(ac, token, subscribeId);
+        Call<ArrayList<ResponseOfServer>> saveData = api.saveUserBuy(ac, refId, subscribeId);
         saveData.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {

@@ -52,7 +52,6 @@ import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
-import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
 
@@ -234,7 +233,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         else if (flagMadrak == 1)
             showDialogForMadrakState("مدرک یا مجوز آموزشی", "مدرک شما در انتظار تایید است,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
         else if (!haveASubscribe)
-            showDialogForMadrakState("اشتراک", "شما هیچ اشتراک فعالی ندارید لطفا نسخه جدید برنامه را نصب کنید.", "", "متوجه شدم", "");
+            showDialogForMadrakState("اشتراک", "شما هیچ اشتراک فعالی ندارید.", "", "متوجه شدم", "");
         else
             starterActivity(ActivityCourseRegistring.class);
     }
@@ -330,15 +329,23 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
                 break;
 
             case R.id.btnSubscribe:
-                checkSubscribe();
+                subData();
                 break;
         }
     }
 
-    private void checkSubscribe() {
+    private void subData() {
+        if(flagMadrak == 2){
         Intent intent = new Intent(G.context, ActivitySubscribe.class);
         intent.putExtra("haveASubscribe", !(txtSubscribe_up.getText().toString().equals("خرید اشتراک")));
-        startActivity(intent);
+        startActivityForResult(intent, 5);
+        }
+        else if(flagMadrak == 1){
+            showDialogForMadrakState("مدرک یا مجوز آموزشی", "ابتدا باید مدرک شما تایید شود,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
+        }
+        else {
+            Toast.makeText(G.context, "ابتدا مدرک خود را بارگذاری کنید.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -475,6 +482,11 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
             } else
                 txtSubscribe_down.setText("اشتراک شما به پایان رسیده");
         }
+    }
+
+    @Override
+    public void onReceiveFlagFromSubscribe(boolean flag) {
+
     }
 
 }

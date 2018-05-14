@@ -36,6 +36,8 @@ public class FragmentShowSubscribeFeture extends Fragment {
     TextView txtBuyDate;
     TextView txtEndBuyDate;
     TextView txtDescription;
+    TextView txtRefId;
+    TextView txtRefId_2;
     TextView txtRemainingCourse_2;
     TextView txtBuyDate_2;
     TextView txtEndBuyDate_2;
@@ -65,6 +67,8 @@ public class FragmentShowSubscribeFeture extends Fragment {
         txtBuyDate = (TextView) view.findViewById(R.id.txtBuyDateFeuture);
         txtEndBuyDate = (TextView) view.findViewById(R.id.txtEndBuyDateFeuture);
         txtDescription = (TextView) view.findViewById(R.id.txtDescriptionFeutureSubscribe);
+        txtRefId = (TextView) view.findViewById(R.id.txtRefIdFutureSub);
+        txtRefId_2 = (TextView) view.findViewById(R.id.txtRefIdFutureSub_2);
         txtRemainingCourse_2 = (TextView) view.findViewById(R.id.txtRemainingCourseFeuture_2);
         txtBuyDate_2 = (TextView) view.findViewById(R.id.txtBuyDateFeuture_2);
         txtEndBuyDate_2 = (TextView) view.findViewById(R.id.txtEndBuyDateFeuture_2);
@@ -76,6 +80,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
         txtRemainingCourse.setText(buyData.remainingCourses + "");
         txtEndBuyDate.setText(new String(Base64.decode(Base64.decode(buyData.endBuyDate, Base64.DEFAULT), Base64.DEFAULT)));
         txtDescription.setText(buyData.description);
+        txtRefId.setText(buyData.refId);
         txtBuyDate.setText(new String(Base64.decode(Base64.decode(buyData.buyDate, Base64.DEFAULT), Base64.DEFAULT)));
         setColor();
         setImage();
@@ -95,18 +100,21 @@ public class FragmentShowSubscribeFeture extends Fragment {
             PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_brown_sub));
             txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
+            txtRefId_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             txtDescription_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             txtEndBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             txtRemainingCourse_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
         } else if (buyData.subscribeId == 2) {
-            PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
-            txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
-            txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
-            txtDescription_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
-            txtEndBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
-            txtRemainingCourse_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
+            txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
+            txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
+            txtRefId_2.setTextColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
+            txtDescription_2.setTextColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
+            txtEndBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
+            txtRemainingCourse_2.setTextColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
 
             txtBuyDate.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
+            txtRefId.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
             txtDescription.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
             txtEndBuyDate.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
             txtRemainingCourse.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));

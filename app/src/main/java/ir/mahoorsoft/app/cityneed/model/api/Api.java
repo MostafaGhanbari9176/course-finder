@@ -20,6 +20,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -352,8 +353,8 @@ public interface Api {
     @POST("saveUserBuy")
     Call<ArrayList<ResponseOfServer>> saveUserBuy(
             @Field("ac") String ac,
-            @Field("token") String token,
-            @Field("subscribeId") int subscribeId
+            @Field("refId") String refId,
+            @Field("subId") int subId
     );
 
     @GET("getUserBuySubscribe/{ac}")
