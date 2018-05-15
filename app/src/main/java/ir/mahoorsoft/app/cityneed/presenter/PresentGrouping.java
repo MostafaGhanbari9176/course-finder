@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.model.tables.grouping.Grouping;
 
@@ -43,6 +44,6 @@ public class PresentGrouping implements Grouping.OnTabagheListener {
 
     @Override
     public void sendMessage(String message) {
-        onPresentTabagheListener.sendMessageFTabagheT(message);
+        onPresentTabagheListener.sendMessageFTabagheT(Message.getMessage(1));
     }
 }

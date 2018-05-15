@@ -171,7 +171,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:src="@drawable/icon_menu" />
+                                app:srcCompat="@drawable/icon_menu" />
 
                             <TextView
                                 android:id="@+id/textView7"
@@ -204,7 +204,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:src="@drawable/icon_delete_red" />
+                                app:srcCompat="@drawable/icon_delete_red" />
 
                             <TextView
                                 android:id="@+id/textView19"

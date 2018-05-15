@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.uploadFile.Upload;
 
@@ -39,6 +40,6 @@ public class PresentUpload implements Upload.OnUploadListener {
 
     @Override
     public void sendMessage(String message) {
-        onPresentUploadListener.messageFromUpload(message);
+        onPresentUploadListener.messageFromUpload(Message.getMessage(1));
     }
 }

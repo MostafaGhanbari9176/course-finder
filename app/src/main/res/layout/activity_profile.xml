@@ -16,16 +16,6 @@
 
     </FrameLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottomNavProfileTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/light"
-        app:itemIconTint="@color/light"
-        app:itemTextColor="@color/light"
-        app:menu="@menu/bottom_nav_menu_profile_teacher" />
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarProfile"
         android:layout_width="match_parent"
@@ -129,4 +119,14 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavProfileTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/light"
+        app:itemIconTint="@color/light"
+        app:itemTextColor="@color/light"
+        app:menu="@menu/bottom_nav_menu_profile_teacher" />
 </android.support.design.widget.CoordinatorLayout>

@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
@@ -72,6 +73,6 @@ public class PresenterComment implements Comment.OnCommentResponseListener {
 
     @Override
     public void sendMessage(String message) {
-        onPresentCommentListener.messageFromComment(message);
+        onPresentCommentListener.messageFromComment(Message.getMessage(1));
     }
 }

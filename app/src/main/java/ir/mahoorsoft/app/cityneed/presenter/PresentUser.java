@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.model.tables.user.User;
@@ -91,7 +92,7 @@ public class PresentUser implements User.OnUserLitener {
 
     @Override
     public void sendMessage(String message) {
-        onPresentUserLitener.sendMessageFUT(message);
+        onPresentUserLitener.sendMessageFUT(Message.getMessage(1));
     }
 
     public interface OnPresentUserLitener {

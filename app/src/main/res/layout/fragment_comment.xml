@@ -91,7 +91,7 @@
             android:layout_alignParentRight="false"
             android:layout_margin="16dp"
             android:clickable="true"
-            android:src="@drawable/icon_add_yellow"
+            app:srcCompat="@drawable/icon_add_yellow"
             app:backgroundTint="@color/dark_eq"
             app:fabSize="normal" />
 

@@ -34,6 +34,8 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.DownloadManager;
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
@@ -290,7 +292,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     public void uploadFile(String path) {
         //isResponseForImage = false;
-        dialogProgres = new DialogProgres(G.context, "درحال بارگذاری");
+        dialogProgres = new DialogProgres(G.context, "درحال بارگذاری",false);
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
         presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.phone, "") + ".pdf", path);
@@ -341,7 +343,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         startActivityForResult(intent, 5);
         }
         else if(flagMadrak == 1){
-            showDialogForMadrakState("مدرک یا مجوز آموزشی", "ابتدا باید مدرک شما تایید شود,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
+            showDialogForMadrakState("خطا", "ابتدا باید مدرک شما تایید شود,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
         }
         else {
             Toast.makeText(G.context, "ابتدا مدرک خود را بارگذاری کنید.", Toast.LENGTH_SHORT).show();
@@ -458,7 +460,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     @Override
     public void onResiveSubscribeList(ArrayList<StSubscribe> data) {
-
+        dialogProgres.closeProgresBar();
     }
 
     @Override
@@ -486,7 +488,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     @Override
     public void onReceiveFlagFromSubscribe(boolean flag) {
-
+        pbarSubscribeData.setVisibility(View.GONE);
     }
 
 }

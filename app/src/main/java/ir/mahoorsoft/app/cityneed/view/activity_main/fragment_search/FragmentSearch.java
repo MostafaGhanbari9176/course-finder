@@ -59,10 +59,16 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     ProgressBar pbar;
     private View dialogView;
     private Dialog dialog;
-    private Button btnStartDate;
-    private Button btnEndDate;
-    private Button btnDay;
-    private Button btnGroup;
+    private LinearLayout btnStartDate;
+    private LinearLayout btnEndDate;
+    private LinearLayout btnDay;
+    private LinearLayout btnGroup;
+
+    private TextView txtStartDate;
+    private TextView txtEndDate;
+    private TextView txtDay;
+    private TextView txtGroup;
+
     private Button btnConfirm;
     TextView txtMinOld;
     TextView txtMaxOld;
@@ -197,10 +203,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
                          if (isStartDate) {
                              sD = year + "-" + (((monthOfYear + 1) + "").length() == 1 ? "0" + (monthOfYear + 1) : (monthOfYear + 1) + "") + "-" + ((dayOfMonth + "").length() == 1 ? "0" + dayOfMonth : dayOfMonth + "");
-                             btnStartDate.setText(sD);
+                             txtStartDate.setText(sD);
                          } else {
                              eD = year + "-" + (((monthOfYear + 1) + "").length() == 1 ? "0" + (monthOfYear + 1) : (monthOfYear + 1) + "") + "-" + ((dayOfMonth + "").length() == 1 ? "0" + dayOfMonth : dayOfMonth + "");
-                             btnEndDate.setText(eD);
+                             txtEndDate.setText(eD);
                          }
                      }
                  }, now.getPersianYear(),
@@ -286,10 +292,16 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         dialogView = li.inflate(R.layout.dialog_filter, null, false);
         btnConfirm = (Button) dialogView.findViewById(R.id.btnConfirmFilter);
-        btnDay = (Button) dialogView.findViewById(R.id.btnSelectDayFilter);
-        btnStartDate = (Button) dialogView.findViewById(R.id.btnStartDateFilter);
-        btnEndDate = (Button) dialogView.findViewById(R.id.btnEndDateFilter);
-        btnGroup = (Button) dialogView.findViewById(R.id.btnSelectGroupFilter);
+        btnDay = (LinearLayout) dialogView.findViewById(R.id.btnSelectDayFilter);
+        btnStartDate = (LinearLayout) dialogView.findViewById(R.id.btnStartDateFilter);
+        btnEndDate = (LinearLayout) dialogView.findViewById(R.id.btnEndDateFilter);
+        btnGroup = (LinearLayout) dialogView.findViewById(R.id.btnSelectGroupFilter);
+
+        txtDay = (TextView) dialogView.findViewById(R.id.txtSelectDayFilter);
+        txtStartDate = (TextView) dialogView.findViewById(R.id.txtStartDateFilter);
+        txtEndDate = (TextView) dialogView.findViewById(R.id.txtEndDateFilter);
+        txtGroup = (TextView) dialogView.findViewById(R.id.txtSelectGroupFilter);
+
         txtMinOld = (TextView) dialogView.findViewById(R.id.txtminOldFilter);
         txtMaxOld = (TextView) dialogView.findViewById(R.id.txtMaxOldFilter);
 
@@ -376,7 +388,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     @Override
     public void days(String days) {
         day = days;
-        btnDay.setText("تعیین شده");
+        txtDay.setText("تعیین شده");
         Toast.makeText(G.context, days, Toast.LENGTH_SHORT).show();
     }
 
@@ -384,7 +396,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     public void tabagheInf(String name, int id) {
         groupId = id;
         groupName = name;
-        btnGroup.setText(name);
+        txtGroup.setText(name);
     }
 }
 

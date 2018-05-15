@@ -51,7 +51,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
             android:clickable="true"
-            android:src="@drawable/icon_menu"
+            app:srcCompat="@drawable/icon_menu"
             android:visibility="gone"
             app:backgroundTint="@color/dark_eq"
             app:fabSize="normal" />
@@ -65,7 +65,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginStart="8dp"
             android:layout_toLeftOf="@id/fltbActivityList"
-            android:src="@drawable/icon_cancel"
+            app:srcCompat="@drawable/icon_cancel"
             android:visibility="gone"
             app:backgroundTint="@color/dark_eq"
             app:fabSize="mini" />

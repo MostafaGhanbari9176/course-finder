@@ -5,6 +5,7 @@ import android.util.Base64;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
@@ -129,6 +130,6 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     @Override
     public void sendMessage(String message) {
-        onPresentCourseLitener.sendMessageFCT(message);
+        onPresentCourseLitener.sendMessageFCT(Message.getMessage(1));
     }
 }

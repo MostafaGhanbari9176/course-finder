@@ -31,6 +31,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
+import ir.mahoorsoft.app.cityneed.view.activity_sms_box.DialogGetSmsText;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
@@ -38,7 +39,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivitySabtenamList extends AppCompatActivity implements AdapterSabtenamList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterSmsBox.OnPresentSmsBoxListener {
+public class ActivitySabtenamList extends AppCompatActivity implements AdapterSabtenamList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterSmsBox.OnPresentSmsBoxListener, DialogGetSmsText.DialogGetSmsTextListener {
 
     AdapterSabtenamList adapter;
     RecyclerView list;
@@ -47,6 +48,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
     TextView txt;
     Toolbar tlb;
     boolean isUserChanged = true;
+    int position;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,58 +147,13 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     @Override
     public void sendSmsButtonPresed(int position) {
-
-        getTextMessage(position);
+        this.position = position;
+        DialogGetSmsText dialogGetSmsText = new DialogGetSmsText(this, this);
+        dialogGetSmsText.showDialog();
     }
 
-    private void getTextMessage(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ارسالی به " + surce.get(position).MasterName);
-        final EditText editText = new EditText(G.context);
-        editText.setPadding(60, 60, 60, 60);
-        editText.setGravity(Gravity.RIGHT);
-        editText.setHint("متن پیام خود را وارد کنید");
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    editText.setTextKeepState(CharCheck.faCheck(editText.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        builder.setView(editText);
-        builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("ارسال", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sendMessage(position, editText.getText().toString());
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
-
-    private void sendMessage(int position, String text) {
+    private void sendMessage(String text) {
         dialogProgres.showProgresBar();
         int type;
         if (Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 1 || Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 2)
@@ -271,5 +228,10 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
     public void messageFromSmsBox(String message) {
         dialogProgres.closeProgresBar();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void sendindSms(String smsText) {
+        sendMessage(smsText);
     }
 }

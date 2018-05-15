@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.StMahoorAppData;
 import ir.mahoorsoft.app.cityneed.model.tables.MahoorAppData;
 
@@ -40,6 +41,6 @@ public class PresentMahoorAppData implements MahoorAppData.OnMahoorAppDataListen
 
     @Override
     public void sendMessage(String message) {
-        onPresentMahoorAppDataListener.messageFromAppData(message);
+        onPresentMahoorAppDataListener.messageFromAppData(Message.getMessage(1));
     }
 }

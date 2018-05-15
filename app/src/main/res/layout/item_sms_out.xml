@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="128dp"
                 android:alpha="0.125"
-                android:src="@drawable/icon_seen" />
+                app:srcCompat="@drawable/icon_seen" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="4dp"
-                        android:src="@drawable/icon_seen" />
+                        app:srcCompat="@drawable/icon_seen" />
 
                 </LinearLayout>
 
@@ -121,7 +121,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="4dp"
-                        android:src="@drawable/icon_delete_red" />
+                        app:srcCompat="@drawable/icon_delete_red" />
 
                 </LinearLayout>
             </LinearLayout>

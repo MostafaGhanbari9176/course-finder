@@ -1,6 +1,8 @@
 package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
+
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.StCity;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.tables.ostan.Ostan;
@@ -36,7 +38,7 @@ public class PresentOstan implements Ostan.OnOstanListener {
 
     @Override
     public void sendMessage(String message) {
-        onPresentOstanListener.sendMessageFOT(message);
+        onPresentOstanListener.sendMessageFOT(Message.getMessage(1));
     }
 
     public interface OnPresentOstanListener {

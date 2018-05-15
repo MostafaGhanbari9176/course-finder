@@ -235,7 +235,7 @@
                         android:id="@+id/btnLikeItemComment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_like" />
+                        app:srcCompat="@drawable/icon_like" />
 
                 </LinearLayout>
 
@@ -262,7 +262,7 @@
                         android:id="@+id/btnDisLikeItemComment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_dislike" />
+                        app:srcCompat="@drawable/icon_dislike" />
 
                 </LinearLayout>
 
@@ -277,7 +277,7 @@
                         android:id="@+id/btnFeedBackItemComment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_feedback" />
+                        app:srcCompat="@drawable/icon_feedback" />
 
                 </LinearLayout>
 

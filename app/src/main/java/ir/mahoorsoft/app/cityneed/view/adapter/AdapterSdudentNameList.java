@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,9 +56,9 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
 
     public class Holder extends RecyclerView.ViewHolder {
         TextView txtName;
-        Button btnSendSms;
-        Button btnDeleteSabtenam;
-        Button btnConfirm;
+        ImageView btnSendSms;
+        ImageView btnDeleteSabtenam;
+        ImageView btnConfirm;
         CheckBox cbx;
         CardView cardView;
         LinearLayout llButton;
@@ -68,9 +69,9 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
             cardView = (CardView) itemView.findViewById(R.id.cvItemStudentName);
             cbx = (CheckBox) itemView.findViewById(R.id.cbxMoreSelect);
             txtName = (TextView) itemView.findViewById(R.id.txtItemStudentName);
-            btnSendSms = (Button) itemView.findViewById(R.id.btnSendSmsStudentListName);
-            btnDeleteSabtenam = (Button) itemView.findViewById(R.id.btnDeleteSabtenamStudentListName);
-            btnConfirm = (Button) itemView.findViewById(R.id.btnConfirmSabtenamStudent);
+            btnSendSms = (ImageView) itemView.findViewById(R.id.btnSendSmsStudentListName);
+            btnDeleteSabtenam = (ImageView) itemView.findViewById(R.id.btnDeleteSabtenamStudentListName);
+            btnConfirm = (ImageView) itemView.findViewById(R.id.btnConfirmSabtenamStudent);
         }
     }
 

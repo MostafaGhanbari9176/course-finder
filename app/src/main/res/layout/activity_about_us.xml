@@ -39,7 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -54,7 +54,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -68,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -82,7 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -96,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -110,7 +110,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -124,7 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -138,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -160,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -174,7 +174,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -188,7 +188,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -202,7 +202,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -216,7 +216,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -230,7 +230,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -244,7 +244,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -258,7 +258,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -272,7 +272,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -293,7 +293,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="-60"
-                        android:src="@drawable/icon_palette" />
+                        app:srcCompat="@drawable/icon_palette" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -307,7 +307,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="-30"
-                        android:src="@drawable/icon_phonelink" />
+                        app:srcCompat="@drawable/icon_phonelink" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -321,7 +321,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="45"
-                        android:src="@drawable/icon_laptop" />
+                        app:srcCompat="@drawable/icon_laptop" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -343,26 +343,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp">
-
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        app:srcCompat="@mipmap/ic_app" />
-
-                </android.support.v7.widget.CardView>
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    app:srcCompat="@drawable/defult" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="126dp"
-                    android:layout_margin="4dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -395,6 +389,7 @@
                         android:layout_weight="1"
                         android:enabled="true"
                         android:gravity="center"
+                        android:lineSpacingExtra="8sp"
                         android:text="تهیه کننده : شرکت کلبه هوشمند خلاق اندیشان ماهور و مجتمع فناوری و نوآوری دانشگاه سیستان و بلوچستان"
                         android:textColor="#000"
                         android:textSize="@dimen/txt_size_smal" />
@@ -503,7 +498,8 @@
                         android:id="@+id/txtEmptyAboutUs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
+                        android:layout_marginBottom="128dp"
+                        android:layout_marginTop="16dp"
                         android:text="هیچ اپلیکیشنی موجود نیست"
                         android:textColor="@color/red_ios"
                         android:textSize="@dimen/txt_size_big"
@@ -563,7 +559,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -577,7 +573,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -591,7 +587,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -605,7 +601,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -619,7 +615,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -633,7 +629,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -647,7 +643,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -661,7 +657,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -675,7 +671,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -697,7 +693,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -711,7 +707,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -725,7 +721,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -739,7 +735,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -753,7 +749,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -767,7 +763,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -781,7 +777,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_phone" />
+                        app:srcCompat="@drawable/icon_phone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -795,7 +791,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_mony" />
+                        app:srcCompat="@drawable/icon_mony" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -815,7 +811,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="30"
-                        android:src="@drawable/icon_college" />
+                        app:srcCompat="@drawable/icon_college" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -829,7 +825,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="-50"
-                        android:src="@drawable/icon_android" />
+                        app:srcCompat="@drawable/icon_android" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -842,7 +838,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="180"
-                        android:src="@drawable/icon_build" />
+                        app:srcCompat="@drawable/icon_build" />
                 </LinearLayout>
             </LinearLayout>
 

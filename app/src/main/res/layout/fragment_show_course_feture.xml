@@ -407,7 +407,7 @@
                             android:id="@+id/imgDropShowFeature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_drop_down" />
+                            app:srcCompat="@drawable/icon_drop_down" />
 
                         <LinearLayout
                             android:layout_width="match_parent"

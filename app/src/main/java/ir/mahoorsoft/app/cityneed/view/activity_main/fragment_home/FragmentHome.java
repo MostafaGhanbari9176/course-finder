@@ -493,7 +493,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     public void onReceiveSelectedTeacher(ArrayList<StTeacher> data) {
         pbarSelectedTeacherList.setVisibility(View.GONE);
         if (data == null || data.size() == 0 || data.get(0).empty == 1) {
-
+            txtEmptySelectedTeacherList.setVisibility(View.VISIBLE);
             return;
         }
         txtEmptySelectedTeacherList.setVisibility(View.GONE);

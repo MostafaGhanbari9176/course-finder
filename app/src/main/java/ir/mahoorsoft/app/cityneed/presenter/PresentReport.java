@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.tables.Report;
 
@@ -40,6 +41,6 @@ public class PresentReport implements Report.OnReportListener {
 
     @Override
     public void sendMessage(String message) {
-
+        onPresentReportListener.messageFromReport(Message.getMessage(1));
     }
 }

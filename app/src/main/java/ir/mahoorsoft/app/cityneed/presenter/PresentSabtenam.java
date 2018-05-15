@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 
@@ -76,7 +77,7 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
 
     @Override
     public void sendMessage(String message) {
-        onPresentSabtenamListaener.sendMessageFST(message);
+        onPresentSabtenamListaener.sendMessageFST(Message.getMessage(1));
     }
 
     @Override

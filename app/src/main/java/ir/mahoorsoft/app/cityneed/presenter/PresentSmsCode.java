@@ -42,6 +42,6 @@ public class PresentSmsCode implements SmsCode.OnSmsCodeListener {
     @Override
     public void sendMessage(String message) {
 
-        onPresentSmsCodeListener.sendMessageFScT(Message.convertRetrofitMessage(message));
+        onPresentSmsCodeListener.sendMessageFScT(Message.convertRetrofitMessage(Message.getMessage(1)));
     }
 }

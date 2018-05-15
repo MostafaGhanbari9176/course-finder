@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
@@ -99,7 +100,7 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
 
     @Override
     public void sendMessage(String message) {
-        onPresentTeacherListener.sendMessageFTT(message);
+        onPresentTeacherListener.sendMessageFTT(Message.getMessage(1));
     }
 
     public interface OnPresentTeacherListener {

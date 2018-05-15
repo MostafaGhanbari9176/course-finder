@@ -77,7 +77,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         //checkUserType();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(Pref.getStringValue(PrefKey.subject, ""));
+        getSupportActionBar().setTitle("اطلاعات کاربری شما");
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +137,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
     @Override
     public void onBackPressed() {
-        if (user != null && user.mapIsShow) {
+        if (user != null && user.mapIsShow && teacher == null) {
             user.mapIsShow = false;
             replaceContentWith(user, R.id.contentProfileUser);
         } else {

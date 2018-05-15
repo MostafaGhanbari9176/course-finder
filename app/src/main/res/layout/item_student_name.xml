@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app.srcCompat="http://schemas.android.com/tools"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
@@ -41,29 +43,29 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageView
                     android:id="@+id/btnDeleteSabtenamStudentListName"
                     android:layout_width="@dimen/btn_nav"
                     android:layout_height="@dimen/btn_nav"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/icon_delete_red" />
+                    app:srcCompat="@drawable/icon_delete_red" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btnSendSmsStudentListName"
                     android:layout_width="@dimen/btn_nav"
                     android:layout_height="@dimen/btn_nav"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/icon_message_box" />
+                    app:srcCompat="@drawable/icon_message_box" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btnConfirmSabtenamStudent"
                     android:layout_width="@dimen/btn_nav"
                     android:layout_height="@dimen/btn_nav"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/icon_checked" />
+                    app:srcCompat="@drawable/icon_checked" />
             </LinearLayout>
 
         </LinearLayout>

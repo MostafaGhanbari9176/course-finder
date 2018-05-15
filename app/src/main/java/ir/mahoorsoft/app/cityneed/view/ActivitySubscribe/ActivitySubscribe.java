@@ -52,7 +52,7 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
             public void onCallbackResultVerificationPayment(boolean isPaymentSuccess, String refID, PaymentRequest paymentRequest) {
 
 
-                if (!isPaymentSuccess) {
+                if (isPaymentSuccess) {
                     /* When Payment Request is Success :) */
                     Pref.saveBollValue(PrefKey.isPaymentSuccess, true);
                     Pref.saveStringValue(PrefKey.refId, "");
