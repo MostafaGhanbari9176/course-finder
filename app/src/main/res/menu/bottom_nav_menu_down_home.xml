@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/homeNaveDownHome"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="داشبورد" />
+        android:icon="@drawable/icon_home_true"
+        android:title="خانه" />
 
     <item
         android:id="@+id/groupingNavDownHome"
@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/teacherListNavDownHome"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/icon_college"
         android:title="آموزشگاها" />
 
     <item

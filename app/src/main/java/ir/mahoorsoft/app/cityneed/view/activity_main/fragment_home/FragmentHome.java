@@ -67,7 +67,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     View view;
     RecyclerView groupingList;
     TextView txtEmpty;
-    public static int id = -1;
+    public int id = -1;
     ProgressBar pbarSelectedTeacherList;
     TextView txtEmptySelectedTeacherList;
     RelativeLayout rlPbar;

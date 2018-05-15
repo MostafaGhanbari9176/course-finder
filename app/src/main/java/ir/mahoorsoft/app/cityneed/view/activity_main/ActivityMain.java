@@ -23,6 +23,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
@@ -41,15 +45,16 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 
-public class ActivityMain extends AppCompatActivity implements DialogGrouping.OnTabagheItemClick {
+public class ActivityMain extends AppCompatActivity {
     Toolbar toolbar;
     LinearLayout llRadioGroup;
     RadioButton rbSelf;
     RadioButton rbOther;
     FrameLayout contentMain;
     public DialogProgres dialogProgres;
-    private FragmentHome fhome = null;
     BottomNavigationView navDown;
+    HashMap<String, Fragment> fSaver = new HashMap<>();
+    Stack<String> keySaver = new Stack<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +65,7 @@ public class ActivityMain extends AppCompatActivity implements DialogGrouping.On
         setContentView(R.layout.activity_main);
         init();
         rbOther.setChecked(true);
-        fhome = new FragmentHome();
-        replaceContentWith(fhome);
+        replaceContentWith("fHome", new FragmentHome());
     }
 
     @Override
@@ -75,8 +79,7 @@ public class ActivityMain extends AppCompatActivity implements DialogGrouping.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnMapMenu:
-                fhome = null;
-                replaceContentWith(new FragmentMap());
+                replaceContentWith("fMap", new FragmentMap());
                 return true;
             case R.id.btnSabtenamListMenu:
                 if (Pref.getBollValue(PrefKey.IsLogin, false))
@@ -125,10 +128,8 @@ public class ActivityMain extends AppCompatActivity implements DialogGrouping.On
         rbSelf.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                {
-                    fhome = null;
-                    replaceContentWith(new FragmentSelfCourse());
+                if (isChecked) {
+                    replaceContentWith("fSelfCourse", new FragmentSelfCourse());
                 }
             }
         });
@@ -142,30 +143,21 @@ public class ActivityMain extends AppCompatActivity implements DialogGrouping.On
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homeNaveDownHome:
-                        if (fhome == null) {
-                            rbOther.setChecked(true);
-                            navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
-                            fhome = new FragmentHome();
-                            replaceContentWith(fhome);
-                        }
+                        rbOther.setChecked(true);
+                        replaceContentWith("fHome", new FragmentHome());
+
                         return true;
 
                     case R.id.searchNanDownHome:
-                        fhome = null;
-                        navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
-                        replaceContentWith(new FragmentSearch());
+                        replaceContentWith("fSearch", new FragmentSearch());
                         return true;
 
                     case R.id.groupingNavDownHome:
-                        fhome = null;
-                        navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
-                        replaceContentWith(new FragmentGroupingList());
+                        replaceContentWith("fGroupingList", new FragmentGroupingList());
                         return true;
 
                     case R.id.teacherListNavDownHome:
-                        fhome = null;
-                        navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
-                        replaceContentWith(new FragmentTeacherList());
+                        replaceContentWith("fTeacherList", new FragmentTeacherList());
                         return true;
 
                     case R.id.profileNavDownHome:
@@ -179,11 +171,62 @@ public class ActivityMain extends AppCompatActivity implements DialogGrouping.On
 
     }
 
-    public static void replaceContentWith(Fragment fragment) {
-
+    public void replaceContentWith(String key, Fragment value) {
+        boolean isAvailable = false;
+        for (Map.Entry m : fSaver.entrySet()) {
+            if (m.getKey() == key) {
+                isAvailable = true;
+                break;
+            }
+        }
+        try {
+            if (!isAvailable) {
+                fSaver.put(key, value);
+            }
+        } catch (Exception e) {
+            keySaver.clear();
+            fSaver.clear();
+        }
         G.activity.getSupportFragmentManager()
-                .beginTransaction().replace(R.id.contentMain, fragment)
+                .beginTransaction().replace(R.id.contentMain, fSaver.get(key))
                 .commit();
+        setNavBottomColor(key);
+        addKeyForBack(key);
+    }
+
+    private void setNavBottomColor(String key) {
+        switch (key) {
+            case "fHome":
+                navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
+                break;
+
+            case "fMap":
+                navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
+                break;
+
+            case "fSearch":
+                navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
+                break;
+
+            case "fGroupingList":
+                navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
+                break;
+
+            case "fSelfCourse":
+                navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
+                break;
+
+            case "fTeacherList":
+                navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
+                break;
+        }
+    }
+
+    private void addKeyForBack(String key) {
+        if (keySaver.size() >= 4) {
+            keySaver.remove(0);
+        }
+        keySaver.add(key);
     }
 
     private void starterActivity(Class aClass) {
@@ -191,10 +234,12 @@ public class ActivityMain extends AppCompatActivity implements DialogGrouping.On
         startActivity(intent);
 
     }
+
     @Override
     public void onBackPressed() {
-        if (fhome == null) {
-            navDown.setSelectedItemId(R.id.homeNaveDownHome);
+        if (keySaver.size() > 1) {
+            keySaver.pop();
+            replaceContentWith(keySaver.pop(), null);
         } else {
             super.onBackPressed();
         }
@@ -224,17 +269,5 @@ public class ActivityMain extends AppCompatActivity implements DialogGrouping.On
         G.context = this;
         profileCheck();
         super.onResume();
-    }
-
-    @Override
-    public void tabagheInf(String name, int id) {
-
-        if (fhome != null) {
-            fhome.queryForCourses(id);
-        } else {
-            fhome = new FragmentHome();
-            replaceContentWith(fhome);
-            fhome.id = id;
-        }
     }
 }

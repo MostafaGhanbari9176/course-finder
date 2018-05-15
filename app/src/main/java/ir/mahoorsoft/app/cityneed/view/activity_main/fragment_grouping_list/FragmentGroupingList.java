@@ -46,7 +46,10 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_grouping_list, container, false);
         pointers();
-        queryForGroupData();
+        if (source.size() == 0)
+            queryForGroupData();
+        else
+            onResiveTabaghe(source);
         return view;
     }
 
@@ -56,6 +59,7 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     }
 
     public void queryForGroupData() {
+        bar.setVisibility(View.VISIBLE);
         PresentGrouping presentGrouping = new PresentGrouping(this);
         presentGrouping.getTabaghe(-1);
     }
