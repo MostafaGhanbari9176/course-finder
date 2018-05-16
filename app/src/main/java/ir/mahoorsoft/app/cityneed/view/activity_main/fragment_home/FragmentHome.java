@@ -76,8 +76,10 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        init();
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_home, container, false);
+            init();
+        }
         return view;
     }
 

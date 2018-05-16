@@ -57,7 +57,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_map, container, false);
+
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map1);
         if (supportMapFragment == null) {
             FragmentManager fragmentManager = getFragmentManager();
@@ -66,7 +66,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
             fragmentTransaction.replace(R.id.map1, supportMapFragment).commit();
         }
         supportMapFragment.getMapAsync(this);
-        init();
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_map, container, false);
+            init();
+        }
         return view;
     }
 

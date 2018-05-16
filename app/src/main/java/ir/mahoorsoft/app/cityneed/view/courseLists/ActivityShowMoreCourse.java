@@ -140,7 +140,13 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
                 textEmpty.setTextColor(ContextCompat.getColor(G.context, R.color.pink_tel));
                 textEmpty.setTypeface(textView.getTypeface(), Typeface.BOLD);
                 textEmpty.setText("موجود نیست");
-                cardView.addView(textEmpty, textParams);
+
+                LinearLayout.LayoutParams textEmptyParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                textEmptyParams.setMargins(dp, dp, dp, dp);
+                textEmpty.setLayoutParams(textEmptyParams);
+                textEmpty.setGravity(Gravity.CENTER);
+                cardView.addView(textEmpty);
             }
 
 

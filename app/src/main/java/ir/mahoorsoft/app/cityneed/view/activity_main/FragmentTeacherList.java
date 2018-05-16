@@ -43,8 +43,10 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_teacher_list, container, false);
-        inite();
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_teacher_list, container, false);
+            inite();
+        }
         return view;
     }
 

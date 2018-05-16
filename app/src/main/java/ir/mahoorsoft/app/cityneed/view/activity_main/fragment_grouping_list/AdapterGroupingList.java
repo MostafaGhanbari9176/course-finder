@@ -79,7 +79,6 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
                 .error(R.drawable.android)
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .fitCenter()
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {

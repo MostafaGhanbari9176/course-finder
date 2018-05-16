@@ -44,12 +44,12 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_grouping_list, container, false);
-        pointers();
-        if (source.size() == 0)
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_grouping_list, container, false);
+            pointers();
             queryForGroupData();
-        else
-            onResiveTabaghe(source);
+
+        }
         return view;
     }
 

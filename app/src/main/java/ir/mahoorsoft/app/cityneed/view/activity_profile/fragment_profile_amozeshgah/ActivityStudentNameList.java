@@ -377,6 +377,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
                 (AdapterSdudentNameList.selectedItems.pop()).setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
             }
         }
+        adapter.notifyDataSetChanged();
     }
 
     @Override

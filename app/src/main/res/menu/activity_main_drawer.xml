@@ -13,5 +13,8 @@
         <item
             android:id="@+id/btnMapMenu"
             android:title="نقشه" />
+    <item
+        android:id="@+id/closeApp"
+        android:title="خروج" />
 
 </menu>

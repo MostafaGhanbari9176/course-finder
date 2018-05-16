@@ -56,8 +56,6 @@ public class PresentUser implements User.OnUserLitener {
     public void responseForLogIn(ArrayList<ResponseOfServer> res) {//0-->badCod  1-->okAndIsUser  2-->okAndIsTeacher  3--> badLogU
         if (res == null || res.size() == 0)
             sendMessage("خطا,پیش بینی نشده!!!");
-        else if (res.get(0).code == 0)
-            sendMessage("کد وارد شده اشتباه است");
         else
             onPresentUserLitener.LogIn(res.get(0));
     }
@@ -66,8 +64,6 @@ public class PresentUser implements User.OnUserLitener {
     public void responseForLogUp(ArrayList<ResponseOfServer> res) {//0-->badCod  1-->ok  2--> badLogin
         if (res == null || res.size() == 0)
             sendMessage("خطا,پیش بینی نشده!!!");
-        else if (res.get(0).code == 0)
-            sendMessage("کد وارد شده اشتباه است");
         else
             onPresentUserLitener.LogUp(res.get(0));
     }

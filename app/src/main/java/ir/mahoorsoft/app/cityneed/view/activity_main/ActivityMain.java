@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentContainer;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -96,6 +97,9 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.btnAboutUsMenu:
                 starterActivity(ActivityAboutUs.class);
                 return true;
+            case R.id.closeApp:
+                this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -143,9 +147,7 @@ public class ActivityMain extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homeNaveDownHome:
-                        rbOther.setChecked(true);
                         replaceContentWith("fHome", new FragmentHome());
-
                         return true;
 
                     case R.id.searchNanDownHome:
@@ -192,6 +194,14 @@ public class ActivityMain extends AppCompatActivity {
                 .commit();
         setNavBottomColor(key);
         addKeyForBack(key);
+        switch (key) {
+            case "fHome":
+                rbOther.setChecked(true);
+                break;
+            case "fSelfCourse":
+                rbSelf.setChecked(true);
+                break;
+        }
     }
 
     private void setNavBottomColor(String key) {

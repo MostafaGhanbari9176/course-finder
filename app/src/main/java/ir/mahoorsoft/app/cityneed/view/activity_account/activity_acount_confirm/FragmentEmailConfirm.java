@@ -59,6 +59,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     RadioButton rbLogIn;
     RadioButton rbLogUp;
     RelativeLayout rlPbar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -230,7 +231,9 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     @Override
     public void LogIn(ResponseOfServer res) {
         rlPbar.setVisibility(View.GONE);
-        if (res.code == 1) {
+        if (res.code == 0)
+            sendMessageFUT("کد وارد شده اشتباه است.");
+        else if (res.code == 1) {
             Pref.saveStringValue(PrefKey.userName, res.name);
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
             Pref.saveBollValue(PrefKey.IsLogin, true);
@@ -251,7 +254,9 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     @Override
     public void LogUp(ResponseOfServer res) {
         rlPbar.setVisibility(View.GONE);
-        if (res.code == 1) {
+        if (res.code == 0)
+            sendMessageFUT("کد وارد شده اشتباه است.");
+        else if (res.code == 1) {
             Pref.saveStringValue(PrefKey.userName, txtName.getText().toString().trim());
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
             Pref.saveBollValue(PrefKey.IsLogin, true);

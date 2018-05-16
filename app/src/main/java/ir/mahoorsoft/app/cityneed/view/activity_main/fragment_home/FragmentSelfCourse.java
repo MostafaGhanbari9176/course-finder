@@ -46,8 +46,10 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_list, container, false);
-        init();
+        if (view == null) {
+            view = inflater.inflate(R.layout.activity_list, container, false);
+            init();
+        }
         return view;
     }
 
@@ -173,7 +175,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
     @Override
     public void onResume() {
-        if (ActivityStudentNameList.removeWaiting){
+        if (ActivityStudentNameList.removeWaiting) {
             setSource();
             ActivityStudentNameList.removeWaiting = false;
         }
