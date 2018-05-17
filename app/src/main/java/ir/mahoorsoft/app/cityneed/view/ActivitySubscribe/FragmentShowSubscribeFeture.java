@@ -90,7 +90,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
         Glide.with(G.context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/subscribe/" + buyData.subscribeId + ".png")
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-                .error(R.drawable.university)
+                .error(R.drawable.icon_defuelt_sub)
                 .fitCenter()
                 .into(img);
     }
@@ -119,6 +119,16 @@ public class FragmentShowSubscribeFeture extends Fragment {
             txtEndBuyDate.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
             txtRemainingCourse.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
             txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
+
+        }
+        else if(buyData.subscribeId != 1){
+            PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
+            txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
+            txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
+            txtRefId_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
+            txtDescription_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
+            txtEndBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
+            txtRemainingCourse_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
 
         }
     }

@@ -24,6 +24,7 @@ import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityShowMoreCourse;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -75,6 +76,8 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     @Override
     public void onResiveTabaghe(ArrayList<StGrouping> data) {
         bar.setVisibility(View.GONE);
+        ActivityMain.sDown.setRefreshing(false);
+        source.clear();
         source.addAll(data);
         adapter = new AdapterGroupingList(G.context, source, this);
         RecyclerView.LayoutManager manager = new GridLayoutManager(G.context, 2, GridLayoutManager.VERTICAL, false);
@@ -87,6 +90,14 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     @Override
     public void sendMessageFTabagheT(String message) {
         bar.setVisibility(View.GONE);
+        ActivityMain.sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        if(ActivityMain.sDown.isRefreshing())
+            queryForGroupData();
+        super.onResume();
     }
 }

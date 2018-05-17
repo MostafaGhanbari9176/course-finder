@@ -25,6 +25,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityStudentNameList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -39,7 +40,6 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     AdapterCourseListTeacher adapter;
     RecyclerView list;
     ArrayList<StCourse> surce = new ArrayList<>();
-    ;
     DialogProgres dialogProgres;
     int position;
 
@@ -78,6 +78,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     @Override
     public void sendMessageFCT(String message) {
         dialogProgres.closeProgresBar();
+        ActivityMain.sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -90,6 +91,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
+        ActivityMain.sDown.setRefreshing(false);
         if (course.get(0).empty == 1)
             txt.setVisibility(View.VISIBLE);
         else {
@@ -142,6 +144,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
         super.onActivityResult(requestCode, resultCode, data);
         dialogProgres.closeProgresBar();
+        ActivityMain.sDown.setRefreshing(false);
         if (data == null) {
             sendMessageFCT("خطا!!!");
             return;
@@ -175,7 +178,9 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
     @Override
     public void onResume() {
-        if (ActivityStudentNameList.removeWaiting) {
+        if (ActivityMain.sDown.isRefreshing())
+            init();
+        else if (ActivityStudentNameList.removeWaiting) {
             setSource();
             ActivityStudentNameList.removeWaiting = false;
         }

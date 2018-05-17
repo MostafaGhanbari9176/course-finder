@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:app.srcCompat="http://schemas.android.com/tools"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
@@ -17,55 +15,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="4dp">
 
-            <CheckBox
-                android:id="@+id/cbxMoreSelect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/txtItemStudentName"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:gravity="center|start"
-                android:maxLines="2"
-                android:textColor="@color/dark_eq"
-                android:textSize="@dimen/txt_size_smal" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cbxMoreSelect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtItemStudentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center|start"
+                    android:maxLines="2"
+                    android:textColor="@color/dark_eq"
+                    android:textSize="@dimen/txt_size_smal" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llItemStudentName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageView
+                <TextView
                     android:id="@+id/btnDeleteSabtenamStudentListName"
-                    android:layout_width="@dimen/btn_nav"
-                    android:layout_height="@dimen/btn_nav"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/icon_delete_red" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="حذف محصل"
+                    android:textColor="@color/red_ios"
+                    android:textSize="@dimen/txt_size_vsmal"
+                    android:textStyle="bold" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/btnSendSmsStudentListName"
-                    android:layout_width="@dimen/btn_nav"
-                    android:layout_height="@dimen/btn_nav"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/icon_message_box" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="ارسال پیام به محصل"
+                    android:textColor="@color/blue_ios"
+                    android:textSize="@dimen/txt_size_vsmal"
+                    android:textStyle="bold" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/btnConfirmSabtenamStudent"
-                    android:layout_width="@dimen/btn_nav"
-                    android:layout_height="@dimen/btn_nav"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/icon_checked" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="تایید کردن محصل"
+                    android:textColor="@color/green_ios"
+                    android:textSize="@dimen/txt_size_vsmal"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>

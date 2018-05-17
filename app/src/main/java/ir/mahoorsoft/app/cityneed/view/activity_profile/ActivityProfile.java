@@ -74,7 +74,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         G.context = this;
         dialogProgres = new DialogProgres(this);
         pointers();
-        //checkUserType();
+        checkUserType();
         setSupportActionBar(tlb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("اطلاعات کاربری شما");
@@ -156,7 +156,6 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     protected void onResume() {
         G.activity = this;
         G.context = this;
-        checkUserType();
         super.onResume();
     }
 
@@ -191,7 +190,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
             } else if (Pref.getBollValue(PrefKey.isPaymentSaved, false)) {
                 Pref.removeValue(PrefKey.isPaymentSaved);
-                onResume();
+                checkUserType();
             }
 
         } catch (Exception ex) {

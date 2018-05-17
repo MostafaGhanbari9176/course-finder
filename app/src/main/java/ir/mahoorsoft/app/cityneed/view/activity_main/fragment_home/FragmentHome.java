@@ -41,14 +41,13 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListHome;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTeacherListHome;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByGroupingId;
-import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByTeacherId;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityShowMoreCourse;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by M-gh on 07-Oct-17.
@@ -83,7 +82,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         return view;
     }
 
-    private void init() {
+    public void init() {
         pointer();
         getCustomCourseListData();
         getSelectedTeacher();
@@ -235,6 +234,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void sendMessageFCT(String message) {
         rlPbar.setVisibility(View.GONE);
+        ActivityMain.sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -251,6 +251,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
         rlPbar.setVisibility(View.GONE);
+        ActivityMain.sDown.setRefreshing(false);
         creatListsByGrouping(items);
     }
 
@@ -443,6 +444,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     @Override
     public void onResume() {
+        if (ActivityMain.sDown.isRefreshing())
+            init();
         super.onResume();
     }
 

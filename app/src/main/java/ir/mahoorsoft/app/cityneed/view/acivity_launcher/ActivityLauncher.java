@@ -25,7 +25,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  */
 
 public class ActivityLauncher extends AppCompatActivity implements PresentCheckedStatuse.OnPresentCheckServrer {
-    DialogProgres dialogProgres;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,6 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         setContentView(R.layout.activity_launcher);
         G.context = this;
         G.activity = this;
-        dialogProgres = new DialogProgres(this);
         //Pref.saveBollValue(PrefKey.smsListReady, false);
         if (!Pref.getBollValue(PrefKey.smsListReady, false))
             setSmsTextData();
@@ -52,27 +51,33 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
 
     private void runLogo() {
         replaceContentWith(new FragmentLogo());
-        new CountDownTimer(2000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
+        if (Pref.getBollValue(PrefKey.IsLogin, false))
+            checkedUserStatuse();
+        else {
+            new CountDownTimer(2000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                }
 
-            @Override
-            public void onFinish() {
-                //set the new Content of your activity
-                next();
-            }
-        }.start();
+                @Override
+                public void onFinish() {
+                    //set the new Content of your activity
+                    next();
+                }
+            }.start();
+        }
     }
 
     private void next() {
 
-        if (Pref.getBollValue(PrefKey.hacked, false))
+/*        if (Pref.getBollValue(PrefKey.hacked, false))
             replaceContentWith(new FragmentHacked());
-        else if (Pref.getBollValue(PrefKey.IsLogin, false))
-            checkedUserStatuse();
-        else
-            checkedServerStatuse();
+        else*/
+        Intent intent = new Intent(this, ActivityMain.class);
+        startActivity(intent);
+        this.finish();
+/*        else
+            checkedServerStatuse();*/
     }
 
     private void checkedServerStatuse() {
@@ -87,7 +92,6 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
 
     @Override
     public void serverChecked(boolean online) {
-        dialogProgres.closeProgresBar();
         if (online) {
             Intent intent = new Intent(this, ActivityMain.class);
             startActivity(intent);

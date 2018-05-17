@@ -56,9 +56,9 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
 
     public class Holder extends RecyclerView.ViewHolder {
         TextView txtName;
-        ImageView btnSendSms;
-        ImageView btnDeleteSabtenam;
-        ImageView btnConfirm;
+        TextView btnSendSms;
+        TextView btnDeleteSabtenam;
+        TextView btnConfirm;
         CheckBox cbx;
         CardView cardView;
         LinearLayout llButton;
@@ -69,9 +69,9 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
             cardView = (CardView) itemView.findViewById(R.id.cvItemStudentName);
             cbx = (CheckBox) itemView.findViewById(R.id.cbxMoreSelect);
             txtName = (TextView) itemView.findViewById(R.id.txtItemStudentName);
-            btnSendSms = (ImageView) itemView.findViewById(R.id.btnSendSmsStudentListName);
-            btnDeleteSabtenam = (ImageView) itemView.findViewById(R.id.btnDeleteSabtenamStudentListName);
-            btnConfirm = (ImageView) itemView.findViewById(R.id.btnConfirmSabtenamStudent);
+            btnSendSms = (TextView) itemView.findViewById(R.id.btnSendSmsStudentListName);
+            btnDeleteSabtenam = (TextView) itemView.findViewById(R.id.btnDeleteSabtenamStudentListName);
+            btnConfirm = (TextView) itemView.findViewById(R.id.btnConfirmSabtenamStudent);
         }
     }
 

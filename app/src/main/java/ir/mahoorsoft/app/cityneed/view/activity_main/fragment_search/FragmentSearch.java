@@ -33,6 +33,7 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
@@ -322,6 +323,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     @Override
     public void sendMessageFCT(String message) {
         pbar.setVisibility(View.GONE);
+        ActivityMain.sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -334,6 +336,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         try {
             pbar.setVisibility(View.GONE);
+            ActivityMain.sDown.setRefreshing(false);
             dialog.cancel();
             txtSearch.setBackgroundResource(R.drawable.txt_search);
             txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
@@ -399,6 +402,13 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         groupId = id;
         groupName = name;
         txtGroup.setText(name);
+    }
+
+    @Override
+    public void onResume() {
+        if (ActivityMain.sDown.isRefreshing())
+            init();
+        super.onResume();
     }
 }
 

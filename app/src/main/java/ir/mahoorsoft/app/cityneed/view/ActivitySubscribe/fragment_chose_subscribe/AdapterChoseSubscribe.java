@@ -126,6 +126,13 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
             holder.showMoreFeature.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
 
         }
+        else if(source.get(position).id != 1){
+            holder.heder.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
+            holder.confirm.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
+            holder.txtDescription.setTextColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
+            holder.showMoreFeature.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
+
+        }
     }
 
 
@@ -133,7 +140,7 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
         Glide.with(G.context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/subscribe/" + source.get(position).id + ".png")
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-                .error(R.drawable.university)
+                .error(R.drawable.icon_defuelt_sub)
                 .fitCenter()
                 .into(img);
     }

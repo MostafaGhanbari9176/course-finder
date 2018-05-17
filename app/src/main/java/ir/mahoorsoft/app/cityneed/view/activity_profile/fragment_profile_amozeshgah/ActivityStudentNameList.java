@@ -228,10 +228,10 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     @Override
     public void confirmStudent(int position, CardView cardView) {
         this.cardView = cardView;
-        dialogGetSmsText = new DialogGetSmsText(this, this, "تایید ثبت نام");
-        dialogGetSmsText.showDialog();
         needToBeDown = "confirmStudent";
         this.position = position;
+        dialogGetSmsText = new DialogGetSmsText(this, this, "تایید ثبت نام");
+        dialogGetSmsText.showDialog();
     }
 
     private void queryForConfirm(int position, String message) {
@@ -371,9 +371,17 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     private void changeColorItems() {
         int size = AdapterSdudentNameList.selectedItems.size();
         if (size == 0 && cardView != null) {
+            StUser user = source.get(position);
+            user.status = 1;
+            source.remove(position);
+            source.add(position, user);
             cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
         } else if (size != 0) {
             for (int i = 0; i < size; i++) {
+                StUser user = source.get(i);
+                user.status = 1;
+                source.remove(i);
+                source.add(i, user);
                 (AdapterSdudentNameList.selectedItems.pop()).setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
             }
         }

@@ -400,6 +400,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     public void confirmTeacher(boolean flag) {
         dialogProgres.closeProgresBar();
         if (flag) {
+            sendMessageFTT("بارگذاری شد");
             txtUpload.setText("مدرک شما در انتظار تایید است");
             flagMadrak = 1;
         } else

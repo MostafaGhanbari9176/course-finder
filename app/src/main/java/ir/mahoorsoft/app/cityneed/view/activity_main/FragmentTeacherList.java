@@ -67,6 +67,7 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     @Override
     public void sendMessageFTT(String message) {
         pbar.setVisibility(View.GONE);
+        ActivityMain.sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -78,6 +79,7 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> teachers) {
         pbar.setVisibility(View.GONE);
+        ActivityMain.sDown.setRefreshing(false);
         if (teachers.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);
             return;
@@ -114,5 +116,12 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
         intent.putExtra("teacherId", source.get(position).ac);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void onResume() {
+        if(ActivityMain.sDown.isRefreshing())
+            inite();
+        super.onResume();
     }
 }

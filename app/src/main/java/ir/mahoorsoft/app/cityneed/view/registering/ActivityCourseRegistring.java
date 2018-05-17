@@ -258,11 +258,11 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                      public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
                          if (isStartDate) {
-                             btnStartDate.setText("تاریخ شروع دوره(" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + ")");
-                             sD = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                             sD = year + "-" + (((monthOfYear + 1) + "").length() == 1 ? "0" + (monthOfYear + 1) : (monthOfYear + 1) + "") + "-" + ((dayOfMonth + "").length() == 1 ? "0" + dayOfMonth : dayOfMonth + "");
+                             btnStartDate.setText("تاریخ شروع دوره(" + sD + ")");
                          } else {
-                             eD = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                             btnEndDate.setText("تاریخ پایان دوره (" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + ")");
+                             eD = year + "-" + (((monthOfYear + 1) + "").length() == 1 ? "0" + (monthOfYear + 1) : (monthOfYear + 1) + "") + "-" + ((dayOfMonth + "").length() == 1 ? "0" + dayOfMonth : dayOfMonth + "");
+                             btnEndDate.setText("تاریخ پایان دوره (" + eD + ")");
 
                          }
                      }
@@ -450,8 +450,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         dialogProgres.closeProgresBar();
         if (res.code == 1) {
             sendMessageFCT("بارگذاری شد");
-        }
-        else{
+        } else {
             sendMessageFCT("خطا در بارگذاری");
         }
         this.finish();

@@ -8,16 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,9 +32,9 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
-import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
-import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByTeacherId;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
+import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -70,7 +69,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
             view = inflater.inflate(R.layout.fragment_map, container, false);
             init();
         }
+        setMapSize();
         return view;
+    }
+
+    private void setMapSize() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        (view.findViewById(R.id.map1)).getLayoutParams().height = (int) ((displayMetrics.heightPixels) / 1.5);
     }
 
     private void init() {
@@ -122,7 +128,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     private void addMarker(LatLng location, String title) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(location);
-        markerOptions.title("آموزشگاه : " + title);
+        markerOptions.title("آموزشگاه : " + title + ", " +" برای مشاهده جزییات دوباره کلیک کنید.");
         Marker m = mMap.addMarker(markerOptions);
 //        m.showInfoWindow();
     }
@@ -130,6 +136,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     @Override
     public void sendMessageFTT(String message) {
         dialogProgres.closeProgresBar();
+        ActivityMain.sDown.setRefreshing(false);
         //Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -140,11 +147,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
 
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> users) {
+        dialogProgres.closeProgresBar();
+        ActivityMain.sDown.setRefreshing(false);
         if (users.get(0).empty == 1) {
             sendMessageFTT("هیچ آموزشگاهی موجود نیست !");
             return;
         }
-        dialogProgres.closeProgresBar();
+        source.clear();
         source.addAll(users);
         dataSaved = true;
         if (mapReady)
@@ -185,7 +194,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
                 selectedMarker.showInfoWindow();
                 selectedMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
             } else
-                showDialog(marker.getTitle(), "نمایش دوره های این آموزشگاه؟", "بله", "خیر");
+                showCourseList();
 
         } catch (Exception e) {
             e.getMessage();
@@ -222,10 +231,17 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     }
 
     private void showCourseList() {
-        Intent intent = new Intent(G.context, ActivityCoursesListByTeacherId.class);
-        intent.putExtra("apiCode", source.get(selectedId).ac);
+        Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
+        intent.putExtra("id", -1);
+        intent.putExtra("teacherId", source.get(selectedId).ac);
         startActivity(intent);
+    }
 
+    @Override
+    public void onResume() {
+        if (ActivityMain.sDown.isRefreshing())
+            init();
+        super.onResume();
     }
 }
 

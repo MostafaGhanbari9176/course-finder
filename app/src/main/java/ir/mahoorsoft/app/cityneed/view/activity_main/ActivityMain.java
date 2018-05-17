@@ -3,13 +3,9 @@ package ir.mahoorsoft.app.cityneed.view.activity_main;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentContainer;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +17,6 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -43,10 +38,9 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSea
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 
-public class ActivityMain extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     Toolbar toolbar;
     LinearLayout llRadioGroup;
     RadioButton rbSelf;
@@ -56,6 +50,7 @@ public class ActivityMain extends AppCompatActivity {
     BottomNavigationView navDown;
     HashMap<String, Fragment> fSaver = new HashMap<>();
     Stack<String> keySaver = new Stack<>();
+    public static SwipeRefreshLayout sDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +107,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void pointers() {
-
+        sDown = (SwipeRefreshLayout) findViewById(R.id.SDMain);
         navDown = (BottomNavigationView) findViewById(R.id.bottomNav_down_Home);
         navDown.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_tel));
         setNavigationItemListener();
@@ -122,6 +117,7 @@ public class ActivityMain extends AppCompatActivity {
         llRadioGroup = (LinearLayout) findViewById(R.id.llRadioGroupMain);
         toolbar = (Toolbar) findViewById(R.id.tlbProfile);
         contentMain = (FrameLayout) findViewById(R.id.contentMain);
+        sDown.setOnRefreshListener(this);
         rbOther.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -195,11 +191,19 @@ public class ActivityMain extends AppCompatActivity {
         setNavBottomColor(key);
         addKeyForBack(key);
         switch (key) {
+            case "fMap":
+                sDown.setEnabled(false);
+                break;
             case "fHome":
                 rbOther.setChecked(true);
+                sDown.setEnabled(true);
                 break;
             case "fSelfCourse":
                 rbSelf.setChecked(true);
+                sDown.setEnabled(true);
+                break;
+            default:
+                sDown.setEnabled(true);
                 break;
         }
     }
@@ -279,5 +283,11 @@ public class ActivityMain extends AppCompatActivity {
         G.context = this;
         profileCheck();
         super.onResume();
+    }
+
+    @Override
+    public void onRefresh() {
+        (fSaver.get(keySaver.peek())).onResume();
+
     }
 }

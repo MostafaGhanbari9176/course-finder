@@ -180,6 +180,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
                 location).zoom(16).build();
         marker = mMap.addMarker(markerOptions);
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setRotateGesturesEnabled(true);
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
