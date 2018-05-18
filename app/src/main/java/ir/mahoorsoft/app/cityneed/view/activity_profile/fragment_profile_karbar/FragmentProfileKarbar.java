@@ -3,6 +3,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
@@ -328,7 +329,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
 
 
         Spotlight.with(G.activity)
-                .setOverlayColor(ContextCompat.getColor(G.context, R.color.blue_ios))
+                .setOverlayColor(Color.argb(220, 100, 50, 70))
                 .setDuration(500L)
                 .setAnimation(new DecelerateInterpolator(4f))
                 .setTargets(map, sabtenam, sms, trend, logout)

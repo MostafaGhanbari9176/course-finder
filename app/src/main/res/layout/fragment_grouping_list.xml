@@ -11,18 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.02"
-            android:background="@color/orange_tel"
-            android:orientation="horizontal"></LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/RVFragmentGroupingList"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/SDFragmentGroupingList"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/RVFragmentGroupingList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:id="@+id/pbarFragmentGroupingList"

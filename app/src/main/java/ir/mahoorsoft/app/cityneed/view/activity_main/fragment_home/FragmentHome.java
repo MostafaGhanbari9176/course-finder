@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +54,7 @@ import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityShowMoreCourse;
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener, AdapterTeacherListHome.OnClickItemTeacherList {
+public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener, AdapterTeacherListHome.OnClickItemTeacherList, SwipeRefreshLayout.OnRefreshListener {
     LinearLayout scrollView;
     LinearLayout llitems;
     LinearLayout llCustomeCourseList;
@@ -70,7 +71,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     ProgressBar pbarSelectedTeacherList;
     TextView txtEmptySelectedTeacherList;
     RelativeLayout rlPbar;
-
+    SwipeRefreshLayout sDown;
 
     @Nullable
     @Override
@@ -130,7 +131,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void pointer() {
-        // (view.findViewById(R.id.llViewPager)).setBackgroundColor(RandomColor.randomColor(G.context));
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentHome);
+        sDown.setOnRefreshListener(this);
         rlPbar = (RelativeLayout) view.findViewById(R.id.rlPbarFragmentHome);
         btnDelete = (CardView) view.findViewById(R.id.btnDeletGroupingHome);
         llViewPager = (LinearLayout) view.findViewById(R.id.llViewPager);
@@ -234,7 +236,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void sendMessageFCT(String message) {
         rlPbar.setVisibility(View.GONE);
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -251,7 +253,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void onReceiveCourseForListHome(ArrayList<StCustomCourseListHome> items) {
         rlPbar.setVisibility(View.GONE);
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         creatListsByGrouping(items);
     }
 
@@ -443,13 +445,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void onResume() {
-        if (ActivityMain.sDown.isRefreshing())
-            init();
-        super.onResume();
-    }
-
-    @Override
     public void onResiveTabaghe(ArrayList<StGrouping> data) {
         adapterGrouping = new AdapterGroupingListHome(G.context, data, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
@@ -528,4 +523,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
 
+    @Override
+    public void onRefresh() {
+        init();
+    }
 }

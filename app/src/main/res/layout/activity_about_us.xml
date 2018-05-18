@@ -809,7 +809,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView7"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="-60"
@@ -823,7 +823,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView8"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="-30"
@@ -837,7 +837,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView9"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:rotation="45"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 4/28/2018.
  */
 
-public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPresentTeacherListener, AdapterTeacherList.OnClickItemTeacherList {
+public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPresentTeacherListener, AdapterTeacherList.OnClickItemTeacherList, SwipeRefreshLayout.OnRefreshListener {
 
     View view;
     RecyclerView list;
@@ -38,6 +39,7 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     ArrayList<StTeacher> source = new ArrayList<>();
     TextView txtEmpty;
     ProgressBar pbar;
+    SwipeRefreshLayout sDown;
 
     @Nullable
     @Override
@@ -51,7 +53,8 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     }
 
     private void inite() {
-
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentTeacherList);
+        sDown.setOnRefreshListener(this);
         list = (RecyclerView) view.findViewById(R.id.RVTeacherList);
         txtEmpty = (TextView) view.findViewById(R.id.txtEmptyFragmentTeacherList);
         pbar = (ProgressBar) view.findViewById(R.id.pbarFragmentTeacherList);
@@ -67,7 +70,7 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     @Override
     public void sendMessageFTT(String message) {
         pbar.setVisibility(View.GONE);
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -79,7 +82,7 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> teachers) {
         pbar.setVisibility(View.GONE);
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         if (teachers.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);
             return;
@@ -118,10 +121,9 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
 
     }
 
+
     @Override
-    public void onResume() {
-        if(ActivityMain.sDown.isRefreshing())
-            inite();
-        super.onResume();
+    public void onRefresh() {
+        inite();
     }
 }

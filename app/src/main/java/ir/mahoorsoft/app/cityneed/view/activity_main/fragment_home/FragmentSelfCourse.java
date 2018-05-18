@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -34,7 +35,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 03-Feb-18.
  */
 
-public class FragmentSelfCourse extends Fragment implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener {
+public class FragmentSelfCourse extends Fragment implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener, SwipeRefreshLayout.OnRefreshListener {
     View view;
     TextView txt;
     AdapterCourseListTeacher adapter;
@@ -42,6 +43,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     ArrayList<StCourse> surce = new ArrayList<>();
     DialogProgres dialogProgres;
     int position;
+    SwipeRefreshLayout sDown;
 
     @Nullable
     @Override
@@ -54,6 +56,8 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     }
 
     private void init() {
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentSelfCourse);
+        sDown.setOnRefreshListener(this);
         ((Toolbar) view.findViewById(R.id.tlbList)).setVisibility(View.GONE);
         txt = (TextView) view.findViewById(R.id.txtEmptyCourseList);
         dialogProgres = new DialogProgres(G.context);
@@ -78,7 +82,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     @Override
     public void sendMessageFCT(String message) {
         dialogProgres.closeProgresBar();
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -91,7 +95,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         dialogProgres.closeProgresBar();
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         if (course.get(0).empty == 1)
             txt.setVisibility(View.VISIBLE);
         else {
@@ -144,7 +148,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
         super.onActivityResult(requestCode, resultCode, data);
         dialogProgres.closeProgresBar();
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         if (data == null) {
             sendMessageFCT("خطا!!!");
             return;
@@ -178,12 +182,15 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
     @Override
     public void onResume() {
-        if (ActivityMain.sDown.isRefreshing())
-            init();
-        else if (ActivityStudentNameList.removeWaiting) {
+        if (ActivityStudentNameList.removeWaiting) {
             setSource();
             ActivityStudentNameList.removeWaiting = false;
         }
         super.onResume();
+    }
+
+    @Override
+    public void onRefresh() {
+        init();
     }
 }

@@ -259,8 +259,8 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
         SimpleTarget starter = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.registerCourseBottomNavTeacher))
                 .setRadius(1f)
-                .setTitle("تبریک و تشکر از اینکه به ما در جهت توسعه کسب و کار خود اعتماد کردید")
-                .setDescription("در ابتدا باید شما از سمت ما تایید اعتبار شوید سپس می توانید دوره های خود را ثبت کنید پس از ثیت هر دوره محصلین می توانند درخواست ثبتنام دهند و پس از تایید از جانب شما از طریق برنامه و مراجعه حضوری محصل ثبتنام نهایی می شود.")
+                .setTitle("تشکر از اینکه به ما در جهت توسعه کسب و کار خود اعتماد کردید")
+                .setDescription("در ابتدا باید شما از سمت ما تایید اعتبار شوید سپس می توانید دوره های خود را ثبت کنید پس از ثیت هر دوره محصلین می توانند درخواست ثبت نام دهند و پس از تایید از جانب شما از طریق برنامه و مراجعه حضوری محصل ثب تنام نهایی می شود.")
                 .build();
 
         SimpleTarget sabtenam = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.registerCourseBottomNavTeacher))
@@ -309,7 +309,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                 .build();
 
         Spotlight.with(G.activity)
-                .setOverlayColor(ContextCompat.getColor(G.context, R.color.blue_ios))
+                .setOverlayColor(Color.argb(220, 100, 50, 70))
                 .setDuration(500L)
                 .setAnimation(new DecelerateInterpolator(4f))
                 .setTargets(starter, sabtenam, add, sms, addList, logout, madrak, subscribe, img)
@@ -323,7 +323,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                 .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
                     @Override
                     public void onEnded() {
-                        Pref.saveBollValue(PrefKey.profileTeacherPage, false);
+                      Pref.saveBollValue(PrefKey.profileTeacherPage, false);
                     }
                 })
                 .start();

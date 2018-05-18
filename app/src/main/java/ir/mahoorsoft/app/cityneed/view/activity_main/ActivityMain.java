@@ -40,7 +40,7 @@ import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
-public class ActivityMain extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class ActivityMain extends AppCompatActivity {
     Toolbar toolbar;
     LinearLayout llRadioGroup;
     RadioButton rbSelf;
@@ -50,7 +50,6 @@ public class ActivityMain extends AppCompatActivity implements SwipeRefreshLayou
     BottomNavigationView navDown;
     HashMap<String, Fragment> fSaver = new HashMap<>();
     Stack<String> keySaver = new Stack<>();
-    public static SwipeRefreshLayout sDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +106,7 @@ public class ActivityMain extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void pointers() {
-        sDown = (SwipeRefreshLayout) findViewById(R.id.SDMain);
+
         navDown = (BottomNavigationView) findViewById(R.id.bottomNav_down_Home);
         navDown.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_tel));
         setNavigationItemListener();
@@ -117,7 +116,6 @@ public class ActivityMain extends AppCompatActivity implements SwipeRefreshLayou
         llRadioGroup = (LinearLayout) findViewById(R.id.llRadioGroupMain);
         toolbar = (Toolbar) findViewById(R.id.tlbProfile);
         contentMain = (FrameLayout) findViewById(R.id.contentMain);
-        sDown.setOnRefreshListener(this);
         rbOther.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -191,19 +189,11 @@ public class ActivityMain extends AppCompatActivity implements SwipeRefreshLayou
         setNavBottomColor(key);
         addKeyForBack(key);
         switch (key) {
-            case "fMap":
-                sDown.setEnabled(false);
-                break;
             case "fHome":
                 rbOther.setChecked(true);
-                sDown.setEnabled(true);
                 break;
             case "fSelfCourse":
                 rbSelf.setChecked(true);
-                sDown.setEnabled(true);
-                break;
-            default:
-                sDown.setEnabled(true);
                 break;
         }
     }
@@ -212,26 +202,32 @@ public class ActivityMain extends AppCompatActivity implements SwipeRefreshLayou
         switch (key) {
             case "fHome":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
+                toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
                 break;
 
             case "fMap":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
+                toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
                 break;
 
             case "fSearch":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
+                toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
                 break;
 
             case "fGroupingList":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
+                toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
                 break;
 
             case "fSelfCourse":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
+                toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
                 break;
 
             case "fTeacherList":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
+                toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
                 break;
         }
     }
@@ -283,11 +279,5 @@ public class ActivityMain extends AppCompatActivity implements SwipeRefreshLayou
         G.context = this;
         profileCheck();
         super.onResume();
-    }
-
-    @Override
-    public void onRefresh() {
-        (fSaver.get(keySaver.peek())).onResume();
-
     }
 }

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +34,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 08-Apr-18.
  */
 
-public class FragmentGroupingList extends Fragment implements AdapterGroupingList.OnClickItemGroupingList, PresentGrouping.OnPresentTabagheListener {
+public class FragmentGroupingList extends Fragment implements AdapterGroupingList.OnClickItemGroupingList, PresentGrouping.OnPresentTabagheListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     View view;
@@ -41,6 +42,7 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     ProgressBar bar;
     ArrayList<StGrouping> source = new ArrayList<>();
     AdapterGroupingList adapter;
+    SwipeRefreshLayout sDown;
 
     @Nullable
     @Override
@@ -55,6 +57,8 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     }
 
     private void pointers() {
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentGroupingList);
+        sDown.setOnRefreshListener(this);
         list = (RecyclerView) view.findViewById(R.id.RVFragmentGroupingList);
         bar = (ProgressBar) view.findViewById(R.id.pbarFragmentGroupingList);
     }
@@ -76,7 +80,7 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     @Override
     public void onResiveTabaghe(ArrayList<StGrouping> data) {
         bar.setVisibility(View.GONE);
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         source.clear();
         source.addAll(data);
         adapter = new AdapterGroupingList(G.context, source, this);
@@ -90,14 +94,12 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     @Override
     public void sendMessageFTabagheT(String message) {
         bar.setVisibility(View.GONE);
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onResume() {
-        if(ActivityMain.sDown.isRefreshing())
-            queryForGroupData();
-        super.onResume();
+    public void onRefresh() {
+        queryForGroupData();
     }
 }

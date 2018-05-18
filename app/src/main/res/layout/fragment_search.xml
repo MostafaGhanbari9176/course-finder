@@ -20,7 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_eq"
+                android:background="@color/light"
                 android:orientation="horizontal"
                 android:padding="8dp">
 
@@ -38,8 +38,8 @@
                         android:layout_marginRight="8dp"
                         android:gravity="right|center"
                         android:text="جستجو در : "
-                        android:textColor="@color/light"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:textSize="@dimen/txt_size_smal"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -69,7 +69,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="نام آموزشگاه"
-                            android:textColor="@color/light" />
+                            android:textStyle="bold" />
 
                         <RadioButton
                             android:id="@+id/rbBaseOnCourseNameSearch"
@@ -85,7 +85,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="نام دوره"
-                            android:textColor="@color/light" />
+                            android:textStyle="bold" />
 
                     </RadioGroup>
 
@@ -96,7 +96,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_eq"
+                android:background="@color/purple_tel"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -220,16 +220,16 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/SDFragmentSearch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/RVSerarch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-            </LinearLayout>
+            </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>
 
         <TextView

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,7 +45,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
  * Created by M-gh on 07-Oct-17.
  */
 
-public class FragmentSearch extends Fragment implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, AdapterCourseList.OnClickItemCourseList, DialogGrouping.OnTabagheItemClick, DialogDayWeek.ReturnDay {
+public class FragmentSearch extends Fragment implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, AdapterCourseList.OnClickItemCourseList, DialogGrouping.OnTabagheItemClick, DialogDayWeek.ReturnDay, SwipeRefreshLayout.OnRefreshListener {
 
     View view;
     LinearLayout btnFilter;
@@ -81,6 +82,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     int minOld;
     int maxOld;
     boolean isFilterRes = false;
+    SwipeRefreshLayout sDown;
 
     @Nullable
     @Override
@@ -273,6 +275,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void pointers() {
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentSearch);
+        sDown.setOnRefreshListener(this);
         pbar = (ProgressBar) view.findViewById(R.id.pbarFragmentSearch);
         dialog = new Dialog(G.context);
         txtSearch = (TextView) view.findViewById(R.id.txtSearch);
@@ -323,7 +327,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     @Override
     public void sendMessageFCT(String message) {
         pbar.setVisibility(View.GONE);
-        ActivityMain.sDown.setRefreshing(false);
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -336,7 +340,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         try {
             pbar.setVisibility(View.GONE);
-            ActivityMain.sDown.setRefreshing(false);
+            sDown.setRefreshing(false);
             dialog.cancel();
             txtSearch.setBackgroundResource(R.drawable.txt_search);
             txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
@@ -405,10 +409,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     @Override
-    public void onResume() {
-        if (ActivityMain.sDown.isRefreshing())
-            init();
-        super.onResume();
+    public void onRefresh() {
+        init();
     }
 }
 

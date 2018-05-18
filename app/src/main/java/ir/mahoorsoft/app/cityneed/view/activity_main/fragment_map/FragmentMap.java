@@ -69,14 +69,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
             view = inflater.inflate(R.layout.fragment_map, container, false);
             init();
         }
-        setMapSize();
-        return view;
-    }
 
-    private void setMapSize() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        (view.findViewById(R.id.map1)).getLayoutParams().height = (int) ((displayMetrics.heightPixels) / 1.5);
+        return view;
     }
 
     private void init() {
@@ -136,7 +130,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     @Override
     public void sendMessageFTT(String message) {
         dialogProgres.closeProgresBar();
-        ActivityMain.sDown.setRefreshing(false);
+
         //Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -148,7 +142,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> users) {
         dialogProgres.closeProgresBar();
-        ActivityMain.sDown.setRefreshing(false);
+
         if (users.get(0).empty == 1) {
             sendMessageFTT("هیچ آموزشگاهی موجود نیست !");
             return;
@@ -237,11 +231,5 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Present
         startActivity(intent);
     }
 
-    @Override
-    public void onResume() {
-        if (ActivityMain.sDown.isRefreshing())
-            init();
-        super.onResume();
-    }
 }
 
