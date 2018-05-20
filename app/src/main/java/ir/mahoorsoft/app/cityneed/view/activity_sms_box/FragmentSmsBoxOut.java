@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,10 +30,10 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 27-Feb-18.
  */
 
-public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListOut.OnClickItemSmsList {
+public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListOut.OnClickItemSmsList, SwipeRefreshLayout.OnRefreshListener {
     int deletedMessagePotision;
     View view;
-    DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
     RecyclerView list;
     AdapterSmsListOut adapter;
     ArrayList<StSmsBox> source = new ArrayList<>();
@@ -47,22 +48,23 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
     }
 
     private void init() {
-        dialogProgres = new DialogProgres(G.context);
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDSmsBoxOut);
+        sDown.setOnRefreshListener(this);
         list = (RecyclerView) view.findViewById(R.id.RVSmsOut);
         txtEmpty = (TextView) view.findViewById(R.id.txtEmptyOutSms);
         getData();
     }
 
     private void getData() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
         presenterSmsBox.getTsSms(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
     @Override
     public void onResiveSms(ArrayList<StSmsBox> sms) {
-        dialogProgres.closeProgresBar();
-        if(sms.get(0).empty == 1){
+        sDown.setRefreshing(false);
+        if (sms.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);
             return;
         }
@@ -80,14 +82,14 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
     @Override
     public void onResiveFlagFromSmsBox(boolean flag) {
 
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (!flag)
             messageFromSmsBox("خطا!!");
     }
 
     @Override
     public void smsDeleteFlag(boolean flag) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (!flag)
             return;
         source.remove(deletedMessagePotision);
@@ -97,7 +99,7 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
 
     @Override
     public void sendingMessageFlag(boolean flag) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (!flag)
             messageFromSmsBox("پیام ارسال شد");
         else
@@ -106,7 +108,7 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
 
     @Override
     public void messageFromSmsBox(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -120,6 +122,7 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
         deletedMessagePotision = position;
         answerForDelete();
     }
+
     private void answerForDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
         builder.setTitle("حذف پیام");
@@ -141,7 +144,7 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
     }
 
     private void queryForDelete() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
         presenterSmsBox.deleteMessage(source.get(deletedMessagePotision).id);
     }
@@ -160,5 +163,8 @@ public class FragmentSmsBoxOut extends Fragment implements PresenterSmsBox.OnPre
     }
 
 
-
+    @Override
+    public void onRefresh() {
+        getData();
+    }
 }

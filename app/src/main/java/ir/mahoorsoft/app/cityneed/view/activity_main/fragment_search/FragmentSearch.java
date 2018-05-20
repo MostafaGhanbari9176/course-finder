@@ -58,7 +58,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     AdapterCourseList adapter;
     TextView txtSearch;
     TextView txtEmpty;
-    ProgressBar pbar;
     private View dialogView;
     private Dialog dialog;
     private LinearLayout btnStartDate;
@@ -129,7 +128,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void getDataFromServer() {
-        pbar.setVisibility(View.VISIBLE);
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getAllCourse();
     }
@@ -192,7 +191,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void sendFilterForServer() {
-        pbar.setVisibility(View.VISIBLE);
+        sDown.setRefreshing(true);
         isFilterRes = true;
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseByFilter(minOld, maxOld, sD, eD, groupId == 0 ? -1 : groupId, day.length() == 0 ? "-1" : day);
@@ -277,7 +276,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     private void pointers() {
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentSearch);
         sDown.setOnRefreshListener(this);
-        pbar = (ProgressBar) view.findViewById(R.id.pbarFragmentSearch);
         dialog = new Dialog(G.context);
         txtSearch = (TextView) view.findViewById(R.id.txtSearch);
         rbCourseName = (RadioButton) view.findViewById(R.id.rbBaseOnCourseNameSearch);
@@ -326,7 +324,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
     @Override
     public void sendMessageFCT(String message) {
-        pbar.setVisibility(View.GONE);
         sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
@@ -339,7 +336,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         try {
-            pbar.setVisibility(View.GONE);
             sDown.setRefreshing(false);
             dialog.cancel();
             txtSearch.setBackgroundResource(R.drawable.txt_search);

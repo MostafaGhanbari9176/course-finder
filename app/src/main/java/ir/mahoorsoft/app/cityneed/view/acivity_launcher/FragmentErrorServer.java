@@ -58,6 +58,7 @@ public class FragmentErrorServer extends Fragment implements PresentCheckedStatu
         if (online){
             Intent intent = new Intent(G.context, ActivityMain.class);
             startActivity(intent);
+            G.activity.finish();
         }
 
     }

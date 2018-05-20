@@ -1,19 +1,15 @@
 package ir.mahoorsoft.app.cityneed.view.courseLists;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +25,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
-import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.DialogGetSmsText;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSabtenamList;
@@ -39,12 +34,12 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivitySabtenamList extends AppCompatActivity implements AdapterSabtenamList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterSmsBox.OnPresentSmsBoxListener, DialogGetSmsText.DialogGetSmsTextListener {
+public class ActivitySabtenamList extends AppCompatActivity implements AdapterSabtenamList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterSmsBox.OnPresentSmsBoxListener, DialogGetSmsText.DialogGetSmsTextListener, SwipeRefreshLayout.OnRefreshListener {
 
     AdapterSabtenamList adapter;
     RecyclerView list;
     ArrayList<StCourse> surce = new ArrayList<>();
-    DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
     TextView txt;
     Toolbar tlb;
     boolean isUserChanged = true;
@@ -65,8 +60,10 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
                 onBackPressed();
             }
         });
-        dialogProgres = new DialogProgres(this);
+        sDown = (SwipeRefreshLayout) findViewById(R.id.SDFragmentSelfCourse);
+        sDown.setOnRefreshListener(this);
         list = (RecyclerView) findViewById(R.id.RVList);
+        list.setBackgroundColor(ContextCompat.getColor(this, R.color.light_two));
         adapter = new AdapterSabtenamList(this, surce, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
                 , LinearLayoutManager.VERTICAL, false);
@@ -80,7 +77,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
     }
 
     private void setSource() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getUserCourse();
 
@@ -88,7 +85,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     @Override
     public void sendMessageFCT(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -104,18 +101,18 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (course.get(0).empty == 1)
             txt.setVisibility(View.VISIBLE);
         else {
             txt.setVisibility(View.GONE);
+            surce.clear();
             surce.addAll(course);
             adapter = new AdapterSabtenamList(this, surce, this);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
     }
-
 
 
     @Override
@@ -154,7 +151,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
 
     private void sendMessage(String text) {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         int type;
         if (Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 1 || Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 2)
             type = 1;
@@ -171,7 +168,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     private void queryForUpdateCanceledFlag(int id) {
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.updateCanceledFlag(id, 2,-1,"a","a","a");
+        presentSabtenam.updateCanceledFlag(id, 2, -1, "a", "a", "a");
 
     }
 
@@ -226,12 +223,17 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     @Override
     public void messageFromSmsBox(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void sendindSms(String smsText) {
         sendMessage(smsText);
+    }
+
+    @Override
+    public void onRefresh() {
+        setSource();
     }
 }

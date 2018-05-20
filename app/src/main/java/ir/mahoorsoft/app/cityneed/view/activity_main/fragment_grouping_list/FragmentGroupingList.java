@@ -39,7 +39,6 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
 
     View view;
     RecyclerView list;
-    ProgressBar bar;
     ArrayList<StGrouping> source = new ArrayList<>();
     AdapterGroupingList adapter;
     SwipeRefreshLayout sDown;
@@ -60,11 +59,11 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentGroupingList);
         sDown.setOnRefreshListener(this);
         list = (RecyclerView) view.findViewById(R.id.RVFragmentGroupingList);
-        bar = (ProgressBar) view.findViewById(R.id.pbarFragmentGroupingList);
+
     }
 
     public void queryForGroupData() {
-        bar.setVisibility(View.VISIBLE);
+        sDown.setRefreshing(true);
         PresentGrouping presentGrouping = new PresentGrouping(this);
         presentGrouping.getTabaghe(-1);
     }
@@ -79,7 +78,7 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
 
     @Override
     public void onResiveTabaghe(ArrayList<StGrouping> data) {
-        bar.setVisibility(View.GONE);
+
         sDown.setRefreshing(false);
         source.clear();
         source.addAll(data);
@@ -93,7 +92,7 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
 
     @Override
     public void sendMessageFTabagheT(String message) {
-        bar.setVisibility(View.GONE);
+
         sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }

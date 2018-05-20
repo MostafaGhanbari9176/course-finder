@@ -126,6 +126,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         else
             btnDelete.setVisibility(View.VISIBLE);
         rlPbar.setVisibility(View.VISIBLE);
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseForListHome(groupId);
     }

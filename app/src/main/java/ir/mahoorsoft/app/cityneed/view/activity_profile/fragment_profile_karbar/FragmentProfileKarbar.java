@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,8 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     String name;
     BottomNavigationView bottomNav;
     ImageView imgProfile;
+    ImageButton btnHome;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,6 +95,13 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     }
 
     private void pointers() {
+        btnHome = (ImageButton) view.findViewById(R.id.imgButtonHomeProfileKarbar);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                G.activity.finish();
+            }
+        });
         imgProfile = (ImageView) view.findViewById(R.id.imgProfileUser);
         setUserImage();
         bottomNav = (BottomNavigationView) view.findViewById(R.id.bottomNavProfileUser);
@@ -152,6 +162,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
 
                     case R.id.trendingUpBottomNavUser:
                         starterActivity(ActivityTeacherRegistering.class);
+                        G.activity.finish();
                         return true;
 
                     case R.id.logOutBottomNavUser:
@@ -207,7 +218,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
         builder.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(editText.getText() != null) {
+                if (editText.getText() != null) {
                     name = CharCheck.faCheck(editText.getText().toString().trim());
                     if (name.length() == 0)
                         showDialog();
@@ -215,7 +226,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
                         updateName(name);
                         dialog.cancel();
                     }
-                }else
+                } else
                     showDialog();
             }
         });

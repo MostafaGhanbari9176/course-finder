@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
 
 import ir.mahoorsoft.app.cityneed.G;
@@ -90,7 +92,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
         Glide.with(G.context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/subscribe/" + buyData.subscribeId + ".png")
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-                .error(R.drawable.icon_defuelt_sub)
+                .error(R.drawable.subscribe_pressure)
                 .fitCenter()
                 .into(img);
     }

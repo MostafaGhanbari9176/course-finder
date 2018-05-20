@@ -64,11 +64,16 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/RVCommentList"
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/SDComment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent">
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/RVCommentList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </android.support.v4.widget.SwipeRefreshLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -92,9 +97,9 @@
             android:layout_alignParentRight="false"
             android:layout_margin="16dp"
             android:clickable="true"
-            app:srcCompat="@drawable/icon_add_yellow"
             app:backgroundTint="@color/dark_eq"
-            app:fabSize="normal" />
+            app:fabSize="normal"
+            app:srcCompat="@drawable/icon_add_yellow" />
 
     </RelativeLayout>
 

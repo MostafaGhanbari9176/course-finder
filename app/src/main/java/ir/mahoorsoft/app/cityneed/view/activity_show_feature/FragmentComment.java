@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -37,11 +38,11 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 3/5/2018.
  */
 
-public class FragmentComment extends Fragment implements PresenterComment.OnPresentCommentListener, AdapterCommentList.OnClickItemCommentList, PresentReport.OnPresentReportListener {
+public class FragmentComment extends Fragment implements PresenterComment.OnPresentCommentListener, AdapterCommentList.OnClickItemCommentList, PresentReport.OnPresentReportListener, SwipeRefreshLayout.OnRefreshListener {
     View view;
     boolean licked = false;
     boolean disLicked = false;
-    DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
     RatingBar totalRat;
     FloatingActionButton btnAddComment;
     TextView txtEmptyComment;
@@ -60,14 +61,15 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     }
 
     private void inite() {
-        dialogProgres = new DialogProgres(G.context);
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDComment);
+        sDown.setOnRefreshListener(this);
         pointers();
         getCommentList();
         setFont();
     }
 
     private void getCommentList() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresenterComment presenterComment = new PresenterComment(this);
         presenterComment.getCommentByTeacherId(teacherId);
 
@@ -149,7 +151,7 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     }
 
     private void addComment(String commentText, float rat) {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresenterComment presenterComment = new PresenterComment(this);
         presenterComment.saveComment(commentText, Pref.getStringValue(PrefKey.apiCode, ""), courseId, teacherId, rat);
 
@@ -158,7 +160,7 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
 
     @Override
     public void onResiveComment(ArrayList<StComment> comment) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (comment.get(0).empty == 1) {
             txtEmptyComment.setVisibility(View.VISIBLE);
             return;
@@ -176,7 +178,7 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
 
     @Override
     public void onResiveFlagFromComment(boolean flag) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (flag)
             messageFromComment("ثبت شد");
         else
@@ -186,7 +188,7 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     @Override
     public void messageFromComment(String message) {
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
     }
 
     @Override
@@ -248,14 +250,14 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     }
 
     private void sendReport(String signText, String reportText, int spamId, String spamerId, String reporterId) {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentReport presentReport = new PresentReport(this);
         presentReport.report(signText, reportText, spamId, spamerId, reporterId);
     }
 
     @Override
     public void flagFromReport(boolean flag) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (flag)
             messageFromComment("ارسال شد,بابت فیدبک شما متشکریم");
         else
@@ -264,8 +266,13 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
 
     @Override
     public void messageFromReport(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        getCommentList();
     }
 }
 /*

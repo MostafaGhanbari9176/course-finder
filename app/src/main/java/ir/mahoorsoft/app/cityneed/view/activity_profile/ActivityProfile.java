@@ -368,17 +368,6 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                // if we can scroll pass the event to the superclass
-                return false;
-            default:
-                return super.onTouchEvent(ev);
-        }
-    }
-
-    @Override
     public void onResiveSubscribeList(ArrayList<StSubscribe> data) {
 
     }

@@ -74,8 +74,6 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
         holder.txtTabagheName.setText(items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
-                .error(R.drawable.defult)
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .centerCrop()
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {

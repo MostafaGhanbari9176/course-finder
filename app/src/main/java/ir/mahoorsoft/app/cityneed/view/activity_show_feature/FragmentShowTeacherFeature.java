@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 3/5/2018.
  */
 
-public class FragmentShowTeacherFeature extends Fragment implements PresentTeacher.OnPresentTeacherListener, OnMapReadyCallback {
+public class FragmentShowTeacherFeature extends Fragment implements PresentTeacher.OnPresentTeacherListener, OnMapReadyCallback, SwipeRefreshLayout.OnRefreshListener {
     View view;
     GoogleMap mMap;
     SupportMapFragment supportMapFragment;
@@ -49,7 +50,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     TextView txtLandPhone;
     TextView txtPhone;
     ImageView img;
-    DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
     String teacherId = ActivityOptionalCourse.teacherId;
     Marker marker;
     StTeacher teacher;
@@ -67,7 +68,8 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     }
 
     private void inite() {
-        dialogProgres = new DialogProgres(G.context);
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDShowTeacherFuture);
+        sDown.setOnRefreshListener(this);
         pointers();
         settingUpMap();
         setFont();
@@ -86,7 +88,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     }
 
     private void getTeacherProfile() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentTeacher presentTeacher = new PresentTeacher(this);
         presentTeacher.getTeacher(teacherId);
     }
@@ -108,7 +110,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
 
     @Override
     public void sendMessageFTT(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -119,7 +121,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
 
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> users) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (users.size() == 0) {
             sendMessageFTT("خطا");
             ActivityOptionalCourse.viewPager.setCurrentItem(0);
@@ -139,18 +141,19 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     }
 
 
-
     @Override
     public void onReceiveSelectedTeacher(ArrayList<StTeacher> users) {
 
     }
 
     private void setTeacherLocation() {
-        LatLng latLng = new LatLng(Double.parseDouble(teacher.lt), Double.parseDouble(teacher.lg));
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(
-                latLng).zoom(16).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        marker.setPosition(latLng);
+        if (mMap != null) {
+            LatLng latLng = new LatLng(Double.parseDouble(teacher.lt), Double.parseDouble(teacher.lg));
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(
+                    latLng).zoom(16).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            marker.setPosition(latLng);
+        }
     }
 
     private void setImg(String pictureId) {
@@ -184,5 +187,10 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setRotateGesturesEnabled(true);
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+    }
+
+    @Override
+    public void onRefresh() {
+        getTeacherProfile();
     }
 }

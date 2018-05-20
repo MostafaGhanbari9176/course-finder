@@ -71,8 +71,6 @@ public class AdapterMahoorAppDataItem extends RecyclerView.Adapter<AdapterMahoor
         holder.txtName.setText(items.appName);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/MAP/" + items.pictureId + ".png")
-                .error(R.drawable.android)
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .fitCenter()
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {

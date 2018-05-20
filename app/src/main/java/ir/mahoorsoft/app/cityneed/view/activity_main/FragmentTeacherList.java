@@ -38,7 +38,6 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     AdapterTeacherList adapter;
     ArrayList<StTeacher> source = new ArrayList<>();
     TextView txtEmpty;
-    ProgressBar pbar;
     SwipeRefreshLayout sDown;
 
     @Nullable
@@ -57,19 +56,17 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
         sDown.setOnRefreshListener(this);
         list = (RecyclerView) view.findViewById(R.id.RVTeacherList);
         txtEmpty = (TextView) view.findViewById(R.id.txtEmptyFragmentTeacherList);
-        pbar = (ProgressBar) view.findViewById(R.id.pbarFragmentTeacherList);
         getData();
     }
 
     private void getData() {
-        pbar.setVisibility(View.VISIBLE);
+        sDown.setRefreshing(true);
         PresentTeacher presentTeacher = new PresentTeacher(this);
         presentTeacher.getAllTeacher();
     }
 
     @Override
     public void sendMessageFTT(String message) {
-        pbar.setVisibility(View.GONE);
         sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
@@ -81,7 +78,6 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
 
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> teachers) {
-        pbar.setVisibility(View.GONE);
         sDown.setRefreshing(false);
         if (teachers.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);

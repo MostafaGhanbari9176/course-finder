@@ -241,12 +241,6 @@
             android:textStyle="bold|italic"
             android:visibility="gone" />
 
-        <ProgressBar
-            android:id="@+id/pbarFragmentSearch"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
     </RelativeLayout>
 
 </LinearLayout>

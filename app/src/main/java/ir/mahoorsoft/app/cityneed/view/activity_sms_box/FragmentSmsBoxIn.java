@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,11 +41,11 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 27-Feb-18.
  */
 
-public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListIn.OnClickItemSmsList, PresentReport.OnPresentReportListener, DialogGetSmsText.DialogGetSmsTextListener {
+public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPresentSmsBoxListener, AdapterSmsListIn.OnClickItemSmsList, PresentReport.OnPresentReportListener, DialogGetSmsText.DialogGetSmsTextListener, SwipeRefreshLayout.OnRefreshListener {
 
     int deletedMessagePotision;
     View view;
-    DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
     RecyclerView list;
     AdapterSmsListIn adapter;
     ArrayList<StSmsBox> source = new ArrayList<>();
@@ -60,7 +61,8 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     }
 
     private void init() {
-        dialogProgres = new DialogProgres(G.context);
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDSmsBoxIn);
+        sDown.setOnRefreshListener(this);
         txtEmpty = (TextView) view.findViewById(R.id.txtEmptyInSms);
         list = (RecyclerView) view.findViewById(R.id.RVSmsIn);
 
@@ -69,14 +71,14 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
 
     private void getData() {
 
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
         presenterSmsBox.getRsSms(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
     @Override
     public void onResiveSms(ArrayList<StSmsBox> sms) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (sms.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);
             return;
@@ -94,14 +96,14 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     @Override
     public void onResiveFlagFromSmsBox(boolean flag) {
 
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (!flag)
             messageFromSmsBox("خطا!!");
     }
 
     @Override
     public void smsDeleteFlag(boolean flag) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (!flag)
             return;
         source.remove(deletedMessagePotision);
@@ -111,7 +113,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
 
     @Override
     public void sendingMessageFlag(boolean flag) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (flag)
             messageFromSmsBox("پیام ارسال شد");
         else
@@ -120,7 +122,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
 
     @Override
     public void messageFromSmsBox(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -178,14 +180,14 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     }
 
     private void sendReport(String signText, String reportText, int spamId, String spamerId, String reporterId) {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentReport presentReport = new PresentReport(this);
         presentReport.report(signText, reportText, spamId, spamerId, reporterId);
     }
 
     @Override
     public void flagFromReport(boolean flag) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (flag)
             messageFromReport("ارسال شد,بابت فیدبک شما متشکریم");
         else
@@ -194,7 +196,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
 
     @Override
     public void messageFromReport(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -226,7 +228,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     }
 
     private void queryForDelete() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
         presenterSmsBox.deleteMessage(source.get(deletedMessagePotision).id);
     }
@@ -259,7 +261,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
 
     @Override
     public void sendindSms(String smsText) {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         int type;
         if (Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 1 || Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 2)
             type = 1;
@@ -268,5 +270,10 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
         presenterSmsBox.saveSms(smsText, Pref.getStringValue(PrefKey.apiCode, ""), source.get(position).tsId, source.get(position).courseId, type);
 
+    }
+
+    @Override
+    public void onRefresh() {
+        getData();
     }
 }

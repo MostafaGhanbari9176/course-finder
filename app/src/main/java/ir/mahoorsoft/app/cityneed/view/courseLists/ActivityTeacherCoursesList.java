@@ -3,6 +3,7 @@ package ir.mahoorsoft.app.cityneed.view.courseLists;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,12 +31,13 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivityTeacherCoursesList extends AppCompatActivity implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener {
+public class ActivityTeacherCoursesList extends AppCompatActivity implements AdapterCourseListTeacher.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, PresentUpload.OnPresentUploadListener, SwipeRefreshLayout.OnRefreshListener {
     int position;
     AdapterCourseListTeacher adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
     DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
     TextView txt;
     Toolbar tlb;
 
@@ -54,7 +56,8 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
                 onBackPressed();
             }
         });
-        dialogProgres = new DialogProgres(this);
+        sDown = (SwipeRefreshLayout) findViewById(R.id.SDFragmentSelfCourse);
+        sDown.setOnRefreshListener(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
         adapter = new AdapterCourseListTeacher(this, surce, this);
@@ -67,14 +70,14 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     }
 
     private void getData() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
     @Override
     public void sendMessageFCT(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -86,7 +89,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (course.get(0).empty == 1)
             txt.setVisibility(View.VISIBLE);
         else {
@@ -98,7 +101,6 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
             adapter.notifyDataSetChanged();
         }
     }
-
 
 
     @Override
@@ -141,7 +143,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (data == null) {
             sendMessageFCT("خطا!!!");
             return;
@@ -161,6 +163,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
 
     @Override
     public void messageFromUpload(String message) {
+        dialogProgres.closeProgresBar();
         sendMessageFCT(message);
     }
 
@@ -168,17 +171,22 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     public void flagFromUpload(ResponseOfServer res) {
 
         if (res.code == 1)
-            sendMessageFCT("بارگذاری شد");
+            messageFromUpload("بارگذاری شد");
         else
-            sendMessageFCT("خطا!!!");
+            messageFromUpload("خطا!!!");
     }
 
     @Override
     protected void onResume() {
-        if (ActivityStudentNameList.removeWaiting){
+        if (ActivityStudentNameList.removeWaiting) {
             getData();
             ActivityStudentNameList.removeWaiting = false;
         }
         super.onResume();
+    }
+
+    @Override
+    public void onRefresh() {
+        getData();
     }
 }

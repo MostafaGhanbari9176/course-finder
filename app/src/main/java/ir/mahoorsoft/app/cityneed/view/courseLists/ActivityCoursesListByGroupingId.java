@@ -3,6 +3,7 @@ package ir.mahoorsoft.app.cityneed.view.courseLists;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,21 +27,22 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivityCoursesListByGroupingId extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
+public class ActivityCoursesListByGroupingId extends AppCompatActivity implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, SwipeRefreshLayout.OnRefreshListener {
 
     AdapterCourseList adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
-    DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
     TextView txt;
     int groupingId;
     Toolbar tlb;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        if(getIntent().getExtras() != null)
-            groupingId = getIntent().getIntExtra("groupingId",-1);
+        if (getIntent().getExtras() != null)
+            groupingId = getIntent().getIntExtra("groupingId", -1);
         txt = (TextView) findViewById(R.id.txtEmptyCourseList);
         tlb = (Toolbar) findViewById(R.id.tlbList);
         setSupportActionBar(tlb);
@@ -52,7 +54,8 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
                 onBackPressed();
             }
         });
-        dialogProgres = new DialogProgres(this);
+        sDown = (SwipeRefreshLayout) findViewById(R.id.SDFragmentSelfCourse);
+        sDown.setOnRefreshListener(this);
         surce = new ArrayList<>();
         list = (RecyclerView) findViewById(R.id.RVList);
         adapter = new AdapterCourseList(this, surce, this);
@@ -67,7 +70,7 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
     }
 
     private void setSource() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseByGroupingId(groupingId);
     }
@@ -75,7 +78,7 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
 
     @Override
     public void sendMessageFCT(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -87,7 +90,7 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (course.get(0).empty == 1)
             txt.setVisibility(View.VISIBLE);
         else {
@@ -99,7 +102,6 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
             adapter.notifyDataSetChanged();
         }
     }
-
 
 
     @Override
@@ -122,7 +124,12 @@ public class ActivityCoursesListByGroupingId extends AppCompatActivity implement
 
     @Override
     public void onBackPressed() {
-        finish();
+        this.finish();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onRefresh() {
+        setSource();
     }
 }

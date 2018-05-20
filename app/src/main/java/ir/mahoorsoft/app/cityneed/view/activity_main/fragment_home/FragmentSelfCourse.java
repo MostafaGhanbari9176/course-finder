@@ -60,8 +60,6 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
         sDown.setOnRefreshListener(this);
         ((Toolbar) view.findViewById(R.id.tlbList)).setVisibility(View.GONE);
         txt = (TextView) view.findViewById(R.id.txtEmptyCourseList);
-        dialogProgres = new DialogProgres(G.context);
-
         list = (RecyclerView) view.findViewById(R.id.RVList);
         adapter = new AdapterCourseListTeacher(G.context, surce, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
@@ -73,7 +71,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     }
 
     private void setSource() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
     }
@@ -81,7 +79,6 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
     @Override
     public void sendMessageFCT(String message) {
-        dialogProgres.closeProgresBar();
         sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
@@ -94,7 +91,6 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        dialogProgres.closeProgresBar();
         sDown.setRefreshing(false);
         if (course.get(0).empty == 1)
             txt.setVisibility(View.VISIBLE);
@@ -147,13 +143,10 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        dialogProgres.closeProgresBar();
         sDown.setRefreshing(false);
-        if (data == null) {
-            sendMessageFCT("خطا!!!");
+        if (data == null)
             return;
-        }
-        if (requestCode == 2 && data != null) {
+        if (requestCode == 2) {
             uploadImage(data.getStringExtra("path"));
         } else
             sendMessageFCT("خطا!!!");
@@ -168,6 +161,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
     @Override
     public void messageFromUpload(String message) {
+        dialogProgres.closeProgresBar();
         sendMessageFCT(message);
     }
 
@@ -175,9 +169,9 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     public void flagFromUpload(ResponseOfServer res) {
 
         if (res.code == 1)
-            sendMessageFCT("بارگذاری شد");
+            messageFromUpload("بارگذاری شد");
         else
-            sendMessageFCT("خطا!!!");
+            messageFromUpload("خطا!!!");
     }
 
     @Override

@@ -80,8 +80,6 @@ public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + items.pictureId + ".png")
                 .fitCenter()
-                .error(R.drawable.university)
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .into(holder.img);
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override

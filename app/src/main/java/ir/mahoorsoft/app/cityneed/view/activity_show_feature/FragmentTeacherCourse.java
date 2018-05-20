@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,13 +28,13 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by M-gh on 03-Feb-18.
  */
 
-public class FragmentTeacherCourse extends Fragment implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener {
+public class FragmentTeacherCourse extends Fragment implements AdapterCourseList.OnClickItemCourseList, PresentCourse.OnPresentCourseLitener, SwipeRefreshLayout.OnRefreshListener {
     View view;
     TextView txt;
     AdapterCourseList adapter;
     RecyclerView list;
     ArrayList<StCourse> surce;
-    DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
 
     @Nullable
     @Override
@@ -46,7 +47,8 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
     private void init() {
         ((Toolbar) view.findViewById(R.id.tlbList)).setVisibility(View.GONE);
         txt = (TextView) view.findViewById(R.id.txtEmptyCourseList);
-        dialogProgres = new DialogProgres(G.context);
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentSelfCourse);
+        sDown.setOnRefreshListener(this);
         surce = new ArrayList<>();
         list = (RecyclerView) view.findViewById(R.id.RVList);
         adapter = new AdapterCourseList(G.context, surce, this);
@@ -59,7 +61,7 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
     }
 
     private void setSource() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseByTeacherId(ActivityOptionalCourse.teacherId);
     }
@@ -67,7 +69,7 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
 
     @Override
     public void sendMessageFCT(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -79,7 +81,7 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (course.get(0).empty == 1)
             txt.setVisibility(View.VISIBLE);
         else {
@@ -95,7 +97,6 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
             adapter.notifyDataSetChanged();
         }
     }
-
 
 
     @Override
@@ -117,4 +118,8 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
     }
 
 
+    @Override
+    public void onRefresh() {
+        setSource();
+    }
 }

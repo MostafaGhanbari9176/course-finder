@@ -168,6 +168,8 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     public void replaceContentWith(String key, Fragment value) {
+        if (!keySaver.empty() && keySaver.peek().equals(key))
+            return;
         boolean isAvailable = false;
         for (Map.Entry m : fSaver.entrySet()) {
             if (m.getKey() == key) {

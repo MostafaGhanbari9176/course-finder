@@ -40,8 +40,7 @@
                     android:layout_alignParentStart="false"
                     android:layout_centerHorizontal="false"
                     android:layout_centerVertical="false"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/subscribe_pressure" />
+                    android:layout_marginStart="16dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

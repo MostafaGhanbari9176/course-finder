@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
-public class FragmentShowcourseFeature extends Fragment implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterComment.OnPresentCommentListener {
+public class FragmentShowcourseFeature extends Fragment implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterComment.OnPresentCommentListener, SwipeRefreshLayout.OnRefreshListener {
     View view;
     public static boolean issabtenamed = false;
     DecimalFormat formatter;
@@ -70,7 +71,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     String idTeacher;
     String startDate;
     String idUser = Pref.getStringValue(PrefKey.apiCode, "");
-    DialogProgres dialogProgres;
+    SwipeRefreshLayout sDown;
     TextView txtConfirmRegistery;
 
     @Nullable
@@ -83,7 +84,8 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     private void inite() {
-        dialogProgres = new DialogProgres(G.context);
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDShowCourseFuture);
+        sDown.setOnRefreshListener(this);
         formatter = new DecimalFormat("#,###,###");
         pointers();
         setFont();
@@ -94,13 +96,13 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     private void getCourseInf() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseById(courseId);
     }
 
     private void checkedSabtenamCourse() {
-        dialogProgres.showProgresBar();
+        sDown.setRefreshing(false);
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.checkSabtenam(courseId, idUser);
     }
@@ -172,7 +174,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     private void registerHe() {
 
         if (Pref.getBollValue(PrefKey.IsLogin, false)) {
-            dialogProgres.showProgresBar();
+            sDown.setRefreshing(true);
             PresentSabtenam presentSabtenam = new PresentSabtenam(this);
             presentSabtenam.add(courseId, idTeacher, idUser);
         } else
@@ -241,7 +243,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     @Override
     public void sendMessageFCT(String message) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -253,7 +255,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         capacity = course.get(0).capacity;
         startDate = course.get(0).startDate;
         idTeacher = course.get(0).idTeacher;
@@ -305,7 +307,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     @Override
     public void confirmSabtenam(boolean flag) {
-        dialogProgres.closeProgresBar();
+        sDown.setRefreshing(false);
         if (flag) {
             issabtenamed = true;
             setUpRatBar();
@@ -380,5 +382,10 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
         pbRatBar.setVisibility(View.GONE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        getCourseInf();
     }
 }
