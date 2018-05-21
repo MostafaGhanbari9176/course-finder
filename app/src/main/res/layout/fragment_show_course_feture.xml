@@ -707,6 +707,35 @@
 
                             </LinearLayout>
                         </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            app:cardBackgroundColor="@color/blue_ios">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="10dp">
+
+                                <TextView
+                                    android:id="@+id/txtDescriptionCourseFuture"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="16dp"
+                                    android:enabled="false"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="4sp"
+                                    android:textColor="@color/light"
+                                    android:textSize="@dimen/txt_size_smal"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
                     </LinearLayout>
 
                     <LinearLayout

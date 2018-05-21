@@ -89,13 +89,8 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                 Glide.with(context)
                         .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
                         .error(R.drawable.books)
-                        .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                         .centerCrop()
                         .into(imgItem);
-
-                Typeface tf = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/Far_Homa.ttf");
-/*                txtMasterName.setTypeface(tf);
-                txtCourseName.setTypeface(tf);*/
                 txtCourseName.setText(items.CourseName);
                 txtMasterName.setText("آموزشگاه " + items.MasterName);
                 item.setOnLongClickListener(new View.OnLongClickListener() {
@@ -107,7 +102,6 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                 });
             } else {
                 endOfList.setVisibility(View.VISIBLE);
-                //endOfList.setBackgroundColor(RandomColor.randomColor(context));
             }
             item.setOnClickListener(new View.OnClickListener() {
                 @Override

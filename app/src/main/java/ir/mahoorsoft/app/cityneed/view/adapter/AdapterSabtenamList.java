@@ -98,6 +98,7 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
         holder.txtMasterName.setText(items.MasterName);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
+                .error(R.drawable.books)
                 .centerCrop()
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {

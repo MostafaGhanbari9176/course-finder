@@ -34,8 +34,6 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.DownloadManager;
-import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
@@ -71,6 +69,8 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     TextView txtSubscribe_up;
     TextView txtSubscribe_down;
     TextView txtname;
+    TextView txtDescription;
+    TextView txtAddress;
     TextView txtSubject;
     DialogProgres dialogProgres;
     View view;
@@ -100,8 +100,9 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
             showDialogForHelper();
         txtSubject.setText(Pref.getStringValue(PrefKey.subject, ""));
         txtname.setText(Pref.getStringValue(PrefKey.userName, ""));
-        txtPhone.setText(Pref.getStringValue(PrefKey.phone, ""));
+        txtPhone.setText(Pref.getStringValue(PrefKey.email, ""));
         txtLandPhone.setText(Pref.getStringValue(PrefKey.landPhone, ""));
+        txtAddress.setText(Pref.getStringValue(PrefKey.address, ""));
 
     }
 
@@ -156,6 +157,8 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         btnSubscribe = (LinearLayout) view.findViewById(R.id.btnSubscribe);
         txtUpload = (TextView) view.findViewById(R.id.txtUpload);
         txtSubscribe_up = (TextView) view.findViewById(R.id.txtSubscribt_up);
+        txtDescription = (TextView) view.findViewById(R.id.txtDescriptionProfileTeacher);
+        txtAddress = (TextView) view.findViewById(R.id.txtAddressProfileTeacher);
         txtSubscribe_down = (TextView) view.findViewById(R.id.txtSubscribe_down);
         pbarSubscribeData = (ProgressBar) view.findViewById(R.id.pbarUserSubscribeData);
         txtname = (TextView) view.findViewById(R.id.txtNameProfileTeacher);
@@ -226,7 +229,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     private void queryForLogOut() {
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
-        presentUser.logOut(Pref.getStringValue(PrefKey.phone, ""));
+        presentUser.logOut(Pref.getStringValue(PrefKey.email, ""));
     }
 
     private void addCourse() {
@@ -295,7 +298,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         dialogProgres = new DialogProgres(G.context, "درحال بارگذاری",false);
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.phone, "") + ".pdf", path);
+        presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.email, "") + ".pdf", path);
 
     }
 
@@ -359,7 +362,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     @Override
     public void LogOut(boolean flag) {
         dialogProgres.closeProgresBar();
-        Pref.removeValue(PrefKey.phone);
+        Pref.removeValue(PrefKey.email);
         Pref.removeValue(PrefKey.apiCode);
         Pref.removeValue(PrefKey.userName);
         Pref.removeValue(PrefKey.location);

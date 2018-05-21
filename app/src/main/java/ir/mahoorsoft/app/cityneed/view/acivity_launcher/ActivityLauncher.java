@@ -1,12 +1,10 @@
 package ir.mahoorsoft.app.cityneed.view.acivity_launcher;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import java.util.ArrayList;
 
@@ -17,8 +15,6 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedStatuse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by M-gh on 13-Mar-18.
@@ -105,7 +101,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     public void userChecked(boolean logIn) {
 
         if (!logIn) {
-            Pref.removeValue(PrefKey.phone);
+            Pref.removeValue(PrefKey.email);
             Pref.removeValue(PrefKey.apiCode);
             Pref.removeValue(PrefKey.userName);
             Pref.removeValue(PrefKey.location);

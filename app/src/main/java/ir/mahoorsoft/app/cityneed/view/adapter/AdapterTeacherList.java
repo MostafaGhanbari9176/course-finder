@@ -79,6 +79,7 @@ public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.
         holder.txt.setText("آموزشگاه "+items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + items.pictureId + ".png")
+                .error(R.drawable.university)
                 .fitCenter()
                 .into(holder.img);
         holder.item.setOnClickListener(new View.OnClickListener() {

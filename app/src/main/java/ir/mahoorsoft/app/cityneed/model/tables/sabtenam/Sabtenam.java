@@ -31,9 +31,9 @@ public class Sabtenam {
         this.onSabtenamListener = onSabtenamListener;
     }
 
-    public void add(int idCourse, String idTeacher, String idUser) {
+    public void add(int idCourse, String idTeacher, String idUser, String cellPhone) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> add = api.sabtenam(idCourse, idTeacher, idUser);
+        Call<ArrayList<ResponseOfServer>> add = api.sabtenam(idCourse, idTeacher, idUser, cellPhone);
         add.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {

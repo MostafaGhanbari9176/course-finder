@@ -27,10 +27,10 @@ public class Teacher {
         this.onTeacherListener = onTeacherListener;
     }
 
-    public void addTeacher(String landPhone, String subject, String tozihat, int type, String lat, String lon) {
+    public void addTeacher(String landPhone, String subject, String tozihat, int type, String lat, String lon, String address) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> updateUser = api.addTeacher(Pref.getStringValue(PrefKey.apiCode, ""), landPhone, subject, tozihat, type, lat, lon);
+        Call<ArrayList<ResponseOfServer>> updateUser = api.addTeacher(Pref.getStringValue(PrefKey.apiCode, ""), landPhone, subject, tozihat, type, lat, lon, address);
         updateUser.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {

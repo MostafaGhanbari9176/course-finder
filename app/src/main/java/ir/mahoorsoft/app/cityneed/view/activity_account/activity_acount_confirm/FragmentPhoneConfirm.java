@@ -243,13 +243,13 @@ public class FragmentPhoneConfirm extends Fragment implements View.OnClickListen
             Pref.saveStringValue(PrefKey.userName, res.name);
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
             Pref.saveBollValue(PrefKey.IsLogin, true);
-            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.email, txtPhone.getText().toString().trim());
             Pref.getIntegerValue(PrefKey.userTypeMode, 0);
             next();
         } else if (res.code == 3) {
             showAlertDialog("خطا", "شما قبلا ثبت نام نداشته اید.", "ثبت نام", "");
         } else if (res.code == 2) {
-            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.email, txtPhone.getText().toString().trim());
             Pref.saveStringValue(PrefKey.userName, res.name);
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
             PresentTeacher presentTeacher = new PresentTeacher(this);
@@ -264,7 +264,7 @@ public class FragmentPhoneConfirm extends Fragment implements View.OnClickListen
             Pref.saveStringValue(PrefKey.userName, txtName.getText().toString().trim());
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
             Pref.saveBollValue(PrefKey.IsLogin, true);
-            Pref.saveStringValue(PrefKey.phone, txtPhone.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.email, txtPhone.getText().toString().trim());
             Pref.getIntegerValue(PrefKey.userTypeMode, 0);
             next();
         } else if (res.code == 2) {

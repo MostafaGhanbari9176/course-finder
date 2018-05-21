@@ -2,7 +2,9 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 
@@ -32,7 +34,7 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
 
     public void add(int idCourse, String idTeacher, String iduser) {
         Sabtenam sabtenam = new Sabtenam(this);
-        sabtenam.add(idCourse, idTeacher, iduser);
+        sabtenam.add(idCourse, idTeacher, iduser, Pref.getStringValue(PrefKey.cellPhone, ""));
     }
 
     public void checkSabtenam(int idCourse, String iduser) {

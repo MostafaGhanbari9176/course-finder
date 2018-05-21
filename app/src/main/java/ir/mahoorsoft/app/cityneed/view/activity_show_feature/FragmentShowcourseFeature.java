@@ -1,5 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,10 +11,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -60,6 +65,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     TextView txtsharayet;
     TextView txtRange;
     TextView txtNews;
+    TextView txtDescription;
     LinearLayout moreDetails;
     LinearLayout btnMoreDetails;
     LinearLayout llRatBar;
@@ -121,6 +127,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtRange.setTypeface(typeface);
         txtMasterName.setTypeface(typeface);
         txtMony.setTypeface(typeface);
+        txtDescription.setTypeface(typeface);
 
     }
 
@@ -143,6 +150,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtsharayet = (TextView) view.findViewById(R.id.txtsharayetFeature);
         txtStartDate = (TextView) view.findViewById(R.id.txtStartDateFeature);
         txtRange = (TextView) view.findViewById(R.id.txtRangeFeature);
+        txtDescription = (TextView) view.findViewById(R.id.txtDescriptionCourseFuture);
         txtMony = (TextView) view.findViewById(R.id.txtMonyFeature);
         txtCapacity = (TextView) view.findViewById(R.id.txtCapacityFeature);
         moreDetails = (LinearLayout) view.findViewById(R.id.MoreDetailsShowFeature);
@@ -174,11 +182,46 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     private void registerHe() {
 
         if (Pref.getBollValue(PrefKey.IsLogin, false)) {
-            sDown.setRefreshing(true);
-            PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-            presentSabtenam.add(courseId, idTeacher, idUser);
+            if (Pref.getStringValue(PrefKey.cellPhone, "").length() > 0) {
+                answerForRegistery();
+            } else {
+                getPhoneNumber();
+            }
         } else
             showDialog();
+    }
+
+    private void queryForRegistery() {
+        sDown.setRefreshing(true);
+        PresentSabtenam presentSabtenam = new PresentSabtenam(this);
+        presentSabtenam.add(courseId, idTeacher, idUser);
+    }
+
+    private void getPhoneNumber() {
+        final Dialog dialog = new Dialog(G.context);
+        LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = li.inflate(R.layout.dialog_get_phone_number, null, false);
+        final EditText editText = (EditText) view.findViewById(R.id.txtGetPhoneNumberFDialog);
+        ((Button) view.findViewById(R.id.btnCancelGetPhoneNumberDialog)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        ((Button) view.findViewById(R.id.btnConfirmGetPhoneNumberDialog)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.getText().toString().trim().length() == 11 && TextUtils.isDigitsOnly(editText.getText().toString().trim())) {
+                    Pref.saveStringValue(PrefKey.cellPhone, editText.getText().toString().trim());
+                    queryForRegistery();
+                    dialog.cancel();
+                } else
+                    editText.setError("لطفا صحیح وارد کنید");
+            }
+        });
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
     }
 
     private boolean checkDate() {
@@ -209,7 +252,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
-        builder.setTitle("ثبت نام");
+        builder.setTitle("حساب کاربری");
         builder.setMessage("ابتدا باید وارد حساب خود شوید یا یک حساب جدید ایجاد کنید.");
         builder.setPositiveButton("بعدا", new DialogInterface.OnClickListener() {
             @Override
@@ -226,6 +269,40 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
                 dialog.cancel();
             }
         });
+        builder.show();
+    }
+
+    private void answerForRegistery() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
+        builder.setTitle("ثبت نام");
+        builder.setMessage("آیا مایل به ثبت نام در این دوره هستید؟");
+        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                queryForRegistery();
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void showDialogForWaitingRegistery() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
+        builder.setTitle("ثبت نام");
+        builder.setMessage("ثبت نام موقت شما انجام شد,می توانید در قسمت حساب کاربری نتیجه آن را مشاهده کنید.");
+        builder.setPositiveButton("خوب", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
         builder.show();
     }
 
@@ -269,6 +346,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtMasterName.setText(course.get(0).MasterName);
         txtHours.setText(course.get(0).hours);
         txtDay.setText(course.get(0).day);
+        txtDescription.setText(course.get(0).tozihat);
         txtTabaghe.setText(course.get(0).tabaghe);
         txtsharayet.setText(course.get(0).sharayet);
         checkCourseData();
@@ -314,6 +392,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             sendMessageFCT("انجام شد");
             txtNews.setVisibility(View.VISIBLE);
             txtNews.setText("ثبت نام شما در انتظار تایید مدرس است");
+            showDialogForWaitingRegistery();
             btnRegister.setVisibility(View.GONE);
         } else
             sendMessageFCT("خطا");
@@ -334,7 +413,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             btnRegister.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);
             txtNews.setText("ثبت نام شما در انتظار تایید مدرس است");
-        } else if(ratBarValue != -1){
+        } else if (ratBarValue != -1) {
             issabtenamed = true;
             btnRegister.setVisibility(View.GONE);
             llRatBar.setVisibility(View.VISIBLE);

@@ -47,6 +47,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     TextView txtPhone;
     TextView txtSubject;
     TextView txtTozihat;
+    TextView txtAddress;
     CheckBox cbxPublic;
     CheckBox cbxPrivate;
     DialogProgres dialogProgres;
@@ -82,6 +83,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         txtTozihat = (TextView) findViewById(R.id.txtTozihat);
         txtPhone = (TextView) findViewById(R.id.txtPhoneRegistery);
         txtSubject = (TextView) findViewById(R.id.txtSubject);
+        txtAddress = (TextView) findViewById(R.id.txtAddressRegistery);
         btnUploadImag = (Button) findViewById(R.id.btnUploadImg);
         btnSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnLocation = (Button) findViewById(R.id.btnLocation);
@@ -194,10 +196,13 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         if (TextUtils.isEmpty(txtSubject.getText().toString().trim())) {
             txtSubject.setError("کامل کنید");
             txtSubject.requestFocus();
-        } else if (TextUtils.isEmpty(txtPhone.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(txtPhone.getText().toString().trim()) || txtPhone.getText().toString().trim().length() != 11) {
             txtPhone.setError("کامل کنید");
             txtPhone.requestFocus();
         } else if (TextUtils.isEmpty(txtTozihat.getText().toString().trim())) {
+            txtTozihat.setError("کامل کنید");
+            txtTozihat.requestFocus();
+        } else if (TextUtils.isEmpty(txtAddress.getText().toString().trim())) {
             txtTozihat.setError("کامل کنید");
             txtTozihat.requestFocus();
         } else if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
@@ -217,7 +222,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     private void sendDataForServer() {
         dialogProgres.showProgresBar();
         PresentTeacher presentTeacher = new PresentTeacher(this);
-        presentTeacher.addTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, Pref.getStringValue(PrefKey.lat, ""), Pref.getStringValue(PrefKey.lon, ""));
+        presentTeacher.addTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, Pref.getStringValue(PrefKey.lat, ""), Pref.getStringValue(PrefKey.lon, ""), txtTozihat.getText().toString().trim());
 
     }
 
@@ -261,6 +266,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
             Pref.saveStringValue(PrefKey.pictureId, Pref.getStringValue(PrefKey.apiCode, ""));
             Pref.saveStringValue(PrefKey.landPhone, txtPhone.getText().toString().trim());
             Pref.saveStringValue(PrefKey.subject, txtSubject.getText().toString().trim());
+            Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
             Pref.saveIntegerValue(PrefKey.madrak, 0);
             Pref.saveIntegerValue(PrefKey.userTypeMode, cbxPublic.isChecked() ? 1 : 2);
             starterActivitry(ActivityProfile.class);

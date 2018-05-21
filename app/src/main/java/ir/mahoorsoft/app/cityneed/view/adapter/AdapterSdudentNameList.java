@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,12 +57,14 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
 
     public class Holder extends RecyclerView.ViewHolder {
         TextView txtName;
+        TextView txtCellPhone;
         TextView btnSendSms;
         TextView btnDeleteSabtenam;
         TextView btnConfirm;
         CheckBox cbx;
         CardView cardView;
         LinearLayout llButton;
+        RelativeLayout RLDelete;
 
         public Holder(View itemView) {
             super(itemView);
@@ -69,9 +72,11 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
             cardView = (CardView) itemView.findViewById(R.id.cvItemStudentName);
             cbx = (CheckBox) itemView.findViewById(R.id.cbxMoreSelect);
             txtName = (TextView) itemView.findViewById(R.id.txtItemStudentName);
+            txtCellPhone = (TextView) itemView.findViewById(R.id.txtCellPhoneStudentName);
             btnSendSms = (TextView) itemView.findViewById(R.id.btnSendSmsStudentListName);
             btnDeleteSabtenam = (TextView) itemView.findViewById(R.id.btnDeleteSabtenamStudentListName);
             btnConfirm = (TextView) itemView.findViewById(R.id.btnConfirmSabtenamStudent);
+            RLDelete = (RelativeLayout) itemView.findViewById(R.id.RLDeletedStudent);
         }
     }
 
@@ -85,13 +90,15 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
     @Override
     public void onBindViewHolder(final AdapterSdudentNameList.Holder holder, final int position) {
         final StUser items = surce.get(position);
+        if (items.isCanceled != 0)
+            holder.RLDelete.setVisibility(View.VISIBLE);
         if (items.status == 0) {
             holder.cardView.setCardBackgroundColor(Color.argb(100, 255, 118, 144));
-        }
-        else{
+        } else {
             holder.btnConfirm.setVisibility(View.GONE);
         }
         holder.txtName.setText(items.name);
+        holder.txtCellPhone.setText(items.cellPhone);
         if (showCheckBox) {
             holder.cbx.setVisibility(View.VISIBLE);
             holder.llButton.setVisibility(View.GONE);

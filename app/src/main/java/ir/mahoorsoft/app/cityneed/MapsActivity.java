@@ -86,11 +86,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void checkLocation() {
-        if (marker.getPosition().longitude < 60.90546827763319 && marker.getPosition().longitude > 60.79812191426753
-                && marker.getPosition().latitude < 29.548549235896427 && marker.getPosition().latitude > 29.433302501885095) {
-            showDialog("ثبت موقعیت مکانی", "آیا از موقعیت انتخاب شده مطمعن هستید؟", "بله", "خیر");
-        } else {
-            showDialog("خطا!", "درحال حاظر سرویس ما فقط در شهر زاهدان ارائه می شود.", "", "قبول");
+        try {
+            if (marker.getPosition().longitude < 60.90546827763319 && marker.getPosition().longitude > 60.79812191426753
+                    && marker.getPosition().latitude < 29.548549235896427 && marker.getPosition().latitude > 29.433302501885095) {
+                showDialog("ثبت موقعیت مکانی", "آیا از موقعیت انتخاب شده مطمعن هستید؟", "بله", "خیر");
+            } else {
+                showDialog("خطا!", "درحال حاظر سرویس ما فقط در شهر زاهدان ارائه می شود.", "", "قبول");
+            }
+        } catch (Exception e) {
         }
     }
 

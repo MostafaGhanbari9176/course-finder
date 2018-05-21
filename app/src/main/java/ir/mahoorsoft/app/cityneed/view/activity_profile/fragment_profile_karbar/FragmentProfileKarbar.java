@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,12 +41,10 @@ import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
-import ir.mahoorsoft.app.cityneed.view.acivity_launcher.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
-import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityTeacherRegistering;
 
@@ -83,7 +79,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
         dialogProgres = new DialogProgres(G.context, "درحال بروزرسانی");
         pointers();
         setFont();
-        txtPhone.setText(Pref.getStringValue(PrefKey.phone, ""));
+        txtPhone.setText(Pref.getStringValue(PrefKey.email, ""));
         txtName.setText(Pref.getStringValue(PrefKey.userName, ""));
 
     }
@@ -200,7 +196,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     private void queryForLogOut() {
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
-        presentUser.logOut(Pref.getStringValue(PrefKey.phone, ""));
+        presentUser.logOut(Pref.getStringValue(PrefKey.email, ""));
     }
 
     private void starterActivity(Class aClass) {
@@ -251,7 +247,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     @Override
     public void LogOut(boolean flag) {
         dialogProgres.closeProgresBar();
-        Pref.removeValue(PrefKey.phone);
+        Pref.removeValue(PrefKey.email);
         Pref.removeValue(PrefKey.apiCode);
         Pref.removeValue(PrefKey.userName);
         Pref.removeValue(PrefKey.location);
@@ -286,7 +282,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     private void updateName(String name) {
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
-        presentUser.updateUser(Pref.getStringValue(PrefKey.phone, ""), name);
+        presentUser.updateUser(Pref.getStringValue(PrefKey.email, ""), name);
     }
 
     private void showDialogForHelper() {

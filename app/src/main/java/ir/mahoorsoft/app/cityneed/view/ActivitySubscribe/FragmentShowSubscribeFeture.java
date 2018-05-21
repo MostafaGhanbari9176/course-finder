@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
+import ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.fragment_chose_subscribe.FragmentChoseSubscrib;
+import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 
 /**
  * Created by RCC1 on 5/8/2018.
@@ -44,6 +47,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
     TextView txtBuyDate_2;
     TextView txtEndBuyDate_2;
     TextView txtDescription_2;
+    Button btnBuyNew;
     CardView PCV;
     ImageView img;
 
@@ -75,10 +79,21 @@ public class FragmentShowSubscribeFeture extends Fragment {
         txtBuyDate_2 = (TextView) view.findViewById(R.id.txtBuyDateFeuture_2);
         txtEndBuyDate_2 = (TextView) view.findViewById(R.id.txtEndBuyDateFeuture_2);
         txtDescription_2 = (TextView) view.findViewById(R.id.txtDescriptionFeutureSubscribe_2);
+        btnBuyNew = (Button) view.findViewById(R.id.btnBuyNewSubscribe);
+        btnBuyNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivitySubscribe.replaceContentWith(new FragmentChoseSubscrib());
+            }
+        });
     }
 
     private void setData() {
-        txtSubject.setText(buyData.subjectSubscribe);
+        if ((new String(Base64.decode(Base64.decode(buyData.endBuyDate, Base64.DEFAULT), Base64.DEFAULT))).compareTo(DateCreator.todayDate()) == -1 || buyData.remainingCourses == 0) {
+            btnBuyNew.setVisibility(View.VISIBLE);
+            txtSubject.setText("اشتراک شما به پایان رسیده");
+        } else
+            txtSubject.setText(buyData.subjectSubscribe);
         txtRemainingCourse.setText(buyData.remainingCourses + "");
         txtEndBuyDate.setText(new String(Base64.decode(Base64.decode(buyData.endBuyDate, Base64.DEFAULT), Base64.DEFAULT)));
         txtDescription.setText(buyData.description);
@@ -122,8 +137,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
             txtRemainingCourse.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
             txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
 
-        }
-        else if(buyData.subscribeId != 1){
+        } else if (buyData.subscribeId != 1) {
             PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
             txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
             txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));

@@ -20,7 +20,6 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedStatuse;
 
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -67,7 +66,7 @@ public class FragmentErrorServer extends Fragment implements PresentCheckedStatu
     public void userChecked(boolean logIn) {
         if(!logIn){
             dialogProgres.closeProgresBar();
-            Pref.removeValue(PrefKey.phone);
+            Pref.removeValue(PrefKey.email);
             Pref.removeValue(PrefKey.apiCode);
             Pref.removeValue(PrefKey.userName);
             Pref.removeValue(PrefKey.location);

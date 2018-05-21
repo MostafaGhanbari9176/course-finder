@@ -20,9 +20,9 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         this.onPresentTeacherListener = onPresentTeacherListener;
     }
 
-    public void addTeacher(String landPhone, String subject, String tozihat, int type, String lat, String lon) {
+    public void addTeacher(String landPhone, String subject, String tozihat, int type, String lat, String lon, String address) {
         Teacher teacher = new Teacher(this);
-        teacher.addTeacher(landPhone, subject, tozihat, type, lat, lon);
+        teacher.addTeacher(landPhone, subject, tozihat, type, lat, lon, address);
     }
 
     public void getTeacher(String teacherId) {

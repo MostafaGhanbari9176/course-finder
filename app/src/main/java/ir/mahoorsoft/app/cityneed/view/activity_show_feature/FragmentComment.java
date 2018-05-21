@@ -32,7 +32,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.presenter.PresentReport;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterComment;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCommentList;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by RCC1 on 3/5/2018.
@@ -225,7 +224,7 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
             @Override
             public void onClick(View v) {
                 if (checkReportData(textView)) {
-                    sendReport("comment", textView.getText().toString(), source.get(position).id, source.get(position).userId, Pref.getStringValue(PrefKey.phone, ""));
+                    sendReport("comment", textView.getText().toString(), source.get(position).id, source.get(position).userId, Pref.getStringValue(PrefKey.email, ""));
                     dialog.cancel();
                 }
             }

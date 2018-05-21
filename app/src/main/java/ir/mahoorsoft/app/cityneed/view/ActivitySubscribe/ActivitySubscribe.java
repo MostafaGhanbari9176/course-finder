@@ -55,8 +55,8 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
                 if (isPaymentSuccess) {
                     /* When Payment Request is Success :) */
                     Pref.saveBollValue(PrefKey.isPaymentSuccess, true);
-                    Pref.saveStringValue(PrefKey.refId, "");
-                    saveUserBuy("ok");
+                    Pref.saveStringValue(PrefKey.refId, refID);
+                    saveUserBuy(refID);
                 } else {
                     PaymentRequest paymentRequest1 = paymentRequest;
                     /* When Payment Request is Failure :) */
@@ -105,7 +105,7 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
         tlb = (Toolbar) findViewById(R.id.tlbSubscribe);
     }
 
-    private void replaceContentWith(Fragment fragment) {
+    public static void replaceContentWith(Fragment fragment) {
         G.activity.getSupportFragmentManager().beginTransaction().
                 replace(R.id.contentSubscribe, fragment).commit();
     }

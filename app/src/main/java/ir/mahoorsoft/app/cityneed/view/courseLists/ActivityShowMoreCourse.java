@@ -94,13 +94,6 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
     private void settingUpLists(ArrayList<StCustomCourseListHome> items){
         if (((LinearLayout) llScrollView).getChildCount() > 0)
             ((LinearLayout) llScrollView).removeAllViews();
-
-/*        if (items.size() == 0 || items.get(0).empty == 1) {
-            txtEmpty.setVisibility(View.VISIBLE);
-            return;
-        } else
-            txtEmpty.setVisibility(View.GONE);*/
-
         for (int i = 0; i < items.size(); i++) {
             LinearLayout masterLayout = new LinearLayout(G.context);
             masterLayout.setOrientation(LinearLayout.VERTICAL);

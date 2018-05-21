@@ -50,7 +50,8 @@
                         android:layout_margin="3dp"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:textSize="@dimen/txt_item_home" />
+                        android:textSize="@dimen/txt_item_home"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -68,7 +69,8 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:textSize="@dimen/txt_item_home" />
+                        android:textSize="@dimen/txt_item_home"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 

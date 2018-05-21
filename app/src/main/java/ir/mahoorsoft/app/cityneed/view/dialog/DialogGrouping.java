@@ -88,21 +88,27 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
 
     @Override
     public void onResiveTabaghe(ArrayList<StGrouping> data) {
-        closeProgresBar();
-        source.clear();
-        source.addAll(data);
-        adapter = new AdapterGroupingListDialog(context, source, this);
-        RecyclerView.LayoutManager manager = new GridLayoutManager(context, 2, GridLayout.VERTICAL, false);
-        list.setLayoutManager(manager);
-        list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        try {
+            closeProgresBar();
+            source.clear();
+            source.addAll(data);
+            adapter = new AdapterGroupingListDialog(context, source, this);
+            RecyclerView.LayoutManager manager = new GridLayoutManager(context, 2, GridLayout.VERTICAL, false);
+            list.setLayoutManager(manager);
+            list.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+        }
     }
 
     @Override
     public void sendMessageFTabagheT(String message) {
-        idSaver.pop();
-        closeProgresBar();
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        try {
+            idSaver.pop();
+            closeProgresBar();
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+        }
     }
 
 

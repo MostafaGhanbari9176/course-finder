@@ -43,43 +43,43 @@ public interface Api {
             @Path("flag") String flag
     );
 
-    @GET("updateUser/{phone}/{name}")
+    @GET("updateUser/{email}/{name}")
     Call<ArrayList<ResponseOfServer>> updateUser(
-            @Path("phone") String phone,
+            @Path("email") String phone,
             @Path("name") String name
     );
 
-    @GET("getUser/{phone}")
+    @GET("getUser/{email}")
     Call<ArrayList<StUser>> getUser(
-            @Path("phone") String phone
+            @Path("email") String phone
     );
 
-    @GET("logOut/{phone}")
+    @GET("logOut/{email}")
     Call<ArrayList<ResponseOfServer>> logOut(
-            @Path("phone") String phone
+            @Path("email") String phone
     );
 
     //  @GET()
 
-    @GET("createAndSaveSmsCode/{phone}")
+    @GET("createAndSaveSmsCode/{email}")
     Call<ArrayList<ResponseOfServer>> createSmsCode(
-            @Path("phone") String phone
+            @Path("email") String phone
     );
 
-    @GET("logUp/{phone}/{name}/{code}")
+    @GET("logUp/{email}/{name}/{code}")
     Call<ArrayList<ResponseOfServer>> logUp(
-            @Path("phone") String phone,
+            @Path("email") String phone,
             @Path("name") String name,
             @Path("code") int code
     );
 
-    @GET("logIn/{phone}/{code}")
+    @GET("logIn/{email}/{code}")
     Call<ArrayList<ResponseOfServer>> logIn(
-            @Path("phone") String phone,
+            @Path("email") String phone,
             @Path("code") int code
     );
 
-    @GET("addTeacher/{ac}/{landPhone}/{subject}/{tozihat}/{type}/{lat}/{lon}")
+    @GET("addTeacher/{ac}/{landPhone}/{subject}/{tozihat}/{type}/{lat}/{lon}/{address}")
     Call<ArrayList<ResponseOfServer>> addTeacher(
             @Path("ac") String ApiCode,
             @Path("landPhone") String landPhone,
@@ -87,7 +87,8 @@ public interface Api {
             @Path("tozihat") String tozihat,
             @Path("type") int type,
             @Path("lat") String lat,
-            @Path("lon") String lon
+            @Path("lon") String lon,
+            @Path("address") String address
     );
 
     @Multipart
@@ -97,17 +98,17 @@ public interface Api {
             @Part MultipartBody.Part file
     );
 
-    @GET("getTeacher/{phone}")
+    @GET("getTeacher/{email}")
     Call<ArrayList<StTeacher>> getTeacher(
-            @Path("phone") String phone
+            @Path("email") String phone
     );
 
     @GET("getAllTeacher")
     Call<ArrayList<StTeacher>> getAllTeacher();
 
-    @GET("updateTeacher/{phone}/{landPhone}/{address}/{subject}/{cityId}/{m}")
+    @GET("updateTeacher/{email}/{landPhone}/{address}/{subject}/{cityId}/{m}")
     Call<ArrayList<ResponseOfServer>> updateTeacher(
-            @Path("phone") String phone,
+            @Path("email") String phone,
             @Path("landPhone") String landPhone,
             @Path("address") String address,
             @Path("subject") String subject,
@@ -187,11 +188,12 @@ public interface Api {
             @Path("id") String id
     );
 
-    @GET("sabtenam/{idCourse}/{idTeacher}/{idUser}")
+    @GET("sabtenam/{idCourse}/{idTeacher}/{idUser}/{cellPhone}")
     Call<ArrayList<ResponseOfServer>> sabtenam(
             @Path("idCourse") int idCourse,
             @Path("idTeacher") String idTeacher,
-            @Path("idUser") String idUser
+            @Path("idUser") String idUser,
+            @Path("cellPhone") String cellPhone
     );
 
     @GET("checkSabtenam/{idCourse}/{idUser}")
@@ -362,17 +364,17 @@ public interface Api {
             @Path("ac") String ac
     );
 
-    @GET("remaining_credit/{tableName}/{phone}")
+    @GET("remaining_credit/{tableName}/{email}")
     Call<String> remainCredit(
             @Path("tableName") String tableName,
-            @Path("phone") String phone);
+            @Path("email") String phone);
 
 
     @FormUrlEncoded
     @POST("use_credit")
     Call<ArrayList> useCredit(
             @Field("table_name") String tableName,
-            @Field("phone") String phone);
+            @Field("email") String phone);
 
 
 }

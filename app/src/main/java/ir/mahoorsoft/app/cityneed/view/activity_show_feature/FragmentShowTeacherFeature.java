@@ -47,6 +47,8 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     GoogleMap mMap;
     SupportMapFragment supportMapFragment;
     TextView txtSubject;
+    TextView txtAddress;
+    TextView txtDescription;
     TextView txtLandPhone;
     TextView txtPhone;
     ImageView img;
@@ -102,6 +104,8 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
 
     private void pointers() {
         txtLandPhone = (TextView) view.findViewById(R.id.txtLandPhoneTeacherFeature);
+        txtAddress = (TextView) view.findViewById(R.id.txtAddressTeacherFeature);
+        txtDescription = (TextView) view.findViewById(R.id.txtDescriptionTeacherFeature);
         txtPhone = (TextView) view.findViewById(R.id.txtPhoneTeacherFeature);
         txtSubject = (TextView) view.findViewById(R.id.txtTeacherSubgectTeacherFeature);
         img = (ImageView) view.findViewById(R.id.imgTeacherFeature);
@@ -131,6 +135,8 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         txtSubject.setText(users.get(0).subject);
         txtPhone.setText(users.get(0).phone);
         txtLandPhone.setText(users.get(0).landPhone);
+        txtDescription.setText(users.get(0).tozihat);
+        txtAddress.setText(users.get(0).address);
         setImg(users.get(0).pictureId);
         setTeacherLocation();
     }

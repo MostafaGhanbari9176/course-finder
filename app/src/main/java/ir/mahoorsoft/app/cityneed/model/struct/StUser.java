@@ -13,8 +13,10 @@ public class StUser {
     public int cityId;
     public String apiCode = "";
     public String location = "";
+    public String cellPhone = "";
     public int empty;
     public int sabtenamId;
+    public int isCanceled = 0;
 
     public StUser(String phone, String name, String family) {
         this.phone = phone;
