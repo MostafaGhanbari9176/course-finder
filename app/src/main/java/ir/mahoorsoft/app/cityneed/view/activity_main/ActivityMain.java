@@ -1,6 +1,10 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -9,14 +13,19 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -91,12 +100,99 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.btnAboutUsMenu:
                 starterActivity(ActivityAboutUs.class);
                 return true;
+            case R.id.btnChangeCellPhone:
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
+                    shwoCellPhoneDialog();
+                else
+                    Toast.makeText(this, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                return true;
             case R.id.closeApp:
                 this.finish();
+                return true;
+            case R.id.btnCallUSDialog:
+                showDialogCallUs();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showDialogCallUs() {
+
+        Dialog callUs = new Dialog(this);
+        LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = li.inflate(R.layout.dialog_call_us, null, false);
+        ((TextView) view.findViewById(R.id.txtCallUsDialog)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:05431132499"));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(G.context, "خطا!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        ((TextView) view.findViewById(R.id.txtWebSiteDialog)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String url = "http://www.mahoorsoft.ir";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                } catch (Exception e) {
+                    Toast.makeText(ActivityMain.this, "خطا!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        ((TextView) view.findViewById(R.id.txtEmailDialog)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent mailClient = new Intent(Intent.ACTION_VIEW);
+                    mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivity");
+                    startActivity(mailClient);
+                } catch (Exception e) {
+                    Toast.makeText(ActivityMain.this, "خطا!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        callUs.setContentView(view);
+        callUs.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        callUs.show();
+
+    }
+
+    private void shwoCellPhoneDialog() {
+        final Dialog dialog = new Dialog(G.context);
+        LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = li.inflate(R.layout.dialog_get_phone_number, null, false);
+        final EditText editText = (EditText) view.findViewById(R.id.txtGetPhoneNumberFDialog);
+        editText.setText(Pref.getStringValue(PrefKey.cellPhone, ""));
+        ((Button) view.findViewById(R.id.btnCancelGetPhoneNumberDialog)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        Button btnConfirm = (Button) view.findViewById(R.id.btnConfirmGetPhoneNumberDialog);
+        btnConfirm.setText("ذخیره");
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.getText().toString().trim().length() == 11 && TextUtils.isDigitsOnly(editText.getText().toString().trim())) {
+                    Pref.saveStringValue(PrefKey.cellPhone, editText.getText().toString().trim());
+                    dialog.cancel();
+                } else
+                    editText.setError("لطفا صحیح وارد کنید");
+            }
+        });
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
     }
 
     private void init() {

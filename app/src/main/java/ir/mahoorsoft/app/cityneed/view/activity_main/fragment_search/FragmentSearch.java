@@ -185,6 +185,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             if (eD.compareTo(sD) == -1)
                 throw new Exception("لطفا تاریخ شروع و پایان دوره را صحیح انتخاب کنید");
             sendFilterForServer();
+            dialog.cancel();
         } catch (Exception e) {
             sendMessageFCT(e.getMessage());
         }

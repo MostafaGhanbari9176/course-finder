@@ -203,8 +203,8 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
             txtTozihat.setError("کامل کنید");
             txtTozihat.requestFocus();
         } else if (TextUtils.isEmpty(txtAddress.getText().toString().trim())) {
-            txtTozihat.setError("کامل کنید");
-            txtTozihat.requestFocus();
+            txtAddress.setError("کامل کنید");
+            txtAddress.requestFocus();
         } else if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
             showDialog("خطا", "لطفا موقعیت مکانی خود را تعیین کنید", "", "قبول");
         else {

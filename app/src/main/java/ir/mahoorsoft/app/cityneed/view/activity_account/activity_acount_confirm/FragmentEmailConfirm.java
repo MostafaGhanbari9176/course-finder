@@ -329,7 +329,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
                 txtCode.setEnabled(false);
                 txtCode.setText("");
                 btnConfirmCode.setEnabled(false);
-                btnResend.setEnabled(false);
+
                 if (buttonTrue.equals("ثبت نام")) {
                     rbLogUp.setChecked(true);
                     dialog.cancel();

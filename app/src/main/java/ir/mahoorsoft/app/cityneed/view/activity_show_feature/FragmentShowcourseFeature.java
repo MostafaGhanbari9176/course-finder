@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -79,6 +80,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     String idUser = Pref.getStringValue(PrefKey.apiCode, "");
     SwipeRefreshLayout sDown;
     TextView txtConfirmRegistery;
+
 
     @Nullable
     @Override
@@ -157,6 +159,22 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         btnMoreDetails = (LinearLayout) view.findViewById(R.id.btnMoreDetailsShowFeature);
         btnRegister = (Button) view.findViewById(R.id.btnRegisterShowFeature);
         moreDetails.setVisibility(View.GONE);
+        ((ImageButton) view.findViewById(R.id.imgButtonShareCourseFuture)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "My application name");
+                    String sAux = "\nLet me recommend you this application\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=the.package.id \n\n";
+                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(i, "choose one"));
+                } catch (Exception e) {
+                    //e.toString();
+                }
+            }
+        });
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

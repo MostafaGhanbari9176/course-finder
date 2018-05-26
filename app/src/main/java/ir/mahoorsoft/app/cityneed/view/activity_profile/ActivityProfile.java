@@ -190,7 +190,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
             } else if (Pref.getBollValue(PrefKey.isPaymentSaved, false)) {
                 Pref.removeValue(PrefKey.isPaymentSaved);
-                checkUserType();
+                this.finish();
             }
 
         } catch (Exception ex) {
@@ -287,8 +287,8 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
         SimpleTarget subscribe = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.btnSubscribe))
                 .setRadius(300f)
-                .setTitle("مدرک یا مجوز آموزشی")
-                .setDescription("جهت بارگزاری مدرک از این قسمت اقدام کنید")
+                .setTitle("خرید اشتراک")
+                .setDescription("جهت خرید اشتراک از این قسمت اقدام کنید")
                 .build();
 
         SimpleTarget addList = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.addListBottomNavTeacher))
@@ -323,7 +323,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                 .setOnSpotlightEndedListener(new OnSpotlightEndedListener() {
                     @Override
                     public void onEnded() {
-                      Pref.saveBollValue(PrefKey.profileTeacherPage, false);
+                        Pref.saveBollValue(PrefKey.profileTeacherPage, false);
                     }
                 })
                 .start();

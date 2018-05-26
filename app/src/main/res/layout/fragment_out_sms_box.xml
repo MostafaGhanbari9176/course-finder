@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_eq"
+    android:background="@color/light_two"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
@@ -19,15 +19,17 @@
             android:textColor="@color/yellow_ios"
             android:textStyle="bold|italic"
             android:visibility="gone" />
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/SDSmsBoxOut"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/RVSmsOut"
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/SDSmsBoxOut"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-</android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/RVSmsOut"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
 
 </LinearLayout>

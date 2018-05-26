@@ -16,9 +16,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedStatuse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 
-/**
- * Created by M-gh on 13-Mar-18.
- */
+
 
 public class ActivityLauncher extends AppCompatActivity implements PresentCheckedStatuse.OnPresentCheckServrer {
 

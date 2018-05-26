@@ -54,9 +54,11 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
 
                 if (isPaymentSuccess) {
                     /* When Payment Request is Success :) */
-                    Pref.saveBollValue(PrefKey.isPaymentSuccess, true);
-                    Pref.saveStringValue(PrefKey.refId, refID);
-                    saveUserBuy(refID);
+                    if (Pref.getIntegerValue(PrefKey.SubId, -1) != -1) {
+                        Pref.saveBollValue(PrefKey.isPaymentSuccess, true);
+                        Pref.saveStringValue(PrefKey.refId, refID);
+                        saveUserBuy(refID);
+                    }
                 } else {
                     PaymentRequest paymentRequest1 = paymentRequest;
                     /* When Payment Request is Failure :) */
@@ -143,12 +145,12 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
     public void onReceiveFlagFromSubscribe(boolean flag) {
         Pref.saveBollValue(PrefKey.isPaymentSaved, flag);
         if (flag) {
-            sendMessageFromSubscribe("خرید موفق ...");
+            Toast.makeText(this, "خرید موفق ...", Toast.LENGTH_SHORT).show();
             Pref.removeValue(PrefKey.SubId);
             Pref.removeValue(PrefKey.isPaymentSuccess);
             Pref.removeValue(PrefKey.refId);
         } else
-            sendMessageFromSubscribe("خطا ...");
+            Toast.makeText(this, "خطا !", Toast.LENGTH_SHORT).show();
         Intent intent = getIntent();
         intent.putExtra("buyResult", flag);
         setResult(5, intent);

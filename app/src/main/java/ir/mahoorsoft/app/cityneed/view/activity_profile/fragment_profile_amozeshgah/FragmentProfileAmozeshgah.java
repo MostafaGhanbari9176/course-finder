@@ -79,6 +79,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     public Object object;
     public int flagMadrak = 0;
     boolean haveASubscribe = false;
+    boolean subError = false;
     ProgressBar pbarSubscribeData;
     public static StBuy subscribeData;
 
@@ -295,7 +296,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     public void uploadFile(String path) {
         //isResponseForImage = false;
-        dialogProgres = new DialogProgres(G.context, "درحال بارگذاری",false);
+        dialogProgres = new DialogProgres(G.context, "درحال بارگذاری", false);
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
         presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.email, "") + ".pdf", path);
@@ -340,15 +341,13 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     }
 
     private void subData() {
-        if(flagMadrak == 2){
-        Intent intent = new Intent(G.context, ActivitySubscribe.class);
-        intent.putExtra("haveASubscribe", !(txtSubscribe_up.getText().toString().equals("خرید اشتراک")));
-        startActivityForResult(intent, 5);
-        }
-        else if(flagMadrak == 1){
+        if (flagMadrak == 2 && !subError) {
+            Intent intent = new Intent(G.context, ActivitySubscribe.class);
+            intent.putExtra("haveASubscribe", !(txtSubscribe_up.getText().toString().equals("خرید اشتراک")));
+            startActivityForResult(intent, 5);
+        } else if (flagMadrak == 1) {
             showDialogForMadrakState("خطا", "ابتدا باید مدرک شما تایید شود,برای سرعت بخشیدن به روند تایید می توانید با ما تماس بگیرید.", "", "متوجه شدم", "تماس باما");
-        }
-        else {
+        } else if (flagMadrak == 0) {
             Toast.makeText(G.context, "ابتدا مدرک خود را بارگذاری کنید.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -470,6 +469,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     @Override
     public void sendMessageFromSubscribe(String message) {
         pbarSubscribeData.setVisibility(View.GONE);
+        subError = true;
         txtSubscribe_up.setText(message);
     }
 

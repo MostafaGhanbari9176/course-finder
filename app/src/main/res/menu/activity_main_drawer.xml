@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item
-            android:id="@+id/btnSabtenamListMenu"
-            android:title="دوره های ثبت نام شده" />
-        <item
-            android:id="@+id/btnSmsBoxMenu"
-            android:title="صندوق پیام" />
-        <item
-            android:id="@+id/btnAboutUsMenu"
-            android:title="درباره ما" />
-        <item
-            android:id="@+id/btnMapMenu"
-            android:title="نقشه" />
+        android:id="@+id/btnSabtenamListMenu"
+        android:title="دوره های ثبت نام شده" />
+    <item
+        android:id="@+id/btnChangeCellPhone"
+        android:title="تعیین شماره همراه" />
+    <item
+        android:id="@+id/btnSmsBoxMenu"
+        android:title="صندوق پیام" />
+
+    <item
+        android:id="@+id/btnCallUSDialog"
+        android:title="تماس با ما" />
+
+    <item
+        android:id="@+id/btnAboutUsMenu"
+        android:title="درباره ما" />
+
+    <item
+        android:id="@+id/btnMapMenu"
+        android:title="نقشه" />
     <item
         android:id="@+id/closeApp"
         android:title="خروج" />
