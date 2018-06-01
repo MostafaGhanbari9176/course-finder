@@ -449,7 +449,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     public void onResiveFlagFromComment(boolean flag) {
         pbRatBar.setVisibility(View.GONE);
         if (flag)
-            Snackbar.make(view, "امتیاز شما ثبت شد", 1).show();
+            messageFromComment("امتیاز شما ثبت شد");
         else {
             messageFromComment("خطا,امتیاز شما ثبت نشد");
         }

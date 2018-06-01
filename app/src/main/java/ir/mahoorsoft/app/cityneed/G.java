@@ -29,7 +29,7 @@ public class G extends Application {
 
     public static String MID = "18e4d686-6592-11e8-803c-005056a205be";
     public static String VN = "1.0.1";
-    public static String appLink = "http://www.mahoorsoft.ir/";
+    public static String appLink = "http://app.mahoorsoft.ir/city_need/apk/MyTrainingCourses.apk";
     public static AppCompatActivity activity;
     public static Context context;
     public static SharedPreferences preferences;

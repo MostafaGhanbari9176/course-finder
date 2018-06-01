@@ -295,6 +295,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         Pref.saveStringValue(PrefKey.lat, teacher.get(0).lt);
         Pref.saveStringValue(PrefKey.pictureId, teacher.get(0).pictureId);
         Pref.saveIntegerValue(PrefKey.madrak, teacher.get(0).m);
+        Pref.saveStringValue(PrefKey.address, teacher.get(0).address);
         Pref.saveIntegerValue(PrefKey.userTypeMode, teacher.get(0).type == 0 ? 1 : 2);
         next();
     }
