@@ -260,18 +260,16 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         SimpleTarget starter = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.registerCourseBottomNavTeacher))
                 .setRadius(1f)
                 .setTitle("تشکر از اینکه به ما در جهت توسعه کسب و کار خود اعتماد کردید")
-                .setDescription("در ابتدا باید شما از سمت ما تایید اعتبار شوید سپس می توانید دوره های خود را ثبت کنید پس از ثیت هر دوره محصلین می توانند درخواست ثبت نام دهند و پس از تایید از جانب شما از طریق برنامه و مراجعه حضوری محصل ثب تنام نهایی می شود.")
+                .setDescription("در ابتدا باید شما از سمت ما تایید اعتبار شوید سپس می توانید دوره های خود را ثبت کنید پس از ثبت هر دوره محصلین می توانند درخواست ثبت نام دهند و پس از تایید از جانب شما از طریق برنامه و مراجعه حضوری محصل ثبت نام نهایی می شود.")
                 .build();
 
         SimpleTarget sabtenam = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.registerCourseBottomNavTeacher))
                 .setRadius(100f)
-                .setTitle("لیست")
-                .setDescription("لیست دوره های ثبتنام شده")
+                .setTitle("لیست دوره های ثبتنام شده")
                 .build();
         SimpleTarget add = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.addedCourseBottomNavTeacher))
                 .setRadius(100f)
-                .setTitle("دوره")
-                .setDescription("اضافه کردن دوره")
+                .setTitle("اضافه کردن دوره")
                 .build();
         SimpleTarget sms = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.messageBoxBottomNavTeacher))
                 .setRadius(100f)
@@ -293,8 +291,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
         SimpleTarget addList = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.addListBottomNavTeacher))
                 .setRadius(100f)
-                .setTitle("لیست دوره")
-                .setDescription("لیست دوره های اضافه شده توسط شما")
+                .setTitle("لیست دوره های اضافه شده توسط شما")
                 .build();
         SimpleTarget logout = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.logOutBottomNavTeacher))
                 .setRadius(100f)

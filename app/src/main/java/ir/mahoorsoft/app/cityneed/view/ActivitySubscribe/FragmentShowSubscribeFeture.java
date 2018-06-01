@@ -89,7 +89,10 @@ public class FragmentShowSubscribeFeture extends Fragment {
     }
 
     private void setData() {
-        if ((new String(Base64.decode(Base64.decode(buyData.endBuyDate, Base64.DEFAULT), Base64.DEFAULT))).compareTo(DateCreator.todayDate()) == -1 || buyData.remainingCourses == 0) {
+
+        String buyDate = new String(Base64.decode(Base64.decode(buyData.endBuyDate, Base64.DEFAULT), Base64.DEFAULT));
+        String todayDate = DateCreator.todayDate();
+        if (buyDate.compareTo(todayDate) == -1 || buyData.remainingCourses == 0) {
             btnBuyNew.setVisibility(View.VISIBLE);
             txtSubject.setText("اشتراک شما به پایان رسیده");
         } else
@@ -98,7 +101,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
         txtEndBuyDate.setText(new String(Base64.decode(Base64.decode(buyData.endBuyDate, Base64.DEFAULT), Base64.DEFAULT)));
         txtDescription.setText(buyData.description);
         txtRefId.setText(buyData.refId);
-        txtBuyDate.setText(new String(Base64.decode(Base64.decode(buyData.buyDate, Base64.DEFAULT), Base64.DEFAULT)));
+        txtBuyDate.setText(buyDate);
         setColor();
         setImage();
     }
@@ -113,7 +116,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
     }
 
     private void setColor() {
-        if (buyData.subscribeId == 3) {
+        if (buyData.subjectSubscribe.equals("برونزی")) {
             PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_brown_sub));
             txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
@@ -121,7 +124,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
             txtDescription_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             txtEndBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             txtRemainingCourse_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
-        } else if (buyData.subscribeId == 2) {
+        } else if (buyData.subjectSubscribe.equals("نقره ایی")) {
             PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
             txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
             txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
@@ -137,7 +140,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
             txtRemainingCourse.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
             txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.light_eq));
 
-        } else if (buyData.subscribeId != 1) {
+        } else if (! buyData.subjectSubscribe.equals("طلایی")) {
             PCV.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
             txtSubject.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));
             txtBuyDate_2.setTextColor(ContextCompat.getColor(G.context, R.color.dark_simple_sub));

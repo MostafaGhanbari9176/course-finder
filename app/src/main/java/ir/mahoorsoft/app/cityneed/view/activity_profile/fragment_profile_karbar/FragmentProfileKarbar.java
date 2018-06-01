@@ -60,7 +60,6 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     View view;
     DialogProgres dialogProgres;
     Typeface typeface;
-    String name;
     BottomNavigationView bottomNav;
     ImageView imgProfile;
     ImageButton btnHome;
@@ -76,7 +75,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     }
 
     private void init() {
-        dialogProgres = new DialogProgres(G.context, "درحال بروزرسانی");
+        dialogProgres = new DialogProgres(G.context, false);
         pointers();
         setFont();
         txtPhone.setText(Pref.getStringValue(PrefKey.email, ""));
@@ -104,16 +103,8 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
         bottomNav.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
         G.disableShiftModeNavigation(bottomNav);
         setNavigationItemListener();
-        dialogProgres = new DialogProgres(G.context);
         txtName = (TextView) view.findViewById(R.id.txtUserNameProfile);
         txtPhone = (TextView) view.findViewById(R.id.txtUserIdProfile);
-/*        txtName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-            }
-        });*/
-
 
     }
 
@@ -204,42 +195,8 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
         startActivity(intent);
     }
 
-    private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
-        final EditText editText = new EditText(G.context);
-        editText.setTypeface(typeface);
-        builder.setView(editText);
-        builder.setTitle("تغییر نام کاربری");
-        builder.setMessage("از این نام برای ثبت نام شما در دوره های انتخابی استفاده می شود.");
-        builder.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (editText.getText() != null) {
-                    name = CharCheck.faCheck(editText.getText().toString().trim());
-                    if (name.length() == 0)
-                        showDialog();
-                    else {
-                        updateName(name);
-                        dialog.cancel();
-                    }
-                } else
-                    showDialog();
-            }
-        });
-
-        builder.setNegativeButton("رد کردن", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
-
-    }
-
     @Override
     public void sendMessageFUT(String message) {
-        dialogProgres.closeProgresBar();
         dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
@@ -277,14 +234,6 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     public void onReceiveUser(ArrayList<StUser> students) {
 
     }
-
-
-    private void updateName(String name) {
-        dialogProgres.showProgresBar();
-        PresentUser presentUser = new PresentUser(this);
-        presentUser.updateUser(Pref.getStringValue(PrefKey.email, ""), name);
-    }
-
     private void showDialogForHelper() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(G.context);

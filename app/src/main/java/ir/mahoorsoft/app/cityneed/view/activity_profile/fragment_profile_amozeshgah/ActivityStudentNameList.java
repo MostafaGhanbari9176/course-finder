@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,12 +42,12 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
  * Created by RCC1 on 1/22/2018.
  */
 
-public class ActivityStudentNameList extends AppCompatActivity implements AdapterSdudentNameList.OnClickItemSdutentNameList, PresentUser.OnPresentUserLitener, PresenterSmsBox.OnPresentSmsBoxListener, PresentSabtenam.OnPresentSabtenamListaener, View.OnClickListener, DialogGetSmsText.DialogGetSmsTextListener {
+public class ActivityStudentNameList extends AppCompatActivity implements AdapterSdudentNameList.OnClickItemSdutentNameList, PresentUser.OnPresentUserLitener, PresenterSmsBox.OnPresentSmsBoxListener, PresentSabtenam.OnPresentSabtenamListaener, View.OnClickListener, DialogGetSmsText.DialogGetSmsTextListener, SwipeRefreshLayout.OnRefreshListener {
     boolean isUserChanged = true;
+    SwipeRefreshLayout swipe;
     AdapterSdudentNameList adapter;
     RecyclerView list;
     ArrayList<StUser> source = new ArrayList<>();
-    DialogProgres dialogProgres;
     TextView txt;
     int courseId;
     public static boolean removeWaiting = false;
@@ -85,12 +86,13 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
                 onBackPressed();
             }
         });
-        dialogProgres = new DialogProgres(this);
         dialogGetSmsText = new DialogGetSmsText(this, this);
         queryForData();
     }
 
     private void pointers() {
+        swipe = (SwipeRefreshLayout) findViewById(R.id.SDStudentName);
+        swipe.setOnRefreshListener(this);
         txt = (TextView) findViewById(R.id.txtEmptyCourseList);
         tlb = (Toolbar) findViewById(R.id.tlbList);
         list = (RecyclerView) findViewById(R.id.RVList);
@@ -165,14 +167,14 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     }
 
     private void queryForData() {
-        dialogProgres.showProgresBar();
+        swipe.setRefreshing(true);
         PresentUser presentUser = new PresentUser(this);
         presentUser.getRegistrationsName(courseId);
     }
 
     @Override
     public void sendMessageFUT(String message) {
-        dialogProgres.closeProgresBar();
+        swipe.setRefreshing(false);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -193,12 +195,13 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     @Override
     public void onReceiveUser(ArrayList<StUser> students) {
-        dialogProgres.closeProgresBar();
+        swipe.setRefreshing(false);
         if (students.get(0).empty == 1) {
             txt.setVisibility(View.VISIBLE);
             txt.setText("هیچ محصلی موجود نیست");
         } else {
             txt.setVisibility(View.GONE);
+            source.clear();
             source.addAll(students);
             adapter = new AdapterSdudentNameList(this, source, this, false);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
@@ -235,7 +238,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     }
 
     private void queryForConfirm(int position, String message) {
-        dialogProgres.showProgresBar();
+        swipe.setRefreshing(true);
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.confirmStudent(source.get(position).sabtenamId, courseId, message, ac, source.get(position).apiCode);
     }
@@ -262,19 +265,19 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     }
 
     private void queryForMoreDelete(String jsonData, String message) {
-        dialogProgres.showProgresBar();
+        swipe.setRefreshing(true);
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.updateMoreCanceledFlag(jsonData, message);
     }
 
     private void queryForDelete(int position, String message) {
-        dialogProgres.showProgresBar();
+        swipe.setRefreshing(true);
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.updateCanceledFlag(source.get(position).sabtenamId, 1, courseId, message, ac, source.get(position).apiCode);
     }
 
     private void sendMessage(int position, String text) {
-        dialogProgres.showProgresBar();
+        swipe.setRefreshing(true);
         int type;
         if (Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 1 || Pref.getIntegerValue(PrefKey.userTypeMode, 0) == 2)
             type = 1;
@@ -301,7 +304,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     @Override
     public void sendingMessageFlag(boolean flag) {
-        dialogProgres.closeProgresBar();
+        swipe.setRefreshing(false);
         onClick(findViewById(R.id.fltbCancelActivityList));
         if (flag)
             messageFromSmsBox("پیام ارسال شد");
@@ -311,20 +314,20 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     @Override
     public void messageFromSmsBox(String message) {
-        dialogProgres.closeProgresBar();
+        swipe.setRefreshing(false);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void sendMessageFST(String message) {
-        dialogProgres.closeProgresBar();
+        swipe.setRefreshing(false);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void confirmSabtenam(boolean flag) {
 
-        dialogProgres.closeProgresBar();
+        swipe.setRefreshing(false);
         if (flag) {
             changeColorItems();
             removeWaiting = true;
@@ -337,7 +340,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     @Override
     public void confirmDelete(boolean flag) {
-        dialogProgres.closeProgresBar();
+        swipe.setRefreshing(false);
         if (flag) {
             deleteItems();
             removeWaiting = true;
@@ -476,7 +479,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     }
 
     private void queryForMoreSms(String data, String message) {
-        dialogProgres.showProgresBar();
+        swipe.setRefreshing(true);
         PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
         presenterSmsBox.sendMoreSms(data, message);
     }
@@ -504,7 +507,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     private void queryForMoreConfirm(String jsonData, String message) {
 
-        dialogProgres.showProgresBar();
+        swipe.setRefreshing(true);
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.confirmMoreStudent(jsonData, message);
     }
@@ -531,6 +534,11 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
                 sendMoreMessage(smsText);
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        queryForData();
     }
 }
 

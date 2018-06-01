@@ -47,7 +47,6 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.ActivitySubscribe;
-import ir.mahoorsoft.app.cityneed.view.acivity_launcher.FragmentErrorServer;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
@@ -92,7 +91,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     }
 
     private void init() {
-        dialogProgres = new DialogProgres(G.context);
+        dialogProgres = new DialogProgres(G.context, false);
         settingUpMap();
         pointers();
         checkMadrak();
@@ -428,9 +427,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     public void responseForMadrak(ResponseOfServer res) {
         dialogProgres.closeProgresBar();
         ActivityProfile.ratingBar.setRating(res.code);
-        if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("error")) {
-            ActivityProfile.replaceContentWith(new FragmentErrorServer(), R.id.contentProfileTeacher);
-        } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {
+        if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {
             txtUpload.setText("بارگذاری مدرک آموزشی");
             flagMadrak = 0;
         } else if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("yesbarnotok")) {

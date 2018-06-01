@@ -5,12 +5,22 @@
     <item
         android:id="@+id/btnSabtenamListMenu"
         android:title="دوره های ثبت نام شده" />
-    <item
-        android:id="@+id/btnChangeCellPhone"
-        android:title="تعیین شماره همراه" />
+
     <item
         android:id="@+id/btnSmsBoxMenu"
         android:title="صندوق پیام" />
+
+    <item
+        android:id="@+id/btnMapMenu"
+        android:title="نقشه" />
+
+    <item
+        android:id="@+id/btnInviteFriend"
+        android:title="معرفی به دیگران" />
+
+    <item
+        android:id="@+id/btnFeedBackMenu"
+        android:title="انتقاد و پیشنهاد" />
 
     <item
         android:id="@+id/btnCallUSDialog"
@@ -20,9 +30,6 @@
         android:id="@+id/btnAboutUsMenu"
         android:title="درباره ما" />
 
-    <item
-        android:id="@+id/btnMapMenu"
-        android:title="نقشه" />
     <item
         android:id="@+id/closeApp"
         android:title="خروج" />

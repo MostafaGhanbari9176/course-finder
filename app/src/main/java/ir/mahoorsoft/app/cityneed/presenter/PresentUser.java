@@ -18,16 +18,6 @@ public class PresentUser implements User.OnUserLitener {
         this.onPresentUserLitener = onPresentUserLitener;
     }
 
-    public void updateUser(String phone, String name) {
-        User user = new User(this);
-        user.updateUser(phone, name);
-    }
-
-    public void getUser(String phone) {
-        User user = new User(this);
-        user.getUser(phone);
-    }
-
     public void getRegistrationsName(int courseId) {
         User user = new User(this);
         user.getRegistrationsName(courseId);

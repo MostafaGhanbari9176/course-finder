@@ -11,41 +11,25 @@ public class Roozh {
     private int leap, march;
 
     /**
-
      * Calculates the Julian Day number (JG2JD) from Gregorian or Julian
-
+     * <p>
      * calendar dates. This integer number corresponds to the noon of the date
-
+     * <p>
      * (i.e. 12 hours of Universal Time). The procedure was tested to be good
-
+     * <p>
      * since 1 March, -100100 (of both the calendars) up to a few millions
-
+     * <p>
      * (10**6) years into the future. The algorithm is based on D.A. Hatcher,
-
+     * <p>
      * Q.Jl.R.Astron.Soc. 25(1984), 53-55 slightly modified by me (K.M.
-
+     * <p>
      * Borkowski, Post.Astron. 25(1987), 275-279).
-
      *
-
-     * @param year
-
-     *            int
-
-     * @param month
-
-     *            int
-
-     * @param day
-
-     *            int
-
-     * @param J1G0
-
-     *            to be set to 1 for Julian and to 0 for Gregorian calendar
-
+     * @param year  int
+     * @param month int
+     * @param day   int
+     * @param J1G0  to be set to 1 for Julian and to 0 for Gregorian calendar
      * @return Julian Day number
-
      */
 
     private int JG2JD(int year, int month, int day, int J1G0) {
@@ -67,27 +51,18 @@ public class Roozh {
     }
 
     /**
-
      * Calculates Gregorian and Julian calendar dates from the Julian Day number
-
+     * <p>
      * (JD) for the period since JD=-34839655 (i.e. the year -100100 of both the
-
+     * <p>
      * calendars) to some millions (10**6) years ahead of the present. The
-
+     * <p>
      * algorithm is based on D.A. Hatcher, Q.Jl.R.Astron.Soc. 25(1984), 53-55
-
+     * <p>
      * slightly modified by me (K.M. Borkowski, Post.Astron. 25(1987), 275-279).
-
      *
-
-     * @param JD
-
-     *            Julian day number as int
-
-     * @param J1G0
-
-     *            to be set to 1 for Julian and to 0 for Gregorian calendar
-
+     * @param JD   Julian day number as int
+     * @param J1G0 to be set to 1 for Julian and to 0 for Gregorian calendar
      */
 
     private void JD2JG(int JD, int J1G0) {
@@ -113,15 +88,9 @@ public class Roozh {
     }
 
     /**
-
      * Converts the Julian Day number to a date in the Jalali calendar
-
      *
-
-     * @param JDN
-
-     *            the Julian Day number
-
+     * @param JDN the Julian Day number
      */
 
     private void JD2Jal(int JDN) {
@@ -171,7 +140,6 @@ public class Roozh {
     }
 
 
-
     private int Jal2JD(int jY, int jM, int jD) {
 
         JalCal(jY);
@@ -185,19 +153,13 @@ public class Roozh {
     }
 
     /**
-
      * This procedure determines if the Jalali (Persian) year is leap (366-day
-
+     * <p>
      * long) or is the common year (365 days), and finds the day in March
-
+     * <p>
      * (Gregorian calendar) of the first day of the Jalali year (jY)
-
      *
-
-     * @param jY
-
-     *            Jalali calendar year (-61 to 3177)
-
+     * @param jY Jalali calendar year (-61 to 3177)
      */
 
     private void JalCal(int jY) {
@@ -206,9 +168,9 @@ public class Roozh {
 
         leap = 0;
 
-        int[] breaks = { -61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210,
+        int[] breaks = {-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210,
 
-                1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178 };
+                1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178};
 
         gY = jY + 621;
 
@@ -261,41 +223,25 @@ public class Roozh {
     }
 
     /**
-
      * Modified toString() method that represents date string
-
      *
-
      * @return Date as String
-
      */
 
     @Override
 
     public String toString() {
 
-        return String.format("%04d-%02d-%02d", getYear(), getMonth(), getDay());
+        return getYear() + "-" + getMonth() + "-" + getDay();
 
     }
 
     /**
-
      * Converts Gregorian date to Persian(Jalali) date
-
      *
-
-     * @param year
-
-     *            int
-
-     * @param month
-
-     *            int
-
-     * @param day
-
-     *            int
-
+     * @param year  int
+     * @param month int
+     * @param day   int
      */
 
     public void GregorianToPersian(int year, int month, int day) {
@@ -313,23 +259,11 @@ public class Roozh {
     }
 
     /**
-
      * Converts Persian(Jalali) date to Gregorian date
-
      *
-
-     * @param year
-
-     *            int
-
-     * @param month
-
-     *            int
-
-     * @param day
-
-     *            int
-
+     * @param year  int
+     * @param month int
+     * @param day   int
      */
 
     public void PersianToGregorian(int year, int month, int day) {
@@ -347,45 +281,35 @@ public class Roozh {
     }
 
     /**
-
      * Get manipulated day
-
      *
-
      * @return Day as int
-
      */
 
-    public int getDay() {
-
-        return day;
+    public String getDay() {
+        if ((day + "").length() == 1)
+            return "0" + day;
+        return day + "";
 
     }
 
     /**
-
      * Get manipulated month
-
      *
-
      * @return Month as int
-
      */
 
-    public int getMonth() {
-
-        return month;
+    public String getMonth() {
+        if ((month + "").length() == 1)
+            return "0" + month;
+        return month + "";
 
     }
 
     /**
-
      * Get manipulated year
-
      *
-
      * @return Year as int
-
      */
 
     public int getYear() {

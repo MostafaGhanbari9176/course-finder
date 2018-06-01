@@ -19,28 +19,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="ثبت نظر" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RatingBar
-                    android:id="@+id/ratBDialogComment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:numStars="5" />
+                    android:text="از همراهی شما متشکریم"
+                    android:textColor="@color/blue_ios" />
             </LinearLayout>
 
             <LinearLayout
@@ -48,15 +35,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/txtDialogComment"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:ems="10"
-                    android:gravity="start"
-                    android:inputType="textMultiLine"
-                    android:maxLength="110" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/txtGetFeedBack"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="دیدگاه شما"
+                        android:inputType="textMultiLine"
+                        android:maxLength="150" />
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -65,7 +59,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnConfirmDialogComment"
+                    android:id="@+id/btnSendFeedBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -75,7 +69,7 @@
                     android:textColor="@color/light" />
 
                 <Button
-                    android:id="@+id/btnCancelDialogComment"
+                    android:id="@+id/btnCancelFeedBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"

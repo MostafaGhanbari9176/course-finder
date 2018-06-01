@@ -113,19 +113,19 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
     }
 
     private void setColor(Holder holder, int position) {
-        if (source.get(position).id == 3) {
+        if (source.get(position).subject.equals("برونزی")) {
             holder.heder.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             holder.confirm.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             holder.txtDescription.setTextColor(ContextCompat.getColor(G.context, R.color.dark_brown_sub));
             holder.showMoreFeature.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_brown_sub));
 
-        } else if (source.get(position).id == 2) {
+        } else if (source.get(position).subject.equals("نقره ایی")) {
             holder.heder.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
             holder.confirm.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
             holder.txtDescription.setTextColor(ContextCompat.getColor(G.context, R.color.dark_silver_sub));
             holder.showMoreFeature.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_silver_sub));
 
-        } else if (source.get(position).id != 1) {
+        } else if (!source.get(position).subject.equals("طلایی")) {
             holder.heder.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
             holder.confirm.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));
             holder.txtDescription.setTextColor(ContextCompat.getColor(G.context, R.color.light_simple_sub));

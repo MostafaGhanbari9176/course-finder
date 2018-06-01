@@ -24,41 +24,6 @@ public class User {
         this.onUserLitener = onUserLitener;
     }
 
-    public void updateUser(String phone, String name) {
-
-
-        Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> updateUser = api.updateUser(phone,name);
-        updateUser.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
-            @Override
-            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
-    //            onUserLitener.onReceiveFlag(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
-                onUserLitener.sendMessage(Message.convertRetrofitMessage(t.toString()));
-            }
-        });
-    }
-
-    public void getUser(String phone){
-        Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StUser>> getUser = api.getUser(phone);
-        getUser.enqueue(new Callback<ArrayList<StUser>>() {
-            @Override
-            public void onResponse(Call<ArrayList<StUser>> call, retrofit2.Response<ArrayList<StUser>> response) {
-      //          onUserLitener.onReceiveData(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<StUser>> call, Throwable t) {
-                onUserLitener.sendMessage(Message.convertRetrofitMessage(t.toString()));
-            }
-        });
-
-    }
-
     public void getRegistrationsName(int courseId){
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StUser>> getUser = api.getRegistrationsName(courseId, Pref.getStringValue(PrefKey.apiCode,""));

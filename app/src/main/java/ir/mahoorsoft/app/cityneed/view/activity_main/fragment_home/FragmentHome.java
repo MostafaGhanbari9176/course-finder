@@ -51,7 +51,6 @@ import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByGrouping
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityShowMoreCourse;
 
 
-
 public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener, AdapterTeacherListHome.OnClickItemTeacherList, SwipeRefreshLayout.OnRefreshListener {
     LinearLayout scrollView;
     LinearLayout llitems;
@@ -525,5 +524,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void onRefresh() {
         init();
+        ((ActivityMain) G.activity).helpSwipeProgress.setVisibility(View.GONE);
     }
 }

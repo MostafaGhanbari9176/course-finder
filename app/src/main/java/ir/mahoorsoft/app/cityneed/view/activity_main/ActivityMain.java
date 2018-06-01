@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +25,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -35,7 +35,9 @@ import java.util.Stack;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.presenter.PresentFeedBack;
 import ir.mahoorsoft.app.cityneed.view.ActivityAboutUs;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_grouping_list.FragmentGroupingList;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
@@ -49,7 +51,7 @@ import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
-public class ActivityMain extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity implements PresentFeedBack.OnPresentFeedBackListener {
     Toolbar toolbar;
     LinearLayout llRadioGroup;
     RadioButton rbSelf;
@@ -59,6 +61,9 @@ public class ActivityMain extends AppCompatActivity {
     BottomNavigationView navDown;
     HashMap<String, Fragment> fSaver = new HashMap<>();
     Stack<String> keySaver = new Stack<>();
+    boolean doubleBackToExitPressedOnce = false;
+    public RelativeLayout helpSwipeProgress;
+    LinearLayout llBackHelpSwipeProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,11 @@ public class ActivityMain extends AppCompatActivity {
         init();
         rbOther.setChecked(true);
         replaceContentWith("fHome", new FragmentHome());
+
+        if (!Pref.getBollValue(PrefKey.helpSwipeProgres, false)) {
+            helpSwipeProgress.setVisibility(View.VISIBLE);
+            Pref.saveBollValue(PrefKey.helpSwipeProgres, true);
+        }
     }
 
     @Override
@@ -100,9 +110,9 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.btnAboutUsMenu:
                 starterActivity(ActivityAboutUs.class);
                 return true;
-            case R.id.btnChangeCellPhone:
+            case R.id.btnFeedBackMenu:
                 if (Pref.getBollValue(PrefKey.IsLogin, false))
-                    shwoCellPhoneDialog();
+                    shwoFeedBackDialog();
                 else
                     Toast.makeText(this, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
                 return true;
@@ -112,8 +122,27 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.btnCallUSDialog:
                 showDialogCallUs();
                 return true;
+
+            case R.id.btnInviteFriend:
+                inviteFriend();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void inviteFriend() {
+        try {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT, "برنامه دوره های آموزشی من");
+            String sAux = "\nبا این برنامه می تونی دوره هایه مورد علاقه خودت رو پیدا کنی و وقتت رو پرکنی.\n\n";
+            sAux = sAux + G.appLink + "\n\n";
+            i.putExtra(Intent.EXTRA_TEXT, sAux);
+            startActivity(Intent.createChooser(i, "choose one"));
+        } catch (Exception e) {
+            //e.toString();
         }
     }
 
@@ -122,7 +151,7 @@ public class ActivityMain extends AppCompatActivity {
         Dialog callUs = new Dialog(this);
         LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = li.inflate(R.layout.dialog_call_us, null, false);
-        ((TextView) view.findViewById(R.id.txtCallUsDialog)).setOnClickListener(new View.OnClickListener() {
+        ((LinearLayout) view.findViewById(R.id.llCallUsDialog)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -134,7 +163,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ((TextView) view.findViewById(R.id.txtWebSiteDialog)).setOnClickListener(new View.OnClickListener() {
+        ((LinearLayout) view.findViewById(R.id.llWebSiteDialog)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -147,7 +176,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ((TextView) view.findViewById(R.id.txtEmailDialog)).setOnClickListener(new View.OnClickListener() {
+        ((LinearLayout) view.findViewById(R.id.llEmailDialog)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -165,34 +194,38 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    private void shwoCellPhoneDialog() {
+    private void shwoFeedBackDialog() {
         final Dialog dialog = new Dialog(G.context);
         LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = li.inflate(R.layout.dialog_get_phone_number, null, false);
-        final EditText editText = (EditText) view.findViewById(R.id.txtGetPhoneNumberFDialog);
-        editText.setText(Pref.getStringValue(PrefKey.cellPhone, ""));
-        ((Button) view.findViewById(R.id.btnCancelGetPhoneNumberDialog)).setOnClickListener(new View.OnClickListener() {
+        View view = li.inflate(R.layout.dialog_get_feed_back, null, false);
+        final EditText editText = (EditText) view.findViewById(R.id.txtGetFeedBack);
+
+        ((Button) view.findViewById(R.id.btnCancelFeedBack)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
             }
         });
 
-        Button btnConfirm = (Button) view.findViewById(R.id.btnConfirmGetPhoneNumberDialog);
-        btnConfirm.setText("ذخیره");
+        Button btnConfirm = (Button) view.findViewById(R.id.btnSendFeedBack);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editText.getText().toString().trim().length() == 11 && TextUtils.isDigitsOnly(editText.getText().toString().trim())) {
-                    Pref.saveStringValue(PrefKey.cellPhone, editText.getText().toString().trim());
+                if (!TextUtils.isEmpty(editText.getText().toString().trim())) {
+                    sendFeedBackForServer(editText.getText().toString().trim());
                     dialog.cancel();
                 } else
-                    editText.setError("لطفا صحیح وارد کنید");
+                    editText.setError("هیچ متنی وارد نشده");
             }
         });
         dialog.setContentView(view);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
+    }
+
+    private void sendFeedBackForServer(String text) {
+        sendMessageFromFeedBack("درحال ارسال بازخورد ...");
+        (new PresentFeedBack(this)).saveFeedBack(text);
     }
 
     private void init() {
@@ -202,7 +235,8 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void pointers() {
-
+        helpSwipeProgress = (RelativeLayout) findViewById(R.id.RLHelpSwipeProgres);
+        llBackHelpSwipeProgress = (LinearLayout) findViewById(R.id.LLBackHelpSwipeProgress);
         navDown = (BottomNavigationView) findViewById(R.id.bottomNav_down_Home);
         navDown.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_tel));
         setNavigationItemListener();
@@ -301,31 +335,37 @@ public class ActivityMain extends AppCompatActivity {
             case "fHome":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
+                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
                 break;
 
             case "fMap":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
+                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
                 break;
 
             case "fSearch":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
+                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
                 break;
 
             case "fGroupingList":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
+                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
                 break;
 
             case "fSelfCourse":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
+                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
                 break;
 
             case "fTeacherList":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
+                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
                 break;
         }
     }
@@ -349,7 +389,21 @@ public class ActivityMain extends AppCompatActivity {
             keySaver.pop();
             replaceContentWith(keySaver.pop(), null);
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "لطفا برای خروج یکبار دیگر کلیک کنید", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
         }
     }
 
@@ -377,5 +431,18 @@ public class ActivityMain extends AppCompatActivity {
         G.context = this;
         profileCheck();
         super.onResume();
+    }
+
+    @Override
+    public void OnReceiveFlagFromFeedBack(Boolean flag) {
+        if (flag)
+            sendMessageFromFeedBack("بازخورد شما ثبت شد");
+        else
+            sendMessageFromFeedBack(Message.getMessage(1));
+    }
+
+    @Override
+    public void sendMessageFromFeedBack(String Message) {
+        Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
     }
 }

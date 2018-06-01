@@ -5,27 +5,21 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.model.CheckedSTatuse;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 
-/**
- * Created by RCC1 on 2/1/2018.
- */
 
 public class PresentCheckedStatuse implements CheckedSTatuse.OnCheckServer {
 
     public interface OnPresentCheckServrer {
-        void serverChecked(boolean online);
+        void versionChecked(ResponseOfServer rse);
 
-        void userChecked(boolean online);
+        void userChecked(ResponseOfServer rse);
+
+        void messageFromStatuse(String message);
     }
 
-    OnPresentCheckServrer onPresentCheckServrer;
+    private OnPresentCheckServrer onPresentCheckServrer;
 
     public PresentCheckedStatuse(OnPresentCheckServrer onPresentCheckServrer) {
         this.onPresentCheckServrer = onPresentCheckServrer;
-    }
-
-    public void checkedServerStatuse() {
-        CheckedSTatuse checkedSTatuse = new CheckedSTatuse(this);
-        checkedSTatuse.checkServerStatuse();
     }
 
     public void checkedUserStatuse() {
@@ -33,12 +27,16 @@ public class PresentCheckedStatuse implements CheckedSTatuse.OnCheckServer {
         checkedSTatuse.checkUserStatuse();
     }
 
+    public void checkVersion() {
+        (new CheckedSTatuse(this)).checkVersionName();
+    }
+
     @Override
-    public void ResponseForSarverStatuse(ArrayList<ResponseOfServer> res) {
+    public void ResponseForVersion(ArrayList<ResponseOfServer> res) {
         if (res == null || res.size() == 0)
             sendMessage("خطا");
         else
-            onPresentCheckServrer.serverChecked(res.get(0).code == 0 ? false : true);
+            onPresentCheckServrer.versionChecked(res.get(0));
     }
 
     @Override
@@ -46,11 +44,11 @@ public class PresentCheckedStatuse implements CheckedSTatuse.OnCheckServer {
         if (res == null || res.size() == 0)
             sendMessage("خطا");
         else
-            onPresentCheckServrer.userChecked(res.get(0).code == 0 ? false : true);
+            onPresentCheckServrer.userChecked(res.get(0));
     }
 
     @Override
     public void sendMessage(String message) {
-        onPresentCheckServrer.serverChecked(false);
+        onPresentCheckServrer.messageFromStatuse(message);
     }
 }

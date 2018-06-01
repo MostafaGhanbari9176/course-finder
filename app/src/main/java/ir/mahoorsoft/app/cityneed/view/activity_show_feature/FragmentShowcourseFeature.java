@@ -3,6 +3,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,8 @@ import com.bumptech.glide.signature.StringSignature;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import javax.xml.datatype.Duration;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -98,8 +101,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         pointers();
         setFont();
         getCourseInf();
-        if (Pref.getBollValue(PrefKey.IsLogin, false))
-            checkedSabtenamCourse();
+
 
     }
 
@@ -165,9 +167,9 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
                 try {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, "My application name");
-                    String sAux = "\nLet me recommend you this application\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id=the.package.id \n\n";
+                    i.putExtra(Intent.EXTRA_SUBJECT, "دوره " + txtName.getText());
+                    String sAux = "\nبرای شرکت در این دوره عالی کافیه برنامه دوره های آموزشی من رو از لینک زیر دانلود کنی.\n\n";
+                    sAux = sAux + G.appLink + "\n\n";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(i, "choose one"));
                 } catch (Exception e) {
@@ -200,11 +202,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     private void registerHe() {
 
         if (Pref.getBollValue(PrefKey.IsLogin, false)) {
-            if (Pref.getStringValue(PrefKey.cellPhone, "").length() > 0) {
-                answerForRegistery();
-            } else {
-                getPhoneNumber();
-            }
+            getPhoneNumber();
         } else
             showDialog();
     }
@@ -220,6 +218,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = li.inflate(R.layout.dialog_get_phone_number, null, false);
         final EditText editText = (EditText) view.findViewById(R.id.txtGetPhoneNumberFDialog);
+        editText.setText(Pref.getStringValue(PrefKey.cellPhone, ""));
         ((Button) view.findViewById(R.id.btnCancelGetPhoneNumberDialog)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -290,29 +289,9 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         builder.show();
     }
 
-    private void answerForRegistery() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
-        builder.setTitle("ثبت نام");
-        builder.setMessage("آیا مایل به ثبت نام در این دوره هستید؟");
-        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                queryForRegistery();
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
 
     private void showDialogForWaitingRegistery() {
         AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
-        builder.setTitle("ثبت نام");
         builder.setMessage("ثبت نام موقت شما انجام شد,می توانید در قسمت حساب کاربری نتیجه آن را مشاهده کنید.");
         builder.setPositiveButton("خوب", new DialogInterface.OnClickListener() {
             @Override
@@ -369,21 +348,43 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtsharayet.setText(course.get(0).sharayet);
         checkCourseData();
         setImage();
-
+        if (Pref.getBollValue(PrefKey.IsLogin, false))
+            checkedSabtenamCourse();
     }
 
     private void checkCourseData() {
         if (!checkDate()) {
             btnRegister.setVisibility(View.GONE);
-            ratBar.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);
             txtNews.setText("دوره در تاریخ " + startDate + " برگزار شده");
         } else if (capacity == 0) {
             btnRegister.setVisibility(View.GONE);
-            ratBar.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);
             txtNews.setText("ظرفیت دوره تکمیل شده");
         }
+    }
+
+    @Override
+    public void checkSabtenam(float ratBarValue) {
+        if (ratBarValue == -3) {
+            btnRegister.setVisibility(View.GONE);
+            txtNews.setVisibility(View.GONE);
+            txtConfirmRegistery.setVisibility(View.VISIBLE);
+            txtConfirmRegistery.setText("ثبت نام شما لغو شده است.");
+        } else if (ratBarValue == -2) {
+            btnRegister.setVisibility(View.GONE);
+            txtNews.setVisibility(View.VISIBLE);
+            txtNews.setText("ثبت نام شما در انتظار تایید مدرس است");
+        } else if (ratBarValue != -1) {
+            issabtenamed = true;
+            btnRegister.setVisibility(View.GONE);
+            llRatBar.setVisibility(View.VISIBLE);
+            ratBar.setRating(ratBarValue);
+            txtConfirmRegistery.setVisibility(View.VISIBLE);
+            txtNews.setVisibility(View.GONE);
+            setUpRatBar();
+        }
+
     }
 
     @Override
@@ -421,26 +422,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     }
 
-    @Override
-    public void checkSabtenam(float ratBarValue) {
-        if (ratBarValue == -3) {
-            btnRegister.setVisibility(View.GONE);
-            txtConfirmRegistery.setVisibility(View.VISIBLE);
-            txtConfirmRegistery.setText("ثبت نام شما لغو شده است.");
-        } else if (ratBarValue == -2) {
-            btnRegister.setVisibility(View.GONE);
-            txtNews.setVisibility(View.VISIBLE);
-            txtNews.setText("ثبت نام شما در انتظار تایید مدرس است");
-        } else if (ratBarValue != -1) {
-            issabtenamed = true;
-            btnRegister.setVisibility(View.GONE);
-            llRatBar.setVisibility(View.VISIBLE);
-            ratBar.setRating(ratBarValue);
-            txtConfirmRegistery.setVisibility(View.VISIBLE);
-            setUpRatBar();
-        }
-
-    }
 
     private void setUpRatBar() {
         ratBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -466,9 +447,9 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     @Override
     public void onResiveFlagFromComment(boolean flag) {
-
+        pbRatBar.setVisibility(View.GONE);
         if (flag)
-            messageFromComment("امتیاز شما ثبت شد");
+            Snackbar.make(view, "امتیاز شما ثبت شد", 1).show();
         else {
             messageFromComment("خطا,امتیاز شما ثبت نشد");
         }

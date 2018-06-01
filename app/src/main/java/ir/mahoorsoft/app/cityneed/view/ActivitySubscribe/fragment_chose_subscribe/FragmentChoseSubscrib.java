@@ -105,7 +105,7 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
         ZarinPal purchase = ZarinPal.getPurchase(G.context);
         PaymentRequest payment = ZarinPal.getPaymentRequest();
 
-        payment.setMerchantID("71c705f8-bd37-11e6-aa0c-000c295eb8fc");
+        payment.setMerchantID(G.MID);
         payment.setAmount(source.get(position).price);
         payment.setDescription("خرید اشتراک " + source.get(position).subject + " به قیمت " + source.get(position).price + " تومان ");
         payment.setCallbackURL("ir.mahoorsoft.app.cityneed://app");     /* Your App Scheme */

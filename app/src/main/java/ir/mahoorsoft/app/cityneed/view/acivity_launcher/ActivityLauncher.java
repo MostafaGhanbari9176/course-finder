@@ -1,10 +1,14 @@
 package ir.mahoorsoft.app.cityneed.view.acivity_launcher;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -13,25 +17,41 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
+import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedStatuse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 
 
+public class ActivityLauncher extends AppCompatActivity implements PresentCheckedStatuse.OnPresentCheckServrer, View.OnClickListener {
 
-public class ActivityLauncher extends AppCompatActivity implements PresentCheckedStatuse.OnPresentCheckServrer {
 
+    LinearLayout serverError;
+    LinearLayout updateNews;
+    LinearLayout logo;
+    TextView txtNewVersion;
+    TextView txtCurrentVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-        G.context = this;
-        G.activity = this;
-        //Pref.saveBollValue(PrefKey.smsListReady, false);
+        pointer();
         if (!Pref.getBollValue(PrefKey.smsListReady, false))
             setSmsTextData();
         runLogo();
 
+    }
+
+    private void pointer() {
+        serverError = (LinearLayout) findViewById(R.id.llServerError);
+        logo = (LinearLayout) findViewById(R.id.llLogo);
+        updateNews = (LinearLayout) findViewById(R.id.llUpdateNews);
+        txtCurrentVersion = (TextView) findViewById(R.id.txtCurrentVersion);
+        txtNewVersion = (TextView) findViewById(R.id.txtNewVersion);
+        txtCurrentVersion.setText(G.VN);
+        ((Button) findViewById(R.id.btnDownload)).setOnClickListener(this);
+        ((Button) findViewById(R.id.btnContinueLuncher)).setOnClickListener(this);
+        ((Button) findViewById(R.id.btnReConnectc)).setOnClickListener(this);
     }
 
     private void setSmsTextData() {
@@ -44,39 +64,25 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     }
 
     private void runLogo() {
-        replaceContentWith(new FragmentLogo());
+        serverError.setVisibility(View.GONE);
+        logo.setVisibility(View.VISIBLE);
+        updateNews.setVisibility(View.GONE);
         if (Pref.getBollValue(PrefKey.IsLogin, false))
             checkedUserStatuse();
-        else {
-            new CountDownTimer(2000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                }
+        else
+            checkVersion();
 
-                @Override
-                public void onFinish() {
-                    //set the new Content of your activity
-                    next();
-                }
-            }.start();
-        }
+    }
+
+    private void checkVersion() {
+        (new PresentCheckedStatuse(this)).checkVersion();
     }
 
     private void next() {
-
-/*        if (Pref.getBollValue(PrefKey.hacked, false))
-            replaceContentWith(new FragmentHacked());
-        else*/
         Intent intent = new Intent(this, ActivityMain.class);
         startActivity(intent);
         this.finish();
-/*        else
-            checkedServerStatuse();*/
-    }
 
-    private void checkedServerStatuse() {
-        PresentCheckedStatuse presentCheckedStatuse = new PresentCheckedStatuse(this);
-        presentCheckedStatuse.checkedServerStatuse();
     }
 
     private void checkedUserStatuse() {
@@ -84,21 +90,25 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         presentCheckedStatuse.checkedUserStatuse();
     }
 
+
     @Override
-    public void serverChecked(boolean online) {
-        if (online) {
-            Intent intent = new Intent(this, ActivityMain.class);
-            startActivity(intent);
-            this.finish();
-        } else {
-            replaceContentWith(new FragmentErrorServer());
+    public void versionChecked(ResponseOfServer rse) {
+        if (rse.versionName.equals(G.VN))
+            next();
+        else {
+            serverError.setVisibility(View.GONE);
+            logo.setVisibility(View.GONE);
+            updateNews.setVisibility(View.VISIBLE);
+            txtNewVersion.setText(rse.versionName);
         }
+
+
     }
 
     @Override
-    public void userChecked(boolean logIn) {
+    public void userChecked(ResponseOfServer rse) {
 
-        if (!logIn) {
+        if (rse.code == 0) {
             Pref.removeValue(PrefKey.email);
             Pref.removeValue(PrefKey.apiCode);
             Pref.removeValue(PrefKey.userName);
@@ -113,16 +123,48 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
             Pref.removeValue(PrefKey.lon);
             Pref.removeValue(PrefKey.IsLogin);
         }
-        Intent intent = new Intent(this, ActivityMain.class);
-        startActivity(intent);
-        this.finish();
-
+        if (rse.versionName.equals(G.VN))
+            next();
+        else {
+            serverError.setVisibility(View.GONE);
+            logo.setVisibility(View.GONE);
+            updateNews.setVisibility(View.VISIBLE);
+            txtNewVersion.setText(rse.versionName);
+        }
 
     }
 
-    public static void replaceContentWith(Fragment fragment) {
-        G.activity.getSupportFragmentManager()
-                .beginTransaction().replace(R.id.contentLuncher, fragment)
-                .commit();
+    @Override
+    public void messageFromStatuse(String message) {
+        serverError.setVisibility(View.VISIBLE);
+        logo.setVisibility(View.GONE);
+        updateNews.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.btnDownload:
+                downloadApp();
+                break;
+            case R.id.btnReConnectc:
+                runLogo();
+                break;
+            case R.id.btnContinueLuncher:
+                next();
+                break;
+        }
+    }
+
+    private void downloadApp() {
+        try {
+            String url = G.appLink;
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        } catch (Exception e) {
+            Toast.makeText(this, "خطا!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -25,6 +25,7 @@ public class PrefKey {
     public static final String profileUserPage = "one";
     public static final String profileTeacherPage = "two";
     public static final String courseImageHelp = "three";
+    public static final String helpSwipeProgres = "helpSwipeProgres";
     /////////////////////////
     public static final String hacked = "hacked";
     public static final String smsListReady = "smslistready";

@@ -12,4 +12,5 @@ public class ResponseOfServer {
     public String apiCode;
     public String ms;
     public String sub;
+    public String versionName;
 }

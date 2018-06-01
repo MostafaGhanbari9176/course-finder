@@ -7,9 +7,6 @@
     <dimen name="txt_size_vsmal">30dp</dimen>
     <dimen name="txt_size_xvsmal">26dp</dimen>
     <dimen name="txt_size_big">48dp</dimen>
-    <dimen name="txt_size_vbig">64dp</dimen>
-    <dimen name="txt_toolbar">18dp</dimen>
-    <dimen name="ll_scroll_view_bias">170dp</dimen>
 
 
 </resources>

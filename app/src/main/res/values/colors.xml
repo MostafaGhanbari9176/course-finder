@@ -1,56 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#16815a</color>
-    <color name="colorPrimaryDark">@color/light_eq</color>
-    <color name="colorAccent">#25D366</color>
 
-<!--  0000  -->
+    <!--  0000  -->
     <color name="text_home">#000</color>
     <color name="text_item">#000</color>
-    <color name="text_dialog">#000</color>
     <color name="dark">#000</color>
-    <color name="dark_green">#1a4d3a</color>
 
-    <color name="light_green">#16815a</color>
-    <color name="light_green2">#0dbf16</color>
-    <color name="light_orange">#ff6600</color>
-    <color name="dark_blue">#34495e</color>
-    <color name="line_item">#1e5843</color>
     <color name="btn_true">#16815a</color>
     <color name="btn_false">#79caaf</color>
-    <color name="back_grand_txt_search">#29a176</color>
-    <color name="back_grand_dialog">#ffffff</color>
     <color name="back_grand_item">#ffffff</color>
-    <color name="back_grand_button">#85d9bb</color>
-    <color name="back_grand_layout">#E8F5E9</color>
-    <color name="toolbar_elements1">#fff</color>
     <color name="error">#F44336</color>
     <color name="red">#FF1744</color>
-    <color name="light_red">#FF5252</color>
     <color name="dark_red">#D50000</color>
     <!--color primary group  == eq -->
     <color name="blue_eq">#41cdb0</color>
     <color name="dark_eq">#263238</color>
     <color name="light_eq">#384248</color>
-    <color name="silver">#e6eaec</color>
-    <color name="brown">#ce5a30</color>
     <!--apple ios color  -->
     <color name="red_ios">#ff3b30</color>
     <color name="blue_ios">#007aff</color>
-    <color name="orange_ios">#ff9500</color>
     <color name="yellow_ios">#ffcc00</color>
     <color name="green_ios">#4fd964</color>
     <color name="pink_ios">#ff2d55</color>
-    <color name="purple_ios">#5856d6</color>
     <color name="tealblue_ios">#5ac8fa</color>
     <!--color red group  == google -->
     <color name="red_one">#EF5350</color>
-    <color name="red_two">#F44336</color>
-    <color name="red_three">#ff3b30</color>
     <!--color green group  == google -->
-    <color name="green_one">#93d79d</color>
-    <color name="green_two">#7fda8d</color>
-    <color name="green_three">#4fd964</color>
     <!--color green group  == google -->
     <color name="light_one">#E1E6E9</color>
     <color name="light_two">#FAFAFA</color>

@@ -13,7 +13,6 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/llPhoneConfirm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -186,11 +185,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txtToBuilding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="در دست ساخت"
+            android:text="به زودی ..."
             android:textColor="@color/blue_ios"
             android:textSize="@dimen/txt_size_big"
             android:textStyle="bold|italic" />

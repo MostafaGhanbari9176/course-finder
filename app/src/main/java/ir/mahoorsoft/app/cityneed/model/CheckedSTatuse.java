@@ -16,33 +16,17 @@ import retrofit2.Callback;
 
 public class CheckedSTatuse {
     public interface OnCheckServer {
-        void ResponseForSarverStatuse(ArrayList<ResponseOfServer> res);
+        void ResponseForVersion(ArrayList<ResponseOfServer> res);
 
         void ResponseForUserStatuse(ArrayList<ResponseOfServer> res);
 
         void sendMessage(String message);
     }
 
-    OnCheckServer onCheckServer;
+    private OnCheckServer onCheckServer;
 
     public CheckedSTatuse(OnCheckServer onCheckServer) {
         this.onCheckServer = onCheckServer;
-    }
-
-    public void checkServerStatuse() {
-        Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> checkedServer = api.checkedServerStatuse();
-        checkedServer.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
-            @Override
-            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
-                onCheckServer.ResponseForSarverStatuse(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
-                onCheckServer.sendMessage(t.getMessage());
-            }
-        });
     }
 
     public void checkUserStatuse() {
@@ -52,6 +36,22 @@ public class CheckedSTatuse {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
                 onCheckServer.ResponseForUserStatuse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onCheckServer.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void checkVersionName() {
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> checkedServer = api.checkUpdate();
+        checkedServer.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {
+                onCheckServer.ResponseForVersion(response.body());
             }
 
             @Override

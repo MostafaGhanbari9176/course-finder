@@ -43,17 +43,6 @@ public interface Api {
             @Path("flag") String flag
     );
 
-    @GET("updateUser/{email}/{name}")
-    Call<ArrayList<ResponseOfServer>> updateUser(
-            @Path("email") String phone,
-            @Path("name") String name
-    );
-
-    @GET("getUser/{email}")
-    Call<ArrayList<StUser>> getUser(
-            @Path("email") String phone
-    );
-
     @GET("logOut/{email}")
     Call<ArrayList<ResponseOfServer>> logOut(
             @Path("email") String phone
@@ -179,9 +168,6 @@ public interface Api {
     Call<ArrayList<StCourse>> getUserCourse(
             @Path("ac") String ac
     );
-
-    @GET("checkedServerStatuse")
-    Call<ArrayList<ResponseOfServer>> checkedServerStatuse();
 
     @GET("checkedUserStatuse/{id}")
     Call<ArrayList<ResponseOfServer>> checkedUserStatuse(
@@ -363,6 +349,15 @@ public interface Api {
     Call<ArrayList<StBuy>> getUserSubscribe(
             @Path("ac") String ac
     );
+
+    @GET("saveFeedBack/{ac}/{feedBackText}")
+    Call<ArrayList<ResponseOfServer>> saveFeedBack(
+            @Path("ac") String ac,
+            @Path("feedBackText") String feedBackText
+    );
+
+    @GET("checkUpdate")
+    Call<ArrayList<ResponseOfServer>> checkUpdate();
 
     @GET("remaining_credit/{tableName}/{email}")
     Call<String> remainCredit(

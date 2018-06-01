@@ -41,7 +41,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txtTsNameItemIn2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
@@ -76,7 +75,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txtCourseNameItemIn2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
@@ -111,7 +109,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txtDateItemIn2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
