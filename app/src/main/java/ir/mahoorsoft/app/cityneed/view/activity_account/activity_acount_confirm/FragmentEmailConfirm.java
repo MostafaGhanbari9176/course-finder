@@ -51,12 +51,12 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     Button btnConfirmEmail;
     Button btnConfirmCode;
     Button btnResend;
-    TextView txtEmail;
-    TextView txtName;
+    public TextView txtEmail;
+    public TextView txtName;
     TextView txtCode;
     boolean isLogIn;
-    RadioButton rbLogIn;
-    RadioButton rbLogUp;
+    public RadioButton rbLogIn;
+    public RadioButton rbLogUp;
     RelativeLayout rlPbar;
 
     @Nullable
@@ -380,4 +380,6 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
                 break;
         }
     }
+
+
 }

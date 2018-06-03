@@ -1,5 +1,6 @@
 package ir.mahoorsoft.app.cityneed;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,10 +11,14 @@ import android.media.Image;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -83,6 +88,22 @@ public class G extends Application {
         } catch (IllegalAccessException e) {
             Log.e("BNVHelper", "Unable to change value of shift mode", e);
         }
+    }
+
+    public static void showSnackBar(View view, String message, String buttonText, final Activity activity) {
+        Snackbar snackbar = Snackbar
+                .make(view, message, Snackbar.LENGTH_SHORT)
+                .setAction(buttonText, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        activity.finish();
+                    }
+                });
+        View snackbarView = snackbar.getView();
+        int snackbarTextId = android.support.design.R.id.snackbar_text;
+        TextView textView = (TextView) snackbarView.findViewById(snackbarTextId);
+        textView.setTextColor(ContextCompat.getColor(activity, R.color.light));
+        snackbar.show();
     }
 
 }

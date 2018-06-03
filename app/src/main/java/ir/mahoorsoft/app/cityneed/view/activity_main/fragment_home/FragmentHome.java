@@ -32,6 +32,8 @@ import cn.lightsky.infiniteindicator.Page;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
@@ -123,7 +125,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         else
             btnDelete.setVisibility(View.VISIBLE);
         rlPbar.setVisibility(View.VISIBLE);
-        sDown.setRefreshing(true);
+        if (Pref.getBollValue(PrefKey.helpSwipeProgres, false))
+            sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseForListHome(groupId);
     }

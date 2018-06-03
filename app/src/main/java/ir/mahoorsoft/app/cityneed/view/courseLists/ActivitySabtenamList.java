@@ -26,9 +26,8 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
-import ir.mahoorsoft.app.cityneed.view.activity_sms_box.DialogGetSmsText;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogGetSmsText;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSabtenamList;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by RCC1 on 1/22/2018.

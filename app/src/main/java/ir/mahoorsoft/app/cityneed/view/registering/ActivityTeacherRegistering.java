@@ -236,10 +236,9 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            if (data == null) {
-                sendMessageFTT("خطا!!!");
+            if (data == null)
                 return;
-            }
+
             if (requestCode == 1 && resultCode == RESULT_OK) {
                 uploadFile(data.getStringExtra("path"));
             }

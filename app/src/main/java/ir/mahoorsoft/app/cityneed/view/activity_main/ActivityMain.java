@@ -61,7 +61,6 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     BottomNavigationView navDown;
     HashMap<String, Fragment> fSaver = new HashMap<>();
     Stack<String> keySaver = new Stack<>();
-    boolean doubleBackToExitPressedOnce = false;
     public RelativeLayout helpSwipeProgress;
     LinearLayout llBackHelpSwipeProgress;
 
@@ -389,21 +388,7 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
             keySaver.pop();
             replaceContentWith(keySaver.pop(), null);
         } else {
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
-                return;
-            }
-
-            this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "لطفا برای خروج یکبار دیگر کلیک کنید", Toast.LENGTH_SHORT).show();
-
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
+           G.showSnackBar(findViewById(R.id.LLActivityMain), "", "خروج از برنامه", this);
         }
     }
 

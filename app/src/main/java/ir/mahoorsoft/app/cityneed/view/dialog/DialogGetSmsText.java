@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_sms_box;
+package ir.mahoorsoft.app.cityneed.view.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,14 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-
-import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
+import ir.mahoorsoft.app.cityneed.view.activity_sms_box.AdapterReadySmsList;
 
 
 /**
@@ -136,9 +133,9 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
     }
 
     private void getTextMessage() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("افزودن پیام آماده");
-        final EditText editText = new EditText(G.context);
+        final EditText editText = new EditText(context);
         editText.setPadding(60, 60, 60, 60);
         editText.setGravity(Gravity.RIGHT);
         editText.setHint("متن پیام خود را وارد کنید");

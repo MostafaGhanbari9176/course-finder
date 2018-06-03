@@ -1,11 +1,18 @@
 package ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -20,6 +27,9 @@ public class ActivityAcountConfirm extends AppCompatActivity {
     TabLayout tabLayout;
     AdapterViewPager adapterViewPager;
     ViewPager viewPager;
+    FragmentEmailConfirm fEC;
+    FragmentPhoneConfirm fPC;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,15 +52,30 @@ public class ActivityAcountConfirm extends AppCompatActivity {
         });
         tabLayout.setupWithViewPager(viewPager);
         settingUpViewPager();
+        showDialog();
 
     }
 
     private void settingUpViewPager() {
         adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
-        adapterViewPager.add(new FragmentEmailConfirm(), "ثبت نام یا ورود با ایمیل");
-        adapterViewPager.add(new FragmentPhoneConfirm(), "ثبت نام یا ورود با شماره همراه");
+        fEC = new FragmentEmailConfirm();
+        adapterViewPager.add(fEC, "ثبت نام یا ورود با ایمیل");
+        fPC = new FragmentPhoneConfirm();
+        adapterViewPager.add(fPC, "ثبت نام یا ورود با شماره همراه");
         viewPager.setAdapter(adapterViewPager);
 
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("درحال حاظر سرویس ما فقط در زاهدان ارائه می شود.");
+        builder.setNegativeButton("خب", new Dialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     private void pointer() {
@@ -61,7 +86,13 @@ public class ActivityAcountConfirm extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-        super.onBackPressed();
+        if ((fEC.rbLogIn.isChecked() && fEC.txtEmail.length() > 0) || (fEC.rbLogUp.isChecked() && (fEC.txtEmail.length() > 0 || fEC.txtName.length() > 0))) {
+            G.showSnackBar(findViewById(R.id.LLAccountConfirm), "در صورت بازگشت اطلاعات وارد شده پاک میشود", "بازگشت", this);
+        } else {
+            this.finish();
+            super.onBackPressed();
+        }
     }
+
+
 }

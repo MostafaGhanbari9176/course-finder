@@ -29,6 +29,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import ir.mahoorsoft.app.cityneed.presenter.PresentReport;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterSmsBox;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSmsListIn;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogGetSmsText;
 
 /**
  * Created by M-gh on 27-Feb-18.

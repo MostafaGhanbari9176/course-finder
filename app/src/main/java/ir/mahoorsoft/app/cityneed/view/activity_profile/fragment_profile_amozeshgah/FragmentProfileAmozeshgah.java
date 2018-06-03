@@ -334,7 +334,8 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
                 break;
 
             case R.id.btnSubscribe:
-                subData();
+                if (pbarSubscribeData.getVisibility() == View.GONE)
+                    subData();
                 break;
         }
     }
