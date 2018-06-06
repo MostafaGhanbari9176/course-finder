@@ -224,7 +224,7 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
             @Override
             public void onClick(View v) {
                 if (checkReportData(textView)) {
-                    sendReport("comment", textView.getText().toString(), source.get(position).id, source.get(position).userId, Pref.getStringValue(PrefKey.email, ""));
+                    sendReport("comment", textView.getText().toString(), source.get(position).id, source.get(position).userId, Pref.getStringValue(PrefKey.apiCode, ""));
                     dialog.cancel();
                 }
             }

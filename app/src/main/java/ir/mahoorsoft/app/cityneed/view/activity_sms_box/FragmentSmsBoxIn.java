@@ -149,7 +149,7 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
             @Override
             public void onClick(View v) {
                 if (checkReportData(textView)) {
-                    sendReport("sms", textView.getText().toString(), source.get(position).id, source.get(position).tsId, Pref.getStringValue(PrefKey.email, ""));
+                    sendReport("sms", textView.getText().toString(), source.get(position).id, source.get(position).tsId, Pref.getStringValue(PrefKey.apiCode, ""));
                     dialog.cancel();
                 }
             }

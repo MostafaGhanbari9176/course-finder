@@ -97,7 +97,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
             next();
         else {
             serverError.setVisibility(View.GONE);
-            logo.setVisibility(View.GONE);
+            //logo.setVisibility(View.GONE);
             updateNews.setVisibility(View.VISIBLE);
             txtNewVersion.setText(rse.versionName);
         }
@@ -127,7 +127,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
             next();
         else {
             serverError.setVisibility(View.GONE);
-            logo.setVisibility(View.GONE);
+         //   logo.setVisibility(View.GONE);
             updateNews.setVisibility(View.VISIBLE);
             txtNewVersion.setText(rse.versionName);
         }
@@ -137,7 +137,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     @Override
     public void messageFromStatuse(String message) {
         serverError.setVisibility(View.VISIBLE);
-        logo.setVisibility(View.GONE);
+      //  logo.setVisibility(View.GONE);
         updateNews.setVisibility(View.GONE);
     }
 

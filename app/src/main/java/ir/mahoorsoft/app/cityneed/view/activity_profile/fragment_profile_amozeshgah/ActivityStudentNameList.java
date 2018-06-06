@@ -442,7 +442,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     private void confirmAction() {
         if (smsMore) {
-            dialogGetSmsText = new DialogGetSmsText(this, this, "ازسال پیام");
+            dialogGetSmsText = new DialogGetSmsText(this, this, "ارسال پیام");
             dialogGetSmsText.showDialog();
             needToBeDown = "sendMoreSms";
         } else if (deleteMore) {
