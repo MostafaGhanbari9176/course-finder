@@ -1,7 +1,6 @@
-package ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.fragment_chose_subscribe;
+package ir.mahoorsoft.app.cityneed.view.activity_subscribe.fragment_chose_subscribe;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 

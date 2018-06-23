@@ -68,7 +68,7 @@ public class ActivityAcountConfirm extends AppCompatActivity {
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("درحال حاظر سرویس ما فقط در زاهدان ارائه می شود.");
+        builder.setMessage("درحال حاظر سرویس ما فقط در شهر زاهدان ارائه می شود.");
         builder.setNegativeButton("خب", new Dialog.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -99,7 +99,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         sDown.setOnRefreshListener(this);
         formatter = new DecimalFormat("#,###,###");
         pointers();
-        setFont();
         getCourseInf();
 
 
@@ -115,24 +114,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         sDown.setRefreshing(false);
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
         presentSabtenam.checkSabtenam(courseId, idUser);
-    }
-
-    private void setFont() {
-        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
-        txtName.setTypeface(typeface);
-        txtsharayet.setTypeface(typeface);
-        txtTabaghe.setTypeface(typeface);
-        txtDay.setTypeface(typeface);
-        txtHours.setTypeface(typeface);
-        txtType.setTypeface(typeface);
-        txtCapacity.setTypeface(typeface);
-        txtEndDate.setTypeface(typeface);
-        txtStartDate.setTypeface(typeface);
-        txtRange.setTypeface(typeface);
-        txtMasterName.setTypeface(typeface);
-        txtMony.setTypeface(typeface);
-        txtDescription.setTypeface(typeface);
-
     }
 
     private void pointers() {
@@ -161,7 +142,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         btnMoreDetails = (LinearLayout) view.findViewById(R.id.btnMoreDetailsShowFeature);
         btnRegister = (Button) view.findViewById(R.id.btnRegisterShowFeature);
         moreDetails.setVisibility(View.GONE);
-        ((ImageButton) view.findViewById(R.id.imgButtonShareCourseFuture)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView) view.findViewById(R.id.imgButtonShareCourseFuture)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -338,7 +319,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtRange.setText("از " + course.get(0).minOld + " تا " + course.get(0).maxOld + " سال");
         txtStartDate.setText(course.get(0).startDate);
         txtEndDate.setText(course.get(0).endDate);
-        txtType.setText(course.get(0).type == 0 ? "عمومی" : "خصوصی");
+        txtType.setText(course.get(0).type == 0 ? "آموزش عمومی" : "آموزش خصوصی");
         txtName.setText(course.get(0).CourseName);
         txtMasterName.setText(course.get(0).MasterName);
         txtHours.setText(course.get(0).hours);

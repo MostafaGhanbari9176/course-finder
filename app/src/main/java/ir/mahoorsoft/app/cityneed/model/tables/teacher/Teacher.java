@@ -44,9 +44,9 @@ public class Teacher {
         });
     }
 
-    public void getTeacher(String teacherId) {
+    public void getTeacher(String teacherApi, String userApi) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StTeacher>> getTeacher = api.getTeacher(teacherId);
+        Call<ArrayList<StTeacher>> getTeacher = api.getTeacher(teacherApi, userApi);
         getTeacher.enqueue(new Callback<ArrayList<StTeacher>>() {
             @Override
             public void onResponse(Call<ArrayList<StTeacher>> call, retrofit2.Response<ArrayList<StTeacher>> response) {

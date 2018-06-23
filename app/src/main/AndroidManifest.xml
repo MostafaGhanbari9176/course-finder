@@ -22,7 +22,9 @@
         android:roundIcon="@mipmap/ic_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.acivity_launcher.ActivityLauncher">
+        <activity
+            android:name=".view.acivity_launcher.ActivityLauncher"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,12 +40,12 @@
             android:name=".view.registering.ActivityTeacherRegistering"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustNothing" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.registering.ActivityCourseRegistring"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustNothing" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.activity_profile.ActivityProfile"
             android:screenOrientation="portrait"
@@ -91,16 +93,17 @@
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
             android:name=".view.activity_account.activity_acount_confirm.ActivityAcountConfirm"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustNothing" />
+             />
         <activity
             android:name=".view.courseLists.ActivityCoursesListByGroupingId"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".view.ActivitySubscribe.ActivitySubscribe"
+            android:name=".view.activity_subscribe.ActivitySubscribe"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing">

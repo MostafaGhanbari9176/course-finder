@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.ActivitySubscribe;
+package ir.mahoorsoft.app.cityneed.view.activity_subscribe;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -25,7 +24,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
-import ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.fragment_chose_subscribe.FragmentChoseSubscrib;
+import ir.mahoorsoft.app.cityneed.view.activity_subscribe.fragment_chose_subscribe.FragmentChoseSubscrib;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 
 /**

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -40,6 +39,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.presenter.PresentFeedBack;
 import ir.mahoorsoft.app.cityneed.view.ActivityAboutUs;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_grouping_list.FragmentGroupingList;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_teacher_list.FragmentTeacherList;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
@@ -73,8 +73,9 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
         setContentView(R.layout.activity_main);
         init();
         rbOther.setChecked(true);
-        replaceContentWith("fHome", new FragmentHome());
-
+        FragmentHome fragmentHome = new FragmentHome();
+        replaceContentWith("fHome", fragmentHome);
+        fragmentHome.activityMain = this;
         if (!Pref.getBollValue(PrefKey.helpSwipeProgres, false)) {
             helpSwipeProgress.setVisibility(View.VISIBLE);
             Pref.saveBollValue(PrefKey.helpSwipeProgres, true);
@@ -91,21 +92,6 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.btnMapMenu:
-                replaceContentWith("fMap", new FragmentMap());
-                return true;
-            case R.id.btnSabtenamListMenu:
-                if (Pref.getBollValue(PrefKey.IsLogin, false))
-                    starterActivity(ActivitySabtenamList.class);
-                else
-                    Toast.makeText(this, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.btnSmsBoxMenu:
-                if (Pref.getBollValue(PrefKey.IsLogin, false))
-                    starterActivity(ActivitySmsBox.class);
-                else
-                    Toast.makeText(this, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
-                return true;
             case R.id.btnAboutUsMenu:
                 starterActivity(ActivityAboutUs.class);
                 return true;
@@ -270,7 +256,9 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homeNaveDownHome:
-                        replaceContentWith("fHome", new FragmentHome());
+                        FragmentHome fragmentHome = new FragmentHome();
+                        replaceContentWith("fHome", fragmentHome);
+                        fragmentHome.activityMain = ActivityMain.this;
                         return true;
 
                     case R.id.searchNanDownHome:
@@ -371,12 +359,12 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
 
     private void addKeyForBack(String key) {
         if (keySaver.size() >= 4) {
-            keySaver.remove(0);
+            keySaver.removeElement(key);
         }
         keySaver.add(key);
     }
 
-    private void starterActivity(Class aClass) {
+    public void starterActivity(Class aClass) {
         Intent intent = new Intent(this, aClass);
         startActivity(intent);
 
@@ -388,7 +376,7 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
             keySaver.pop();
             replaceContentWith(keySaver.pop(), null);
         } else {
-           G.showSnackBar(findViewById(R.id.LLActivityMain), "", "خروج از برنامه", this);
+            G.showSnackBar(findViewById(R.id.LLActivityMain), "", "خروج از برنامه", this);
         }
     }
 

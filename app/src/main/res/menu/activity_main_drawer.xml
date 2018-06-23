@@ -3,18 +3,6 @@
 
 
     <item
-        android:id="@+id/btnSabtenamListMenu"
-        android:title="دوره های ثبت نام شده" />
-
-    <item
-        android:id="@+id/btnSmsBoxMenu"
-        android:title="صندوق پیام" />
-
-    <item
-        android:id="@+id/btnMapMenu"
-        android:title="نقشه" />
-
-    <item
         android:id="@+id/btnInviteFriend"
         android:title="معرفی به دیگران" />
 

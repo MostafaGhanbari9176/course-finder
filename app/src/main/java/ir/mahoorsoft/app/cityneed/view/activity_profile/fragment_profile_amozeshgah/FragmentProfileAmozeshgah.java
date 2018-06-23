@@ -47,12 +47,11 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
-import ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.ActivitySubscribe;
+import ir.mahoorsoft.app.cityneed.view.activity_subscribe.ActivitySubscribe;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
 
 /**

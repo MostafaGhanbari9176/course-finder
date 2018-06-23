@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.activity_main;
+package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_teacher_list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +20,16 @@ import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
-import ir.mahoorsoft.app.cityneed.model.tables.teacher.Teacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTeacherList;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
- * Created by RCC1 on 4/28/2018.
+ * Created by M-gh on 21-Jun-18.
  */
 
-public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPresentTeacherListener, AdapterTeacherList.OnClickItemTeacherList, SwipeRefreshLayout.OnRefreshListener {
+public class FragmentAllTeacher extends Fragment implements PresentTeacher.OnPresentTeacherListener, AdapterTeacherList.OnClickItemTeacherList, SwipeRefreshLayout.OnRefreshListener {
 
     View view;
     RecyclerView list;
@@ -45,17 +43,17 @@ public class FragmentTeacherList extends Fragment implements PresentTeacher.OnPr
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_teacher_list, container, false);
+            view = inflater.inflate(R.layout.fragment_all_teacher_list, container, false);
             inite();
         }
         return view;
     }
 
     private void inite() {
-        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentTeacherList);
+        sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentAllTeacherList);
         sDown.setOnRefreshListener(this);
-        list = (RecyclerView) view.findViewById(R.id.RVTeacherList);
-        txtEmpty = (TextView) view.findViewById(R.id.txtEmptyFragmentTeacherList);
+        list = (RecyclerView) view.findViewById(R.id.RVFragmentAllTeacherList);
+        txtEmpty = (TextView) view.findViewById(R.id.txtEmptyFragmentAllTeacherList);
         getData();
     }
 

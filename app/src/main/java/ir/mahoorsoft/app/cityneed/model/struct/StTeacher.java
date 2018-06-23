@@ -14,8 +14,6 @@ public class StTeacher {
     public String subject;
     public int vaziat;//0-->no && 1-->yes
     public String definitionDate;
-    public String taiedDate;
-    public String endDate;
     public String tozihat;
     public int cityId;
     public String location;
@@ -24,6 +22,7 @@ public class StTeacher {
     public String pictureId;
     public float teacherRat;
     public int empty;
+    public int favorite;
 
     public StTeacher() {
     }

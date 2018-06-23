@@ -87,9 +87,10 @@ public interface Api {
             @Part MultipartBody.Part file
     );
 
-    @GET("getTeacher/{email}")
+    @GET("getTeacher/{teacherApi}/{userApi}")
     Call<ArrayList<StTeacher>> getTeacher(
-            @Path("email") String phone
+            @Path("teacherApi") String teacherApi,
+            @Path("userApi") String userApi
     );
 
     @GET("getAllTeacher")
@@ -354,6 +355,17 @@ public interface Api {
     Call<ArrayList<ResponseOfServer>> saveFeedBack(
             @Path("ac") String ac,
             @Path("feedBackText") String feedBackText
+    );
+
+    @GET("SaveFavorite/{teacherApi}/{userApi}")
+    Call<ArrayList<ResponseOfServer>> saveFavorite(
+            @Path("teacherApi") String teacherApi,
+            @Path("userApi") String userApi
+    );
+
+    @GET("RemoveFavorite/{favoriteId}")
+    Call<ArrayList<ResponseOfServer>> removeFavorite(
+            @Path("favoriteId") int id
     );
 
     @GET("checkUpdate")

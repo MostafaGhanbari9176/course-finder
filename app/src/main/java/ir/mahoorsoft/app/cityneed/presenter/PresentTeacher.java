@@ -2,7 +2,9 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
@@ -27,7 +29,7 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
 
     public void getTeacher(String teacherId) {
         Teacher teacher = new Teacher(this);
-        teacher.getTeacher(teacherId);
+        teacher.getTeacher(teacherId, Pref.getStringValue(PrefKey.apiCode, "aaa"));
     }
 
     public void getSelectedTeacher() {

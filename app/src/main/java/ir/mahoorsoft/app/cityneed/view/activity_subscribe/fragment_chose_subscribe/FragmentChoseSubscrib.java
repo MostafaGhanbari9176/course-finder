@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed.view.ActivitySubscribe.fragment_chose_subscribe;
+package ir.mahoorsoft.app.cityneed.view.activity_subscribe.fragment_chose_subscribe;
 
 import android.content.Intent;
 import android.net.Uri;

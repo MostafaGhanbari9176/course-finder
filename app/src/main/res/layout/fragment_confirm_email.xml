@@ -12,21 +12,20 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:background="@color/light"
                     android:gravity="center">
 
@@ -77,7 +76,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="8dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -226,301 +225,88 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llNameEmailConfirm"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/txtNameConfirmEmail"
-                    style="@android:style/Widget.DeviceDefault.EditText"
+                <LinearLayout
+                    android:id="@+id/llNameEmailConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
+                    android:layout_margin="8dp"
                     android:gravity="center"
-                    android:hint="نام و نام خانوادگی"
-                    android:inputType="textPersonName"
-                    android:maxLength="11"
-                    android:maxLines="1"
-                    android:textColor="@color/dark_eq"
-                    android:textColorHint="@color/blue_tel"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/txtEmailConfirmٍEmail"
-                    style="@android:style/Widget.DeviceDefault.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="آدرس ایمیل"
-                    android:inputType="textWebEmailAddress"
-                    android:maxLength="50"
-                    android:maxLines="1"
-                    android:textColor="@color/dark_eq"
-                    android:textColorHint="@color/blue_tel"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    app:cardBackgroundColor="@color/blue_ios"
-                    app:cardCornerRadius="10dp">
-
-                    <Button
-                        android:id="@+id/btnConfirmEmailConfirmEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@android:color/transparent"
-                        android:text="تایید ایمیل"
-                        android:textColor="@color/light"
-                        android:textSize="@dimen/txt_size_smal"
-                        android:textStyle="bold" />
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="2dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_ios"
-                    android:orientation="horizontal"></LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/txtSmsCodeConfirmEmail"
-                    style="@android:style/Widget.DeviceDefault.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="کد تایید"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:textColor="@color/dark_eq"
-                    android:textColorHint="@color/blue_tel"
-                    android:textSize="@dimen/txt_size_smal"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    app:cardBackgroundColor="@color/green_ios"
-                    app:cardCornerRadius="10dp">
-
-                    <Button
-                        android:id="@+id/btnConfirmCodeConfirmEmail"
+                    <EditText
+                        android:id="@+id/txtNameConfirmEmail"
+                        style="@android:style/Widget.DeviceDefault.EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@android:color/transparent"
-                        android:enabled="@bool/default_circle_indicator_snap"
-                        android:text="بررسی صحت کد"
-                        android:textColor="@color/light"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="نام و نام خانوادگی"
+                        android:inputType="textPersonName"
+                        android:maxLength="11"
+                        android:maxLines="1"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/blue_tel"
                         android:textSize="@dimen/txt_size_smal"
                         android:textStyle="bold" />
-                </android.support.v7.widget.CardView>
+                </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/txtEmailConfirmٍEmail"
+                        style="@android:style/Widget.DeviceDefault.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="آدرس ایمیل"
+                        android:inputType="textWebEmailAddress"
+                        android:maxLength="50"
+                        android:maxLines="1"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/blue_tel"
+                        android:textSize="@dimen/txt_size_smal"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        app:cardBackgroundColor="@color/blue_ios"
+                        app:cardCornerRadius="10dp">
+
+                        <Button
+                            android:id="@+id/btnConfirmEmailConfirmEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@android:color/transparent"
+                            android:text="تایید ایمیل"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="8dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -671,9 +457,214 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/txtSmsCodeConfirmEmail"
+                        style="@android:style/Widget.DeviceDefault.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="کد تایید"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/blue_tel"
+                        android:textSize="@dimen/txt_size_smal"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        app:cardBackgroundColor="@color/green_ios"
+                        app:cardCornerRadius="10dp">
+
+                        <Button
+                            android:id="@+id/btnConfirmCodeConfirmEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@android:color/transparent"
+                            android:enabled="@bool/default_circle_indicator_snap"
+                            android:text="بررسی صحت کد"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="@color/light"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue_ios"
+                        android:orientation="horizontal"></LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -699,8 +690,9 @@
                     </android.support.v7.widget.CardView>
 
                 </LinearLayout>
+
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
 
         <RelativeLayout
             android:id="@+id/rlPbarFragmentConfirmEmail"

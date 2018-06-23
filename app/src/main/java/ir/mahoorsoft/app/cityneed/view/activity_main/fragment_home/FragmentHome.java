@@ -16,6 +16,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -45,15 +48,18 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
+import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListHome;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterTeacherListHome;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityCoursesListByGroupingId;
+import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityShowMoreCourse;
 
 
-public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener, AdapterTeacherListHome.OnClickItemTeacherList, SwipeRefreshLayout.OnRefreshListener {
+public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClickItem, ViewPager.OnPageChangeListener, OnPageClickListener, PresentCourse.OnPresentCourseLitener, PresentGrouping.OnPresentTabagheListener, AdapterGroupingListHome.OnClickItemTabagheList, PresentTeacher.OnPresentTeacherListener, AdapterTeacherListHome.OnClickItemTeacherList, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     LinearLayout scrollView;
     LinearLayout llitems;
     LinearLayout llCustomeCourseList;
@@ -71,6 +77,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     TextView txtEmptySelectedTeacherList;
     RelativeLayout rlPbar;
     SwipeRefreshLayout sDown;
+    WebView webView;
+    public ActivityMain activityMain;
 
     @Nullable
     @Override
@@ -84,6 +92,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     public void init() {
         pointer();
+        setUpWebView();
         getCustomCourseListData();
         getSelectedTeacher();
         getCustomTeacherListData();
@@ -132,6 +141,10 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void pointer() {
+        ((Button) view.findViewById(R.id.btnMabFragmentHome)).setOnClickListener(this);
+        ((Button) view.findViewById(R.id.btnSubCourseFragmentHome)).setOnClickListener(this);
+        ((Button) view.findViewById(R.id.btnMessageBoxFragmentHome)).setOnClickListener(this);
+        webView = (WebView) view.findViewById(R.id.wvHome);
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentHome);
         sDown.setOnRefreshListener(this);
         rlPbar = (RelativeLayout) view.findViewById(R.id.rlPbarFragmentHome);
@@ -226,6 +239,15 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
         PresentTeacher presentTeacher = new PresentTeacher(this);
         presentTeacher.getCustomTeacherListData();
+    }
+
+    private void setUpWebView() {
+        webView.setWebViewClient(new MyWebView());
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webView.loadUrl(ApiClient.BASE_URL + "wv.php");
     }
 
     private void getCustomCourseListData() {
@@ -528,5 +550,26 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     public void onRefresh() {
         init();
         ((ActivityMain) G.activity).helpSwipeProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnMabFragmentHome:
+                activityMain.replaceContentWith("fMap", new FragmentMap());
+                break;
+            case R.id.btnSubCourseFragmentHome:
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
+                    activityMain.starterActivity(ActivitySabtenamList.class);
+                else
+                    Toast.makeText(G.context, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnMessageBoxFragmentHome:
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
+                    activityMain.starterActivity(ActivitySmsBox.class);
+                else
+                    Toast.makeText(G.context, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

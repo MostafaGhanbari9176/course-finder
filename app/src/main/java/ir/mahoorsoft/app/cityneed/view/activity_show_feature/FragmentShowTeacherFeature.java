@@ -1,6 +1,5 @@
 package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,17 +30,19 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
+import ir.mahoorsoft.app.cityneed.presenter.PresentFavorite;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
  * Created by RCC1 on 3/5/2018.
  */
 
-public class FragmentShowTeacherFeature extends Fragment implements PresentTeacher.OnPresentTeacherListener, OnMapReadyCallback, SwipeRefreshLayout.OnRefreshListener {
+public class FragmentShowTeacherFeature extends Fragment implements PresentTeacher.OnPresentTeacherListener, OnMapReadyCallback, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, PresentFavorite.OnPresentFavoriteListener {
     View view;
     GoogleMap mMap;
     SupportMapFragment supportMapFragment;
@@ -56,6 +56,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     String teacherId = ActivityOptionalCourse.teacherId;
     Marker marker;
     StTeacher teacher;
+    ImageView imgFavorite;
 
 
     @Nullable
@@ -63,18 +64,17 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_show_teacher_feture, container, false);
-            inite();
+            init();
         }
         return view;
 
     }
 
-    private void inite() {
+    private void init() {
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDShowTeacherFuture);
         sDown.setOnRefreshListener(this);
         pointers();
         settingUpMap();
-        setFont();
         getTeacherProfile();
     }
 
@@ -95,13 +95,6 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         presentTeacher.getTeacher(teacherId);
     }
 
-    private void setFont() {
-        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
-        txtLandPhone.setTypeface(typeface);
-        txtPhone.setTypeface(typeface);
-        txtSubject.setTypeface(typeface);
-    }
-
     private void pointers() {
         txtLandPhone = (TextView) view.findViewById(R.id.txtLandPhoneTeacherFeature);
         txtAddress = (TextView) view.findViewById(R.id.txtAddressTeacherFeature);
@@ -109,6 +102,8 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         txtPhone = (TextView) view.findViewById(R.id.txtPhoneTeacherFeature);
         txtSubject = (TextView) view.findViewById(R.id.txtTeacherSubgectTeacherFeature);
         img = (ImageView) view.findViewById(R.id.imgTeacherFeature);
+        imgFavorite = (ImageView) view.findViewById(R.id.imgFavorite);
+        imgFavorite.setOnClickListener(this);
 
     }
 
@@ -138,6 +133,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         txtDescription.setText(users.get(0).tozihat);
         txtAddress.setText(users.get(0).address);
         setImg(users.get(0).pictureId);
+        setFavoriteImage();
         setTeacherLocation();
     }
 
@@ -153,12 +149,15 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     }
 
     private void setTeacherLocation() {
-        if (mMap != null) {
-            LatLng latLng = new LatLng(Double.parseDouble(teacher.lt), Double.parseDouble(teacher.lg));
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(
-                    latLng).zoom(16).build();
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            marker.setPosition(latLng);
+        try {
+            if (mMap != null) {
+                LatLng latLng = new LatLng(Double.parseDouble(teacher.lt), Double.parseDouble(teacher.lg));
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(
+                        latLng).zoom(16).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                marker.setPosition(latLng);
+            }
+        } catch (Exception ignored) {
         }
     }
 
@@ -170,6 +169,13 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
                 .error(R.drawable.university)
                 .clone()
                 .into(img);
+    }
+
+    private void setFavoriteImage() {
+        if (teacher.favorite == 1)
+            imgFavorite.setImageResource(R.drawable.icon_favorite_red);
+        else
+            imgFavorite.setImageResource(R.drawable.icon_favorite_silver);
     }
 
     @Override
@@ -198,5 +204,48 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     @Override
     public void onRefresh() {
         getTeacherProfile();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imgFavorite:
+                if (Pref.getBollValue(PrefKey.IsLogin, false)) {
+                    if (teacher.favorite == 0)
+                        queryForSaveFavorite();
+                    else
+                        queryForRemoveFavorite();
+                } else
+                    messageFromFavorite("ابتدا وارد حساب کاربری خود شوید");
+                break;
+        }
+    }
+
+    private void queryForSaveFavorite() {
+        messageFromFavorite("درحال ثبت در لیست علاقه مندی ...");
+        (new PresentFavorite(this)).saveFavorite(teacherId);
+    }
+
+    private void queryForRemoveFavorite() {
+
+    }
+
+    @Override
+    public void messageFromFavorite(String message) {
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void flagFromFavorite(boolean flag) {
+        if (flag && teacher.favorite == 0) {
+            sendMessageFTT("آموزشگاه به لیست علاقه مندی ها افزوده شد.");
+            teacher.favorite = 1;
+            setFavoriteImage();
+        } else if (flag && teacher.favorite == 1) {
+            sendMessageFTT("آموزشگاه از لیست علاقه مندی ها حذف شد.");
+            teacher.favorite = 0;
+            setFavoriteImage();
+        } else
+            sendMessageFTT("خطا ,لطفا دوباره سیع کنید ...");
     }
 }
