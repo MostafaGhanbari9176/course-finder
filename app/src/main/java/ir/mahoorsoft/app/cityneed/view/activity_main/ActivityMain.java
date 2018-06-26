@@ -121,8 +121,8 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
         try {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
-            i.putExtra(Intent.EXTRA_SUBJECT, "برنامه دوره های آموزشی من");
-            String sAux = "\nبا این برنامه می تونی دوره هایه مورد علاقه خودت رو پیدا کنی و وقتت رو پرکنی.\n\n";
+            i.putExtra(Intent.EXTRA_SUBJECT, "برنامه دوره یاب");
+            String sAux = "\nبا برنامه دوره یاب می تونی دوره هایه مورد علاقه خودت رو به راحتی پیدا کنی و وقت خودت رو با آموختن بگذرونی یا اینکه دوره خودت رو در دوره یاب ثبت کنی و کلی محصل داشته باشی .\n\n";
             sAux = sAux + G.appLink + "\n\n";
             i.putExtra(Intent.EXTRA_TEXT, sAux);
             startActivity(Intent.createChooser(i, "choose one"));

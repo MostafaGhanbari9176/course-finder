@@ -29,5 +29,6 @@ public class StCourse {
     public int vaziat;
     public int endOfList;
     public int numberOfWaitingStudent;
+    public int bookMark;
 
 }

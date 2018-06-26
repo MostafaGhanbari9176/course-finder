@@ -34,6 +34,11 @@ public class PresentFavorite implements Favorite.OnFavoriteResponseListener {
         (new Favorite(this)).saveFavorite(teacherId, Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
+    public void removeFavorite(String teacherId) {
+
+        (new Favorite(this)).removeFavorite(teacherId, Pref.getStringValue(PrefKey.apiCode, ""));
+    }
+
     @Override
     public void sendMessage(String message) {
         onPresentFavoriteListener.messageFromFavorite(Message.getMessage(1));

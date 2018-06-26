@@ -286,7 +286,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         app:cardBackgroundColor="@color/blue_ios"
-                        app:cardCornerRadius="10dp">
+                        app:cardCornerRadius="20dp">
 
                         <Button
                             android:id="@+id/btnConfirmEmailConfirmEmail"
@@ -490,7 +490,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         app:cardBackgroundColor="@color/green_ios"
-                        app:cardCornerRadius="10dp">
+                        app:cardCornerRadius="20dp">
 
                         <Button
                             android:id="@+id/btnConfirmCodeConfirmEmail"
@@ -673,7 +673,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         app:cardBackgroundColor="@color/pink_tel"
-                        app:cardCornerRadius="10dp">
+                        app:cardCornerRadius="20dp">
 
                         <Button
                             android:id="@+id/btnResendEmail"

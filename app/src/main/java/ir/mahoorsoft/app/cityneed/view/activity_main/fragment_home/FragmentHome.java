@@ -47,6 +47,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentGrouping;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.view.GlideLoader;
+import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityBookMarkCourses;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
@@ -144,6 +145,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         ((Button) view.findViewById(R.id.btnMabFragmentHome)).setOnClickListener(this);
         ((Button) view.findViewById(R.id.btnSubCourseFragmentHome)).setOnClickListener(this);
         ((Button) view.findViewById(R.id.btnMessageBoxFragmentHome)).setOnClickListener(this);
+        ((Button) view.findViewById(R.id.btnBookMarkCourses)).setOnClickListener(this);
         webView = (WebView) view.findViewById(R.id.wvHome);
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentHome);
         sDown.setOnRefreshListener(this);
@@ -567,6 +569,12 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             case R.id.btnMessageBoxFragmentHome:
                 if (Pref.getBollValue(PrefKey.IsLogin, false))
                     activityMain.starterActivity(ActivitySmsBox.class);
+                else
+                    Toast.makeText(G.context, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnBookMarkCourses:
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
+                    activityMain.starterActivity(ActivityBookMarkCourses.class);
                 else
                     Toast.makeText(G.context, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
                 break;

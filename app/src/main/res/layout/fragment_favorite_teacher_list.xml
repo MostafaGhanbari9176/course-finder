@@ -8,16 +8,22 @@
         android:layout_height="match_parent">
 
         <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/SDFragmentFavoriteTeacherList"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/RVFavoriteTeacherList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <TextView
+            android:id="@+id/txtEmptyFavoriteTeacherList"
             android:layout_width="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:ems="56"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="هیچ آموزشگاهی موجود نیست"

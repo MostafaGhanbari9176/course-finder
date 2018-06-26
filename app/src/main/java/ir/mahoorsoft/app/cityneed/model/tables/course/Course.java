@@ -106,6 +106,22 @@ public class Course {
         });
     }
 
+    public void getBookMarkCourses(String userApi){
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StCourse>> getAllCourse = api.getBookMarkCourses(userApi);
+        getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
+                onCourseLitener.onReceiveData(response.body(), -1);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StCourse>> call, Throwable t) {
+                onCourseLitener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
     public void getCustomCourseListData() {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StCustomCourseListHome>> get = api.getCustomCourseListData();
@@ -122,9 +138,9 @@ public class Course {
         });
     }
 
-    public void getCourseById(int id) {
+    public void getCourseById(int id, String userApi) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StCourse>> getCourse = api.getCourseById(id);
+        Call<ArrayList<StCourse>> getCourse = api.getCourseById(id, userApi);
         getCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {

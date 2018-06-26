@@ -8,421 +8,391 @@
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    app:srcCompat="@drawable/android" />
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                app:cardBackgroundColor="@color/dark_eq"
+                app:cardCornerRadius="30dp">
+
+                <LinearLayout
+                    android:id="@+id/btnUpload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgDropShowFeature"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="8dp"
+                        app:srcCompat="@drawable/icon_upload" />
+
+                    <TextView
+                        android:id="@+id/txtUpload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:text="بارگذاری مدرک آموزشی"
+                        android:textColor="@color/light"
+                        android:textSize="@dimen/txt_size_smal"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="16dp"
+                app:cardBackgroundColor="@color/dark_eq"
+                app:cardCornerRadius="30dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="20dp"
-                        app:srcCompat="@drawable/android" />
-
-                    <RatingBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true" />
-                </RelativeLayout>
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16dp"
-                    app:cardBackgroundColor="@color/dark_eq"
-                    app:cardCornerRadius="30dp">
+                    android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:id="@+id/btnUpload"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imgDropShowFeature"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_margin="8dp"
-                            app:srcCompat="@drawable/icon_upload" />
-
-                        <TextView
-                            android:id="@+id/txtUpload"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_weight="1"
-                            android:text="بارگذاری مدرک آموزشی"
-                            android:textColor="@color/light"
-                            android:textSize="@dimen/txt_size_smal"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    app:cardBackgroundColor="@color/dark_eq"
-                    app:cardCornerRadius="30dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_alignParentStart="false"
+                            android:layout_centerHorizontal="false"
+                            android:layout_centerVertical="false"
+                            android:src="@drawable/subscribe_pressure" />
 
                         <LinearLayout
+                            android:id="@+id/btnSubscribe"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:gravity="center|start"
                             android:orientation="horizontal">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
-                                android:layout_alignParentStart="false"
-                                android:layout_centerHorizontal="false"
-                                android:layout_centerVertical="false"
-                                android:src="@drawable/subscribe_pressure" />
-
                             <LinearLayout
-                                android:id="@+id/btnSubscribe"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center|start"
-                                android:orientation="horizontal">
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
+                                <TextView
+                                    android:id="@+id/txtSubscribt_up"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
+                                    android:layout_marginBottom="4dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="4dp"
+                                    android:textColor="@color/light"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
 
-                                    <TextView
-                                        android:id="@+id/txtSubscribt_up"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="4dp"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_marginTop="4dp"
-                                        android:textColor="@color/light"
-                                        android:textSize="@dimen/txt_size_smal"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/txtSubscribe_down"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="4dp"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_marginTop="4dp"
-                                        android:textColor="@color/yellow_ios"
-                                        android:textSize="@dimen/txt_size_xvsmal"
-                                        android:textStyle="bold" />
-                                </LinearLayout>
-
+                                <TextView
+                                    android:id="@+id/txtSubscribe_down"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="4dp"
+                                    android:textColor="@color/yellow_ios"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
                             </LinearLayout>
 
                         </LinearLayout>
 
-                        <ProgressBar
-                            android:id="@+id/pbarUserSubscribeData"
-                            style="?android:attr/progressBarStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true" />
-
-                    </RelativeLayout>
-
-                </android.support.v7.widget.CardView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center"
-                            android:orientation="vertical">
-
-                            <EditText
-                                android:id="@+id/txtSubjectProfileTeacher"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:textColor="@color/dark_eq"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center"
-                            android:orientation="vertical">
-
-                            <EditText
-                                android:id="@+id/txtLandPhoneProfileTeacher"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:textColor="@color/dark_eq"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center"
-                            android:orientation="vertical">
-
-                            <EditText
-                                android:id="@+id/txtDescriptionProfileTeacher"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:textColor="@color/dark_eq"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center"
-                            android:orientation="vertical">
-
-                            <EditText
-                                android:id="@+id/txtAddressProfileTeacher"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:textColor="@color/dark_eq"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-
+                    <ProgressBar
+                        android:id="@+id/pbarUserSubscribeData"
+                        style="?android:attr/progressBarStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="16dp"
-                        android:text="ایجاد کننده حساب"
-                        android:textSize="@dimen/txt_size_smal"
-                        android:textStyle="bold" />
+                        android:layout_centerInParent="true" />
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="2dp"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        app:cardBackgroundColor="@color/pink_tel">
+                </RelativeLayout>
 
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="right|center"
-                            android:orientation="vertical">
-
-                            <EditText
-                                android:id="@+id/txtNameProfileTeacher"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:textColor="@color/dark_eq"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="right|center"
-                            android:orientation="vertical">
-
-                            <EditText
-                                android:id="@+id/txtPhoneProfileTeacher"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:textColor="@color/dark_eq"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="16dp"
-                        android:text="مکان شما"
-                        android:textSize="@dimen/txt_size_smal"
-                        android:textStyle="bold" />
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="2dp"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        app:cardBackgroundColor="@color/pink_tel">
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:orientation="vertical">
-
-                    <fragment
-                        android:id="@+id/mapProfileTeacher"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:context="ir.mahoorsoft.app.cityneed.MapsActivity" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </ScrollView>
-
-        <RelativeLayout
-            android:id="@+id/rlPbarFragmentProfileTeacher"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:visibility="gone">
+            </android.support.v7.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:alpha="0.5"
-                android:background="@color/dark_eq"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="vertical">
 
-            <ProgressBar
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/txtSubjectProfileTeacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:textColor="@color/dark_eq"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/txtLandPhoneProfileTeacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:textColor="@color/dark_eq"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/txtDescriptionProfileTeacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:textColor="@color/dark_eq"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/txtAddressProfileTeacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:textColor="@color/dark_eq"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
+                android:gravity="center"
+                android:orientation="horizontal">
 
-    </RelativeLayout>
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:text="ایجاد کننده حساب"
+                    android:textSize="@dimen/txt_size_smal"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/pink_tel">
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/txtNameProfileTeacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:textColor="@color/dark_eq"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/txtPhoneProfileTeacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:textColor="@color/dark_eq"
+                            android:textSize="@dimen/txt_size_smal"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:text="مکان شما"
+                    android:textSize="@dimen/txt_size_smal"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/pink_tel">
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical">
+
+                <fragment
+                    android:id="@+id/mapProfileTeacher"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context="ir.mahoorsoft.app.cityneed.MapsActivity" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

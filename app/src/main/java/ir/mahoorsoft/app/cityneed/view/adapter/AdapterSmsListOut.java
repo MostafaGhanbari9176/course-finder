@@ -1,6 +1,7 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Ho
 
     public interface OnClickItemSmsList {
         void seenMessage(int position);
+
         void deleteMessage(int position);
     }
 
@@ -45,9 +47,11 @@ public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Ho
         ImageView btnDelete;
         ImageView imgSeenSms;
         ImageView btnSeen;
+        CardView item;
 
         public Holder(View itemView) {
             super(itemView);
+            item = (CardView) itemView.findViewById(R.id.cvItemSmsOut);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItemOut);
             txtRsName = (TextView) itemView.findViewById(R.id.txtRsNameItemOut);
             txtDate = (TextView) itemView.findViewById(R.id.txtDateItemOut);
@@ -70,13 +74,19 @@ public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Ho
     public void onBindViewHolder(Holder holder, final int position) {
         final StSmsBox items = surce.get(position);
         this.position = position;
-        if(items.seen == 0){
+        if (items.seen == 0) {
             holder.imgSeenSms.setVisibility(View.GONE);
         }
         holder.txtCourseName.setText(items.courseName);
-        holder.txtRsName.setText(items.rsName );
+        holder.txtRsName.setText(items.rsName);
         holder.txtDate.setText(items.date);
         holder.btnSeen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemSmsList.seenMessage(position);
+            }
+        });
+        holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemSmsList.seenMessage(position);

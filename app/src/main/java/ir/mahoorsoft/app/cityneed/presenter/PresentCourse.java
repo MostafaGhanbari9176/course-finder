@@ -52,6 +52,10 @@ public class PresentCourse implements Course.OnCourseLitener {
         course.getAllCourse();
     }
 
+    public void getBookMarkCourses() {
+        (new Course(this)).getBookMarkCourses(Pref.getStringValue(PrefKey.apiCode, ""));
+    }
+
     public void getCustomCourseListData() {
         Course course = new Course(this);
         course.getCustomCourseListData();
@@ -79,7 +83,7 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     public void getCourseById(int id) {
         Course course = new Course(this);
-        course.getCourseById(id);
+        course.getCourseById(id, Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
     public void getCourseByTeacherId(String apiCode) {

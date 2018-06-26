@@ -145,9 +145,10 @@ public interface Api {
     @GET("getCustomCourseListForHome")
     Call<ArrayList<StCustomCourseListHome>> getCustomCourseListData();
 
-    @GET("getCourseById/{id}")
+    @GET("getCourseById/{id}/{userApi}")
     Call<ArrayList<StCourse>> getCourseById(
-            @Path("id") int id
+            @Path("id") int id,
+            @Path("userApi") String userApi
     );
 
     @GET("getCourseForListHome/{id}")
@@ -363,9 +364,32 @@ public interface Api {
             @Path("userApi") String userApi
     );
 
-    @GET("RemoveFavorite/{favoriteId}")
+    @GET("RemoveFavorite/{teacherApi}/{userApi}")
     Call<ArrayList<ResponseOfServer>> removeFavorite(
-            @Path("favoriteId") int id
+            @Path("teacherApi") String teacherApi,
+            @Path("userApi") String userApi
+    );
+
+    @GET("SaveBookMark/{courseId}/{userApi}")
+    Call<ArrayList<ResponseOfServer>> saveBookMark(
+            @Path("courseId") int courseId,
+            @Path("userApi") String userApi
+    );
+
+    @GET("RemoveBookMark/{courseId}/{userApi}")
+    Call<ArrayList<ResponseOfServer>> removeBookMark(
+            @Path("courseId") int courseId,
+            @Path("userApi") String userApi
+    );
+
+    @GET("getFavoriteTeachers/{userApi}")
+    Call<ArrayList<StTeacher>> getFavoriteTeachers(
+            @Path("userApi") String userApi
+    );
+
+    @GET("getBookMarkCourses/{userApi}")
+    Call<ArrayList<StCourse>> getBookMarkCourses(
+            @Path("userApi") String userApi
     );
 
     @GET("checkUpdate")

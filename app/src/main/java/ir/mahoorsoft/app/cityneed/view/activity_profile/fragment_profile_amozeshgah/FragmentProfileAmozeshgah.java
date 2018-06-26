@@ -52,6 +52,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
 
 /**
@@ -71,7 +72,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     TextView txtDescription;
     TextView txtAddress;
     TextView txtSubject;
-    RelativeLayout RLPbar;
+    DialogProgres dialogProgres;
     View view;
     LinearLayout btnUpload;
     LinearLayout btnSubscribe;
@@ -135,7 +136,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
 
     private void checkMadrak() {
-        RLPbar.setVisibility(View.VISIBLE);
+        dialogProgres.showProgresBar();
         PresentTeacher presentTeacher = new PresentTeacher(this);
         presentTeacher.getMadrakStateAndRat();
     }
@@ -154,7 +155,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     private void pointers() {
 
         btnUpload = (LinearLayout) view.findViewById(R.id.btnUpload);
-        RLPbar = (RelativeLayout) view.findViewById(R.id.rlPbarFragmentProfileTeacher);
+        dialogProgres = new DialogProgres(G.context, false);
         btnSubscribe = (LinearLayout) view.findViewById(R.id.btnSubscribe);
         txtUpload = (TextView) view.findViewById(R.id.txtUpload);
         txtSubscribe_up = (TextView) view.findViewById(R.id.txtSubscribt_up);
@@ -228,7 +229,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     }
 
     private void queryForLogOut() {
-        RLPbar.setVisibility(View.VISIBLE);
+        dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
         presentUser.logOut(Pref.getStringValue(PrefKey.email, ""));
     }
@@ -296,7 +297,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     public void uploadFile(String path) {
         //isResponseForImage = false;
-        RLPbar.setVisibility(View.VISIBLE);
+        dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
         presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.email, "") + ".pdf", path);
 
@@ -354,13 +355,13 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     @Override
     public void sendMessageFUT(String message) {
-        RLPbar.setVisibility(View.GONE);
+        dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void LogOut(boolean flag) {
-        RLPbar.setVisibility(View.GONE);
+        dialogProgres.closeProgresBar();
         Pref.removeValue(PrefKey.email);
         Pref.removeValue(PrefKey.apiCode);
         Pref.removeValue(PrefKey.userName);
@@ -394,13 +395,13 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     @Override
     public void sendMessageFTT(String message) {
-        RLPbar.setVisibility(View.GONE);
+        dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void confirmTeacher(boolean flag) {
-        RLPbar.setVisibility(View.GONE);
+        dialogProgres.closeProgresBar();
         if (flag) {
             sendMessageFTT("بارگذاری شد");
             txtUpload.setText("مدرک شما در انتظار تایید است");
@@ -426,7 +427,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     @Override
     public void responseForMadrak(ResponseOfServer res) {
-        RLPbar.setVisibility(View.GONE);
+        dialogProgres.closeProgresBar();
         ActivityProfile.ratingBar.setRating(res.code);
         if ((new String(Base64.decode(Base64.decode(res.ms, Base64.DEFAULT), Base64.DEFAULT))).equals("notbar")) {
             txtUpload.setText("بارگذاری مدرک آموزشی");
@@ -442,16 +443,15 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     @Override
     public void messageFromUpload(String message) {
-        RLPbar.setVisibility(View.GONE);
+        dialogProgres.closeProgresBar();
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void flagFromUpload(ResponseOfServer res) {
-        RLPbar.setVisibility(View.GONE);
-
+        dialogProgres.closeProgresBar();
         if (res.code == 1) {
-            RLPbar.setVisibility(View.VISIBLE);
+            dialogProgres.showProgresBar();
             PresentTeacher presentTeacher = new PresentTeacher(this);
             presentTeacher.upMs();
         } else {
@@ -461,7 +461,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     @Override
     public void onResiveSubscribeList(ArrayList<StSubscribe> data) {
-        RLPbar.setVisibility(View.GONE);
+        dialogProgres.closeProgresBar();
     }
 
     @Override

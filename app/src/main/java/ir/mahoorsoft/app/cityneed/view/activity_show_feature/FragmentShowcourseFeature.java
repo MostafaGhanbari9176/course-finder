@@ -3,11 +3,9 @@ package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,8 +29,6 @@ import com.bumptech.glide.signature.StringSignature;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import javax.xml.datatype.Duration;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -42,20 +37,21 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StComment;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
+import ir.mahoorsoft.app.cityneed.presenter.PresentBookMark;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSabtenam;
 import ir.mahoorsoft.app.cityneed.presenter.PresenterComment;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
-public class FragmentShowcourseFeature extends Fragment implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterComment.OnPresentCommentListener, SwipeRefreshLayout.OnRefreshListener {
+public class FragmentShowcourseFeature extends Fragment implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterComment.OnPresentCommentListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, PresentBookMark.OnPresentBookMarkListener {
     View view;
     public static boolean issabtenamed = false;
     DecimalFormat formatter;
     ImageView img;
     ImageView imgDrop;
+    ImageView imgBookMark;
     TextView txtName;
     TextView txtMasterName;
     TextView txtTabaghe;
@@ -83,6 +79,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     String idUser = Pref.getStringValue(PrefKey.apiCode, "");
     SwipeRefreshLayout sDown;
     TextView txtConfirmRegistery;
+    int bookMark;
 
 
     @Nullable
@@ -123,6 +120,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
         img = (ImageView) view.findViewById(R.id.imgFeature);
         imgDrop = (ImageView) view.findViewById(R.id.imgDropShowFeature);
+        imgBookMark = (ImageView) view.findViewById(R.id.imgBookMark);
         txtName = (TextView) view.findViewById(R.id.txtNAmeFeature);
         txtMasterName = (TextView) view.findViewById(R.id.txtMasterNameFeature);
         txtDay = (TextView) view.findViewById(R.id.txtDayFeature);
@@ -142,22 +140,8 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         btnMoreDetails = (LinearLayout) view.findViewById(R.id.btnMoreDetailsShowFeature);
         btnRegister = (Button) view.findViewById(R.id.btnRegisterShowFeature);
         moreDetails.setVisibility(View.GONE);
-        ((ImageView) view.findViewById(R.id.imgButtonShareCourseFuture)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent i = new Intent(Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, "دوره " + txtName.getText());
-                    String sAux = "\nبرای شرکت در این دوره عالی کافیه برنامه دوره های آموزشی من رو از لینک زیر دانلود کنی.\n\n";
-                    sAux = sAux + G.appLink + "\n\n";
-                    i.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(i, "choose one"));
-                } catch (Exception e) {
-                    //e.toString();
-                }
-            }
-        });
+        ((ImageView) view.findViewById(R.id.imgButtonShareCourseFuture)).setOnClickListener(this);
+        imgBookMark.setOnClickListener(this);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,6 +312,8 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtTabaghe.setText(course.get(0).tabaghe);
         txtsharayet.setText(course.get(0).sharayet);
         checkCourseData();
+        bookMark = course.get(0).bookMark;
+        setBookMarkImage();
         setImage();
         if (Pref.getBollValue(PrefKey.IsLogin, false))
             checkedSabtenamCourse();
@@ -343,6 +329,13 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             txtNews.setVisibility(View.VISIBLE);
             txtNews.setText("ظرفیت دوره تکمیل شده");
         }
+    }
+
+    private void setBookMarkImage() {
+        if (bookMark == 1)
+            imgBookMark.setImageResource(R.drawable.icon_book_marck_blue);
+        else
+            imgBookMark.setImageResource(R.drawable.icon_book_marck_silver);
     }
 
     @Override
@@ -446,5 +439,61 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     @Override
     public void onRefresh() {
         getCourseInf();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imgBookMark:
+                if (Pref.getBollValue(PrefKey.IsLogin, false)) {
+                    if (bookMark == 0)
+                        queryForSaveBookMark();
+                    else
+                        queryForRemoveBookMark();
+                } else
+                    messageFromBookMark("ابتدا وارد حساب کاربری خود شوید");
+                break;
+            case R.id.imgButtonShareCourseFuture:
+                try {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "دوره " + txtName.getText());
+                    String sAux = "\nبرای شرکت در دوره عالی "+ txtName.getText() +" کافیه برنامه دوره یاب رو از لینک زیر دانلود کنی.\n\n";
+                    sAux = sAux + G.appLink + "\n\n";
+                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(i, "choose one"));
+                } catch (Exception ignored) {
+                }
+                break;
+        }
+    }
+
+    private void queryForSaveBookMark() {
+        messageFromBookMark("درحال نشانه گذاری ...");
+        (new PresentBookMark(this)).saveBookMark(courseId);
+    }
+
+    private void queryForRemoveBookMark() {
+        messageFromBookMark("درحال حذف نشانه ...");
+        (new PresentBookMark(this)).removeBookMark(courseId);
+    }
+
+    @Override
+    public void messageFromBookMark(String message) {
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void flagFromBookMark(boolean flag) {
+        if (flag && bookMark == 0) {
+            messageFromBookMark("نشانه گذاری شد.");
+            bookMark = 1;
+            setBookMarkImage();
+        } else if (flag && bookMark == 1) {
+            messageFromBookMark("نشانه حذف شد.");
+            bookMark = 0;
+            setBookMarkImage();
+        } else
+            messageFromBookMark("خطا ,لطفا دوباره سیع کنید ...");
     }
 }

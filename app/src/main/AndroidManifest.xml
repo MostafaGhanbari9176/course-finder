@@ -47,6 +47,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
+            android:name=".view.activity_main.ActivityBookMarkCourses"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
             android:name=".view.activity_profile.ActivityProfile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -93,10 +98,9 @@
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
             android:name=".view.activity_account.activity_acount_confirm.ActivityAcountConfirm"
-            android:windowSoftInputMode="stateVisible|adjustResize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-             />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".view.courseLists.ActivityCoursesListByGroupingId"
             android:screenOrientation="portrait"

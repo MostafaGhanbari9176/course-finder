@@ -47,6 +47,10 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
         teacher.getAllTeacher();
     }
 
+    public void getFavoriteTeachers() {
+        (new Teacher(this)).getFavoriteTeachers(Pref.getStringValue(PrefKey.apiCode, ""));
+    }
+
     public void getMadrakStateAndRat() {
         Teacher teacher = new Teacher(this);
         teacher.getMadrakStateAndRat();
@@ -65,7 +69,7 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
     @Override
     public void responseForMadrak(ArrayList<ResponseOfServer> res) {
         if (res == null || res.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
+            sendMessage(Message.getMessage(1));
         else
             onPresentTeacherListener.responseForMadrak(res.get(0));
     }
@@ -73,15 +77,15 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
         if (res == null || res.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
+            sendMessage(Message.getMessage(1));
         else
-            onPresentTeacherListener.confirmTeacher(res.get(0).code == 0 ? false : true);
+            onPresentTeacherListener.confirmTeacher(res.get(0).code == 1);
     }
 
     @Override
     public void onReceiveData(ArrayList<StTeacher> data) {
         if (data == null || data.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
+            sendMessage(Message.getMessage(1));
         else
             onPresentTeacherListener.onReceiveTeacher(data);
     }
@@ -89,7 +93,7 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
     @Override
     public void onReceiveSelectedTeacher(ArrayList<StTeacher> data) {
         if (data == null || data.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
+            sendMessage(Message.getMessage(1));
         else
             onPresentTeacherListener.onReceiveSelectedTeacher(data);
     }

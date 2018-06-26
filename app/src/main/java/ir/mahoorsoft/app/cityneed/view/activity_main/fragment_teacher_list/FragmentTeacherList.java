@@ -32,10 +32,8 @@ public class FragmentTeacherList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         view = inflater.inflate(R.layout.fragment_teacher_list, container, false);
         init();
-
 
         return view;
     }
@@ -56,7 +54,7 @@ public class FragmentTeacherList extends Fragment {
         adapterViewPager.add(new FragmentFavoriteTeacher(), "آموزشگاهای مورد علاقه");
         adapterViewPager.add(new FragmentAllTeacher(), "آموزشگاها");
         viewPager.setAdapter(adapterViewPager);
-        viewPager.setOffscreenPageLimit(3);
+       // viewPager.setOffscreenPageLimit(3);
         viewPager.setCurrentItem(1);
 
     }

@@ -10,13 +10,13 @@ import android.webkit.WebViewClient;
 
 public class MyWebView extends WebViewClient {
 
-    @Deprecated
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+    @Override
+    public void onPageFinished(WebView view, String url) {
+
         view.loadUrl(url);
         view.setVisibility(View.VISIBLE);
-        return true;
-    }
 
+    }
 
 
 }

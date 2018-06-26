@@ -64,10 +64,6 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
             txtTsName = (TextView) itemView.findViewById(R.id.txtTsNameItemIn);
             txtDate = (TextView) itemView.findViewById(R.id.txtDateItemIn);
             imgSeenSms = (ImageView) itemView.findViewById(R.id.imgSeenSms);
-/*            txtCourseName2 = (TextView) itemView.findViewById(R.id.txtCourseNameItemIn2);
-            txtTsName2 = (TextView) itemView.findViewById(R.id.txtTsNameItemIn2);
-            txtDate2 = (TextView) itemView.findViewById(R.id.txtDateItemIn2);*/
-
             btnDelete = (ImageView) itemView.findViewById(R.id.btnDeleteItemIn);
             btnSeen = (ImageView) itemView.findViewById(R.id.btnSeenItemIn);
             btnReportSms = (ImageView) itemView.findViewById(R.id.btnReportItemSms);
@@ -99,6 +95,13 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
             }
         });
         holder.btnSeen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.imgSeenSms.setVisibility(View.VISIBLE);
+                itemSmsList.seenMessage(position);
+            }
+        });
+        holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.imgSeenSms.setVisibility(View.VISIBLE);

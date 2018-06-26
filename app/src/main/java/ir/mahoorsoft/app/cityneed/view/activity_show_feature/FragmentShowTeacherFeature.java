@@ -227,7 +227,8 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     }
 
     private void queryForRemoveFavorite() {
-
+        messageFromFavorite("درحال حذف از لیست علاقه مندی ...");
+        (new PresentFavorite(this)).removeFavorite(teacherId);
     }
 
     @Override

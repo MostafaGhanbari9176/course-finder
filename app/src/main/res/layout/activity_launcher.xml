@@ -14,14 +14,16 @@
             android:id="@+id/llLogo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/blue_tel"
+            android:background="@color/light"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/defult" />
 
             <ProgressBar
@@ -29,6 +31,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="(ارائه سرویس محدود به شهر زاهدان)"
+                android:textColor="@color/red_one" />
 
             <TextView
                 android:layout_width="wrap_content"

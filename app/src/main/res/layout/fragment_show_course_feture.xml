@@ -39,10 +39,12 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:id="@+id/imgButtonShareCourseFuture"
+                                android:id="@+id/imgBookMark"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                app:srcCompat="@drawable/icon_share" />
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/icon_book_marck_silver" />
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -81,10 +83,11 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/imgButtonShareCourseFuture"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/icon_book_marck" />
+                                app:srcCompat="@drawable/icon_share" />
                         </LinearLayout>
 
                     </LinearLayout>

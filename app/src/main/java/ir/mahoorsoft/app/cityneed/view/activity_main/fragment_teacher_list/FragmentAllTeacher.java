@@ -42,25 +42,36 @@ public class FragmentAllTeacher extends Fragment implements PresentTeacher.OnPre
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_all_teacher_list, container, false);
-            inite();
-        }
+        view = inflater.inflate(R.layout.fragment_all_teacher_list, container, false);
+        init();
+
         return view;
     }
 
-    private void inite() {
+    private void init() {
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentAllTeacherList);
         sDown.setOnRefreshListener(this);
         list = (RecyclerView) view.findViewById(R.id.RVFragmentAllTeacherList);
         txtEmpty = (TextView) view.findViewById(R.id.txtEmptyFragmentAllTeacherList);
-        getData();
+        if (source.size() == 0)
+            getData();
+        else
+            setData();
+
     }
 
     private void getData() {
         sDown.setRefreshing(true);
         PresentTeacher presentTeacher = new PresentTeacher(this);
         presentTeacher.getAllTeacher();
+    }
+
+    private void setData() {
+        adapter = new AdapterTeacherList(G.context, source, this);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(G.context, 2, GridLayoutManager.VERTICAL, false);
+        list.setLayoutManager(manager);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -77,11 +88,12 @@ public class FragmentAllTeacher extends Fragment implements PresentTeacher.OnPre
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> teachers) {
         sDown.setRefreshing(false);
+        source.clear();
+
         if (teachers.get(0).empty == 1) {
             txtEmpty.setVisibility(View.VISIBLE);
             return;
         }
-        source.clear();
         source.addAll(teachers);
         adapter = new AdapterTeacherList(G.context, source, this);
         RecyclerView.LayoutManager manager = new GridLayoutManager(G.context, 2, GridLayoutManager.VERTICAL, false);
@@ -118,7 +130,7 @@ public class FragmentAllTeacher extends Fragment implements PresentTeacher.OnPre
 
     @Override
     public void onRefresh() {
-        inite();
+        getData();
         ((ActivityMain) G.activity).helpSwipeProgress.setVisibility(View.GONE);
     }
 }

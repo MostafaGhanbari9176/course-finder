@@ -10,55 +10,55 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by M-gh on 24-Jun-18.
+ * Created by M-gh on 26-Jun-18.
  */
 
-public class Favorite {
+public class BookMark {
 
-    public interface OnFavoriteResponseListener {
-
+    public interface OnBookMarkResponseListener {
         void sendMessage(String message);
 
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
     }
 
-    OnFavoriteResponseListener onFavoriteResponseListener;
+    private OnBookMarkResponseListener onBookMarkResponseListener;
 
-    public Favorite(OnFavoriteResponseListener onFavoriteResponseListener) {
-        this.onFavoriteResponseListener = onFavoriteResponseListener;
+    public BookMark(OnBookMarkResponseListener onBookMarkResponseListener) {
+        this.onBookMarkResponseListener = onBookMarkResponseListener;
     }
 
-    public void saveFavorite(String teacherApi, String userApi) {
+    public void saveBookMark(int courseId, String userApi) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> save = api.saveFavorite(teacherApi, userApi);
+        Call<ArrayList<ResponseOfServer>> save = api.saveBookMark(courseId, userApi);
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onFavoriteResponseListener.onReceiveFlag(response.body());
+                onBookMarkResponseListener.onReceiveFlag(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
-                onFavoriteResponseListener.sendMessage(t.getMessage());
+                onBookMarkResponseListener.sendMessage(t.getMessage());
             }
         });
     }
 
-    public void removeFavorite(String teacherApi, String userApi) {
+    public void removeBookMark(int courseId, String userApi) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> save = api.removeFavorite(teacherApi, userApi);
+        Call<ArrayList<ResponseOfServer>> save = api.removeBookMark(courseId, userApi);
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onFavoriteResponseListener.onReceiveFlag(response.body());
+                onBookMarkResponseListener.onReceiveFlag(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
-                onFavoriteResponseListener.sendMessage(t.getMessage());
+                onBookMarkResponseListener.sendMessage(t.getMessage());
             }
         });
     }
 }
+
