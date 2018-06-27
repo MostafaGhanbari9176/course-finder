@@ -249,7 +249,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webView.loadUrl(ApiClient.BASE_URL + "wv.php");
+        webView.loadUrl(ApiClient.BASE_URL + "/WV/");
     }
 
     private void getCustomCourseListData() {

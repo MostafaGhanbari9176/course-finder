@@ -152,7 +152,7 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
             Toast.makeText(this, "خطا !", Toast.LENGTH_SHORT).show();
         Intent intent = getIntent();
         intent.putExtra("buyResult", flag);
-        setResult(5, intent);
+        setResult(RESULT_OK, intent);
         ActivitySubscribe.this.finish();
     }
 }

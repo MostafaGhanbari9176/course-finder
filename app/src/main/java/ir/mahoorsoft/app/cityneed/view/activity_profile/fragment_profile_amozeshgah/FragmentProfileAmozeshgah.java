@@ -107,8 +107,8 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
 
     }
 
-    private void getUserSubscribeData() {
-
+    public void getUserSubscribeData() {
+        pbarSubscribeData.setVisibility(View.VISIBLE);
         (new PresentSubscribe(this)).getUserBuy();
     }
 

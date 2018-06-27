@@ -7,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zarinpal.ewallets.purchase.OnCallbackRequestPaymentListener;
@@ -25,19 +28,25 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
+import ir.mahoorsoft.app.cityneed.presenter.PresentGift;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
+import ir.mahoorsoft.app.cityneed.view.activity_subscribe.ActivitySubscribe;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by RCC1 on 5/7/2018.
  */
 
-public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.OnPresentSubscribeListener, AdapterChoseSubscribe.SubscribeClick {
+public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.OnPresentSubscribeListener, AdapterChoseSubscribe.SubscribeClick, View.OnClickListener, PresentGift.OnPresentGiftListener {
 
     View view;
     ArrayList<StSubscribe> source = new ArrayList<>();
     RecyclerView list;
     AdapterChoseSubscribe adapter;
     RelativeLayout pbar;
+    Button btnCheckGiftCode;
+    TextView txtGetGiftCide;
 
     @Nullable
     @Override
@@ -55,6 +64,9 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
     private void pointers() {
         pbar = (RelativeLayout) view.findViewById(R.id.RLPbarSubscribeList);
         list = (RecyclerView) view.findViewById(R.id.RVSubscribeList);
+        btnCheckGiftCode = (Button) view.findViewById(R.id.btnCheckGiftCode);
+        btnCheckGiftCode.setOnClickListener(this);
+        txtGetGiftCide = (TextView) view.findViewById(R.id.txtGetGiftCode);
     }
 
     public void cancelPbar() {
@@ -132,5 +144,39 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
 
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnCheckGiftCode:
+                checkGiftCode();
+                break;
+        }
+    }
+
+    private void checkGiftCode() {
+        if (TextUtils.isEmpty(txtGetGiftCide.getText().toString().trim())) {
+            txtGetGiftCide.setError("خالی !!!");
+            txtGetGiftCide.requestFocus();
+        } else {
+            pbar.setVisibility(View.VISIBLE);
+            (new PresentGift(this)).checkGiftCode(txtGetGiftCide.getText().toString().trim());
+        }
+    }
+
+    @Override
+    public void flagFromGift(boolean flag) {
+        pbar.setVisibility(View.GONE);
+        Intent data = new Intent();
+        data.putExtra("Gift", "Gift");
+        getActivity().setResult(RESULT_OK, data);
+        G.activity.finish();
+    }
+
+    @Override
+    public void messageFromGift(String message) {
+        pbar.setVisibility(View.GONE);
+        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 }

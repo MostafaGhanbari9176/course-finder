@@ -400,6 +400,12 @@ public interface Api {
             @Path("tableName") String tableName,
             @Path("email") String phone);
 
+    @GET("checkGiftCode/{giftCode}/{userApi}")
+    Call<ArrayList<ResponseOfServer>> checkGiftCode (
+            @Path("giftCode") String giftCode,
+            @Path("userApi") String userApi
+    );
+
 
     @FormUrlEncoded
     @POST("use_credit")

@@ -187,10 +187,13 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                     teacher.uploadFile(data.getStringExtra("path"));
                 else if (requestCode == 2)
                     uploadImage(data.getStringExtra("path"));
-
-            } else if (Pref.getBollValue(PrefKey.isPaymentSaved, false)) {
-                Pref.removeValue(PrefKey.isPaymentSaved);
-                this.finish();
+                else if (data.getStringExtra("Gift").equals("Gift"))
+                    teacher.getUserSubscribeData();
+                else if (data.getBooleanExtra("buyResult", false)) {
+                    Pref.removeValue(PrefKey.isPaymentSaved);
+                    this.finish();
+                } else if (!(data.getBooleanExtra("buyResult", false)))
+                    this.finish();
             }
 
         } catch (Exception ex) {

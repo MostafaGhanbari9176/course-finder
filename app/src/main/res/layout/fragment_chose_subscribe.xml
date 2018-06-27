@@ -36,6 +36,7 @@
                         android:textColor="@color/blue_eq" />
 
                     <EditText
+                        android:id="@+id/txtGetGiftCode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
@@ -59,6 +60,7 @@
                         app:cardCornerRadius="20dp">
 
                         <Button
+                            android:id="@+id/btnCheckGiftCode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"

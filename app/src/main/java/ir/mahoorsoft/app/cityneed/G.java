@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
-import android.media.Image;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -17,18 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
-
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.view.BlurBuilder;
-import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityStudentNameList;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterSdudentNameList;
+
 
 
 public class G extends Application {
