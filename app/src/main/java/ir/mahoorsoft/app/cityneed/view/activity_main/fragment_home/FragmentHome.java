@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -93,7 +94,6 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
     public void init() {
         pointer();
-        setUpWebView();
         getCustomCourseListData();
         getSelectedTeacher();
         getCustomTeacherListData();
@@ -244,13 +244,27 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     private void setUpWebView() {
-        //   webView.setWebViewClient(new MyWebView());
+        final String pageUrl = ApiClient.BASE_URL + "WV/?ac=" + Pref.getStringValue(PrefKey.apiCode, "");
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                // TODO Auto-generated method stub
+
+                super.onReceivedTitle(view, title);
+                if (("http://" + title).equals(pageUrl)) {
+                    webView.loadUrl(pageUrl);
+                } else
+                    view.setVisibility(View.GONE);
+
+            }
+
+        });
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(ApiClient.BASE_URL + "WV/");
+        webView.loadUrl(pageUrl);
     }
 
     private void getCustomCourseListData() {
@@ -580,5 +594,11 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
                     Toast.makeText(G.context, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpWebView();
     }
 }

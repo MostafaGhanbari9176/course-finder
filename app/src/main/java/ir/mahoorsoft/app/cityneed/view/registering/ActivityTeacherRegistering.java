@@ -205,8 +205,8 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         } else if (TextUtils.isEmpty(txtAddress.getText().toString().trim())) {
             txtAddress.setError("کامل کنید");
             txtAddress.requestFocus();
-        } else if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
-            showDialog("خطا", "لطفا موقعیت مکانی خود را تعیین کنید", "", "قبول");
+        } /*else if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
+            showDialog("خطا", "لطفا موقعیت مکانی خود را تعیین کنید", "", "قبول");*/
         else {
             try {
                 Long.parseLong(txtPhone.getText().toString().trim());

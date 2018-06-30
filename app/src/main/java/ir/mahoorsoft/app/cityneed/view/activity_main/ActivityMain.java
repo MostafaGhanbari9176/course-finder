@@ -92,6 +92,21 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menuSmsBox:
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
+                    starterActivity(ActivitySmsBox.class);
+                else
+                    Toast.makeText(G.context, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menuRegistryCourse:
+                if (Pref.getBollValue(PrefKey.IsLogin, false))
+                    starterActivity(ActivitySabtenamList.class);
+                else
+                    Toast.makeText(G.context, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menuTeacherLocation:
+                replaceContentWith("fMap", new FragmentMap());
+                return true;
             case R.id.btnAboutUsMenu:
                 starterActivity(ActivityAboutUs.class);
                 return true;

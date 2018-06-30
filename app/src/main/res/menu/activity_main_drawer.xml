@@ -3,6 +3,15 @@
 
 
     <item
+        android:id="@+id/menuRegistryCourse"
+        android:title="دوره های ثبت نام شده" />
+    <item
+        android:id="@+id/menuTeacherLocation"
+        android:title="نقشه آموزشگاها" />
+    <item
+        android:id="@+id/menuSmsBox"
+        android:title="صندوق پیام" />
+    <item
         android:id="@+id/btnInviteFriend"
         android:title="معرفی به دیگران" />
 
