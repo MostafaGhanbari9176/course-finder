@@ -46,6 +46,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     TextView txtCurrentVersion;
     TextView txtPresentDownload;
     ProgressBar progressBarDownload;
+    DownloadManager downloadManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +171,11 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
                 runLogo();
                 break;
             case R.id.btnContinueLuncher:
+                try {
+                    downloadManager.stopDownlaod();
+                } finally {
+                    next();
+                }
                 next();
                 break;
         }
@@ -177,10 +183,10 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
 
     private void downloadApp() {
 
-        DownloadManager downloadManager = new DownloadManager();
+        downloadManager = new DownloadManager();
         downloadManager.downloadPath(ApiClient.serverAddress + "/city_need/apk/CourseFinder.apk");
         downloadManager.savePath(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/");
-        downloadManager.fileName("CourseFinder.apk");
+        downloadManager.fileName("دوره یاب"+".apk");
         downloadManager.listener(this);
         downloadManager.download();
 
@@ -228,7 +234,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
 
     @Override
     public void onDownloading(int percent, int downloadedSize, int fileSize) {
-
+        Toast.makeText(this, "درحال دانلود ...", Toast.LENGTH_SHORT).show();
         progressBarDownload.setProgress(percent);
         txtPresentDownload.setText(percent + "%");
     }
@@ -242,7 +248,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } catch (Exception e) {
-            Toast.makeText(this, "فایل در شاخه اصلی حافظه با نام" + "CourseFinder" + "ذخیره شد.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "فایل در شاخه اصلی حافظه با نام" + "دوره یاب" + "ذخیره شد.", Toast.LENGTH_SHORT).show();
 
         }
         next();
@@ -250,6 +256,6 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
 
     @Override
     public void onDownloadFailed() {
-        Toast.makeText(this, "failed ...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "خطا در دانلود لطفا دسترسی به حافظه را به برنامه داده و اتصال اینترنت خود را چک کنید.", Toast.LENGTH_LONG).show();
     }
 }

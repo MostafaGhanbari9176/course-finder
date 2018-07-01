@@ -222,7 +222,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     private void sendDataForServer() {
         dialogProgres.showProgresBar();
         PresentTeacher presentTeacher = new PresentTeacher(this);
-        presentTeacher.addTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, Pref.getStringValue(PrefKey.lat, ""), Pref.getStringValue(PrefKey.lon, ""), txtAddress.getText().toString().trim());
+        presentTeacher.addTeacher(txtPhone.getText().toString().trim(), txtSubject.getText().toString().trim(), txtTozihat.getText().toString().trim(), cbxPrivate.isChecked() ? 1 : 0, Pref.getStringValue(PrefKey.lat, "29.4892550"), Pref.getStringValue(PrefKey.lon, "60.8612360"), txtAddress.getText().toString().trim());
 
     }
 

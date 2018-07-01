@@ -312,7 +312,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng location = new LatLng(Double.parseDouble(Pref.getStringValue(PrefKey.lat, "")), Double.parseDouble(Pref.getStringValue(PrefKey.lon, "")));
+        LatLng location = new LatLng(Double.parseDouble(Pref.getStringValue(PrefKey.lat, "29.4892550")), Double.parseDouble(Pref.getStringValue(PrefKey.lon, "60.8612360")));
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(location);
