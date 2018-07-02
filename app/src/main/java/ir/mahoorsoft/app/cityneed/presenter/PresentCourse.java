@@ -83,7 +83,7 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     public void getCourseById(int id) {
         Course course = new Course(this);
-        course.getCourseById(id, Pref.getStringValue(PrefKey.apiCode, ""));
+        course.getCourseById(id, Pref.getStringValue(PrefKey.apiCode, "aaa"));
     }
 
     public void getCourseByTeacherId(String apiCode) {

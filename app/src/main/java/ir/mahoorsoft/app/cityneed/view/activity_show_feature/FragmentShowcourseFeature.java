@@ -458,7 +458,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_SUBJECT, "دوره " + txtName.getText());
-                    String sAux = "\nبرای شرکت در دوره عالی "+ txtName.getText() +" کافیه برنامه دوره یاب رو از لینک زیر دانلود کنی.\n\n";
+                    String sAux = "سلام می خوام بهت یک دوره آموزشی عالی معرفی کنم برای شرکت در این دوره کافیه برنامه دوره یاب رو از لینک زیر دانلود کنی و در دوره"+"*"+ txtName.getText() +" *شرکت کنی";
                     sAux = sAux + G.appLink + "\n\n";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(i, "choose one"));
