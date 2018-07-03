@@ -69,6 +69,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     private void init() {
         pointers();
+        txtEmail.setText(Pref.getStringValue(PrefKey.emailWhenConfirm, ""));
+        txtName.setText(Pref.getStringValue(PrefKey.nameWhenConfirm, ""));
         setFont();
     }
 
@@ -138,7 +140,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     private void checkeInData(String mail) {
-        if (!isLogIn && txtName.getText().length() == 0) {
+        if (!isLogIn && txtName.getText().toString().trim().length() == 0) {
             txtName.setError("کامل کنید");
             txtName.requestFocus();
             return;
@@ -150,6 +152,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             txtEmail.requestFocus();
             txtEmail.setError("صحیح وارد کنید");
         } else {
+            Pref.saveStringValue(PrefKey.emailWhenConfirm, mail);
+            Pref.saveStringValue(PrefKey.nameWhenConfirm, txtName.getText().toString().trim());
             sendEmailForserver(mail);
         }
     }
@@ -162,7 +166,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     private void checkCode() {
-        if (!isLogIn && txtName.getText().length() == 0) {
+        if (!isLogIn && txtName.getText().toString().trim().length() == 0) {
             txtName.setError("کامل کنید");
             txtName.requestFocus();
             return;
@@ -190,23 +194,23 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     @Override
     public void confirmSmsCode(boolean flag) {
         rlPbar.setVisibility(View.GONE);
-        if (!flag)
+/*        if (!flag)
             showAlertDialog("با ارز پوزش", "خطایی رخ داده لطفا دوباره تلاش کنید", "", "خب");
 
-        if (flag) {
+        if (flag) {*/
             Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
             btnConfirmEmail.setText("تغیر آدرس ایمیل");
             txtEmail.setEnabled(false);
             txtName.setEnabled(false);
             txtCode.setEnabled(true);
             btnConfirmCode.setEnabled(true);
-        }
+        //}
     }
 
     @Override
     public void sendMessageFScT(String message) {
         rlPbar.setVisibility(View.GONE);
-        Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
         btnConfirmEmail.setText("تغیر آدرس ایمیل");
         txtEmail.setEnabled(false);
         txtName.setEnabled(false);

@@ -86,12 +86,12 @@ public class ActivityAcountConfirm extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if ((fEC.rbLogIn.isChecked() && fEC.txtEmail.length() > 0) || (fEC.rbLogUp.isChecked() && (fEC.txtEmail.length() > 0 || fEC.txtName.length() > 0))) {
+/*        if ((fEC.rbLogIn.isChecked() && fEC.txtEmail.length() > 0) || (fEC.rbLogUp.isChecked() && (fEC.txtEmail.length() > 0 || fEC.txtName.length() > 0))) {
             G.showSnackBar(findViewById(R.id.LLAccountConfirm), "در صورت بازگشت اطلاعات وارد شده پاک میشود", "بازگشت", this);
-        } else {
+        } else {*/
             this.finish();
             super.onBackPressed();
-        }
+       // }
     }
 
 

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.CheckedSTatuse;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
@@ -376,7 +377,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     @Override
     public void confirmCourse(int id) {
-
+        (new CheckedSTatuse()).sendEmail(id + "");
         dialogProgres.closeProgresBar();
         btnSave.setText("ادامه");
         this.id = id;

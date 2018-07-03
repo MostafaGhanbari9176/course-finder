@@ -9,6 +9,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by RCC1 on 2/1/2018.
@@ -27,6 +28,9 @@ public class CheckedSTatuse {
 
     public CheckedSTatuse(OnCheckServer onCheckServer) {
         this.onCheckServer = onCheckServer;
+    }
+
+    public CheckedSTatuse() {
     }
 
     public void checkUserStatuse() {
@@ -57,6 +61,23 @@ public class CheckedSTatuse {
             @Override
             public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
                 onCheckServer.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void sendEmail(String code) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> sendingEmail = api.sendEmail(code);
+        sendingEmail.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+
             }
         });
     }

@@ -401,9 +401,14 @@ public interface Api {
             @Path("email") String phone);
 
     @GET("checkGiftCode/{giftCode}/{userApi}")
-    Call<ArrayList<ResponseOfServer>> checkGiftCode (
+    Call<ArrayList<ResponseOfServer>> checkGiftCode(
             @Path("giftCode") String giftCode,
             @Path("userApi") String userApi
+    );
+
+    @GET("sendEmail/{code}")
+    Call<ArrayList<ResponseOfServer>> sendEmail(
+            @Path("code") String code
     );
 
 

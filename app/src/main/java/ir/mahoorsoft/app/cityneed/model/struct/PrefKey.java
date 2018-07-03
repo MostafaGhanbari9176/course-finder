@@ -16,6 +16,8 @@ public class PrefKey {
     public static final String subject = "subject";
     public static final String madrak = "m";//0 --> no && 1 --> upload 2 --> uploadAndAccept
     public static final String email = "email";
+    public static final String emailWhenConfirm = "emailWhenConfirm";
+    public static final String nameWhenConfirm = "nameWhenConfirm";
     public static final String cellPhone = "cellPhone";
     public static final String userName = "UserName";
     public static final String location = "location";
@@ -33,4 +35,5 @@ public class PrefKey {
     public static final String isPaymentSuccess = "isPaymentSuccess";
     public static final String isPaymentSaved = "isPaymentSaved";
     public static final String refId = "refID";
+
 }

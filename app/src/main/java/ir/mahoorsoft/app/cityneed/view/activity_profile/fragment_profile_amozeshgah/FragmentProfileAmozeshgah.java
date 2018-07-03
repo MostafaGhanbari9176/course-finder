@@ -35,6 +35,7 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.CheckedSTatuse;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
@@ -405,6 +406,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         if (flag) {
             sendMessageFTT("بارگذاری شد");
             txtUpload.setText("مدرک شما در انتظار تایید است");
+            (new CheckedSTatuse()).sendEmail(Pref.getStringValue(PrefKey.email, "madrak"));
             flagMadrak = 1;
         } else
             showAlertDialog("خطا", "خطا در بارگذاری لطفا بعدا امتحان کنید.", "", "قبول");
