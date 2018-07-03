@@ -52,9 +52,9 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
         public Holder(View itemView) {
             super(itemView);
 
-            img = (ImageView) itemView.findViewById(R.id.imgTeacherListHome);
-            txt = (TextView) itemView.findViewById(R.id.txtTeacherListHome);
-            item = (LinearLayout) itemView.findViewById(R.id.itemTeacherListHome);
+            img = (ImageView) itemView.findViewById(R.id.imgTeacherList);
+            txt = (TextView) itemView.findViewById(R.id.txtTeacherList);
+            item = (LinearLayout) itemView.findViewById(R.id.itemTeacherList);
 
 
             DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -69,7 +69,7 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_teacher_list_home, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_teacher_list, parent, false);
         Holder holder = new Holder(view);
         return holder;
     }

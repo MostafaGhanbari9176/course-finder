@@ -1,14 +1,18 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -106,6 +111,9 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
                 return true;
             case R.id.menuTeacherLocation:
                 replaceContentWith("fMap", new FragmentMap());
+                return true;
+            case R.id.menuTelChanel:
+                showChanel();
                 return true;
             case R.id.btnAboutUsMenu:
                 starterActivity(ActivityAboutUs.class);
@@ -391,7 +399,58 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
             keySaver.pop();
             replaceContentWith(keySaver.pop(), null);
         } else {
-            G.showSnackBar(findViewById(R.id.LLActivityMain), "", "خروج از برنامه", this);
+            showSnackBar(findViewById(R.id.LLActivityMain), "", "خروج از برنامه");
+        }
+    }
+
+    private void showSnackBar(View view, String message, String buttonText) {
+        Snackbar snackbar = Snackbar
+                .make(view, message, Snackbar.LENGTH_SHORT)
+                .setAction(buttonText, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (!(Pref.getBollValue(PrefKey.telChanel, false)))
+                            showDialogForTelChanel();
+                        else
+                            ActivityMain.this.finish();
+                    }
+                });
+        View snackbarView = snackbar.getView();
+        int snackbarTextId = android.support.design.R.id.snackbar_text;
+        TextView textView = (TextView) snackbarView.findViewById(snackbarTextId);
+        textView.setTextColor(ContextCompat.getColor(this, R.color.light));
+        snackbar.show();
+    }
+
+    private void showDialogForTelChanel() {
+        Pref.saveBollValue(PrefKey.telChanel, true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("عضویت در کانال تلگرامی");
+        builder.setMessage("هنگامی که به دوره یاب دسترسی ندارید می توانید از طریق کانال دوره های جدید را مشاهده کنید.");
+        builder.setNegativeButton("خیر", new Dialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ActivityMain.this.finish();
+            }
+        });
+
+        builder.setPositiveButton("عظویت در کانال", new Dialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showChanel();
+                ActivityMain.this.finish();
+            }
+        });
+        builder.show();
+    }
+
+    private void showChanel() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=CourseFinder"));
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "برنامه تلگرام نصب نیست", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -79,20 +79,6 @@ public class G extends Application {
         }
     }
 
-    public static void showSnackBar(View view, String message, String buttonText, final Activity activity) {
-        Snackbar snackbar = Snackbar
-                .make(view, message, Snackbar.LENGTH_SHORT)
-                .setAction(buttonText, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        activity.finish();
-                    }
-                });
-        View snackbarView = snackbar.getView();
-        int snackbarTextId = android.support.design.R.id.snackbar_text;
-        TextView textView = (TextView) snackbarView.findViewById(snackbarTextId);
-        textView.setTextColor(ContextCompat.getColor(activity, R.color.light));
-        snackbar.show();
-    }
+
 
 }

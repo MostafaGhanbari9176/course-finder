@@ -47,7 +47,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     View view;
     boolean isUserChanged = true;
-    LinearLayout llName;
+    RelativeLayout llName;
     Button btnConfirmEmail;
     Button btnConfirmCode;
     Button btnResend;
@@ -85,7 +85,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     private void pointers() {
         rlPbar = (RelativeLayout) view.findViewById(R.id.rlPbarFragmentConfirmEmail);
         txtCode = (TextView) view.findViewById(R.id.txtSmsCodeConfirmEmail);
-        txtCode.setEnabled(false);
+        // txtCode.setEnabled(false);
         (rbLogIn = (RadioButton) view.findViewById(R.id.rbLogInWithEmail)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -109,7 +109,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         btnConfirmEmail = (Button) view.findViewById(R.id.btnConfirmEmailConfirmEmail);
         btnConfirmCode = (Button) view.findViewById(R.id.btnConfirmCodeConfirmEmail);
         btnResend = (Button) view.findViewById(R.id.btnResendEmail);
-        llName = (LinearLayout) view.findViewById(R.id.llNameEmailConfirm);
+        llName = (RelativeLayout) view.findViewById(R.id.RLNameEmailConfirm);
         txtEmail.setText("");
         txtCode.setText("");
         txtName.addTextChangedListener(new TextWatcher() {
@@ -171,6 +171,16 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             txtName.requestFocus();
             return;
         }
+        if (TextUtils.isEmpty(txtEmail.getText().toString().trim())) {
+            txtEmail.setError("کامل کنید");
+            txtEmail.requestFocus();
+            return;
+        }
+        if (!(isEmailValid(txtEmail.getText().toString().trim()))) {
+            txtEmail.requestFocus();
+            txtEmail.setError("صحیح وارد کنید");
+            return;
+        }
         try {
             Integer.parseInt(txtCode.getText().toString().trim());
             rlPbar.setVisibility(View.VISIBLE);
@@ -198,12 +208,12 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             showAlertDialog("با ارز پوزش", "خطایی رخ داده لطفا دوباره تلاش کنید", "", "خب");
 
         if (flag) {*/
-            Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
-            btnConfirmEmail.setText("تغیر آدرس ایمیل");
-            txtEmail.setEnabled(false);
-            txtName.setEnabled(false);
-            txtCode.setEnabled(true);
-            btnConfirmCode.setEnabled(true);
+        Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
+        btnConfirmEmail.setText("تغیر آدرس ایمیل");
+        txtEmail.setEnabled(false);
+        txtName.setEnabled(false);
+        txtCode.setEnabled(true);
+        btnConfirmCode.setEnabled(true);
         //}
     }
 
@@ -331,9 +341,9 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
                 btnConfirmEmail.setText("تایید ایمیل");
                 txtEmail.setEnabled(true);
                 txtName.setEnabled(true);
-                txtCode.setEnabled(false);
+                // txtCode.setEnabled(false);
                 txtCode.setText("");
-                btnConfirmCode.setEnabled(false);
+                //  btnConfirmCode.setEnabled(false);
 
                 if (buttonTrue.equals("ثبت نام")) {
                     rbLogUp.setChecked(true);
@@ -374,8 +384,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
                     btnConfirmEmail.setText("تایید ایمیل");
                     txtEmail.setEnabled(true);
                     txtName.setEnabled(true);
-                    txtCode.setEnabled(false);
-                    btnConfirmCode.setEnabled(false);
+                    // txtCode.setEnabled(false);
+                    // btnConfirmCode.setEnabled(false);
                 } else
                     checkeInData(txtEmail.getText().toString());
                 break;

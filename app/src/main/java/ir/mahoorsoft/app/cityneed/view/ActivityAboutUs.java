@@ -3,7 +3,6 @@ package ir.mahoorsoft.app.cityneed.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,16 +10,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.model.struct.StMahoorAppData;
 import ir.mahoorsoft.app.cityneed.presenter.PresentMahoorAppData;
-import ir.mahoorsoft.app.cityneed.view.adapter.AdapterGroupingListDialog;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterMahoorAppDataItem;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
+
 
 /**
  * Created by M-gh on 16-Mar-18.

@@ -20,6 +20,11 @@
         android:title="انتقاد و پیشنهاد" />
 
     <item
+        android:id="@+id/menuTelChanel"
+        android:title="کانال تلگرامی" />
+
+
+    <item
         android:id="@+id/btnCallUSDialog"
         android:title="تماس با ما" />
 

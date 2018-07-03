@@ -35,5 +35,6 @@ public class PrefKey {
     public static final String isPaymentSuccess = "isPaymentSuccess";
     public static final String isPaymentSaved = "isPaymentSaved";
     public static final String refId = "refID";
+    public static final String telChanel = "telChanel";
 
 }

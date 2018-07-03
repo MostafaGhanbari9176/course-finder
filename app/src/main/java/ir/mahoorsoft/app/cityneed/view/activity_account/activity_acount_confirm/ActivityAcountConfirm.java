@@ -27,8 +27,6 @@ public class ActivityAcountConfirm extends AppCompatActivity {
     TabLayout tabLayout;
     AdapterViewPager adapterViewPager;
     ViewPager viewPager;
-    FragmentEmailConfirm fEC;
-    FragmentPhoneConfirm fPC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +56,8 @@ public class ActivityAcountConfirm extends AppCompatActivity {
 
     private void settingUpViewPager() {
         adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
-        fEC = new FragmentEmailConfirm();
-        adapterViewPager.add(fEC, "ثبت نام یا ورود با ایمیل");
-        fPC = new FragmentPhoneConfirm();
-        adapterViewPager.add(fPC, "ثبت نام یا ورود با شماره همراه");
+        adapterViewPager.add(new FragmentEmailConfirm(), "ثبت نام یا ورود با ایمیل");
+        adapterViewPager.add(new FragmentPhoneConfirm(), "ثبت نام یا ورود با شماره همراه");
         viewPager.setAdapter(adapterViewPager);
 
     }
@@ -86,12 +82,10 @@ public class ActivityAcountConfirm extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-/*        if ((fEC.rbLogIn.isChecked() && fEC.txtEmail.length() > 0) || (fEC.rbLogUp.isChecked() && (fEC.txtEmail.length() > 0 || fEC.txtName.length() > 0))) {
-            G.showSnackBar(findViewById(R.id.LLAccountConfirm), "در صورت بازگشت اطلاعات وارد شده پاک میشود", "بازگشت", this);
-        } else {*/
-            this.finish();
-            super.onBackPressed();
-       // }
+
+        this.finish();
+        super.onBackPressed();
+
     }
 
 

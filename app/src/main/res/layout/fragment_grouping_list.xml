@@ -3,26 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:layoutDirection="rtl"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/SDFragmentGroupingList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="false">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/SDFragmentGroupingList"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RVFragmentGroupingList"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/RVFragmentGroupingList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-    </RelativeLayout>
+            android:layout_height="wrap_content" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -44,15 +44,17 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        ImageView imgItem;
-        TextView txtName;
+        ImageView img;
+        TextView txt;
         LinearLayout item;
+
 
         public Holder(View itemView) {
             super(itemView);
-            imgItem = (ImageView) itemView.findViewById(R.id.imgGroupingList);
-            txtName = (TextView) itemView.findViewById(R.id.txtGroupingList);
-            item = (LinearLayout) itemView.findViewById(R.id.itemGroupingList);
+
+            img = (ImageView) itemView.findViewById(R.id.imgTeacherList);
+            txt = (TextView) itemView.findViewById(R.id.txtTeacherList);
+            item = (LinearLayout) itemView.findViewById(R.id.itemTeacherList);
 
             DisplayMetrics displayMetrics = new DisplayMetrics();
             G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -67,7 +69,7 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
 
     @Override
     public AdapterGroupingList.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_grouping_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_teacher_list, parent, false);
         Holder holder = new Holder(view);
         return holder;
     }
@@ -75,11 +77,11 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
     @Override
     public void onBindViewHolder(final AdapterGroupingList.Holder holder, final int position) {
         final StGrouping items = surce.get(position);
-        holder.txtName.setText(items.subject);
+        holder.txt.setText(items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
                 .fitCenter()
-                .into(holder.imgItem);
+                .into(holder.img);
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
