@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     AppBarLayout appBarLayout;
     NestedScrollView scrollView;
     public static RatingBar ratingBar;
+    ImageButton btnHelp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,13 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     }
 
     private void pointers() {
+        btnHelp = (ImageButton) findViewById(R.id.imageButtonHelpteacherProfile);
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                runHelperForTeacher();
+            }
+        });
         ratingBar = (RatingBar) findViewById(R.id.ratBarProfile);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbarProfile);
         scrollView = (NestedScrollView) findViewById(R.id.nestedScrollview);
@@ -291,6 +300,12 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                 .setDescription("جهت خرید اشتراک از این قسمت اقدام کنید")
                 .build();
 
+        SimpleTarget helper = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.imageButtonHelpteacherProfile))
+                .setRadius(300f)
+                .setTitle("راهنما")
+                .setDescription("مشاهده مجدد این راهنما")
+                .build();
+
         SimpleTarget addList = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.addListBottomNavTeacher))
                 .setRadius(100f)
                 .setTitle("لیست دوره های اضافه شده توسط شما")
@@ -311,7 +326,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                 .setOverlayColor(Color.argb(220, 100, 50, 70))
                 .setDuration(500L)
                 .setAnimation(new DecelerateInterpolator(4f))
-                .setTargets(starter, sabtenam, add, sms, addList, logout, madrak, subscribe, img)
+                .setTargets(starter, sabtenam, add, sms, addList, logout, madrak, subscribe, img, helper)
                 .setClosedOnTouchedOutside(true)
                 .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
                     @Override

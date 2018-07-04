@@ -63,6 +63,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     BottomNavigationView bottomNav;
     ImageView imgProfile;
     ImageButton btnHome;
+    ImageButton btnHelp;
 
     @Nullable
     @Override
@@ -91,10 +92,17 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
 
     private void pointers() {
         btnHome = (ImageButton) view.findViewById(R.id.imgButtonHomeProfileKarbar);
+        btnHelp = (ImageButton) view.findViewById(R.id.imageButtonHelpUserProfile);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 G.activity.finish();
+            }
+        });
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                runHelperForUser();
             }
         });
         imgProfile = (ImageView) view.findViewById(R.id.imgProfileUser);
@@ -233,6 +241,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     public void onReceiveUser(ArrayList<StUser> students) {
 
     }
+
     private void showDialogForHelper() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
@@ -281,13 +290,18 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
                 .setTitle("خروج")
                 .setDescription("خروج از حساب کاربری")
                 .build();
+        SimpleTarget helper = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.imageButtonHelpUserProfile))
+                .setRadius(100f)
+                .setTitle("راهنما")
+                .setDescription("برای مشاهده مجدد این راهنما")
+                .build();
 
 
         Spotlight.with(G.activity)
                 .setOverlayColor(Color.argb(220, 100, 50, 70))
                 .setDuration(500L)
                 .setAnimation(new DecelerateInterpolator(4f))
-                .setTargets(map, sabtenam, sms, trend, logout)
+                .setTargets(map, sabtenam, sms, trend, logout, helper)
                 .setClosedOnTouchedOutside(true)
                 .setOnSpotlightStartedListener(new OnSpotlightStartedListener() {
                     @Override
