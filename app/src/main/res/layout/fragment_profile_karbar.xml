@@ -103,9 +103,9 @@
         android:id="@+id/bottomNavProfileUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/pink_tel"
-        app:menu="@menu/bottom_nav_menu_profile_user"
+        android:background="@color/dark_eq"
         app:itemIconTint="@color/light"
-        app:itemTextColor="@color/light"/>
+        app:itemTextColor="@color/light"
+        app:menu="@menu/bottom_nav_menu_profile_user" />
 
 </LinearLayout>

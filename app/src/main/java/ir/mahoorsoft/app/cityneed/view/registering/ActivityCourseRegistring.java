@@ -80,7 +80,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         dialogProgres = new DialogProgres(this, false);
         pointers();
         setFont();
-        checkTxtInput();
+
     }
 
     private void pointers() {
@@ -133,79 +133,6 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         txtTozihat.setTypeface(typeface);
         txtMony.setTypeface(typeface);
         txtSubject.setTypeface(typeface);
-    }
-
-    private void checkTxtInput() {
-        txtSharayet.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-
-                    txtSharayet.setTextKeepState(CharCheck.faCheck(txtSharayet.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        txtSubject.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    txtSubject.setTextKeepState(CharCheck.faCheck(txtSubject.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        txtTozihat.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    txtTozihat.setTextKeepState(CharCheck.faCheck(txtTozihat.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
     }
 
     @Override

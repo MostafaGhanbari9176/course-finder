@@ -88,60 +88,11 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         btnSave = (Button) findViewById(R.id.btnSaveRegistery);
         btnLocation = (Button) findViewById(R.id.btnLocation);
         cbxPublic.setChecked(true);
-        inPutTVCheck();
         btnSave.setOnClickListener(this);
         cbxPrivate.setOnClickListener(this);
         cbxPublic.setOnClickListener(this);
         btnLocation.setOnClickListener(this);
         btnUploadImag.setOnClickListener(this);
-    }
-
-    private void inPutTVCheck() {
-        txtSubject.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    txtSubject.setTextKeepState(CharCheck.faCheck(txtSubject.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        txtTozihat.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    txtTozihat.setTextKeepState(CharCheck.faCheck(txtTozihat.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 
     private void starterActivitry(Class aClass) {

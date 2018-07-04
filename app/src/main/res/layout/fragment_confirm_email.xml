@@ -93,7 +93,7 @@
                             <android.support.design.widget.TextInputLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher"
+                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher1"
                                 android:textColorHint="@color/dark_eq">
 
                                 <EditText
@@ -117,7 +117,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageView
-                                android:id="@+id/imgSubjectRegisteryTeacher"
+                                android:id="@+id/imgSubjectRegisteryTeacher1"
                                 android:layout_width="@dimen/btn_nav"
                                 android:layout_height="@dimen/btn_nav"
                                 android:layout_alignParentEnd="false"
@@ -135,7 +135,7 @@
                             <android.support.design.widget.TextInputLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher"
+                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher2"
                                 android:textColorHint="@color/dark_eq">
 
                                 <EditText
@@ -149,7 +149,7 @@
                                     android:gravity="start"
                                     android:hint="آدرس ایمیل"
                                     android:inputType="textPersonName"
-                                    android:maxLength="50"
+                                    android:maxLength="100"
                                     android:maxLines="1"
                                     android:paddingStart="8dp"
                                     android:textColor="@color/text_home"
@@ -159,7 +159,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageView
-                                android:id="@+id/imgSubjectRegisteryTeacher"
+                                android:id="@+id/imgSubjectRegisteryTeacher2"
                                 android:layout_width="@dimen/btn_nav"
                                 android:layout_height="@dimen/btn_nav"
                                 android:layout_alignParentEnd="false"
@@ -201,7 +201,7 @@
                             <android.support.design.widget.TextInputLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher"
+                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher3"
                                 android:textColorHint="@color/dark_eq">
 
                                 <EditText
@@ -225,7 +225,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageView
-                                android:id="@+id/imgSubjectRegisteryTeacher"
+                                android:id="@+id/imgSubjectRegisteryTeacher3"
                                 android:layout_width="@dimen/btn_nav"
                                 android:layout_height="@dimen/btn_nav"
                                 android:layout_alignParentEnd="false"

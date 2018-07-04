@@ -100,7 +100,6 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
         imgProfile = (ImageView) view.findViewById(R.id.imgProfileUser);
         setUserImage();
         bottomNav = (BottomNavigationView) view.findViewById(R.id.bottomNavProfileUser);
-        bottomNav.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
         G.disableShiftModeNavigation(bottomNav);
         setNavigationItemListener();
         txtName = (TextView) view.findViewById(R.id.txtUserNameProfile);

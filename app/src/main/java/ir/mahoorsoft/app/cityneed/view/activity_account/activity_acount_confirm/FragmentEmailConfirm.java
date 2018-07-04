@@ -112,27 +112,6 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         llName = (RelativeLayout) view.findViewById(R.id.RLNameEmailConfirm);
         txtEmail.setText("");
         txtCode.setText("");
-        txtName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    txtName.setTextKeepState(CharCheck.faCheck(txtName.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         btnConfirmEmail.setOnClickListener(this);
         btnConfirmCode.setOnClickListener(this);
         btnResend.setOnClickListener(this);

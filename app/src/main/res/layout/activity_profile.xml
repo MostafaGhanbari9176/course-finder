@@ -115,7 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/light"
+        android:background="@color/dark_eq"
         app:itemIconTint="@color/light"
         app:itemTextColor="@color/light"
         app:menu="@menu/bottom_nav_menu_profile_teacher" />

@@ -97,7 +97,6 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         appBarLayout = (AppBarLayout) findViewById(R.id.appbarProfile);
         scrollView = (NestedScrollView) findViewById(R.id.nestedScrollview);
         bottomNav = (BottomNavigationView) findViewById(R.id.bottomNavProfileTeacher);
-        bottomNav.setBackgroundColor(ContextCompat.getColor(G.context, R.color.pink_tel));
         G.disableShiftModeNavigation(bottomNav);
         imgAppBar = (ImageView) findViewById(R.id.app_bar_image);
         imgAppBar.setOnLongClickListener(new View.OnLongClickListener() {
