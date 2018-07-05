@@ -92,6 +92,10 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     }
 
+    public void upDateCourse(int courseId, String startDate, String endDate, String hours, String days, int state) {
+        (new Course(this)).upDateCourse(Pref.getStringValue(PrefKey.apiCode, ""), courseId, startDate, endDate, hours, days, state);
+    }
+
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
         if (res == null || res.size() == 0) {

@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +36,6 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.activity_show_feature.ActivityOptionalCourse;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 /**
@@ -97,10 +94,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     private void init() {
         pointers();
         getDataFromServer();
-        runTxtSerachListener();
+        runTxtSearchListener();
     }
 
-    private void runTxtSerachListener() {
+    private void runTxtSearchListener() {
         txtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -229,7 +226,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         }
         ArrayList<StCourse> serachSource = new ArrayList<>();
         for (int i = 0; i < helpSource.size(); i++) {
-            if ((helpSource.get(i).CourseName).contains(searchFlag))
+            if (((helpSource.get(i).CourseName).toLowerCase()).contains((searchFlag).toLowerCase()))
                 serachSource.add(helpSource.get(i));
         }
         if (serachSource.size() == 0) {
@@ -254,7 +251,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         ArrayList<StCourse> serachSource = new ArrayList<>();
         for (int i = 0; i < helpSource.size(); i++) {
             try {
-                if ((helpSource.get(i).MasterName).contains(searchFlag))
+                if (((helpSource.get(i).MasterName).toLowerCase()).contains((searchFlag).toLowerCase()))
                     serachSource.add(helpSource.get(i));
             } catch (Exception e) {
                 e.getMessage();

@@ -30,5 +30,6 @@ public class StCourse {
     public int endOfList;
     public int numberOfWaitingStudent;
     public int bookMark;
+    public int state;//1-->درحال ثبت نام 2--> شروع دوره 3--> خاتمه دوره 4--> ظرفیت تکمیل
 
 }

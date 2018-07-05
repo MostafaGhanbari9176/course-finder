@@ -106,7 +106,7 @@ public class Course {
         });
     }
 
-    public void getBookMarkCourses(String userApi){
+    public void getBookMarkCourses(String userApi) {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StCourse>> getAllCourse = api.getBookMarkCourses(userApi);
         getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
@@ -217,5 +217,23 @@ public class Course {
                 onCourseLitener.sendMessage(t.getMessage());
             }
         });
+    }
+
+    public void upDateCourse(String teacherApi, int courseId, String startDate, String endDate, String hours, String days, int state) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<ResponseOfServer>> upDate = api.upDateCourse(teacherApi, courseId, startDate, endDate, hours, days, state);
+        upDate.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
+                onCourseLitener.onReceiveFlag(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onCourseLitener.sendMessage(t.getMessage());
+            }
+        });
+
     }
 }

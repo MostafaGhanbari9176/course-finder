@@ -406,6 +406,17 @@ public interface Api {
             @Path("userApi") String userApi
     );
 
+    @GET("upDateCourse/{teacherApi}/{courseId}/{startDate}/{endDate}/{hours}/{days}/{state}")
+    Call<ArrayList<ResponseOfServer>> upDateCourse(
+            @Path("teacherApi") String teacherApi,
+            @Path("courseId") int courseId,
+            @Path("startDate") String startDate,
+            @Path("endDate") String endDate,
+            @Path("hours") String hours,
+            @Path("days") String days,
+            @Path("state") int state
+    );
+
     @GET("sendEmail/{code}")
     Call<ArrayList<ResponseOfServer>> sendEmail(
             @Path("code") String code

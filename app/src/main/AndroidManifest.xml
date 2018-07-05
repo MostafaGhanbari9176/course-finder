@@ -82,10 +82,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".view.courseLists.ActivityTeacherCoursesList"
+            android:name=".view.activity_profile.fragment_profile_amozeshgah.ActivityTeacherCoursesList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustNothing" />
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
         <activity
             android:name=".view.activityFiles.ActivityFiles"
             android:screenOrientation="portrait"

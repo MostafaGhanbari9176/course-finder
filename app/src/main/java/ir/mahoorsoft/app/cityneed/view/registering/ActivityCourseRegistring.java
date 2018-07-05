@@ -64,11 +64,11 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     CheckBox cbxPrivate;
     String sD = "";
     String eD = "";
-    String hours = "";
+    String hours = "مشخص نشده";
     String tabaghe = "";
     int id;
     int tabagheId;
-    String days = "";
+    String days = "مشخص نشده";
     Toolbar tlb;
 
     @Override
@@ -251,8 +251,6 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                     throw new Exception("لطفا تاریخ شروع و پایان دوره را انتخاب کنید");
                 if (eD.compareTo(sD) == -1)
                     throw new Exception("لطفا تاریخ شروع و پایان دوره را صحیح انتخاب کنید");
-                if (hours.length() == 0)
-                    throw new Exception("لطفا ساعت شروع دوره را انتخاب کنید");
                 if (Integer.parseInt(txtMaxRange.getText().toString().trim()) < Integer.parseInt(txtMinRange.getText().toString().trim()))
                     throw new Exception("رنج سنی صحیح نمی باشد");
                 showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید", "بله", "بررسی");
@@ -362,7 +360,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
 
     private void selectImage() {
         Intent intent = new Intent(this, ActivityFiles.class);
-        intent.putExtra("isImage", true);
+        intent.putExtra("fileKind", "image");
         startActivityForResult(intent, 2);
     }
 

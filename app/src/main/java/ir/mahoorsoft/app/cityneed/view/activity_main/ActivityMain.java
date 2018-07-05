@@ -1,6 +1,5 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -44,11 +43,11 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.presenter.PresentFeedBack;
 import ir.mahoorsoft.app.cityneed.view.ActivityAboutUs;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_grouping_list.FragmentGroupingList;
+import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentSelfCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_teacher_list.FragmentTeacherList;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm.ActivityAcountConfirm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentHome;
-import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home.FragmentSelfCourse;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;

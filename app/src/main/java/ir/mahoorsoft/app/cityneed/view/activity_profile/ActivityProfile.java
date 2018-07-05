@@ -95,7 +95,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     }
 
     private void pointers() {
-        btnHelp = (ImageButton) findViewById(R.id.imageButtonHelpteacherProfile);
+        btnHelp = (ImageButton) findViewById(R.id.imageButtonHelpTeacherProfile);
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +123,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
     private void selectImage() {
         Intent intent = new Intent(G.context, ActivityFiles.class);
-        intent.putExtra("isImage", true);
+        intent.putExtra("fileKind", "image");
         startActivityForResult(intent, 2);
     }
 
@@ -241,7 +241,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
     public void getFilesPath() {
         Intent intent = new Intent(G.context, ActivityFiles.class);
-        intent.putExtra("isImage", false);
+        intent.putExtra("fileKind", "pdf");
         startActivityForResult(intent, 1);
     }
 
@@ -300,7 +300,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
                 .setDescription("جهت خرید اشتراک از این قسمت اقدام کنید")
                 .build();
 
-        SimpleTarget helper = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.imageButtonHelpteacherProfile))
+        SimpleTarget helper = new SimpleTarget.Builder(G.activity).setPoint(findViewById(R.id.imageButtonHelpTeacherProfile))
                 .setRadius(300f)
                 .setTitle("راهنما")
                 .setDescription("مشاهده مجدد این راهنما")

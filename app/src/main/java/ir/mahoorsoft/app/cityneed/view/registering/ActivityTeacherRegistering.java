@@ -179,7 +179,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
 
     private void choseFile() {
         Intent intent = new Intent(this, ActivityFiles.class);
-        intent.putExtra("isImage", true);
+        intent.putExtra("fileKind", "image");
         startActivityForResult(intent, 1);
     }
 

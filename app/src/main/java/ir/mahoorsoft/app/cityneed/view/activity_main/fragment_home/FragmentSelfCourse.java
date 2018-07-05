@@ -135,7 +135,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
 
     private void selectImage() {
         Intent intent = new Intent(G.context, ActivityFiles.class);
-        intent.putExtra("isImage", true);
+        intent.putExtra("fileKind", "image");
         startActivityForResult(intent, 2);
     }
 

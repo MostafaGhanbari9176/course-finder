@@ -42,6 +42,7 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
     String root = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
     Toolbar tlb;
     int position = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,17 +104,24 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
                     folderList.add(files[i]);
                     surce.add(file);
                 }
-                if (getIntent().getExtras() != null && files[i].length() >= 5120 && files[i].length() <= 5242880 ) {
-                    if (getIntent().getExtras().getBoolean("isImage")) {
+                if (getIntent().getExtras() != null && files[i].length() >= 5120 && files[i].length() <= 5242880) {
+                    if (getIntent().getExtras().getString("fileKind").equalsIgnoreCase("image")) {
                         if (files[i].getName().toLowerCase().endsWith(".png") || files[i].getName().toLowerCase().endsWith(".jpeg") || files[i].getName().toLowerCase().endsWith(".jpg")) {
                             file.Image = R.drawable.file_orange_icon;
                             file.path = files[i].getAbsolutePath();
                             folderList.add(files[i]);
                             surce.add(file);
                         }
-                    } else {
+                    } else if (getIntent().getExtras().getString("fileKind").equalsIgnoreCase("pdf")) {
                         if (files[i].getName().toLowerCase().endsWith(".pdf")) {
                             file.Image = R.drawable.file_orange_icon;
+                            file.path = files[i].getAbsolutePath();
+                            folderList.add(files[i]);
+                            surce.add(file);
+                        }
+                    } else if (getIntent().getExtras().getString("fileKind").equalsIgnoreCase("video")) {
+                        if (files[i].getName().toLowerCase().endsWith(".3gp") || files[i].getName().toLowerCase().endsWith(".mp4") || files[i].getName().toLowerCase().endsWith(".mkv") || files[i].getName().toLowerCase().endsWith(".flv")) {
+                            file.Image = R.drawable.icon_video;
                             file.path = files[i].getAbsolutePath();
                             folderList.add(files[i]);
                             surce.add(file);
@@ -176,7 +184,7 @@ public class ActivityFiles extends AppCompatActivity implements FilesAdapter.OnC
 
     @Override
     public void onBackPressed() {
-        if (saveAddress.size()  > 1) {
+        if (saveAddress.size() > 1) {
             list.scrollToPosition(position);
             saveAddress.pop();
             setSurce(saveAddress.pop());

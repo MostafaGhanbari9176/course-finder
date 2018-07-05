@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogEditCourseData"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="16dp"
+                        android:text="وضعیت دوره"
+                        android:textSize="@dimen/txt_size_xvsmal" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_red"
+                        android:padding="8dp">
+
+                        <RadioButton
+                            android:id="@+id/radioButton1DialogEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="درحال ثبت نام"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2DialogEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="شروع دوره"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton3DialogEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="خاتمه دوره"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton4DialogEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="ظرفیت تکمیل"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:background="?attr/colorAccent"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="تاریخ شروع"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                        <Button
+                            android:id="@+id/txtStartDateDialogEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:background="@drawable/border_red"
+                            android:ems="50"
+                            android:minEms="50"
+                            android:padding="8dp"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="تاریخ پایان"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                        <Button
+                            android:id="@+id/txtEndDateDialogEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:background="@drawable/border_red"
+                            android:ems="50"
+                            android:minEms="50"
+                            android:padding="8dp"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="ساعت برگذاری"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                        <Button
+                            android:id="@+id/txtStartHoursDialogEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:background="@drawable/border_red"
+                            android:ems="50"
+                            android:minEms="50"
+                            android:padding="8dp"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="ایام برگذاری"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                        <Button
+                            android:id="@+id/txtDaysDialogEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:background="@drawable/border_red"
+                            android:ems="50"
+                            android:minEms="50"
+                            android:padding="8dp"
+                            android:textSize="@dimen/txt_size_xvsmal" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnSaveDataDialogEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/btn_dark_eq"
+                        android:padding="12dp"
+                        android:text="ذخیره تغیرات"
+                        android:textColor="@color/light"
+                        android:textSize="@dimen/txt_size_vsmal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnCancelDialogEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/btn_dark_eq"
+                        android:padding="12dp"
+                        android:text="انصراف"
+                        android:textColor="@color/light"
+                        android:textSize="@dimen/txt_size_vsmal" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

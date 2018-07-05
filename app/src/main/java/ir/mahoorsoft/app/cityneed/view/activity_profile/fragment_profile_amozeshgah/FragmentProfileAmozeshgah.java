@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +51,6 @@ import ir.mahoorsoft.app.cityneed.view.activity_subscribe.ActivitySubscribe;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
-import ir.mahoorsoft.app.cityneed.view.courseLists.ActivityTeacherCoursesList;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 import ir.mahoorsoft.app.cityneed.view.registering.ActivityCourseRegistring;
 

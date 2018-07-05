@@ -7,15 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,7 +33,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSmsCode;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
-import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 
 /**
@@ -133,7 +129,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         } else {
             Pref.saveStringValue(PrefKey.emailWhenConfirm, mail);
             Pref.saveStringValue(PrefKey.nameWhenConfirm, txtName.getText().toString().trim());
-            sendEmailForserver(mail);
+            sendEmailForServer(mail);
         }
     }
 
@@ -174,7 +170,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     }
 
-    private void sendEmailForserver(String phone) {
+    private void sendEmailForServer(String phone) {
         rlPbar.setVisibility(View.VISIBLE);
         PresentSmsCode p = new PresentSmsCode(this);
         p.createAndSaveSmsCode(phone);
@@ -366,10 +362,10 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
                     // txtCode.setEnabled(false);
                     // btnConfirmCode.setEnabled(false);
                 } else
-                    checkeInData(txtEmail.getText().toString());
+                    checkeInData(txtEmail.getText().toString().trim());
                 break;
             case R.id.btnResendEmail:
-                checkeInData(txtEmail.getText().toString());
+                checkeInData(txtEmail.getText().toString().trim());
                 break;
         }
     }

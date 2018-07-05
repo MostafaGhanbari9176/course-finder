@@ -89,6 +89,10 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
             list = (RecyclerView) view.findViewById(R.id.RVList);
             surce.clear();
             surce.addAll(course);
+            for (int i = 0; i < course.size(); i++) {
+                if (course.get(i).vaziat == 0)
+                    surce.remove(course.get(i));
+            }
             adapter = new AdapterCourseList(G.context, surce, this);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                     , LinearLayoutManager.VERTICAL, false);
