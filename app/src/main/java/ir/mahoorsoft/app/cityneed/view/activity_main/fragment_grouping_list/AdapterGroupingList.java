@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
@@ -59,9 +60,9 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
             DisplayMetrics displayMetrics = new DisplayMetrics();
             G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
-            width = (width-400)/2;
-            LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(width, width);
-            int dp = G.dpToPx(16);
+            width = width - 250;
+            LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(width / 2, width / 2);
+            int dp = (250/4);
             params.setMargins(dp, dp, dp, dp);
             item.setLayoutParams(params);
         }
@@ -81,6 +82,7 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
                 .fitCenter()
+                .error(R.drawable.grouping)
                 .into(holder.img);
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override

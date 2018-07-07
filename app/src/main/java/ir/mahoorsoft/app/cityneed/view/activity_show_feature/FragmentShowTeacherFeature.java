@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +105,15 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
         img = (ImageView) view.findViewById(R.id.imgTeacherFeature);
         imgFavorite = (ImageView) view.findViewById(R.id.imgFavorite);
         imgFavorite.setOnClickListener(this);
+        setPaletteSize();
 
+    }
+
+    private void setPaletteSize() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        img.getLayoutParams().height = (int) (width / 1.5);
     }
 
     @Override

@@ -79,7 +79,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         G.context = this;
         dialogProgres = new DialogProgres(this, false);
         pointers();
-        setFont();
+
 
     }
 
@@ -122,17 +122,6 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         cbxPublic.setOnClickListener(this);
         btnDays.setOnClickListener(this);
 
-    }
-
-    private void setFont() {
-        Typeface typeface = Typeface.createFromAsset(this.getResources().getAssets(), "fonts/Far_Nazanin.ttf");
-        txtMaxRange.setTypeface(typeface);
-        txtMinRange.setTypeface(typeface);
-        txtSharayet.setTypeface(typeface);
-        txtCapacity.setTypeface(typeface);
-        txtTozihat.setTypeface(typeface);
-        txtMony.setTypeface(typeface);
-        txtSubject.setTypeface(typeface);
     }
 
     @Override

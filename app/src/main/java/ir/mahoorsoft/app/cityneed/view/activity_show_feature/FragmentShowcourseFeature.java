@@ -3,6 +3,8 @@ package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +21,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
@@ -47,6 +52,8 @@ import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 
 public class FragmentShowcourseFeature extends Fragment implements PresentCourse.OnPresentCourseLitener, PresentSabtenam.OnPresentSabtenamListaener, PresenterComment.OnPresentCommentListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, PresentBookMark.OnPresentBookMarkListener {
     View view;
+    VideoView videoView;
+    CardView CVbtnPlayVideo;
     public static boolean issabtenamed = false;
     DecimalFormat formatter;
     ImageView img;
@@ -71,7 +78,9 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     LinearLayout llRatBar;
     RatingBar ratBar;
     ProgressBar pbRatBar;
+    ProgressBar pBarVideoView;
     int capacity;
+    int state;
     Button btnRegister;
     int courseId = ActivityOptionalCourse.courseId;
     String idTeacher;
@@ -114,10 +123,12 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     private void pointers() {
+        videoView = (VideoView) view.findViewById(R.id.videoView);
+        CVbtnPlayVideo = (CardView) view.findViewById(R.id.CVbtnPlayVideo);
         llRatBar = (LinearLayout) view.findViewById(R.id.llRatBar);
         ratBar = (RatingBar) view.findViewById(R.id.ratBarShowCourseFeature);
         pbRatBar = (ProgressBar) view.findViewById(R.id.pbRatBarCourseFeature);
-
+        pBarVideoView = (ProgressBar) view.findViewById(R.id.pBarVideoView);
         img = (ImageView) view.findViewById(R.id.imgFeature);
         imgDrop = (ImageView) view.findViewById(R.id.imgDropShowFeature);
         imgBookMark = (ImageView) view.findViewById(R.id.imgBookMark);
@@ -162,6 +173,47 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             }
         });
 
+        CVbtnPlayVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settingUpVideoView();
+            }
+        });
+
+    }
+
+    private void settingUpVideoView() {
+        try {
+            MediaController mediaController = new MediaController(G.context);
+            Uri video = Uri.parse(ApiClient.BASE_URL + "uploads/newsVideo/" + courseId + ".mp4");
+            videoView.setMediaController(mediaController);
+            videoView.setVideoURI(video);
+            videoView.setVisibility(View.VISIBLE);
+            CVbtnPlayVideo.setVisibility(View.GONE);
+            pBarVideoView.setVisibility(View.VISIBLE);
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                public void onPrepared(MediaPlayer mp) {
+                    pBarVideoView.setVisibility(View.GONE);
+                    videoView.start();
+                }
+            });
+            videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    pBarVideoView.setVisibility(View.GONE);
+                    videoView.setVisibility(View.GONE);
+                    Toast.makeText(G.context, "خطا هنگام پخش", Toast.LENGTH_SHORT).show();
+                    CVbtnPlayVideo.setVisibility(View.GONE);
+                    return false;
+                }
+            });
+
+        } catch (Exception e) {
+            videoView.setVisibility(View.GONE);
+            pBarVideoView.setVisibility(View.GONE);
+            Toast.makeText(G.context, "خطا هنگام پخش", Toast.LENGTH_SHORT).show();
+            CVbtnPlayVideo.setVisibility(View.GONE);
+        }
     }
 
     private void registerHe() {
@@ -296,6 +348,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         sDown.setRefreshing(false);
         capacity = course.get(0).capacity;
+        state = course.get(0).state;
         startDate = course.get(0).startDate;
         idTeacher = course.get(0).idTeacher;
         txtMony.setText(formatter.format(course.get(0).mony) + " تومان");
@@ -320,14 +373,18 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     private void checkCourseData() {
-        if (!checkDate()) {
+        if (state == 3) {
             btnRegister.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);
-            txtNews.setText("دوره در تاریخ " + startDate + " برگزار شده");
-        } else if (capacity == 0) {
+            txtNews.setText("دوره خاتمه یافته");
+        } else if (capacity == 0 || state == 4) {
             btnRegister.setVisibility(View.GONE);
             txtNews.setVisibility(View.VISIBLE);
             txtNews.setText("ظرفیت دوره تکمیل شده");
+        } else if (!checkDate()) {
+            btnRegister.setVisibility(View.GONE);
+            txtNews.setVisibility(View.VISIBLE);
+            txtNews.setText("دوره در تاریخ " + startDate + " برگزار شده");
         }
     }
 
@@ -458,7 +515,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_SUBJECT, "دوره " + txtName.getText());
-                    String sAux = "سلام می خوام بهت یک دوره آموزشی عالی معرفی کنم برای شرکت در این دوره کافیه برنامه دوره یاب رو از لینک زیر دانلود کنی و در دوره"+"*"+ txtName.getText() +" *شرکت کنی";
+                    String sAux = "سلام می خوام بهت یک دوره آموزشی عالی معرفی کنم برای شرکت در این دوره کافیه برنامه دوره یاب رو از لینک زیر دانلود کنی و در دوره" + "*" + txtName.getText() + " *شرکت کنی";
                     sAux = sAux + G.appLink + "\n\n";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(i, "choose one"));

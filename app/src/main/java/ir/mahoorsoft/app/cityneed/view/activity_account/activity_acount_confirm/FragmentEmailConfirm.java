@@ -67,15 +67,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         pointers();
         txtEmail.setText(Pref.getStringValue(PrefKey.emailWhenConfirm, ""));
         txtName.setText(Pref.getStringValue(PrefKey.nameWhenConfirm, ""));
-        setFont();
-    }
 
-    private void setFont() {
-        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
-        txtName.setTypeface(typeface);
-        btnResend.setTypeface(typeface);
-        btnConfirmCode.setTypeface(typeface);
-        btnConfirmEmail.setTypeface(typeface);
     }
 
     private void pointers() {
@@ -184,11 +176,12 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
         if (flag) {*/
         Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
-        btnConfirmEmail.setText("تغیر آدرس ایمیل");
+        btnConfirmEmail.setText("تغیر اطلاعات وارد شده");
         txtEmail.setEnabled(false);
         txtName.setEnabled(false);
         txtCode.setEnabled(true);
         btnConfirmCode.setEnabled(true);
+        txtCode.requestFocus();
         //}
     }
 
@@ -196,7 +189,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     public void sendMessageFScT(String message) {
         rlPbar.setVisibility(View.GONE);
         Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
-        btnConfirmEmail.setText("تغیر آدرس ایمیل");
+        btnConfirmEmail.setText("تغیر اطلاعات وارد شده");
         txtEmail.setEnabled(false);
         txtName.setEnabled(false);
         txtCode.setEnabled(true);
@@ -355,7 +348,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
                 checkCode();
                 break;
             case R.id.btnConfirmEmailConfirmEmail:
-                if (btnConfirmEmail.getText().equals("تغیر آدرس ایمیل")) {
+                if (btnConfirmEmail.getText().equals("تغیر اطلاعات وارد شده")) {
                     btnConfirmEmail.setText("تایید ایمیل");
                     txtEmail.setEnabled(true);
                     txtName.setEnabled(true);

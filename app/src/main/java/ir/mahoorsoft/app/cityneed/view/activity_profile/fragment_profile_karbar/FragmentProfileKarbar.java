@@ -99,7 +99,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
                 G.activity.finish();
             }
         });
-        btnHome.setOnClickListener(new View.OnClickListener() {
+        btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runHelperForUser();

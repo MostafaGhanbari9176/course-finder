@@ -60,8 +60,10 @@ public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.
             DisplayMetrics displayMetrics = new DisplayMetrics();
             G.activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
-            width = (width-10)/2;
+            width = (width - 10) / 2;
             LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(width,(int)(width/1.5));
+            int dp = (10 / 4);
+            params.setMargins(dp, dp, dp, dp);
             item.setLayoutParams(params);
         }
     }
@@ -76,7 +78,7 @@ public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
         final StTeacher items = surce.get(position);
-        holder.txt.setText("آموزشگاه "+items.subject);
+        holder.txt.setText("آموزشگاه " + items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + items.pictureId + ".png")
                 .error(R.drawable.university)

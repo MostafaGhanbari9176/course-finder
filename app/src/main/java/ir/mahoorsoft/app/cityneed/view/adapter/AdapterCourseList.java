@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
@@ -74,7 +75,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
         final StCourse items = surce.get(position);
-        if(items.isDeleted == 1 || items.isCanceled == 1){
+        if (items.isDeleted == 1 || items.isCanceled == 1) {
             holder.rlDeletedMessage.setVisibility(View.VISIBLE);
         }
         holder.txtCourseName.setText(items.CourseName);

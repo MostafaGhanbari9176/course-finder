@@ -87,34 +87,30 @@
                             android:id="@+id/RLNameEmailConfirm"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="8dp"
+                            android:layout_marginEnd="32dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="32dp"
                             android:orientation="horizontal">
 
-                            <android.support.design.widget.TextInputLayout
+                            <EditText
+                                android:id="@+id/txtNameConfirmEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher1"
-                                android:textColorHint="@color/dark_eq">
-
-                                <EditText
-                                    android:id="@+id/txtNameConfirmEmail"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentTop="true"
-                                    android:ems="10"
-                                    android:gravity="start"
-                                    android:hint="نام ونام خانوادگی"
-                                    android:inputType="textPersonName"
-                                    android:maxLength="50"
-                                    android:maxLines="1"
-                                    android:paddingStart="8dp"
-                                    android:textColor="@color/text_home"
-                                    android:textColorHint="@color/blue_eq"
-                                    android:textColorLink="@color/dark_eq"
-                                    android:textSize="@dimen/txt_submit_iformation" />
-                            </android.support.design.widget.TextInputLayout>
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginStart="48dp"
+                                android:background="@drawable/border_light_eq"
+                                android:ems="10"
+                                android:gravity="start"
+                                android:hint="نام ونام خانوادگی"
+                                android:inputType="textMultiLine"
+                                android:maxLength="50"
+                                android:padding="16dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
 
                             <ImageView
                                 android:id="@+id/imgSubjectRegisteryTeacher1"
@@ -129,34 +125,31 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="8dp"
+                            android:layout_marginBottom="32dp"
+                            android:layout_marginEnd="32dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="32dp"
                             android:orientation="horizontal">
 
-                            <android.support.design.widget.TextInputLayout
+                            <EditText
+                                android:id="@+id/txtEmailConfirmٍEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher2"
-                                android:textColorHint="@color/dark_eq">
-
-                                <EditText
-                                    android:id="@+id/txtEmailConfirmٍEmail"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentTop="true"
-                                    android:ems="10"
-                                    android:gravity="start"
-                                    android:hint="آدرس ایمیل"
-                                    android:inputType="textPersonName"
-                                    android:maxLength="100"
-                                    android:maxLines="1"
-                                    android:paddingStart="8dp"
-                                    android:textColor="@color/text_home"
-                                    android:textColorHint="@color/blue_eq"
-                                    android:textColorLink="@color/dark_eq"
-                                    android:textSize="@dimen/txt_submit_iformation" />
-                            </android.support.design.widget.TextInputLayout>
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginStart="48dp"
+                                android:background="@drawable/border_light_eq"
+                                android:ems="10"
+                                android:gravity="start"
+                                android:hint="آدرس ایمیل"
+                                android:inputType="textMultiLine"
+                                android:maxLength="100"
+                                android:padding="16dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
 
                             <ImageView
                                 android:id="@+id/imgSubjectRegisteryTeacher2"
@@ -195,37 +188,34 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="8dp"
+                            android:layout_marginBottom="32dp"
+                            android:layout_marginEnd="32dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="32dp"
                             android:orientation="horizontal">
 
-                            <android.support.design.widget.TextInputLayout
+                            <EditText
+                                android:id="@+id/txtSmsCodeConfirmEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/imgSubjectRegisteryTeacher3"
-                                android:textColorHint="@color/dark_eq">
-
-                                <EditText
-                                    android:id="@+id/txtSmsCodeConfirmEmail"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentTop="true"
-                                    android:ems="10"
-                                    android:gravity="start"
-                                    android:hint="کد تایید"
-                                    android:inputType="textPersonName"
-                                    android:maxLength="50"
-                                    android:maxLines="1"
-                                    android:paddingStart="8dp"
-                                    android:textColor="@color/text_home"
-                                    android:textColorHint="@color/blue_eq"
-                                    android:textColorLink="@color/dark_eq"
-                                    android:textSize="@dimen/txt_submit_iformation" />
-                            </android.support.design.widget.TextInputLayout>
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginStart="48dp"
+                                android:background="@drawable/border_light_eq"
+                                android:ems="10"
+                                android:gravity="start"
+                                android:hint="کد تایید"
+                                android:inputType="textPersonName"
+                                android:maxLength="50"
+                                android:maxLines="1"
+                                android:padding="16dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
 
                             <ImageView
-                                android:id="@+id/imgSubjectRegisteryTeacher3"
                                 android:layout_width="@dimen/btn_nav"
                                 android:layout_height="@dimen/btn_nav"
                                 android:layout_alignParentEnd="false"
