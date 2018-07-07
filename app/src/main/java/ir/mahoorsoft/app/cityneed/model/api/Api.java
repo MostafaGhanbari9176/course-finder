@@ -11,6 +11,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StMahoorAppData;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StOstan;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
@@ -420,6 +421,29 @@ public interface Api {
     @GET("sendEmail/{code}")
     Call<ArrayList<ResponseOfServer>> sendEmail(
             @Path("code") String code
+    );
+
+    @GET("getSabtenamNotifyData/{apiCode}/{lastId}")
+    Call<ArrayList<StNotifyData>> getSabtenamNotifyData(
+            @Path("apiCode") String apiCode,
+            @Path("lastId") int lastId
+    );
+
+    @GET("getMessageNotifyData/{apiCode}/{lastId}")
+    Call<ArrayList<StNotifyData>> getMessageNotifyData(
+            @Path("apiCode") String apiCode,
+            @Path("lastId") int lastId
+    );
+
+    @GET("getNewCourseNotifyData/{apiCode}/{lastId}")
+    Call<ArrayList<StNotifyData>> getNewCourseNotifyData(
+            @Path("apiCode") String apiCode,
+            @Path("lastId") int lastId
+    );
+
+    @GET("getNewTeacherNotifyData/{apiCode}")
+    Call<ArrayList<StNotifyData>> getNewTeacherNotifyData(
+            @Path("apiCode") String apiCode
     );
 
 

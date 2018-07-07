@@ -11,6 +11,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.tables.course.Course;
 
 /**
@@ -139,5 +140,10 @@ public class PresentCourse implements Course.OnCourseLitener {
     @Override
     public void sendMessage(String message) {
         onPresentCourseLitener.sendMessageFCT(Message.getMessage(1));
+    }
+
+    @Override
+    public void newCourseNotifyData(ArrayList<StNotifyData> data) {
+
     }
 }

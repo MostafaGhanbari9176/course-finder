@@ -10,6 +10,7 @@ import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,6 +31,8 @@ public class Course {
         void DataForCustomCourseListHome(ArrayList<StCustomCourseListHome> data);
 
         void sendMessage(String message);
+
+        void newCourseNotifyData(ArrayList<StNotifyData> data);
     }
 
     OnCourseLitener onCourseLitener;
@@ -235,5 +238,22 @@ public class Course {
             }
         });
 
+    }
+
+    public void getNewCourseNotifyData(String apiCode, int lastId) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StNotifyData>> getData = api.getNewCourseNotifyData(apiCode, lastId);
+        getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {
+                onCourseLitener.newCourseNotifyData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StNotifyData>> call, Throwable t) {
+                onCourseLitener.sendMessage(t.getMessage());
+            }
+        });
     }
 }

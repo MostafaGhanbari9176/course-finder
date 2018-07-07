@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +27,8 @@ public class SmsBox {
         void sendingMessageFlag(ArrayList<ResponseOfServer> res);
 
         void sendMessage(String message);
+
+        void messageNotifyData(ArrayList<StNotifyData> data);
     }
 
     OnSmsBoxResponseListener onSmsBoxResponseListener;
@@ -128,6 +131,23 @@ public class SmsBox {
 
             @Override
             public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
+                onSmsBoxResponseListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void getNotifyData(String apiCode, int lastId) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StNotifyData>> getData = api.getMessageNotifyData(apiCode, lastId);
+        getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {
+                onSmsBoxResponseListener.messageNotifyData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StNotifyData>> call, Throwable t) {
                 onSmsBoxResponseListener.sendMessage(t.getMessage());
             }
         });

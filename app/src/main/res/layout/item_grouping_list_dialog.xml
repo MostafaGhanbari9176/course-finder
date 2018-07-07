@@ -27,7 +27,8 @@
                 android:layout_width="@dimen/img_item_tabaghe"
                 android:layout_height="@dimen/img_item_tabaghe"
                 android:layout_margin="8dp"
-                android:background="@color/light_one" />
+                android:background="@color/light"
+                app:srcCompat="@drawable/grouping" />
 
             <LinearLayout
                 android:layout_width="match_parent"

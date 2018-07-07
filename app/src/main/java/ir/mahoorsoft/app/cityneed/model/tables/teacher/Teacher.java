@@ -9,6 +9,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -172,6 +173,23 @@ public class Teacher {
         });
     }
 
+    public void getNotifyData(String apiCode) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StNotifyData>> getData = api.getNewTeacherNotifyData(apiCode);
+        getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {
+                onTeacherListener.newTeacherNotifyData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StNotifyData>> call, Throwable t) {
+                onTeacherListener.sendMessage(t.getMessage());
+            }
+        });
+    }
+
     public interface OnTeacherListener {
         void responseForMadrak(ArrayList<ResponseOfServer> res);
 
@@ -184,5 +202,7 @@ public class Teacher {
         void onReceiveCustomTeacherListData(ArrayList<StCustomTeacherListHome> data);
 
         void sendMessage(String message);
+
+        void newTeacherNotifyData(ArrayList<StNotifyData> data);
     }
 }

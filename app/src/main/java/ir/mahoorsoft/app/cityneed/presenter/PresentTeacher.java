@@ -7,6 +7,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.tables.teacher.Teacher;
 
@@ -107,6 +108,11 @@ public class PresentTeacher implements Teacher.OnTeacherListener {
     @Override
     public void sendMessage(String message) {
         onPresentTeacherListener.sendMessageFTT(Message.getMessage(1));
+    }
+
+    @Override
+    public void newTeacherNotifyData(ArrayList<StNotifyData> data) {
+
     }
 
     public interface OnPresentTeacherListener {

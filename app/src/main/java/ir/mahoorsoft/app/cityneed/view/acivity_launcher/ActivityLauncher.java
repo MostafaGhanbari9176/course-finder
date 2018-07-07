@@ -1,7 +1,10 @@
 package ir.mahoorsoft.app.cityneed.view.acivity_launcher;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,6 +36,7 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedStatuse;
+import ir.mahoorsoft.app.cityneed.presenter.ServiceUpdate;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 
 
@@ -56,7 +60,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         if (!Pref.getBollValue(PrefKey.smsListReady, false))
             setSmsTextData();
         runLogo();
-
+        startcheckNotification();
     }
 
     private void pointer() {
@@ -91,6 +95,13 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         else
             checkVersion();
 
+    }
+
+    public void startcheckNotification() {
+        Intent intent = new Intent(this, ServiceUpdate.class);
+        PendingIntent pendingIntent = PendingIntent.getService(
+                this, 0, intent, 0);
+        G.alarm.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 60000, pendingIntent);
     }
 
     private void checkVersion() {
@@ -186,7 +197,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         downloadManager = new DownloadManager();
         downloadManager.downloadPath(ApiClient.serverAddress + "/city_need/apk/CourseFinder.apk");
         downloadManager.savePath(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/");
-        downloadManager.fileName("دوره یاب"+".apk");
+        downloadManager.fileName("دوره یاب" + ".apk");
         downloadManager.listener(this);
         downloadManager.download();
 

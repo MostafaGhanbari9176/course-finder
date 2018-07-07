@@ -1,6 +1,14 @@
 package ir.mahoorsoft.app.cityneed;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
+import android.content.Intent;
+import android.media.RingtoneManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,9 +22,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
-import java.lang.reflect.Field;
-import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 
+import java.lang.reflect.Field;
+
+import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 
 
 public class G extends Application {
@@ -28,13 +37,15 @@ public class G extends Application {
     public static Context context;
     public static SharedPreferences preferences;
     public static String Name;
+    public static AlarmManager alarm;
+    public static int INTERVAL_CHECK_PM = 5000;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
-
+        alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
     }
 
@@ -79,6 +90,28 @@ public class G extends Application {
         }
     }
 
+    public static void makeNotification(Context context, Intent resultIntent, int id, String title, String text) {
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification noti;
+        Notification.Builder builder = new Notification.Builder(context);
+        noti = builder/*.setOngoing(true)*/
+                .setSmallIcon(context.getResources().getIdentifier("ic_launcher", "mipmap", context.getPackageName()))
+                .setAutoCancel(false)
+                //.setLargeIcon(bitmap)
+                .setContentIntent(resultPendingIntent)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .build();
+        NotificationManager notificationManager = (NotificationManager)
+                activity.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(id, noti);
+
+    }
 
 
 }

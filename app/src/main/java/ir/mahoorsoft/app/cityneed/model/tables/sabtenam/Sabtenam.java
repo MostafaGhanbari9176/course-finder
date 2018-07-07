@@ -6,8 +6,10 @@ import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by RCC1 on 2/1/2018.
@@ -23,6 +25,8 @@ public class Sabtenam {
         void sendMessage(String message);
 
         void checkSabtenam(ArrayList<ResponseOfServer> res);
+
+        void SabtenamNotifyData(ArrayList<StNotifyData> data);
     }
 
     OnSabtenamListener onSabtenamListener;
@@ -127,6 +131,23 @@ public class Sabtenam {
             @Override
             public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
                 onSabtenamListener.sendMessage(Message.convertRetrofitMessage(t.toString()));
+            }
+        });
+    }
+
+    public void getNotifyData(String apiCode, int lastId) {
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StNotifyData>> getData = api.getSabtenamNotifyData(apiCode, lastId);
+        getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {
+                onSabtenamListener.SabtenamNotifyData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StNotifyData>> call, Throwable t) {
+                onSabtenamListener.sendMessage(t.getMessage());
             }
         });
     }

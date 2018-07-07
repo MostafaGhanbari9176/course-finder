@@ -75,6 +75,7 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
                 .centerCrop()
+                .error(R.drawable.grouping)
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override

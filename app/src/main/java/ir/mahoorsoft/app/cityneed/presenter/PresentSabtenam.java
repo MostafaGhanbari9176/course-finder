@@ -6,6 +6,7 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 
 /**
@@ -88,5 +89,10 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
             sendMessage("خطا");
         else
             onPresentSabtenamListaener.checkSabtenam(res.get(0).code);
+    }
+
+    @Override
+    public void SabtenamNotifyData(ArrayList<StNotifyData> data) {
+
     }
 }

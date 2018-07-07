@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import ir.mahoorsoft.app.cityneed.model.tables.SmsBox;
 
@@ -97,5 +98,10 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener {
     @Override
     public void sendMessage(String message) {
         onPresentSmsBoxListener.messageFromSmsBox(Message.getMessage(1));
+    }
+
+    @Override
+    public void messageNotifyData(ArrayList<StNotifyData> data) {
+
     }
 }
