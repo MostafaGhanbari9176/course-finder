@@ -56,10 +56,11 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
         pointer();
-        if (!Pref.getBollValue(PrefKey.smsListReady, false)) {
+        if (!Pref.getBollValue(PrefKey.smsListReady, false))
             setSmsTextData();
+        if (!Pref.getBollValue(PrefKey.NotifyDataBaseReady, false))
             setDBLastIdData();
-        }
+
         runLogo();
         startcheckNotification();
     }
@@ -93,6 +94,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         smsTexts.add("sabtenam");
         smsTexts.add("course");
         LocalDatabase.insertDBLastIdFirstData(this, smsTexts);
+        Pref.saveBollValue(PrefKey.NotifyDataBaseReady, true);
     }
 
     private void runLogo() {

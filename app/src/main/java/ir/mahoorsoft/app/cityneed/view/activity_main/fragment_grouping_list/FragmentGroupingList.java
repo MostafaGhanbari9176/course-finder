@@ -100,6 +100,6 @@ public class FragmentGroupingList extends Fragment implements AdapterGroupingLis
     @Override
     public void onRefresh() {
         queryForGroupData();
-        ((ActivityMain) G.activity).helpSwipeProgress.setVisibility(View.GONE);
+
     }
 }

@@ -29,6 +29,7 @@ import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 import java.util.ArrayList;
 
 import ir.mahoorsoft.app.cityneed.R;
+import ir.mahoorsoft.app.cityneed.model.CheckedSTatuse;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;

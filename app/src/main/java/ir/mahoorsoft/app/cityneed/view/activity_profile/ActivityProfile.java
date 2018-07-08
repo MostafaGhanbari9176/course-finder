@@ -66,6 +66,7 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
     NestedScrollView scrollView;
     public static RatingBar ratingBar;
     ImageButton btnHelp;
+    ImageButton btnHome;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,10 +97,17 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
     private void pointers() {
         btnHelp = (ImageButton) findViewById(R.id.imageButtonHelpTeacherProfile);
+        btnHome = (ImageButton) findViewById(R.id.imageButtonHomeTeacherProfile);
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runHelperForTeacher();
+            }
+        });
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
         ratingBar = (RatingBar) findViewById(R.id.ratBarProfile);

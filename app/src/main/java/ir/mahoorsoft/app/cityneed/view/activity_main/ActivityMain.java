@@ -52,6 +52,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search.FragmentSearch;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.courseLists.ActivitySabtenamList;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogAllHelp;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 
@@ -65,7 +66,6 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     BottomNavigationView navDown;
     HashMap<String, Fragment> fSaver = new HashMap<>();
     Stack<String> keySaver = new Stack<>();
-    public RelativeLayout helpSwipeProgress;
     LinearLayout llBackHelpSwipeProgress;
 
     @Override
@@ -80,10 +80,7 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
         FragmentHome fragmentHome = new FragmentHome();
         replaceContentWith("fHome", fragmentHome);
         fragmentHome.activityMain = this;
-        if (!Pref.getBollValue(PrefKey.helpSwipeProgres, false)) {
-            helpSwipeProgress.setVisibility(View.VISIBLE);
-            Pref.saveBollValue(PrefKey.helpSwipeProgres, true);
-        }
+
     }
 
     @Override
@@ -132,6 +129,10 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
 
             case R.id.btnInviteFriend:
                 inviteFriend();
+                return true;
+
+            case R.id.menuAllHelp:
+                (new DialogAllHelp(this)).Show();
                 return true;
 
             default:
@@ -242,7 +243,6 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     }
 
     private void pointers() {
-        helpSwipeProgress = (RelativeLayout) findViewById(R.id.RLHelpSwipeProgres);
         llBackHelpSwipeProgress = (LinearLayout) findViewById(R.id.LLBackHelpSwipeProgress);
         navDown = (BottomNavigationView) findViewById(R.id.bottomNav_down_Home);
         navDown.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_tel));

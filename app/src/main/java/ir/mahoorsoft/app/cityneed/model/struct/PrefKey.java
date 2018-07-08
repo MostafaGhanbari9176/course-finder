@@ -27,10 +27,10 @@ public class PrefKey {
     public static final String profileUserPage = "one";
     public static final String profileTeacherPage = "two";
     public static final String courseImageHelp = "three";
-    public static final String helpSwipeProgres = "helpSwipeProgres";
     /////////////////////////
     public static final String hacked = "hacked";
     public static final String smsListReady = "smslistready";
+    public static final String NotifyDataBaseReady = "NotifyDataBaseReady";
     public static final String SubId = "subscibeID";
     public static final String isPaymentSuccess = "isPaymentSuccess";
     public static final String isPaymentSaved = "isPaymentSaved";

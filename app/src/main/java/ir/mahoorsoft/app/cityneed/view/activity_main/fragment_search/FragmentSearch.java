@@ -408,7 +408,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     @Override
     public void onRefresh() {
         init();
-        ((ActivityMain) G.activity).helpSwipeProgress.setVisibility(View.GONE);
+
     }
 }
 

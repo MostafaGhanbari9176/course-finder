@@ -128,6 +128,5 @@ public class FragmentFavoriteTeacher extends Fragment implements SwipeRefreshLay
     @Override
     public void onRefresh() {
         getData();
-        ((ActivityMain) G.activity).helpSwipeProgress.setVisibility(View.GONE);
     }
 }

@@ -135,8 +135,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
         else
             btnDelete.setVisibility(View.VISIBLE);
         rlPbar.setVisibility(View.VISIBLE);
-        if (Pref.getBollValue(PrefKey.helpSwipeProgres, false))
-            sDown.setRefreshing(true);
+        sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseForListHome(groupId);
     }
@@ -566,7 +565,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     @Override
     public void onRefresh() {
         init();
-        ((ActivityMain) G.activity).helpSwipeProgress.setVisibility(View.GONE);
+
     }
 
     @Override

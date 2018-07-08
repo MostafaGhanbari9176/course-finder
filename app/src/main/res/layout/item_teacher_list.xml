@@ -51,6 +51,8 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
                     android:layout_margin="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="TextView"
                     android:textSize="@dimen/txt_size_xvsmal" />
 

@@ -40,7 +40,11 @@ public class LocalDatabase {
 
     public static int getLastId(Context context, String signText) {
 
-        return Integer.parseInt((new DBLastId(context)).getLastId(signText));
+        try {
+            return Integer.parseInt((new DBLastId(context)).getLastId(signText));
+        } catch (Exception ignore) {
+            return 0;
+        }
     }
 
     public static void updateLastId(Context context, String signText, String lastId) {

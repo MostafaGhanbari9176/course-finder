@@ -12,6 +12,9 @@
         android:id="@+id/menuSmsBox"
         android:title="صندوق پیام" />
     <item
+        android:id="@+id/menuAllHelp"
+        android:title="راهنما" />
+    <item
         android:id="@+id/btnInviteFriend"
         android:title="معرفی به دیگران" />
 

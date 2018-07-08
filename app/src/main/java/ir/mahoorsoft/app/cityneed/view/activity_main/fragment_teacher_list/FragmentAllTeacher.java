@@ -131,6 +131,6 @@ public class FragmentAllTeacher extends Fragment implements PresentTeacher.OnPre
     @Override
     public void onRefresh() {
         getData();
-        ((ActivityMain) G.activity).helpSwipeProgress.setVisibility(View.GONE);
+
     }
 }
