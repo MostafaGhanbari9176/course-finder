@@ -7,8 +7,9 @@ package ir.mahoorsoft.app.cityneed.model.struct;
 public class StNotifyData {
 
     public int number;
+    public int empty;
     public String name;
     public int lastId;
     public int courseId;
-    public String apiCose;
+    public String apiCode;
 }

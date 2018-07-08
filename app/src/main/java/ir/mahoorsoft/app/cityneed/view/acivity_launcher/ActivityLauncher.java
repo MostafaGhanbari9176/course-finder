@@ -4,10 +4,8 @@ import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -36,8 +34,9 @@ import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedStatuse;
-import ir.mahoorsoft.app.cityneed.presenter.ServiceUpdate;
+import ir.mahoorsoft.app.cityneed.presenter.notify.Alarm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
+import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 
 
 public class ActivityLauncher extends AppCompatActivity implements PresentCheckedStatuse.OnPresentCheckServrer, View.OnClickListener, DownloadManager.OnProgressDownloadListener {
@@ -57,8 +56,10 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
         pointer();
-        if (!Pref.getBollValue(PrefKey.smsListReady, false))
+        if (!Pref.getBollValue(PrefKey.smsListReady, false)) {
             setSmsTextData();
+            setDBLastIdData();
+        }
         runLogo();
         startcheckNotification();
     }
@@ -86,6 +87,14 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         Pref.saveBollValue(PrefKey.smsListReady, true);
     }
 
+    private void setDBLastIdData() {
+        ArrayList<String> smsTexts = new ArrayList<>();
+        smsTexts.add("sms");
+        smsTexts.add("sabtenam");
+        smsTexts.add("course");
+        LocalDatabase.insertDBLastIdFirstData(this, smsTexts);
+    }
+
     private void runLogo() {
         serverError.setVisibility(View.GONE);
         logo.setVisibility(View.VISIBLE);
@@ -98,10 +107,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     }
 
     public void startcheckNotification() {
-        Intent intent = new Intent(this, ServiceUpdate.class);
-        PendingIntent pendingIntent = PendingIntent.getService(
-                this, 0, intent, 0);
-        G.alarm.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 60000, pendingIntent);
+        (new Alarm()).setAlarm(this);
     }
 
     private void checkVersion() {
@@ -184,6 +190,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
             case R.id.btnContinueLuncher:
                 try {
                     downloadManager.stopDownlaod();
+                } catch (Exception ignore) {
                 } finally {
                     next();
                 }
@@ -197,7 +204,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         downloadManager = new DownloadManager();
         downloadManager.downloadPath(ApiClient.serverAddress + "/city_need/apk/CourseFinder.apk");
         downloadManager.savePath(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/");
-        downloadManager.fileName("دوره یاب" + ".apk");
+        downloadManager.fileName("CourseFinder" + DateCreator.todayDate() + ".apk");
         downloadManager.listener(this);
         downloadManager.download();
 
@@ -245,7 +252,6 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
 
     @Override
     public void onDownloading(int percent, int downloadedSize, int fileSize) {
-        Toast.makeText(this, "درحال دانلود ...", Toast.LENGTH_SHORT).show();
         progressBarDownload.setProgress(percent);
         txtPresentDownload.setText(percent + "%");
     }
@@ -258,11 +264,12 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
             intent.setDataAndType(Uri.fromFile(new File(saveFilePath)), "application/vnd.android.package-archive");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            this.finish();
         } catch (Exception e) {
-            Toast.makeText(this, "فایل در شاخه اصلی حافظه با نام" + "دوره یاب" + "ذخیره شد.", Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(this, "فایل در شاخه اصلی حافظه با نام" + "CourseFinder" + "ذخیره شد.", Toast.LENGTH_SHORT).show();
+            next();
         }
-        next();
+
     }
 
     @Override

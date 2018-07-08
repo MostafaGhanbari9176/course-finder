@@ -272,8 +272,8 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
                 .build();
         SimpleTarget sabtenam = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.registerCourseBottomNavUser))
                 .setRadius(100f)
-                .setTitle("لیست")
-                .setDescription("لیست دوره های ثبتنام شده")
+                .setTitle("لیست دوره های ثبت نام شده")
+                .setDescription("برای مشاهده دوره هایی که درخواست ثبت نام داده اید به این قسمت مراجعه کنید")
                 .build();
         SimpleTarget sms = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.messageBoxBottomNavUser))
                 .setRadius(100f)
@@ -282,8 +282,8 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
                 .build();
         SimpleTarget trend = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.trendingUpBottomNavUser))
                 .setRadius(100f)
-                .setTitle("مدرس")
-                .setDescription("ارتقا کاربری به مدرس")
+                .setTitle("ارتقا کاربری به مدرس")
+                .setDescription("برای اینکه بتوانید دوره ثبت کنید باید کاربری خودرا به مدرس یا آموزشگاه ارتقا داده")
                 .build();
         SimpleTarget logout = new SimpleTarget.Builder(G.activity).setPoint(view.findViewById(R.id.logOutBottomNavUser))
                 .setRadius(100f)

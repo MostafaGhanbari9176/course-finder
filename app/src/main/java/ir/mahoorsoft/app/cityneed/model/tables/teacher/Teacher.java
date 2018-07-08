@@ -173,10 +173,10 @@ public class Teacher {
         });
     }
 
-    public void getNotifyData(String apiCode) {
+    public void getNotifyData() {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StNotifyData>> getData = api.getNewTeacherNotifyData(apiCode);
+        Call<ArrayList<StNotifyData>> getData = api.getNewTeacherNotifyData();
         getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
             @Override
             public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {

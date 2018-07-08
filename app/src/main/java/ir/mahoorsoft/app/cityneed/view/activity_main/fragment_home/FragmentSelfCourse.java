@@ -156,7 +156,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
         dialogProgres = new DialogProgres(G.context, "درحال بارگذاری");
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("course", surce.get(position).id + ".png", path);
+        presentUpload.uploadFile("course", surce.get(position).id + "wIzArD.png", path);
     }
 
     @Override
@@ -169,9 +169,9 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     public void flagFromUpload(ResponseOfServer res) {
 
         if (res.code == 1)
-            messageFromUpload("بارگذاری شد");
-        else
-            messageFromUpload("خطا!!!");
+            messageFromUpload("بارگذاری شد بعداز تایید شدن قابل نمایش است");
+        else if (res.code == 0)
+            messageFromUpload("حداکثر 5 مگابایت");
     }
 
     @Override

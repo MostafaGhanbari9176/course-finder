@@ -358,14 +358,14 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
         dialogProgres = new DialogProgres(this, "درحال بارگذاری");
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("course", surce.get(position).id + ".png", path);
+        presentUpload.uploadFile("course", surce.get(position).id + "wIzArD.png", path);
     }
 
     private void uploadVideo(String path) {
         dialogProgres = new DialogProgres(this, "درحال بارگذاری");
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("newsVideo", surce.get(position).id + ".mp4", path);
+        presentUpload.uploadFile("newsVideo", surce.get(position).id + "wIzArD.mp4", path);
     }
 
     @Override
@@ -378,9 +378,9 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     public void flagFromUpload(ResponseOfServer res) {
 
         if (res.code == 1)
-            messageFromUpload("بارگذاری شد");
-        else
-            messageFromUpload("خطا!!!");
+            messageFromUpload("بارگذاری شد بعداز تایید شدن قابل نمایش است");
+        else if(res.code == 0)
+            messageFromUpload("حداکثر 5 مگابایت");
     }
 
     @Override

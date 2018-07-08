@@ -240,10 +240,10 @@ public class Course {
 
     }
 
-    public void getNewCourseNotifyData(String apiCode, int lastId) {
+    public void getNewCourseNotifyData(int lastId) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StNotifyData>> getData = api.getNewCourseNotifyData(apiCode, lastId);
+        Call<ArrayList<StNotifyData>> getData = api.getNewCourseNotifyData(lastId);
         getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
             @Override
             public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {

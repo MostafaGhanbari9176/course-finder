@@ -31,21 +31,19 @@ import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 public class G extends Application {
 
     public static String MID = "18e4d686-6592-11e8-803c-005056a205be";
-    public static String VN = "1.0.1";
+    public static String VN = "1.0.4";
     public static String appLink = "http://www.mahoorsoft.ir/%D8%A7%D8%AE%D8%A8%D8%A7%D8%B1/ID/12/%D8%A7%D9%86%D8%AA%D8%B4%D8%A7%D8%B1-%D8%A7%D9%BE%D9%84%DB%8C%DA%A9%DB%8C%D8%B4%D9%86-%D8%AF%D9%88%D8%B1%D9%87-%DB%8C%D8%A7%D8%A8";
     public static AppCompatActivity activity;
     public static Context context;
     public static SharedPreferences preferences;
     public static String Name;
-    public static AlarmManager alarm;
-    public static int INTERVAL_CHECK_PM = 5000;
+    public static int INTERVAL_CHECK_PM = 300000;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
-        alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
     }
 

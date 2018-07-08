@@ -435,15 +435,14 @@ public interface Api {
             @Path("lastId") int lastId
     );
 
-    @GET("getNewCourseNotifyData/{apiCode}/{lastId}")
+    @GET("getNewCourseNotifyData/{lastId}")
     Call<ArrayList<StNotifyData>> getNewCourseNotifyData(
-            @Path("apiCode") String apiCode,
             @Path("lastId") int lastId
     );
 
-    @GET("getNewTeacherNotifyData/{apiCode}")
+    @GET("getNewTeacherNotifyData")
     Call<ArrayList<StNotifyData>> getNewTeacherNotifyData(
-            @Path("apiCode") String apiCode
+
     );
 
 

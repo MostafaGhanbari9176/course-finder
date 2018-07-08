@@ -5,6 +5,8 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
+
 /**
  * Created by RCC1 on 4/28/2018.
  */
@@ -46,12 +48,17 @@ public class LocalDatabase {
         (new DBLastId(context)).updateLastId(signText, lastId);
     }
 
-    public static void saveApiCodes(Context context, ArrayList<String> apiCodes, String todayDate) {
+    public static void saveApiCodes(Context context, ArrayList<StNotifyData> apiCodes, String todayDate) {
 
         (new DBTeacherApi(context)).saveApiCode(apiCodes, todayDate);
     }
 
-    public static ArrayList<String> getApiCodes(Context context) {
+    public static void saveApiCodes(Context context, String apiCodes, String todayDate) {
+
+        (new DBTeacherApi(context)).saveApiCode(apiCodes, todayDate);
+    }
+
+    public static ArrayList<StNotifyData> getApiCodes(Context context) {
 
         return (new DBTeacherApi(context)).getApiCodes();
     }
