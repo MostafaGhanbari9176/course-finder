@@ -47,7 +47,7 @@
                         android:gravity="right|center"
                         android:text="نام دوره : "
                         android:textColor="@color/dark"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtCourseNameItem"
@@ -57,7 +57,7 @@
                         android:gravity="center|start"
                         android:maxLines="1"
                         android:textColor="@color/dark"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -74,7 +74,7 @@
                         android:gravity="right|center"
                         android:text="نام آموزشگاه : "
                         android:textColor="@color/dark"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtMasterNameItem"
@@ -84,7 +84,7 @@
                         android:gravity="center|start"
                         android:maxLines="1"
                         android:textColor="@color/dark"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -101,7 +101,7 @@
                         android:gravity="right|center"
                         android:text="تاریخ شروع : "
                         android:textColor="@color/dark"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtStartDateItem"
@@ -111,7 +111,7 @@
                         android:gravity="center|start"
                         android:maxLines="1"
                         android:textColor="@color/dark"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 

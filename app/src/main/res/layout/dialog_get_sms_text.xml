@@ -26,7 +26,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="ارسال پیام" />
+                    android:text="ارسال پیام"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -43,8 +44,9 @@
                     android:gravity="start"
                     android:hint="متن پیام خودرا وارد کنید"
                     android:inputType="textMultiLine"
-                    android:maxLength="50"
-                    android:textColorHint="@color/pink_tel" />
+                    android:maxLength="500"
+                    android:textColorHint="@color/pink_tel"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -65,7 +67,8 @@
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:text="متن پیام آماده : "
-                        android:textColor="@color/pink_tel" />
+                        android:textColor="@color/pink_tel"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/btnAddReadySmsText"
@@ -75,7 +78,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="افزودن"
-                        android:textColor="@color/green_tel" />
+                        android:textColor="@color/green_tel"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView

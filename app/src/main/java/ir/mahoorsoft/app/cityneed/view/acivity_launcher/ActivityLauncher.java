@@ -58,9 +58,6 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         pointer();
         if (!Pref.getBollValue(PrefKey.smsListReady, false))
             setSmsTextData();
-        if (!Pref.getBollValue(PrefKey.NotifyDataBaseReady, false))
-            setDBLastIdData();
-
         runLogo();
         startcheckNotification();
     }
@@ -86,15 +83,6 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         smsTexts.add("ثبت نام شما لغو شد.");
         LocalDatabase.addSmsText(this, smsTexts);
         Pref.saveBollValue(PrefKey.smsListReady, true);
-    }
-
-    private void setDBLastIdData() {
-        ArrayList<String> smsTexts = new ArrayList<>();
-        smsTexts.add("sms");
-        smsTexts.add("sabtenam");
-        smsTexts.add("course");
-        LocalDatabase.insertDBLastIdFirstData(this, smsTexts);
-        Pref.saveBollValue(PrefKey.NotifyDataBaseReady, true);
     }
 
     private void runLogo() {

@@ -45,7 +45,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:gravity="center"
-                        android:text="دریافت شده از : " />
+                        android:text="دریافت شده از : "
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtTsNameItemIn"
@@ -53,7 +54,10 @@
                         android:layout_height="match_parent"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:gravity="center|start" />
+                        android:ellipsize="end"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/btnSeenItemIn"
@@ -79,7 +83,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:gravity="right|center"
-                        android:text="بابت دوره : " />
+                        android:text="بابت دوره : "
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtCourseNameItemIn"
@@ -87,7 +92,10 @@
                         android:layout_height="match_parent"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:gravity="center|start" />
+                        android:ellipsize="end"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/btnDeleteItemIn"
@@ -113,7 +121,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:gravity="right|center"
-                        android:text="در تاریخ : " />
+                        android:text="در تاریخ : "
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtDateItemIn"
@@ -121,7 +130,10 @@
                         android:layout_height="match_parent"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:gravity="center|start" />
+                        android:ellipsize="end"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/btnReportItemSms"

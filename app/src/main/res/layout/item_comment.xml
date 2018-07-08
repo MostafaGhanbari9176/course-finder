@@ -42,7 +42,7 @@
                         android:layout_marginTop="2dp"
                         android:gravity="center|end"
                         android:text="مصطفی"
-                        android:textSize="@dimen/txt_size_vsmal" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -81,7 +81,7 @@
                         android:layout_marginTop="2dp"
                         android:gravity="end"
                         android:text="1396-12-12"
-                        android:textSize="@dimen/txt_size_xvsmal" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -99,7 +99,7 @@
                         android:layout_marginTop="2dp"
                         android:gravity="end"
                         android:text="بابت دوره "
-                        android:textSize="@dimen/txt_size_xvsmal" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -116,7 +116,7 @@
                         android:layout_marginTop="2dp"
                         android:gravity="end"
                         android:text="اندروید"
-                        android:textSize="@dimen/txt_size_xvsmal" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -142,7 +142,7 @@
                         android:layout_marginTop="2dp"
                         android:gravity="center|end"
                         android:text="این دوره در"
-                        android:textSize="@dimen/txt_size_xvsmal" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -161,7 +161,7 @@
                         android:layout_marginTop="2dp"
                         android:gravity="end"
                         android:text="1396-12-12"
-                        android:textSize="@dimen/txt_size_xvsmal" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -179,7 +179,7 @@
                         android:layout_marginTop="2dp"
                         android:gravity="end"
                         android:text="برگزار شده بود"
-                        android:textSize="@dimen/txt_size_xvsmal" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -226,7 +226,7 @@
                         android:paddingStart="2dp"
                         android:text="55"
                         android:textColor="@color/green_ios"
-                        android:textSize="@dimen/txt_size_vsmal"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -253,7 +253,7 @@
                         android:paddingStart="2dp"
                         android:text="5"
                         android:textColor="@color/pink_ios"
-                        android:textSize="@dimen/txt_size_vsmal"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <ImageView

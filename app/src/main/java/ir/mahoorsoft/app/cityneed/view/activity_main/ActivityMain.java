@@ -66,7 +66,6 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     BottomNavigationView navDown;
     HashMap<String, Fragment> fSaver = new HashMap<>();
     Stack<String> keySaver = new Stack<>();
-    LinearLayout llBackHelpSwipeProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,7 +242,6 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     }
 
     private void pointers() {
-        llBackHelpSwipeProgress = (LinearLayout) findViewById(R.id.LLBackHelpSwipeProgress);
         navDown = (BottomNavigationView) findViewById(R.id.bottomNav_down_Home);
         navDown.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_tel));
         setNavigationItemListener();
@@ -344,37 +342,31 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
             case "fHome":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
-                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_tel));
                 break;
 
             case "fMap":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
-                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.blue_ios));
                 break;
 
             case "fSearch":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
-                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.purple_tel));
                 break;
 
             case "fGroupingList":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
-                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.orange_tel));
                 break;
 
             case "fSelfCourse":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
-                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.tealblue_ios));
                 break;
 
             case "fTeacherList":
                 navDown.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
                 toolbar.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
-                llBackHelpSwipeProgress.setBackgroundColor(ContextCompat.getColor(ActivityMain.this, R.color.green_tel));
                 break;
         }
     }

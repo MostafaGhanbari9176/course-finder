@@ -48,7 +48,7 @@
                             android:gravity="center"
                             android:maxLines="2"
                             android:textColor="@color/dark_eq"
-                            android:textSize="@dimen/txt_size_smal" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/txtCellPhoneStudentName"
@@ -62,7 +62,7 @@
                             android:text="05431132499"
                             android:textColor="#000"
                             android:textColorLink="@color/blue_tel"
-                            android:textSize="@dimen/txt_size_smal" />
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -80,9 +80,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="حذف محصل"
                         android:textColor="@color/red_ios"
-                        android:textSize="@dimen/txt_size_vsmal"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -90,9 +92,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="ارسال پیام به محصل"
                         android:textColor="@color/blue_ios"
-                        android:textSize="@dimen/txt_size_vsmal"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -100,9 +104,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="تایید کردن محصل"
                         android:textColor="@color/blue"
-                        android:textSize="@dimen/txt_size_vsmal"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 

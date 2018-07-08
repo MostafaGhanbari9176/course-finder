@@ -32,43 +32,4 @@ public class LocalDatabase {
         DBSmsText dbSmsText = new DBSmsText(context);
         dbSmsText.removeSmsText(smsText);
     }
-
-    public static void insertDBLastIdFirstData(Context context, ArrayList<String> signText) {
-
-        (new DBLastId(context)).insertDBLastIdFirstData(signText);
-    }
-
-    public static int getLastId(Context context, String signText) {
-
-        try {
-            return Integer.parseInt((new DBLastId(context)).getLastId(signText));
-        } catch (Exception ignore) {
-            return 0;
-        }
-    }
-
-    public static void updateLastId(Context context, String signText, String lastId) {
-
-        (new DBLastId(context)).updateLastId(signText, lastId);
-    }
-
-    public static void saveApiCodes(Context context, ArrayList<StNotifyData> apiCodes, String todayDate) {
-
-        (new DBTeacherApi(context)).saveApiCode(apiCodes, todayDate);
-    }
-
-    public static void saveApiCodes(Context context, String apiCodes, String todayDate) {
-
-        (new DBTeacherApi(context)).saveApiCode(apiCodes, todayDate);
-    }
-
-    public static ArrayList<StNotifyData> getApiCodes(Context context) {
-
-        return (new DBTeacherApi(context)).getApiCodes();
-    }
-
-    public static void removeApiCodes(Context context) {
-
-        (new DBTeacherApi(context)).deleteDataBase();
-    }
 }
