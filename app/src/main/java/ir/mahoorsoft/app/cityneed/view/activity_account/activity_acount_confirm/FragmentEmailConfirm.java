@@ -67,6 +67,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         pointers();
         txtEmail.setText(Pref.getStringValue(PrefKey.emailWhenConfirm, ""));
         txtName.setText(Pref.getStringValue(PrefKey.nameWhenConfirm, ""));
+        rbLogIn.setChecked(Pref.getBollValue(PrefKey.cbxLogInisChecked, false));
 
     }
 
@@ -121,6 +122,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         } else {
             Pref.saveStringValue(PrefKey.emailWhenConfirm, mail);
             Pref.saveStringValue(PrefKey.nameWhenConfirm, txtName.getText().toString().trim());
+            Pref.saveBollValue(PrefKey.cbxLogInisChecked, isLogIn);
             sendEmailForServer(mail);
         }
     }

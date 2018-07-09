@@ -3,6 +3,7 @@ package ir.mahoorsoft.app.cityneed.presenter.notify;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -70,7 +71,12 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
 
     void notification(String title, String message, Intent intent) {
         try {
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addNextIntent(intent);
+            PendingIntent resultPendingIntent =
+                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
             NotificationCompat.Builder builder = (NotificationCompat.Builder) new
                     NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.noti)
@@ -78,7 +84,7 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
                     .setTicker("دوره یاب")
                     .setContentTitle(title)
                     .setContentText(message)
-                    .setContentIntent(pendingIntent)
+                    .setContentIntent(resultPendingIntent)
                     .setGroup("CourseFinderGroupNotify")
                     .setGroupSummary(true)
                     .setLights(Color.argb(1, 0, 50, 100), 1000, 1000)

@@ -74,7 +74,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     TextView txtNews;
     TextView txtDescription;
     LinearLayout moreDetails;
-    LinearLayout btnMoreDetails;
     LinearLayout llRatBar;
     RatingBar ratBar;
     ProgressBar pbRatBar;
@@ -148,37 +147,13 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtMony = (TextView) view.findViewById(R.id.txtMonyFeature);
         txtCapacity = (TextView) view.findViewById(R.id.txtCapacityFeature);
         moreDetails = (LinearLayout) view.findViewById(R.id.MoreDetailsShowFeature);
-        btnMoreDetails = (LinearLayout) view.findViewById(R.id.btnMoreDetailsShowFeature);
+        ((LinearLayout) view.findViewById(R.id.btnMoreDetailsShowFeature)).setOnClickListener(this);
         btnRegister = (Button) view.findViewById(R.id.btnRegisterShowFeature);
-        moreDetails.setVisibility(View.GONE);
+        G.animatingForGone(moreDetails, 1f, 0f, -moreDetails.getHeight());
         ((ImageView) view.findViewById(R.id.imgButtonShareCourseFuture)).setOnClickListener(this);
         imgBookMark.setOnClickListener(this);
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerHe();
-            }
-        });
-        btnMoreDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (moreDetails.getVisibility() == View.GONE) {
-                    moreDetails.setVisibility(View.VISIBLE);
-                    imgDrop.setImageResource(R.drawable.icon_drop_up);
-                } else {
-                    moreDetails.setVisibility(View.GONE);
-                    imgDrop.setImageResource(R.drawable.icon_drop_down);
-                }
-            }
-        });
-
-        CVbtnPlayVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                settingUpVideoView();
-            }
-        });
+        btnRegister.setOnClickListener(this);
+        CVbtnPlayVideo.setOnClickListener(this);
 
     }
 
@@ -521,6 +496,24 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
                     startActivity(Intent.createChooser(i, "choose one"));
                 } catch (Exception ignored) {
                 }
+                break;
+
+            case R.id.btnRegisterShowFeature:
+                registerHe();
+                break;
+
+            case R.id.btnMoreDetailsShowFeature:
+                if (moreDetails.getVisibility() == View.GONE) {
+                    G.animatingForVisible(moreDetails, 0f, 1f, 0f);
+                    imgDrop.setImageResource(R.drawable.icon_drop_up);
+                } else {
+                    moreDetails.setVisibility(View.GONE);
+                    G.animatingForGone(moreDetails, 1f, 0f, -moreDetails.getHeight());
+                    imgDrop.setImageResource(R.drawable.icon_drop_down);
+                }
+                break;
+            case R.id.CVbtnPlayVideo:
+                settingUpVideoView();
                 break;
         }
     }

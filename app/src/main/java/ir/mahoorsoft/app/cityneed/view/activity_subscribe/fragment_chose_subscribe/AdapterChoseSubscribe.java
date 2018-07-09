@@ -88,10 +88,10 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
             @Override
             public void onClick(View v) {
                 if (holder.showMoreFeature.getVisibility() == View.GONE) {
-                    holder.showMoreFeature.setVisibility(View.VISIBLE);
+                    G.animatingForVisible(holder.showMoreFeature, 0f, 1f, 0f);
                     holder.imgDropDown.setImageResource(R.drawable.icon_drop_up_light);
                 } else {
-                    holder.showMoreFeature.setVisibility(View.GONE);
+                    G.animatingForGone(holder.showMoreFeature, 1f, 0f, -holder.showMoreFeature.getHeight());
                     holder.imgDropDown.setImageResource(R.drawable.icon_drop_down_light);
                 }
             }

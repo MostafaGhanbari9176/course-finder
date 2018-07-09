@@ -69,11 +69,8 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
         txtGetGiftCide = (TextView) view.findViewById(R.id.txtGetGiftCode);
     }
 
-    public void cancelPbar() {
-        pbar.setVisibility(View.GONE);
-    }
-
     private void queryForSubscribes() {
+        pbar.setVisibility(View.VISIBLE);
         (new PresentSubscribe(this)).getSubscribeList();
     }
 
@@ -97,12 +94,12 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
 
     @Override
     public void onReceiveUserBuy(ArrayList<StBuy> data) {
-
+        pbar.setVisibility(View.GONE);
     }
 
     @Override
     public void onReceiveFlagFromSubscribe(boolean flag) {
-
+        pbar.setVisibility(View.GONE);
     }
 
     @Override

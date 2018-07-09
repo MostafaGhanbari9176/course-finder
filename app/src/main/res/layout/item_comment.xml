@@ -141,7 +141,7 @@
                         android:layout_marginStart="4dp"
                         android:layout_marginTop="2dp"
                         android:gravity="center|end"
-                        android:text="این دوره در"
+                        android:text="تاریخ برگزاری دوره : "
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -161,24 +161,6 @@
                         android:layout_marginTop="2dp"
                         android:gravity="end"
                         android:text="1396-12-12"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="2dp"
-                        android:gravity="end"
-                        android:text="برگزار شده بود"
                         android:textSize="12sp" />
                 </LinearLayout>
 

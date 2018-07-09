@@ -18,6 +18,7 @@ public class PrefKey {
     public static final String email = "email";
     public static final String emailWhenConfirm = "emailWhenConfirm";
     public static final String nameWhenConfirm = "nameWhenConfirm";
+    public static final String cbxLogInisChecked = "cbxLugInisChecked";
     public static final String cellPhone = "cellPhone";
     public static final String userName = "UserName";
     public static final String location = "location";

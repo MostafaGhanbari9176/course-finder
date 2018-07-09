@@ -1,5 +1,7 @@
 package ir.mahoorsoft.app.cityneed;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -111,5 +113,36 @@ public class G extends Application {
 
     }
 
+
+    public static void animatingForGone(final View view, float firstAlpha, float lastAlpha, float translationYValue) {
+        view.setAlpha(firstAlpha);
+        view.animate()
+                .translationY(translationYValue)
+                .alpha(lastAlpha)
+                .setDuration(300)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        view.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    public static void animatingForVisible(final View view, float firstAlpha, float lastAlpha, float translationYValue) {
+        view.setAlpha(firstAlpha);
+        view.setVisibility(View.VISIBLE);
+        view.animate()
+                .translationY(translationYValue)
+                .alpha(lastAlpha)
+                .setDuration(300)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        view.setVisibility(View.VISIBLE);
+                    }
+                });
+    }
 
 }
