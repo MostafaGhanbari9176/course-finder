@@ -81,24 +81,27 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        sDown.setRefreshing(false);
-        if (course.get(0).empty == 1)
-            txt.setVisibility(View.VISIBLE);
-        else {
-            txt.setVisibility(View.GONE);
-            list = (RecyclerView) view.findViewById(R.id.RVList);
-            surce.clear();
-            surce.addAll(course);
-            for (int i = 0; i < course.size(); i++) {
-                if (course.get(i).vaziat == 0)
-                    surce.remove(course.get(i));
+        try {
+            sDown.setRefreshing(false);
+            if (course.get(0).empty == 1)
+                txt.setVisibility(View.VISIBLE);
+            else {
+                txt.setVisibility(View.GONE);
+                list = (RecyclerView) view.findViewById(R.id.RVList);
+                surce.clear();
+                surce.addAll(course);
+                for (int i = 0; i < course.size(); i++) {
+                    if (course.get(i).vaziat == 0)
+                        surce.remove(course.get(i));
+                }
+                adapter = new AdapterCourseList(G.context, surce, this);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                        , LinearLayoutManager.VERTICAL, false);
+                list.setLayoutManager(layoutManager);
+                list.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
-            adapter = new AdapterCourseList(G.context, surce, this);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                    , LinearLayoutManager.VERTICAL, false);
-            list.setLayoutManager(layoutManager);
-            list.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+        } catch (Exception ignore) {
         }
     }
 

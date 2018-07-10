@@ -337,9 +337,13 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     private void next() {
-        Intent intent = new Intent(G.context, ActivityProfile.class);
-        startActivity(intent);
-        G.activity.finish();
+        try {
+            Intent intent = new Intent(G.context, ActivityProfile.class);
+            startActivity(intent);
+            G.activity.finish();
+        } catch (Exception ignore) {
+        }
+
     }
 
     @Override

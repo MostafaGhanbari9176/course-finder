@@ -129,21 +129,24 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
 
     @Override
     public void onReceiveTeacher(ArrayList<StTeacher> users) {
-        sDown.setRefreshing(false);
-        if (users.size() == 0) {
-            sendMessageFTT("خطا");
-            ActivityOptionalCourse.viewPager.setCurrentItem(0);
-            return;
+        try {
+            sDown.setRefreshing(false);
+            if (users.size() == 0) {
+                sendMessageFTT("خطا");
+                ActivityOptionalCourse.viewPager.setCurrentItem(0);
+                return;
+            }
+            teacher = users.get(0);
+            txtSubject.setText(users.get(0).subject);
+            txtPhone.setText(users.get(0).phone);
+            txtLandPhone.setText(users.get(0).landPhone);
+            txtDescription.setText(users.get(0).tozihat);
+            txtAddress.setText(users.get(0).address);
+            setImg(users.get(0).pictureId);
+            setFavoriteImage();
+            setTeacherLocation();
+        } catch (Exception ignore) {
         }
-        teacher = users.get(0);
-        txtSubject.setText(users.get(0).subject);
-        txtPhone.setText(users.get(0).phone);
-        txtLandPhone.setText(users.get(0).landPhone);
-        txtDescription.setText(users.get(0).tozihat);
-        txtAddress.setText(users.get(0).address);
-        setImg(users.get(0).pictureId);
-        setFavoriteImage();
-        setTeacherLocation();
     }
 
     @Override
@@ -171,7 +174,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
     }
 
     private void setImg(String pictureId) {
-        Glide.with(this)
+        Glide.with(G.context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + pictureId + ".png")
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .fitCenter()

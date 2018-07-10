@@ -1,11 +1,11 @@
 package ir.mahoorsoft.app.cityneed.view.acivity_launcher;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -21,11 +20,9 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -39,6 +36,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 
 
+
 public class ActivityLauncher extends AppCompatActivity implements PresentCheckedStatuse.OnPresentCheckServrer, View.OnClickListener, DownloadManager.OnProgressDownloadListener {
 
 
@@ -50,6 +48,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     TextView txtPresentDownload;
     ProgressBar progressBarDownload;
     DownloadManager downloadManager;
+    Button btnDownload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         txtPresentDownload = (TextView) findViewById(R.id.txtPresentDownload);
         txtNewVersion = (TextView) findViewById(R.id.txtNewVersion);
         txtCurrentVersion.setText(G.VN);
-        ((Button) findViewById(R.id.btnDownload)).setOnClickListener(this);
+        (btnDownload = (Button) findViewById(R.id.btnDownload)).setOnClickListener(this);
         ((Button) findViewById(R.id.btnContinueLuncher)).setOnClickListener(this);
         ((Button) findViewById(R.id.btnReConnectc)).setOnClickListener(this);
     }
@@ -190,7 +189,8 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     }
 
     private void downloadApp() {
-
+        Toast.makeText(this, "شروع دانلود تا لحظاتی دیگر...", Toast.LENGTH_SHORT).show();
+        btnDownload.setEnabled(false);
         downloadManager = new DownloadManager();
         downloadManager.downloadPath(ApiClient.serverAddress + "/city_need/apk/CourseFinder.apk");
         downloadManager.savePath(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/");
@@ -237,7 +237,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
 
     @Override
     public void onDownloadStart() {
-        Toast.makeText(this, "شروع دانلود ...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "درحال دانلود ...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -250,13 +250,24 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     public void onDownloadFinished(String saveFilePath) {
         Toast.makeText(this, "پایان دانلود.", Toast.LENGTH_SHORT).show();
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(new File(saveFilePath)), "application/vnd.android.package-archive");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            File toInstall = new File(saveFilePath);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri apkUri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".ir.mahoorsoft.app.cityneed.provider", toInstall);
+                Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                intent.setData(apkUri);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                this.startActivity(intent);
+            } else {
+                Uri apkUri = Uri.fromFile(toInstall);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.startActivity(intent);
+            }
             this.finish();
         } catch (Exception e) {
-            Toast.makeText(this, "فایل در شاخه اصلی حافظه با نام" + "CourseFinder" + "ذخیره شد.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "فایل در شاخه اصلی حافظه با نام" + "CourseFinder" + DateCreator.todayDate() + "ذخیره شد.", Toast.LENGTH_LONG).show();
             next();
         }
 

@@ -24,6 +24,6 @@
     <item
         android:id="@+id/logOutBottomNavUser"
         android:icon="@drawable/icon_power"
-        android:title="خروج" />
+        android:title="خروج از حساب کاربری" />
 
 </menu>

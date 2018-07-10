@@ -23,13 +23,91 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btnAppHelpDialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/btn_dialog"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="4dp"
+                        android:text="نکاتی درمورد برنامه"
+                        android:textColor="@color/dark" />
+
+                    <TextView
+                        android:id="@+id/txtApphHelpDialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="center"
+                        android:lineSpacingExtra="8sp"
+                        android:padding="8dp"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="4dp"
+                        android:text="TextView"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btnSearchHelpDialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/btn_dialog"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="4dp"
+                        android:text="نحوه جستجو کردن"
+                        android:textColor="@color/dark" />
+
+                    <TextView
+                        android:id="@+id/txtSearchHelpDialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="center"
+                        android:lineSpacingExtra="8sp"
+                        android:padding="8dp"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="4dp"
+                        android:text="TextView"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <Button
                         android:id="@+id/btnLoginHelpDialog"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
@@ -56,6 +134,45 @@
                         android:text="TextView"
                         android:visibility="gone" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btnCommentHelpDialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/btn_dialog"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="4dp"
+                        android:text="نحوه نظر دادن در مورد یک آموزشگاه یا یک دوره"
+                        android:textColor="@color/dark" />
+
+                    <TextView
+                        android:id="@+id/txtCommentHelpDialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="center"
+                        android:lineSpacingExtra="8sp"
+                        android:padding="8dp"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="4dp"
+                        android:text="TextView"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -215,6 +332,7 @@
                         android:text="TextView"
                         android:visibility="gone" />
                 </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 

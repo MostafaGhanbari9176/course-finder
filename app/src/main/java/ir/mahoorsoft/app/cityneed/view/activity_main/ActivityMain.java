@@ -410,6 +410,7 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
         View snackbarView = snackbar.getView();
         int snackbarTextId = android.support.design.R.id.snackbar_text;
         TextView textView = (TextView) snackbarView.findViewById(snackbarTextId);
+        snackbarView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         textView.setTextColor(ContextCompat.getColor(this, R.color.light));
         snackbar.show();
     }

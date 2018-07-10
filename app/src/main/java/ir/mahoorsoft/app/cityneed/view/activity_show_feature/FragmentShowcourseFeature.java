@@ -296,7 +296,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     }
 
     private void setImage() {
-        Glide.with(this)
+        Glide.with(G.context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + courseId + ".png")
                 .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .centerCrop()
@@ -321,30 +321,33 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
 
     @Override
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
-        sDown.setRefreshing(false);
-        capacity = course.get(0).capacity;
-        state = course.get(0).state;
-        startDate = course.get(0).startDate;
-        idTeacher = course.get(0).idTeacher;
-        txtMony.setText(formatter.format(course.get(0).mony) + " تومان");
-        txtCapacity.setText(course.get(0).capacity + " نفر");
-        txtRange.setText("از " + course.get(0).minOld + " تا " + course.get(0).maxOld + " سال");
-        txtStartDate.setText(course.get(0).startDate);
-        txtEndDate.setText(course.get(0).endDate);
-        txtType.setText(course.get(0).type == 0 ? "آموزش عمومی" : "آموزش خصوصی");
-        txtName.setText(course.get(0).CourseName);
-        txtMasterName.setText(course.get(0).MasterName);
-        txtHours.setText(course.get(0).hours);
-        txtDay.setText(course.get(0).day);
-        txtDescription.setText(course.get(0).tozihat);
-        txtTabaghe.setText(course.get(0).tabaghe);
-        txtsharayet.setText(course.get(0).sharayet);
-        checkCourseData();
-        bookMark = course.get(0).bookMark;
-        setBookMarkImage();
-        setImage();
-        if (Pref.getBollValue(PrefKey.IsLogin, false))
-            checkedSabtenamCourse();
+        try {
+            sDown.setRefreshing(false);
+            capacity = course.get(0).capacity;
+            state = course.get(0).state;
+            startDate = course.get(0).startDate;
+            idTeacher = course.get(0).idTeacher;
+            txtMony.setText(formatter.format(course.get(0).mony) + " تومان");
+            txtCapacity.setText(course.get(0).capacity + " نفر");
+            txtRange.setText("از " + course.get(0).minOld + " تا " + course.get(0).maxOld + " سال");
+            txtStartDate.setText(course.get(0).startDate);
+            txtEndDate.setText(course.get(0).endDate);
+            txtType.setText(course.get(0).type == 0 ? "آموزش عمومی" : "آموزش خصوصی");
+            txtName.setText(course.get(0).CourseName);
+            txtMasterName.setText(course.get(0).MasterName);
+            txtHours.setText(course.get(0).hours);
+            txtDay.setText(course.get(0).day);
+            txtDescription.setText(course.get(0).tozihat);
+            txtTabaghe.setText(course.get(0).tabaghe);
+            txtsharayet.setText(course.get(0).sharayet);
+            checkCourseData();
+            bookMark = course.get(0).bookMark;
+            setBookMarkImage();
+            setImage();
+            if (Pref.getBollValue(PrefKey.IsLogin, false))
+                checkedSabtenamCourse();
+        } catch (Exception ignore) {
+        }
     }
 
     private void checkCourseData() {

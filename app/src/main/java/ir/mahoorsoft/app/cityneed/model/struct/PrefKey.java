@@ -32,7 +32,10 @@ public class PrefKey {
     public static final String hacked = "hacked";
     public static final String smsListReady = "smslistready";
     public static final String lastIdSabtenam = "lastIdSabtenam";
+    public static final String lastIdCourse = "lastIdCourse";
     public static final String lastIdMessage = "lastIdMessage";
+    public static final String lastTeachers = "lastTeachers";
+    public static final String lastDate = "lastDate";
     public static final String SubId = "subscibeID";
     public static final String isPaymentSuccess = "isPaymentSuccess";
     public static final String isPaymentSaved = "isPaymentSaved";

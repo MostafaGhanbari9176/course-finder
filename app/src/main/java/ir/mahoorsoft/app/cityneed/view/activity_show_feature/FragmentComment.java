@@ -159,20 +159,22 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
 
     @Override
     public void onResiveComment(ArrayList<StComment> comment) {
-        sDown.setRefreshing(false);
-        if (comment.get(0).empty == 1) {
-            txtEmptyComment.setVisibility(View.VISIBLE);
-            return;
+        try {
+            sDown.setRefreshing(false);
+            if (comment.get(0).empty == 1) {
+                txtEmptyComment.setVisibility(View.VISIBLE);
+                return;
+            }
+            source.clear();
+            source.addAll(comment);
+            totalRat.setRating(comment.get(0).totalRat);
+            adapterCommentList = new AdapterCommentList(G.context, source, this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context, LinearLayoutManager.VERTICAL, false);
+            commentList.setLayoutManager(layoutManager);
+            commentList.setAdapter(adapterCommentList);
+            adapterCommentList.notifyDataSetChanged();
+        } catch (Exception ignore) {
         }
-        source.clear();
-        source.addAll(comment);
-        totalRat.setRating(comment.get(0).totalRat);
-        adapterCommentList = new AdapterCommentList(G.context, source, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context, LinearLayoutManager.VERTICAL, false);
-        commentList.setLayoutManager(layoutManager);
-        commentList.setAdapter(adapterCommentList);
-        adapterCommentList.notifyDataSetChanged();
-
     }
 
     @Override

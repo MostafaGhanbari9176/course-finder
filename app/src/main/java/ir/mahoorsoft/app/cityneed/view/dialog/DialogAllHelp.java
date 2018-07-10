@@ -42,12 +42,18 @@ public class DialogAllHelp implements View.OnClickListener {
         views.add((TextView) view.findViewById(R.id.txtTrendingUpHelpDialog));
         views.add((TextView) view.findViewById(R.id.txtAddCourseHelpDialog));
         views.add((TextView) view.findViewById(R.id.txtManageStudentHelpDialog));
+        views.add((TextView) view.findViewById(R.id.txtSearchHelpDialog));
+        views.add((TextView) view.findViewById(R.id.txtCommentHelpDialog));
+        views.add((TextView) view.findViewById(R.id.txtApphHelpDialog));
         setText();
         ((Button) view.findViewById(R.id.btnLoginHelpDialog)).setOnClickListener(this);
         ((Button) view.findViewById(R.id.btnSabtenamHelpDialog)).setOnClickListener(this);
         ((Button) view.findViewById(R.id.btnTrendingUpHelpDialog)).setOnClickListener(this);
         ((Button) view.findViewById(R.id.btnAddCourseHelpDialog)).setOnClickListener(this);
         ((Button) view.findViewById(R.id.btnManageStudentHelpDialog)).setOnClickListener(this);
+        ((Button) view.findViewById(R.id.btnSearchHelpDialog)).setOnClickListener(this);
+        ((Button) view.findViewById(R.id.btnCommentHelpDialog)).setOnClickListener(this);
+        ((Button) view.findViewById(R.id.btnAppHelpDialog)).setOnClickListener(this);
         dialog.setContentView(view);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
@@ -55,11 +61,14 @@ public class DialogAllHelp implements View.OnClickListener {
 
 
     private void setText() {
-        views.get(0).setText("برای ورود به حساب کاربری یا ثبت نام از پایین صفحه خانه سمت چپ استفاده کنید کافیه ایمیل خودرا به همراه نام و نام خانوادگی وارد کرده و پس از دریافت ایمیل اعتبار سنجی کد موجود در آن را وارد کرده و کلید بررسی صحت کدرا فشار دهید...........................................................................................................");
-        views.get(1).setText("برای ثبت نام در یک دوره کافیه بروی دوره مورد نظر کلیک کرده و پس از نمایش مشخصات دوره در انتهای مشخصات دوره بروی کلید ثبت نام کلیک کنید با این کار ثبت نام موقت شما انجام شده و آموزشگاه با شما ارتباط برقرار می کند.............................................................................................................");
-        views.get(2).setText("برای ثبت دوره باید کاربری خود را به مدرس ارتقاء دهید که برای اینکار کافیه به صفحه پروفایل رفته و بروی ارتقاء به مدرس کلیک کنید.............................................................................................................");
-        views.get(3).setText("برای ثبت یک دوره جدید ابتدا باید از طرف ما تایید اعتبار شده و پس از خرید اشتراک با استفاده از کلید اضافه کردن در پایین صفحه پروفایل دوره خودرا ثبت کنید.............................................................................................................");
-        views.get(4).setText("برای مدیریت محصلین و همچنین دوره هایی که ثبت کرده اید کافیه در صفحه پروفایل بروی کلید اضافه شده کلیک کرده تا لیست دوره های ثبت شده توسط خودرا ملاحظه کنید با کلیک بروی هر دوره می توانید لیست محصلین را مشاهده کرده دوره را ویرایش کرده و یک ویدیو مرتبط با دوره بارگذاری کرد............................................................................................................");
+        views.get(0).setText("برای ورود به حساب کاربری کافیه بروی کلید حساب کاربری در پایین صفحه خانه کلیک کرده و ایمیل خودرا به همراه نام و نام خانوادگی وارد کنید و کلید تایید ایمیل را فشار دهید پس از دریافت ایمیل اعتبار سنجی کد موجود در آن را وارد کرده و کلید بررسی صحت کدرا فشار دهید...............................................................................................................");
+        views.get(1).setText("برای ثبت نام در یک دوره کافیه بروی دوره مورد نظر کلیک کرده و پس از نمایش مشخصات دوره در انتهای مشخصات دوره بروی کلید ثبت نام کلیک کنید با این کار ثبت نام موقت شما انجام شده و آموزشگاه با شما ارتباط برقرار می کند...............................................................................................................");
+        views.get(2).setText("برای ثبت دوره باید کاربری خود را به مدرس ارتقاء دهید که برای اینکار کافیه به صفحه پروفایل رفته و بروی ارتقاء به مدرس کلیک کنید...............................................................................................................");
+        views.get(3).setText("برای ثبت یک دوره جدید ابتدا باید از طرف ما تایید اعتبار شده و پس از خرید اشتراک با استفاده از کلید اضافه کردن در پایین صفحه پروفایل دوره خودرا ثبت کنید...............................................................................................................");
+        views.get(4).setText("برای مدیریت محصلین و همچنین دوره هایی که ثبت کرده اید کافیه در صفحه پروفایل بروی کلید اضافه شده کلیک کرده تا لیست دوره های ثبت شده توسط خودرا ملاحظه کنید با کلیک بروی هر دوره می توانید لیست محصلین را مشاهده کرده دوره را ویرایش کرده و یک ویدیو مرتبط با دوره بارگذاری کرد...............................................................................................................");
+        views.get(5).setText("برای جستجو کافیه بروی کلید جستجو در پایین صفحه خانه کلیک کرده پس از ورود به صفحه جستجو می توانبد بخشی از نام دوره یا آموزشگاه موردنظر را جستجو کرده و براساس برخی موارد نتیجه را فیلتر کنید...............................................................................................................");
+        views.get(6).setText("برای نظر و امتیاز دادن درمورد یک دوره یا آموزشگاه کافیه بروی آموزشگاه یا دوره موردنظر کلیک کرده و در صفحه نظرات و امتیازات نظر و امتیاز خودرا ثبت کرده پس از بررسی متن نظر شما توسط تیم ما قابل نمایش خواهد بود................................................................................................................");
+        views.get(7).setText("درهر صفحه در صورت ناقص بارگزاری شدن اطلاعات از سرور کافیه به پایین اسکرول کنید تا اطلاعات صفحه بروزرسانی شود................................................................................................................");
     }
 
     @Override
@@ -78,8 +87,17 @@ public class DialogAllHelp implements View.OnClickListener {
             case R.id.btnTrendingUpHelpDialog:
                 changeViewVisibility((TextView) view.findViewById(R.id.txtTrendingUpHelpDialog));
                 break;
+            case R.id.btnSearchHelpDialog:
+                changeViewVisibility((TextView) view.findViewById(R.id.txtSearchHelpDialog));
+                break;
             case R.id.btnAddCourseHelpDialog:
                 changeViewVisibility((TextView) view.findViewById(R.id.txtAddCourseHelpDialog));
+                break;
+            case R.id.btnCommentHelpDialog:
+                changeViewVisibility((TextView) view.findViewById(R.id.txtCommentHelpDialog));
+                break;
+            case R.id.btnAppHelpDialog:
+                changeViewVisibility((TextView) view.findViewById(R.id.txtApphHelpDialog));
                 break;
         }
     }
@@ -89,7 +107,7 @@ public class DialogAllHelp implements View.OnClickListener {
         if (txt.getVisibility() == View.GONE)
             G.animatingForVisible(txt, 0f, 1f, 0);
         else
-           G.animatingForGone(txt, 1f, 0f, -txt.getHeight());
+            G.animatingForGone(txt, 1f, 0f, -txt.getHeight());
         for (int i = 0; i < views.size(); i++) {
             if (views.get(i) == txt)
                 continue;

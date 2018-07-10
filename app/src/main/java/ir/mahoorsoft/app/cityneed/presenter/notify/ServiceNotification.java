@@ -39,15 +39,17 @@ import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
  * Created by M-gh on 14-Aug-17.
  */
 
-public class ServiceNotification extends Service implements Sabtenam.OnSabtenamListener, SmsBox.OnSmsBoxResponseListener {
+public class ServiceNotification extends Service implements Sabtenam.OnSabtenamListener, SmsBox.OnSmsBoxResponseListener, Teacher.OnTeacherListener, Course.OnCourseLitener {
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
+        checkForNewCourse();
         checkForNewMessage();
         checkForNewStudent();
+        checkForNewTeacher();
 
 
         return Service.START_STICKY;
@@ -67,6 +69,17 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     private void checkForNewStudent() {
         int lastId = Pref.getIntegerValue(PrefKey.lastIdSabtenam, 0);
         (new Sabtenam(this)).getNotifyData(Pref.getStringValue(PrefKey.apiCode, ""), lastId);
+    }
+
+    private void checkForNewCourse() {
+
+        int lastId = Pref.getIntegerValue(PrefKey.lastIdCourse, 0);
+        (new Course(this)).getNewCourseNotifyData(lastId);
+    }
+
+    private void checkForNewTeacher() {
+
+        (new Teacher(this)).getNotifyData();
     }
 
     void notification(String title, String message, Intent intent) {
@@ -117,7 +130,82 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     }
 
     @Override
+    public void newCourseNotifyData(ArrayList<StNotifyData> data) {
+        if (!(data == null || data.size() == 0 || data.get(0).empty == 1)) {
+            notification("دوره یاب", data.size() + " دوره جدید در دوره یاب ثبت شد", new Intent(this, ActivityMain.class));
+            Pref.saveIntegerValue(PrefKey.lastIdCourse, data.get(data.size() - 1).lastId);
+        }
+    }
+
+    @Override
+    public void newTeacherNotifyData(ArrayList<StNotifyData> data) {
+        if (data == null || data.size() == 0 || data.get(0).empty == 1)
+            return;
+        int counter = 0;
+        String[] localData = (Pref.getStringValue(PrefKey.lastTeachers, "")).split("%");
+        if (localData.length > 0 && (Pref.getStringValue(PrefKey.lastDate, "")).equals(DateCreator.todayDate())) {
+            for (int i = 0; i < data.size(); i++) {
+                boolean equal = false;
+                for (int j = 0; j < localData.length; j++) {
+                    if ((data.get(i).apiCode).equals(localData[j]))
+                        equal = true;
+                }
+                if (!equal) {
+                    counter++;
+                    Pref.saveStringValue(PrefKey.lastTeachers, (Pref.getStringValue(PrefKey.lastTeachers, "")) + data.get(i).apiCode + "%");
+                }
+            }
+        } else {
+            Pref.removeValue(PrefKey.lastTeachers);
+            for (int i = 0; i < data.size(); i++)
+                Pref.saveStringValue(PrefKey.lastTeachers, (Pref.getStringValue(PrefKey.lastTeachers, "")) + data.get(i).apiCode + "%");
+            Pref.saveStringValue(PrefKey.lastDate, DateCreator.todayDate());
+            counter = data.size();
+        }
+
+        if (counter > 0)
+            notification("دوره یاب", counter + " آموزشگاه جدید در دوره یاب ثبت شد", new Intent(this, ActivityMain.class));
+
+
+    }
+
+    @Override
+    public void responseForMadrak(ArrayList<ResponseOfServer> res) {
+
+    }
+
+    @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
+
+    }
+
+    @Override
+    public void onReceiveData(ArrayList<StTeacher> data) {
+
+    }
+
+    @Override
+    public void onReceiveSelectedTeacher(ArrayList<StTeacher> data) {
+
+    }
+
+    @Override
+    public void onReceiveCustomTeacherListData(ArrayList<StCustomTeacherListHome> data) {
+
+    }
+
+    @Override
+    public void onReceiveData(ArrayList<StCourse> data, int listId) {
+
+    }
+
+    @Override
+    public void DataForHomeLists(ArrayList<StCustomCourseListHome> data) {
+
+    }
+
+    @Override
+    public void DataForCustomCourseListHome(ArrayList<StCustomCourseListHome> data) {
 
     }
 
