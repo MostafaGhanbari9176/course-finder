@@ -26,6 +26,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 
@@ -40,6 +54,10 @@ public class G extends Application {
     public static SharedPreferences preferences;
     public static String Name;
     public static int INTERVAL_CHECK_PM = 300000;
+    private static final int SALT_BYTES = 8;
+    private static final int PBK_ITERATIONS = 1000;
+    private static final String ENCRYPTION_ALGORITHM = "AES/CBC/PKCS5Padding";
+    private static final String PBE_ALGORITHM = "PBEwithSHA256and128BITAES-CBC-BC";
 
     @Override
     public void onCreate() {
@@ -47,6 +65,37 @@ public class G extends Application {
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
 
+    }
+
+    public static EncryptedData encrypt(String password, byte[] data) throws NoSuchPaddingException,
+            NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, BadPaddingException,
+            IllegalBlockSizeException, InvalidAlgorithmParameterException {
+        EncryptedData encData = new EncryptedData();
+        SecureRandom rnd = new SecureRandom();
+        encData.salt = new byte[SALT_BYTES];
+        encData.iv = new byte[16]; // AES block size
+        rnd.nextBytes(encData.salt);
+        rnd.nextBytes(encData.iv);
+        PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), encData.salt, PBK_ITERATIONS);
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(PBE_ALGORITHM);
+        Key key = secretKeyFactory.generateSecret(keySpec);
+        Cipher cipher = Cipher.getInstance(ENCRYPTION_ALGORITHM);
+        IvParameterSpec ivSpec = new IvParameterSpec(encData.iv);
+        cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+        encData.encryptedData = cipher.doFinal(data);
+        return encData;
+    }
+
+    public static byte[] decrypt(String password, byte[] salt, byte[] iv, byte[] encryptedData) throws
+            NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException,
+            BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
+        PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, PBK_ITERATIONS);
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(PBE_ALGORITHM);
+        Key key = secretKeyFactory.generateSecret(keySpec);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
+        return cipher.doFinal(encryptedData);
     }
 
     public static String myTrim(String string, char subString) {
@@ -89,30 +138,6 @@ public class G extends Application {
             Log.e("BNVHelper", "Unable to change value of shift mode", e);
         }
     }
-
-    public static void makeNotification(Context context, Intent resultIntent, int id, String title, String text) {
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification noti;
-        Notification.Builder builder = new Notification.Builder(context);
-        noti = builder/*.setOngoing(true)*/
-                .setSmallIcon(context.getResources().getIdentifier("ic_launcher", "mipmap", context.getPackageName()))
-                .setAutoCancel(false)
-                //.setLargeIcon(bitmap)
-                .setContentIntent(resultPendingIntent)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .build();
-        NotificationManager notificationManager = (NotificationManager)
-                activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(id, noti);
-
-    }
-
 
     public static void animatingForGone(final View view, float firstAlpha, float lastAlpha, float translationYValue) {
         view.setAlpha(firstAlpha);
