@@ -5,14 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 
@@ -31,7 +29,7 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
 
         void courseDeletedClick(int position);
 
-        void sendSmsButtonPresed(int position);
+        void btnItemMenuPressed(int position);
     }
 
     private OnClickItemCourseList onClickItemCourseList;
@@ -55,13 +53,13 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
         LinearLayout item;
         RelativeLayout rlDeletedMessage;
         TextView btnOk;
-        ImageView btnSendSms;
+        ImageView btnMenu;
 
 
         public Holder(View itemView) {
             super(itemView);
             btnOk = (TextView) itemView.findViewById(R.id.btnOkItemSabtenam);
-            btnSendSms = (ImageView) itemView.findViewById(R.id.btnSendSmsItemSabtenam);
+            btnMenu = (ImageView) itemView.findViewById(R.id.btnMenuItemSabtenam);
             imgItem = (ImageView) itemView.findViewById(R.id.imgItemCourseList);
             txtMasterName = (TextView) itemView.findViewById(R.id.txtMasterNameItem);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtCourseNameItem);
@@ -110,10 +108,10 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
                     onClickItemCourseList.courseListItemClick(position);
             }
         });
-        holder.btnSendSms.setOnClickListener(new View.OnClickListener() {
+        holder.btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCourseList.sendSmsButtonPresed(position);
+                onClickItemCourseList.btnItemMenuPressed(position);
             }
         });
     }

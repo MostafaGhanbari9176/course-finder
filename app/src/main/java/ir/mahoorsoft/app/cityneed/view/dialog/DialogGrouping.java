@@ -36,10 +36,10 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
     private ArrayList<StGrouping> source = new ArrayList<>();
     private AdapterGroupingListDialog adapter = new AdapterGroupingListDialog(context, source, this);
     private Button btnBack;
-    private Button btnSelectHere;
     private ProgressBar pb;
     private TextView txtToolBar;
     private int position;
+    private String uperSubject = "";
 
     public DialogGrouping(Context context, OnTabagheItemClick onTabagheItemClick) {
         this.context = context;
@@ -51,10 +51,8 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
 
     public void Show() {
         btnBack = (Button) view.findViewById(R.id.btnBackDialogTabaghe);
-        btnSelectHere = (Button) view.findViewById(R.id.btnChoseHere);
         list = (RecyclerView) view.findViewById(R.id.RVDialogGrouping);
         btnBack.setOnClickListener(this);
-        btnSelectHere.setOnClickListener(this);
         pb = (ProgressBar) view.findViewById(R.id.pbTabaghe);
         txtToolBar = (TextView) view.findViewById(R.id.txtToolbarTabaghe);
         txtToolBar.setText("دسته بندی خود را انتخاب کنید");
@@ -65,14 +63,12 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
     }
 
     private void backHandle() {
-        btnSelectHere.setVisibility(View.GONE);
         txtToolBar.setText("دسته بندی خود را انتخاب کنید");
         if (idSaver.size() == 0)
             dialog.cancel();
         else if (idSaver.size() == 1) {
             idSaver.pop();
             setSource(-1);
-            btnSelectHere.setVisibility(View.GONE);
         } else {
             idSaver.pop();
             StGrouping t = idSaver.peek();
@@ -97,7 +93,7 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
             list.setLayoutManager(manager);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-        } catch (Exception e) {
+        } catch (Exception ignore) {
         }
     }
 
@@ -114,24 +110,24 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
 
     @Override
     public void tabagheListItemClick(int position) {
+        this.position = position;
+        adapter.setSelectedItem(null);
         if (source.get(position).isFinaly == 1) {
             txtToolBar.setText("آخرین زیر شاخه");
-            btnSelectHere.setVisibility(View.VISIBLE);
-            btnSelectHere.setText("انتخاب : " + source.get(position).subject);
+            choseHandle();
+
         } else {
+            uperSubject = source.get(position).subject;
             setSource(source.get(position).id);
             idSaver.push(source.get(position));
         }
-        this.position = position;
-        adapter.setSelectedItem(null);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnChoseHere:
-                choseHandle();
-                break;
+
             case R.id.btnBackDialogTabaghe:
                 backHandle();
                 break;
@@ -139,7 +135,7 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
     }
 
     private void choseHandle() {
-        onTabagheItemClick.tabagheInf(source.get(position).subject, source.get(position).id);
+        onTabagheItemClick.tabagheInf(uperSubject + " : " + source.get(position).subject, source.get(position).id);
         dialog.cancel();
     }
 

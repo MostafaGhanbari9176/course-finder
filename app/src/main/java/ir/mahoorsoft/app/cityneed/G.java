@@ -53,7 +53,7 @@ public class G extends Application {
     public static Context context;
     public static SharedPreferences preferences;
     public static String Name;
-    public static int INTERVAL_CHECK_PM = 300000;
+    public static int INTERVAL_CHECK_PM = 60000;
     private static final int SALT_BYTES = 8;
     private static final int PBK_ITERATIONS = 1000;
     private static final String ENCRYPTION_ALGORITHM = "AES/CBC/PKCS5Padding";

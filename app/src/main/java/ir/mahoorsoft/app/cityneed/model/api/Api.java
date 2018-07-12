@@ -445,6 +445,33 @@ public interface Api {
 
     );
 
+    @GET("notifySetting/{apiCode}/{courseId}/{weakNotify}/{startNotify}")
+    Call<ArrayList<ResponseOfServer>> notifySetting(
+            @Path("apiCode") String apiCode,
+            @Path("courseId") int courseId,
+            @Path("weakNotify") int weakNotify,
+            @Path("startNotify") int startNotify
+    );
+
+    @GET("getWeakNotifyData/{apiCode}")
+    Call<ArrayList<StNotifyData>> getWeakNotifyData(
+            @Path("apiCode") String apiCode
+    );
+
+    @GET("getStartNotifyData/{apiCode}/{tomDate}")
+    Call<ArrayList<StNotifyData>> getStartNotifyData(
+            @Path("apiCode") String apiCode,
+            @Path("tomDate") String tomDate
+
+    );
+
+    @GET("getSettingNotifyData/{apiCode}/{courseId}")
+    Call<ArrayList<StNotifyData>> getSettingNotifyData(
+            @Path("apiCode") String apiCode,
+            @Path("courseId") int courseId
+
+    );
+
 
     @FormUrlEncoded
     @POST("use_credit")

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -90,6 +91,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_search, container, false);
             init();
+            rbCourseName.setChecked(true);
         }
         return view;
     }
@@ -110,7 +112,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().length() == 0)
-
                     onReceiveCourse(helpSource, -1);
                 else {
                     if (rbTeacherName.isChecked())
@@ -286,7 +287,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         txtEmpty = (TextView) view.findViewById(R.id.txtEmptySearch);
         btnDeleteFilter.setVisibility(View.GONE);
         list = (RecyclerView) view.findViewById(R.id.RVSerarch);
-        rbCourseName.setChecked(true);
         btnFilter.setOnClickListener(this);
         rbCourseName.setOnClickListener(this);
         rbTeacherName.setOnClickListener(this);
@@ -340,7 +340,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             sDown.setRefreshing(false);
             dialog.cancel();
             txtSearch.setBackgroundResource(R.drawable.txt_search);
-            txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
+            txtSearch.setTextColor(ContextCompat.getColor(G.context, R.color.dark_eq));
             if (isFilterRes) {
                 btnDeleteFilter.setVisibility(View.VISIBLE);
                 isFilterRes = false;
@@ -348,28 +348,36 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             if (course.size() == 0 || course.get(0).empty == 1) {
                 txtEmpty.setVisibility(View.VISIBLE);
                 source.clear();
+                helpSource.clear();
                 adapter = new AdapterCourseList(G.context, source, this);
                 list.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 return;
             } else
                 txtEmpty.setVisibility(View.GONE);
-            if (source != course) {
-                source.clear();
-                source.addAll(course);
-
-            }
             if (helpSource != course) {
                 helpSource.clear();
                 helpSource.addAll(course);
             }
+            if (source != course) {
+                source.clear();
+                source.addAll(course);
+                if (txtSearch.getText().length() != 0) {
+                    if (rbTeacherName.isChecked())
+                        searchTeacherName(txtSearch.getText().toString());
+                    else
+                        searchCourseName(txtSearch.getText().toString());
+                }
+
+            }
+
             adapter = new AdapterCourseList(G.context, source, this);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                     , LinearLayoutManager.VERTICAL, false);
             list.setLayoutManager(layoutManager);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-        } catch (Exception e) {
+        } catch (Exception ignore) {
         }
     }
 

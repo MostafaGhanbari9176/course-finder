@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light"
+    android:background="@color/light_two"
     android:gravity="center"
     android:layoutDirection="rtl"
     android:orientation="vertical">
@@ -192,36 +192,23 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="18dp">
 
-                <android.support.v7.widget.CardView
+                <Button
+                    android:id="@+id/btnLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1">
-
-                    <Button
-                        android:id="@+id/btnLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/btn_dialog"
-                        android:gravity="center"
-                        android:text="تعیین موقعیت مکانی"
-                        android:textColor="@color/text_home"
-                        android:textSize="@dimen/txt_submit_iformation" />
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="تعیین موقعیت مکانی"
+                    android:textColor="@color/text_home"
+                    android:textSize="@dimen/txt_submit_iformation" />
+            </android.support.v7.widget.CardView>
 
             <LinearLayout
 
@@ -309,38 +296,22 @@
                 </RadioGroup>
             </LinearLayout>
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|end"
-                android:orientation="vertical">
+                android:layout_margin="16dp"
+                app:cardCornerRadius="18dp">
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/btnUploadImg"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp">
-
-                        <Button
-                            android:id="@+id/btnUploadImg"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:background="@drawable/btn_dialog"
-                            android:text="بارگذاری تصویری مرتبط با موضوع یا محیط آموزشی"
-                            android:textColor="@color/text_home"
-                            android:textSize="@dimen/txt_size_smal" />
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="8dp"
+                    android:text="بارگذاری تصویری مرتبط با موضوع یا محیط آموزشی"
+                    android:textColor="@color/text_home"
+                    android:textSize="@dimen/txt_size_vsmal" />
+            </android.support.v7.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"

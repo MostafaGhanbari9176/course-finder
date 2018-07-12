@@ -85,11 +85,7 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     void notification(String title, String message, Intent intent) {
         try {
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-            stackBuilder.addNextIntent(intent);
-            PendingIntent resultPendingIntent =
-                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
             NotificationCompat.Builder builder = (NotificationCompat.Builder) new
                     NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.noti)
@@ -97,7 +93,7 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
                     .setTicker("دوره یاب")
                     .setContentTitle(title)
                     .setContentText(message)
-                    .setContentIntent(resultPendingIntent)
+                    .setContentIntent(pendingIntent)
                     .setGroup("CourseFinderGroupNotify")
                     .setGroupSummary(true)
                     .setLights(Color.argb(1, 0, 50, 100), 1000, 1000)
@@ -132,7 +128,7 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     @Override
     public void newCourseNotifyData(ArrayList<StNotifyData> data) {
         if (!(data == null || data.size() == 0 || data.get(0).empty == 1)) {
-            notification("دوره یاب", data.size() + " دوره جدید در دوره یاب ثبت شد", new Intent(this, ActivityMain.class));
+            notification("دوره یاب", data.size() + " دوره جدید در دوره یاب ثبت شد", null);
             Pref.saveIntegerValue(PrefKey.lastIdCourse, data.get(data.size() - 1).lastId);
         }
     }
@@ -164,7 +160,7 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
         }
 
         if (counter > 0)
-            notification("دوره یاب", counter + " آموزشگاه جدید در دوره یاب ثبت شد", new Intent(this, ActivityMain.class));
+            notification("دوره یاب", counter + " آموزشگاه جدید در دوره یاب ثبت شد", null);
 
 
     }

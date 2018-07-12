@@ -84,7 +84,7 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener {
         if (res == null || res.size() == 0)
             sendMessage("خطا");
         else
-            onPresentSmsBoxListener.smsDeleteFlag(res.get(0).code == 0 ? false : true);
+            onPresentSmsBoxListener.smsDeleteFlag(res.get(0).code == 1);
     }
 
     @Override
