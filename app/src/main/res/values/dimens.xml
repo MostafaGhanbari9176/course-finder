@@ -1,7 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="txt_size_smal">18dp</dimen>
-    <dimen name="txt_size_vsmal">16dp</dimen>
+    <dimen name="txt_size_smal">16dp</dimen>
+    <dimen name="txt_size_vsmal">14dp</dimen>
     <dimen name="txt_size_xvsmal">12dp</dimen>
     <dimen name="txt_size_big">24dp</dimen>
 

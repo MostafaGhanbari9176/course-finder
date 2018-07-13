@@ -36,6 +36,8 @@ public class PrefKey {
     public static final String lastIdMessage = "lastIdMessage";
     public static final String lastTeachers = "lastTeachers";
     public static final String lastDate = "lastDate";
+    public static final String startNotifyDate = "startNotifyDate";
+    public static final String weakNotifyDate = "weakNotifyDate";
     public static final String SubId = "subscibeID";
     public static final String isPaymentSuccess = "isPaymentSuccess";
     public static final String isPaymentSaved = "isPaymentSaved";

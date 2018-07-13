@@ -13,8 +13,12 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
@@ -26,6 +30,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
+import ir.mahoorsoft.app.cityneed.model.tables.Notify;
 import ir.mahoorsoft.app.cityneed.model.tables.SmsBox;
 import ir.mahoorsoft.app.cityneed.model.tables.course.Course;
 import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
@@ -34,12 +39,13 @@ import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityTeacherCoursesList;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
+import ir.mahoorsoft.app.cityneed.view.date.Roozh;
 
 /**
  * Created by M-gh on 14-Aug-17.
  */
 
-public class ServiceNotification extends Service implements Sabtenam.OnSabtenamListener, SmsBox.OnSmsBoxResponseListener, Teacher.OnTeacherListener, Course.OnCourseLitener {
+public class ServiceNotification extends Service implements Sabtenam.OnSabtenamListener, SmsBox.OnSmsBoxResponseListener, Teacher.OnTeacherListener, Course.OnCourseLitener, Notify.OnNotifyResponseListener {
 
 
     @Override
@@ -50,6 +56,8 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
         checkForNewMessage();
         checkForNewStudent();
         checkForNewTeacher();
+        checkForStartDateNotifyData();
+        checkForWeakNotifyData();
 
 
         return Service.START_STICKY;
@@ -82,10 +90,19 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
         (new Teacher(this)).getNotifyData();
     }
 
+    private void checkForStartDateNotifyData() {
+        if (!(Pref.getStringValue(PrefKey.startNotifyDate, "").equals(DateCreator.todayDate())))
+            (new Notify(this)).getStartNotifyData(Pref.getStringValue(PrefKey.apiCode, "a"), DateCreator.futureDate_day(1));
+    }
+
+    private void checkForWeakNotifyData() {
+        if (!(Pref.getStringValue(PrefKey.weakNotifyDate, "").equals(DateCreator.todayDate())))
+            (new Notify(this)).getWeakNotifyData(Pref.getStringValue(PrefKey.apiCode, "a"));
+    }
+
     void notification(String title, String message, Intent intent) {
         try {
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
             NotificationCompat.Builder builder = (NotificationCompat.Builder) new
                     NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.noti)
@@ -93,12 +110,15 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
                     .setTicker("دوره یاب")
                     .setContentTitle(title)
                     .setContentText(message)
-                    .setContentIntent(pendingIntent)
                     .setGroup("CourseFinderGroupNotify")
                     .setGroupSummary(true)
                     .setLights(Color.argb(1, 0, 50, 100), 1000, 1000)
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setAutoCancel(true);
+
+            if (intent != null)
+                builder.setContentIntent(PendingIntent.getActivity(this, 0, intent, 0));
+
             NotificationManager notificationManager = (NotificationManager)
                     getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify((int) System.currentTimeMillis(), builder.build());
@@ -163,6 +183,73 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
             notification("دوره یاب", counter + " آموزشگاه جدید در دوره یاب ثبت شد", null);
 
 
+    }
+
+    @Override
+    public void onReceiveWeakNotifyData(ArrayList<StNotifyData> res) {
+
+        if (res != null && res.size() != 0 && res.get(0).empty != 1) {
+            String message = "";
+            for (int i = 0; i < res.size(); i++) {
+                if (checkHoldingDay(res.get(i).days))
+                    message = res.get(i).name + " , " + message;
+            }
+            if (message.isEmpty())
+                return;
+            message = G.myTrim(message.trim(), ',');
+            Pref.saveStringValue(PrefKey.weakNotifyDate, DateCreator.todayDate());
+            notification("کلاس امروز رو یادت نره!", message, null);
+
+        }
+
+
+    }
+
+    private boolean checkHoldingDay(String days) {
+
+        String[] courseDays = days.split("-");
+        for (String courseDay : courseDays) {
+            if (courseDay.equals(currentDayName()))
+                return true;
+        }
+        return false;
+    }
+
+    private String currentDayName() {
+
+        Date now = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
+        switch (simpleDateFormat.format(now)) {
+            case "Saturday":
+                return "شنبه";
+            case "Sunday":
+                return "یکشنبه";
+            case "Monday":
+                return "دوشنبه";
+            case "Tuesday":
+                return "سه شنبه";
+            case "Wednesday":
+                return "چهار شنبه";
+            case "Thursday":
+                return "پنجشنبه";
+            case "Friday":
+                return "جمعه";
+            default:
+                return "";
+        }
+    }
+
+    @Override
+    public void onReceiveStartDateNotifyData(ArrayList<StNotifyData> res) {
+
+        if (res != null && res.size() != 0 && res.get(0).empty != 1) {
+            String message = "";
+            for (int i = 0; i < res.size(); i++)
+                message = res.get(i).name + " , " + message;
+            message = G.myTrim(message.trim(), ',');
+            Pref.saveStringValue(PrefKey.startNotifyDate, DateCreator.todayDate());
+            notification("یادآور فرارسیدن تاریخ برگزاری دوره ها", message, null);
+        }
     }
 
     @Override
@@ -237,6 +324,21 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
 
     @Override
     public void checkSabtenam(ArrayList<ResponseOfServer> res) {
+
+    }
+
+    @Override
+    public void onReceiveDataFromNotify(ArrayList<StNotifyData> res) {
+
+    }
+
+    @Override
+    public void onReceiveFlagFromNotify(ArrayList<ResponseOfServer> res) {
+
+    }
+
+    @Override
+    public void sendMessageFromNotify(String message) {
 
     }
 }

@@ -17,15 +17,15 @@ import retrofit2.Response;
 public class Notify {
 
     public interface OnNotifyResponseListener {
-        void onReceiveData(ArrayList<StNotifyData> res);
+        void onReceiveDataFromNotify(ArrayList<StNotifyData> res);
 
         void onReceiveWeakNotifyData(ArrayList<StNotifyData> res);
 
         void onReceiveStartDateNotifyData(ArrayList<StNotifyData> res);
 
-        void onReceiveFlag(ArrayList<ResponseOfServer> res);
+        void onReceiveFlagFromNotify(ArrayList<ResponseOfServer> res);
 
-        void sendMessage(String message);
+        void sendMessageFromNotify(String message);
     }
 
     private OnNotifyResponseListener onNotifyResponseListener;
@@ -41,12 +41,12 @@ public class Notify {
         saveSetting.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {
-                onNotifyResponseListener.onReceiveFlag(response.body());
+                onNotifyResponseListener.onReceiveFlagFromNotify(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<ResponseOfServer>> call, Throwable t) {
-                onNotifyResponseListener.sendMessage(t.getMessage());
+                onNotifyResponseListener.sendMessageFromNotify(t.getMessage());
             }
         });
 
@@ -59,12 +59,12 @@ public class Notify {
         getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
             @Override
             public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {
-                onNotifyResponseListener.onReceiveData(response.body());
+                onNotifyResponseListener.onReceiveWeakNotifyData(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<StNotifyData>> call, Throwable t) {
-                onNotifyResponseListener.sendMessage(t.getMessage());
+                onNotifyResponseListener.sendMessageFromNotify(t.getMessage());
             }
         });
     }
@@ -76,12 +76,12 @@ public class Notify {
         getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
             @Override
             public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {
-                onNotifyResponseListener.onReceiveData(response.body());
+                onNotifyResponseListener.onReceiveStartDateNotifyData(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<StNotifyData>> call, Throwable t) {
-                onNotifyResponseListener.sendMessage(t.getMessage());
+                onNotifyResponseListener.sendMessageFromNotify(t.getMessage());
             }
         });
     }
@@ -93,12 +93,12 @@ public class Notify {
         getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
             @Override
             public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {
-                onNotifyResponseListener.onReceiveData(response.body());
+                onNotifyResponseListener.onReceiveDataFromNotify(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<StNotifyData>> call, Throwable t) {
-                onNotifyResponseListener.sendMessage(t.getMessage());
+                onNotifyResponseListener.sendMessageFromNotify(t.getMessage());
             }
         });
     }

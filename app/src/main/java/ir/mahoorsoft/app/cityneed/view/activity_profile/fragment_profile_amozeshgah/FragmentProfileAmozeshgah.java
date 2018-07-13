@@ -68,7 +68,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     TextView txtSubscribe_up;
     TextView txtSubscribe_down;
     TextView txtname;
-    TextView txtDescription;
     TextView txtAddress;
     TextView txtSubject;
     DialogProgres dialogProgres;
@@ -158,7 +157,6 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         btnSubscribe = (LinearLayout) view.findViewById(R.id.btnSubscribe);
         txtUpload = (TextView) view.findViewById(R.id.txtUpload);
         txtSubscribe_up = (TextView) view.findViewById(R.id.txtSubscribt_up);
-        txtDescription = (TextView) view.findViewById(R.id.txtDescriptionProfileTeacher);
         txtAddress = (TextView) view.findViewById(R.id.txtAddressProfileTeacher);
         txtSubscribe_down = (TextView) view.findViewById(R.id.txtSubscribe_down);
         pbarSubscribeData = (ProgressBar) view.findViewById(R.id.pbarUserSubscribeData);

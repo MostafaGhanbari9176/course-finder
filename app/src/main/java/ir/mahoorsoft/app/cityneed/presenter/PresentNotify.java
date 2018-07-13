@@ -41,7 +41,7 @@ public class PresentNotify implements Notify.OnNotifyResponseListener {
     }
 
     @Override
-    public void onReceiveData(ArrayList<StNotifyData> res) {
+    public void onReceiveDataFromNotify(ArrayList<StNotifyData> res) {
 
         if (res == null || res.size() == 0)
             onPresentNotifyListener.messageFromNotify(Message.getMessage(1));
@@ -61,7 +61,7 @@ public class PresentNotify implements Notify.OnNotifyResponseListener {
     }
 
     @Override
-    public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
+    public void onReceiveFlagFromNotify(ArrayList<ResponseOfServer> res) {
 
         if (res == null || res.size() == 0)
             onPresentNotifyListener.messageFromNotify(Message.getMessage(1));
@@ -70,7 +70,7 @@ public class PresentNotify implements Notify.OnNotifyResponseListener {
     }
 
     @Override
-    public void sendMessage(String message) {
+    public void sendMessageFromNotify(String message) {
         onPresentNotifyListener.messageFromNotify(Message.getMessage(1));
     }
 }

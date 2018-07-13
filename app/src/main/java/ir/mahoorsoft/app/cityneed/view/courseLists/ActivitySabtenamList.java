@@ -166,6 +166,8 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
             View view = layoutInflater.inflate(R.layout.dialog_sabtenam_course_items, null);
             sDate = (SwitchCompat) view.findViewById(R.id.switchCompatStartDate);
             sWeak = (SwitchCompat) view.findViewById(R.id.switchCompatWeak);
+            sDate.setChecked(res.startNotify == 1);
+            sWeak.setChecked(res.weakNotify == 1);
             sDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -178,8 +180,6 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
                     changeNotifySetting();
                 }
             });
-            sDate.setChecked(res.startNotify == 1);
-            sWeak.setChecked(res.weakNotify == 1);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.setContentView(view);
             dialog.show();
