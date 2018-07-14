@@ -32,7 +32,7 @@
     <!--telegram nav color  -->
     <color name="blue_tel">#0084ff</color>
     <color name="orange_tel">#ff6600</color>
-    <color name="green_tel">#09b83e</color>
+    <color name="green_tel">#4CAF50</color>
     <color name="pink_tel">#e4405f</color>
     <color name="purple_tel">#673ab7</color>
     <!-- subscribe color    -->

@@ -17,6 +17,7 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -216,26 +217,30 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     }
 
     private String currentDayName() {
-
-        Date now = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
-        switch (simpleDateFormat.format(now)) {
-            case "Saturday":
-                return "شنبه";
-            case "Sunday":
-                return "یکشنبه";
-            case "Monday":
-                return "دوشنبه";
-            case "Tuesday":
-                return "سه شنبه";
-            case "Wednesday":
-                return "چهار شنبه";
-            case "Thursday":
-                return "پنجشنبه";
-            case "Friday":
-                return "جمعه";
-            default:
-                return "";
+        try {
+            Date now = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE", Locale.ENGLISH);
+            String day = (simpleDateFormat.format(now)).toLowerCase();
+            switch (day) {
+                case "saturday":
+                    return "شنبه";
+                case "sunday":
+                    return "یکشنبه";
+                case "monday":
+                    return "دوشنبه";
+                case "tuesday":
+                    return "سه شنبه";
+                case "wednesday":
+                    return "چهار شنبه";
+                case "thursday":
+                    return "پنجشنبه";
+                case "friday":
+                    return "جمعه";
+                default:
+                    return "";
+            }
+        } catch (Exception e) {
+            return "";
         }
     }
 
