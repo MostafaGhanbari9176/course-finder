@@ -72,6 +72,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     TextView txtsharayet;
     TextView txtRange;
     TextView txtNews;
+    TextView txtTeacherName;
     TextView txtDescription;
     LinearLayout moreDetails;
     LinearLayout llRatBar;
@@ -135,6 +136,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         txtMasterName = (TextView) view.findViewById(R.id.txtMasterNameFeature);
         txtDay = (TextView) view.findViewById(R.id.txtDayFeature);
         txtNews = (TextView) view.findViewById(R.id.txtNewsCourseFeature);
+        txtTeacherName = (TextView) view.findViewById(R.id.txtTeacherNameFeature);
         txtConfirmRegistery = (TextView) view.findViewById(R.id.txtConfirmRegistry);
         txtEndDate = (TextView) view.findViewById(R.id.txtEndDateFeature);
         txtHours = (TextView) view.findViewById(R.id.txtHoursFeature);
@@ -335,6 +337,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             txtType.setText(course.get(0).type == 0 ? "آموزش عمومی" : "آموزش خصوصی");
             txtName.setText(course.get(0).CourseName);
             txtMasterName.setText(course.get(0).MasterName);
+            txtTeacherName.setText(course.get(0).teacherName);
             txtHours.setText(course.get(0).hours);
             txtDay.setText(course.get(0).day);
             txtDescription.setText(course.get(0).tozihat);

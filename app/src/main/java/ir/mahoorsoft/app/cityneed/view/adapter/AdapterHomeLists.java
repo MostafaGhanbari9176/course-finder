@@ -1,12 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.Items;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
-import ir.mahoorsoft.app.cityneed.view.RandomColor;
 
 /**
  * Created by M-gh on 07-Oct-17.

@@ -43,9 +43,9 @@ public class PresentCourse implements Course.OnCourseLitener {
         course.updateDeletedFlag(courseId, code);
     }
 
-    public void addCourse(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int minOld, int maxOld) {
+    public void addCourse(String subject, String teacherName, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int minOld, int maxOld) {
         Course course = new Course(this);
-        course.addtCource(subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
+        course.addtCource(subject, teacherName, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
     }
 
     public void getAllCourse() {

@@ -16,7 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
 import ir.mahoorsoft.app.cityneed.view.CharCheck;
@@ -34,11 +36,7 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
     private AdapterReadySmsList adapter;
     private ArrayList<String> source = new ArrayList<>();
     private Dialog dialog;
-    private TextView btnAdd;
     private TextView txtMessage;
-    private Button btnConfirm;
-    private Button btnCancel;
-    private boolean isUserChanged = false;
     private String confirmText = "ارسال";
 
     public interface DialogGetSmsTextListener {
@@ -65,11 +63,11 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = li.inflate(R.layout.dialog_get_sms_text, null, true);
         list = (RecyclerView) view.findViewById(R.id.RVReadySmsList);
-        btnAdd = (TextView) view.findViewById(R.id.btnAddReadySmsText);
+        TextView btnAdd = (TextView) view.findViewById(R.id.btnAddReadySmsText);
         txtMessage = (TextView) view.findViewById(R.id.txtDialogGetSmsText);
-        btnConfirm = (Button) view.findViewById(R.id.btnConfirmDialogGetSmsText);
+        Button btnConfirm = (Button) view.findViewById(R.id.btnConfirmDialogGetSmsText);
         btnConfirm.setText(confirmText);
-        btnCancel = (Button) view.findViewById(R.id.btnCancelDialogGetSmsText);
+        Button btnCancel = (Button) view.findViewById(R.id.btnCancelDialogGetSmsText);
         btnCancel.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
@@ -139,28 +137,6 @@ public class DialogGetSmsText implements AdapterReadySmsList.OnClickItemReadySms
         editText.setPadding(60, 60, 60, 60);
         editText.setGravity(Gravity.RIGHT);
         editText.setHint("متن پیام خود را وارد کنید");
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isUserChanged) {
-                    isUserChanged = false;
-                    // txtSharayet.setTextKeepState();
-                    editText.setTextKeepState(CharCheck.faCheck(editText.getText().toString()));
-
-                } else
-                    isUserChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         builder.setView(editText);
         builder.setPositiveButton("انصراف", new DialogInterface.OnClickListener() {
             @Override

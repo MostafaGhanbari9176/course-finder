@@ -26,7 +26,7 @@ public class PresentSubscribe implements Subscribe.OnSubscribeListener {
 
     public void saveUserBuy(String refId) {
 
-        (new Subscribe(this)).saveUserBuy(Pref.getStringValue(PrefKey.apiCode, ""), refId, Pref.getIntegerValue(PrefKey.SubId, -1));
+        (new Subscribe(this)).saveUserBuy(Pref.getStringValue(PrefKey.apiCode, ""), refId, Pref.getStringValue(PrefKey.SubId, ""));
     }
 
     @Override

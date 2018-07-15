@@ -228,7 +228,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
     private void queryForLogOut() {
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
-        presentUser.logOut(Pref.getStringValue(PrefKey.email, ""));
+        presentUser.logOut(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
     private void addCourse() {

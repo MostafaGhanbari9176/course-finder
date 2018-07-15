@@ -83,6 +83,40 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/txtTeacherNameRegisteryCourse"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="48dp"
+                            android:background="@drawable/border_light_eq"
+                            android:gravity="center|start"
+                            android:hint="نام ونام خانوادگی مدرس"
+                            android:inputType="textMultiLine"
+                            android:maxLength="50"
+                            android:padding="16dp"
+                            android:textColor="@color/dark_eq"
+                            android:textColorHint="@color/light_eq"
+                            android:textSize="@dimen/txt_submit_iformation" />
+
+                        <ImageView
+                            android:layout_width="@dimen/btn_nav"
+                            android:layout_height="@dimen/btn_nav"
+                            android:layout_alignParentEnd="false"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/icon_txtshort" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="32dp"
+                        android:orientation="horizontal">
+
+                        <EditText
                             android:id="@+id/txtsharayetRegisteryCourse"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

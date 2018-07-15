@@ -73,7 +73,7 @@ public class FragmentSelfCourse extends Fragment implements AdapterCourseListTea
     private void setSource() {
         sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
+        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.email, ""));
     }
 
 

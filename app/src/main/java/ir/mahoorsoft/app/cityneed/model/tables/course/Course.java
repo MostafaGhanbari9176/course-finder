@@ -41,10 +41,10 @@ public class Course {
         this.onCourseLitener = onCourseLitener;
     }
 
-    public void addtCource(String subject, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int minOld, int maxOld) {
+    public void addtCource(String subject, String teacherName, int tabagheId, int type, int capacity, int mony, String sharayet, String tozihat, String startDate, String endDate, String day, String hours, int minOld, int maxOld) {
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> methode = api.addCourse(Pref.getStringValue(PrefKey.apiCode, ""), subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
+        Call<ArrayList<ResponseOfServer>> methode = api.addCourse(Pref.getStringValue(PrefKey.apiCode, ""), teacherName, subject, tabagheId, type, capacity, mony, sharayet, tozihat, startDate, endDate, day, hours, minOld, maxOld);
         methode.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, retrofit2.Response<ArrayList<ResponseOfServer>> response) {

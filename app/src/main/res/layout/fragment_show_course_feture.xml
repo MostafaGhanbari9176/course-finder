@@ -185,6 +185,37 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:layout_marginStart="16dp"
+                                    android:gravity="center"
+                                    android:text="مدرس"
+                                    android:textColor="@color/dark_eq" />
+
+                                <TextView
+                                    android:id="@+id/txtTeacherNameFeature"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="16dp"
+                                    android:background="@drawable/border_light_eq"
+                                    android:enabled="false"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:textColor="@color/dark_eq"
+                                    android:textSize="@dimen/txt_size_smal" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:orientation="horizontal">
 
                                 <LinearLayout

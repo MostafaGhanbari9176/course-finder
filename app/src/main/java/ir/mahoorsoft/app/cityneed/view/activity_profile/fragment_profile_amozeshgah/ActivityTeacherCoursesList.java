@@ -96,7 +96,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
         surce.clear();
         sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.apiCode, ""));
+        presentCourse.getCourseByTeacherId(Pref.getStringValue(PrefKey.email, ""));
     }
 
     @Override
@@ -380,7 +380,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
 
         if (res.code == 1)
             messageFromUpload("بارگذاری شد بعداز تایید شدن قابل نمایش است");
-        else if(res.code == 0)
+        else if (res.code == 0)
             messageFromUpload("حداکثر 5 مگابایت");
     }
 

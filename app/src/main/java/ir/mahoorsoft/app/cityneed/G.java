@@ -24,6 +24,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.security.InvalidAlgorithmParameterException;
@@ -42,6 +43,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.view.activity_subscribe.fragment_chose_subscribe.FragmentChoseSubscrib;
 
 
 public class G extends Application {
@@ -54,13 +56,43 @@ public class G extends Application {
     public static SharedPreferences preferences;
     public static String Name;
     public static int INTERVAL_CHECK_PM = 300000;
+    String data;
+
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
+        // data = encrypt(MID);
+        int i = 0;
+
+        // dectypt("96d4221858752696f016284037072f53ec0d213ac615c5d61cb0517913ec3d9a2a0b577b99cec1ebbe29b12700be5592");
 
     }
+
+    private String encrypt(String data) {
+        try {
+            Hefaz hefaz = new Hefaz();
+
+            String s = hefaz.bytesToHex(hefaz.encrypt(data));
+            return s;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    private String dectypt(String data) {
+        Hefaz hefaz = new Hefaz();
+        try {
+            String s = hefaz.bytesToHex(hefaz.decrypt(data));
+            return s;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
     public static String myTrim(String string, char subString) {
         int count = string.length();
         int len = count;

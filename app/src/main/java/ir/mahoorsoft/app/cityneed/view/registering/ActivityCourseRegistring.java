@@ -53,6 +53,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     TextView txtCapacity;
     TextView txtSharayet;
     TextView txtMony;
+    TextView teacherName;
     Button btnSave;
     Button btnStartDate;
     Button btnEndDate;
@@ -96,6 +97,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         getSupportActionBar().setTitle("ثبت دوره جدید");
         txtCapacity = (TextView) findViewById(R.id.txtCapacityRegisteryCourse);
         txtMony = (TextView) findViewById(R.id.txtMonyRegisteryCourse);
+        teacherName = (TextView) findViewById(R.id.txtTeacherNameRegisteryCourse);
         txtMinRange = (TextView) findViewById(R.id.txtMinRange);
         txtMaxRange = (TextView) findViewById(R.id.txtMaxRange);
         txtSubject = (TextView) findViewById(R.id.txtSubjectRegisteryCourse);
@@ -214,6 +216,9 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
         if (TextUtils.isEmpty(txtSubject.getText().toString())) {
             txtSubject.setError("لطفا تکمیل کنید");
             txtSubject.requestFocus();
+        } else if (TextUtils.isEmpty(teacherName.getText().toString())) {
+            teacherName.setError("لطفا تکمیل کنید");
+            teacherName.requestFocus();
         } else if (TextUtils.isEmpty(txtSharayet.getText().toString())) {
             txtSharayet.setError("لطفا تکمیل کنید");
             txtSharayet.requestFocus();
@@ -266,7 +271,9 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
     private void sendDataForServer() {
         dialogProgres.showProgresBar();
         PresentCourse presentCourse = new PresentCourse(this);
-        presentCourse.addCourse(txtSubject.getText().toString().trim(), tabagheId,
+        presentCourse.addCourse(txtSubject.getText().toString().trim(),
+                teacherName.getText().toString().trim(),
+                tabagheId,
                 cbxPublic.isChecked() == true ? 0 : 1,
                 Integer.parseInt(txtCapacity.getText().toString().trim()),
                 Integer.parseInt(txtMony.getText().toString().trim()),

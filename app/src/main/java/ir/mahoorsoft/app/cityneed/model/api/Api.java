@@ -112,9 +112,10 @@ public interface Api {
             @Path("uperId") int uperId
     );
 
-    @GET("addCourse/{ac}/{subject}/{tabagheId}/{type}/{capacity}/{mony}/{sharayet}/{tozihat}/{startDate}/{endDate}/{day}/{hours}/{minOld}/{maxOld}")
+    @GET("addCourse/{ac}/{teacherName}/{subject}/{tabagheId}/{type}/{capacity}/{mony}/{sharayet}/{tozihat}/{startDate}/{endDate}/{day}/{hours}/{minOld}/{maxOld}")
     Call<ArrayList<ResponseOfServer>> addCourse(
             @Path("ac") String ac,
+            @Path("teacherName") String teacherName,
             @Path("subject") String subject,
             @Path("tabagheId") int tabagheId,
             @Path("type") int type,
@@ -345,7 +346,7 @@ public interface Api {
     Call<ArrayList<ResponseOfServer>> saveUserBuy(
             @Field("ac") String ac,
             @Field("refId") String refId,
-            @Field("subId") int subId
+            @Field("subId") String subId
     );
 
     @GET("getUserBuySubscribe/{ac}")

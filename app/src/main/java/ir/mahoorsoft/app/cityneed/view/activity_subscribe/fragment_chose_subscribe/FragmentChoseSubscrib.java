@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,7 +131,7 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
                     /*
                     When Status is 100 Open Zarinpal PG on Browser
                     */
-                    Pref.saveIntegerValue(PrefKey.SubId, source.get(position).id);
+                    Pref.saveStringValue(PrefKey.SubId, subId(source.get(position).id));
                     startActivity(intent);
                     G.activity.finish();
 
@@ -175,5 +176,19 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
     public void messageFromGift(String message) {
         pbar.setVisibility(View.GONE);
         Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private String subId(String id) {
+        String returnData = "";
+        Long t = System.currentTimeMillis();
+        String data1 = String.valueOf(t);
+        char[] data = data1.toCharArray();
+        for (int i = 0; i < data.length-1; i++) {
+            if (i == 9)
+                returnData = returnData + id;
+            returnData = returnData + data[i];
+
+        }
+        return returnData;
     }
 }

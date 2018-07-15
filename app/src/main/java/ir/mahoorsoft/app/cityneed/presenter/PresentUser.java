@@ -45,7 +45,7 @@ public class PresentUser implements User.OnUserLitener {
     @Override
     public void responseForLogIn(ArrayList<ResponseOfServer> res) {//0-->badCod  1-->okAndIsUser  2-->okAndIsTeacher  3--> badLogU
         if (res == null || res.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
+            sendMessage("");
         else
             onPresentUserLitener.LogIn(res.get(0));
     }
@@ -53,7 +53,7 @@ public class PresentUser implements User.OnUserLitener {
     @Override
     public void responseForLogUp(ArrayList<ResponseOfServer> res) {//0-->badCod  1-->ok  2--> badLogin
         if (res == null || res.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
+            sendMessage("");
         else
             onPresentUserLitener.LogUp(res.get(0));
     }
@@ -61,9 +61,9 @@ public class PresentUser implements User.OnUserLitener {
     @Override
     public void responseForLogOut(ArrayList<ResponseOfServer> res) {
         if (res == null || res.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
+            sendMessage("");
         else if (res.get(0).code == 0)
-            sendMessage("خطا!!!");
+            sendMessage("");
         else
             onPresentUserLitener.LogOut(true);
     }
@@ -71,7 +71,7 @@ public class PresentUser implements User.OnUserLitener {
     @Override
     public void onReceiveUser(ArrayList<StUser> students) {
         if (students == null || students.size() == 0)
-            sendMessage("خطا,پیش بینی نشده!!!");
+            sendMessage("");
         else
             onPresentUserLitener.onReceiveUser(students);
     }

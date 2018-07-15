@@ -230,7 +230,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             Pref.saveStringValue(PrefKey.userName, res.name);
             Pref.saveStringValue(PrefKey.apiCode, res.apiCode);
             PresentTeacher presentTeacher = new PresentTeacher(this);
-            presentTeacher.getTeacher(Pref.getStringValue(PrefKey.apiCode, ""));
+            presentTeacher.getTeacher(Pref.getStringValue(PrefKey.email, ""));
         }
     }
 

@@ -17,7 +17,7 @@ import retrofit2.Response;
 
 public class Subscribe {
 
-    public void getSubscribeList(){
+    public void getSubscribeList() {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StSubscribe>> getData = api.getSubscribeList();
         getData.enqueue(new Callback<ArrayList<StSubscribe>>() {
@@ -33,7 +33,7 @@ public class Subscribe {
         });
     }
 
-    public void saveUserBuy(String ac, String refId, int subscribeId){
+    public void saveUserBuy(String ac, String refId, String subscribeId) {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<ResponseOfServer>> saveData = api.saveUserBuy(ac, refId, subscribeId);
         saveData.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
@@ -49,7 +49,7 @@ public class Subscribe {
         });
     }
 
-    public void getUserBuy(String ac){
+    public void getUserBuy(String ac) {
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StBuy>> getData = api.getUserSubscribe(ac);
         getData.enqueue(new Callback<ArrayList<StBuy>>() {
@@ -66,18 +66,19 @@ public class Subscribe {
     }
 
 
-
-
-
-
-    public Subscribe (OnSubscribeListener onSubscribeListener){
+    public Subscribe(OnSubscribeListener onSubscribeListener) {
         this.onSubscribeListener = onSubscribeListener;
     }
+
     OnSubscribeListener onSubscribeListener;
-    public interface OnSubscribeListener{
+
+    public interface OnSubscribeListener {
         void onReceiveSubscribeList(ArrayList<StSubscribe> data);
+
         void onReceiveUserBuy(ArrayList<StBuy> data);
+
         void sendMessage(String message);
+
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
     }
 }

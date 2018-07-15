@@ -194,7 +194,7 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     private void queryForLogOut() {
         dialogProgres.showProgresBar();
         PresentUser presentUser = new PresentUser(this);
-        presentUser.logOut(Pref.getStringValue(PrefKey.email, ""));
+        presentUser.logOut(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
     private void starterActivity(Class aClass) {

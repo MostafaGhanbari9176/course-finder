@@ -1,4 +1,4 @@
-package ir.mahoorsoft.app.cityneed;
+package ir.mahoorsoft.app.cityneed.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 

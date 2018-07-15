@@ -53,7 +53,7 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
 
                 if (isPaymentSuccess) {
                     /* When Payment Request is Success :) */
-                    if (Pref.getIntegerValue(PrefKey.SubId, -1) != -1) {
+                    if (Pref.getStringValue(PrefKey.SubId, "").length() != 0) {
                         Pref.saveBollValue(PrefKey.isPaymentSuccess, true);
                         Pref.saveStringValue(PrefKey.refId, refID);
                         saveUserBuy(refID);

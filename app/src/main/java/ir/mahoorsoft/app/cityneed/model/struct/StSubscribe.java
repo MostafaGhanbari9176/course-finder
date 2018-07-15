@@ -6,7 +6,7 @@ package ir.mahoorsoft.app.cityneed.model.struct;
 
 public class StSubscribe {
 
-   public int id;
+   public String id;
    public int empty;
    public String subject;
    public String description;
