@@ -48,6 +48,7 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
+import ir.mahoorsoft.app.cityneed.view.activity_subscribe.ActivitySubscribe;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
 
 /**
@@ -199,23 +200,34 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
         try {
             super.onActivityResult(requestCode, resultCode, data);
             if (resultCode == RESULT_OK) {
-                if (requestCode == 1)
+                if (requestCode == 1) {
                     teacher.uploadFile(data.getStringExtra("path"));
-                else if (requestCode == 2)
+                    return;
+                }
+                if (requestCode == 2) {
                     uploadImage(data.getStringExtra("path"));
-                else if (data.getStringExtra("Gift").equals("Gift"))
+                    return;
+                }
+                if (data.getStringExtra("Gift").equals("Gift")) {
                     teacher.getUserSubscribeData();
-                else if (data.getBooleanExtra("buyResult", false)) {
+                    return;
+                }
+                if (data.getBooleanExtra("buyResult", false)) {
                     Pref.removeValue(PrefKey.isPaymentSaved);
                     this.finish();
-                } else if (!(data.getBooleanExtra("buyResult", false)))
+                    return;
+                }
+                if (!(data.getBooleanExtra("buyResult", false))) {
                     this.finish();
+                    return;
+                }
             }
-
-        } catch (Exception ex) {
-            Toast.makeText(ActivityProfile.this, ex.toString(),
-                    Toast.LENGTH_SHORT).show();
+        } catch (Exception ignored) {
+            this.finish();
         }
+
+        if (ActivitySubscribe.Ending)
+            this.finish();
     }
 
     private void uploadImage(String path) {

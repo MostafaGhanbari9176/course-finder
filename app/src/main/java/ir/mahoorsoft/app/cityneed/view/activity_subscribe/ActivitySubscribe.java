@@ -37,6 +37,7 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
     boolean haveSubscribe;
     FragmentChoseSubscrib fragmentChoseSubscrib;
     RelativeLayout pbar;
+    public static boolean Ending = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
         setContentView(R.layout.activity_subscribe);
         G.context = this;
         G.activity = this;
+        Ending = false;
         pbar = (RelativeLayout) findViewById(R.id.RLPbar);
         Uri data = getIntent().getData();
         ZarinPal.getPurchase(this).verificationPayment(data, new OnCallbackVerificationPaymentListener() {
@@ -153,6 +155,7 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
         Intent intent = getIntent();
         intent.putExtra("buyResult", flag);
         setResult(RESULT_OK, intent);
+        Ending = true;
         ActivitySubscribe.this.finish();
     }
 }
