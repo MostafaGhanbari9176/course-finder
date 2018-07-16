@@ -107,6 +107,7 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
             NotificationCompat.Builder builder = (NotificationCompat.Builder) new
                     NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.noti)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setColor(ContextCompat.getColor(this, R.color.blue_tel))
                     .setTicker("دوره یاب")
                     .setContentTitle(title)

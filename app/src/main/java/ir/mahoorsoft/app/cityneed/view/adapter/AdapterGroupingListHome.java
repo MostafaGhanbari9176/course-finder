@@ -35,6 +35,7 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
     private Context context;
     private ArrayList<StGrouping> surce = new ArrayList<>();
     private Holder selectedItem;
+    private int positionSaver = -1;
 
 
     public AdapterGroupingListHome(Context context, ArrayList<StGrouping> surce, OnClickItemTabagheList onClickItemTabagheList) {
@@ -70,7 +71,7 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
     @Override
     public void onBindViewHolder(final AdapterGroupingListHome.Holder holder, final int position) {
         final StGrouping items = surce.get(position);
-        setSelectedItem(selectedItem);
+        setSelectedItem(holder, position);
         holder.txtTabagheName.setText(items.subject);
         Glide.with(context)
                 .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
@@ -80,22 +81,34 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSelectedItem(holder);
+                positionSaver = position;
+                setSelectedItem(holder, position);
                 onClickItemTabagheList.tabagheListItemClick(position, items.id);
             }
         });
     }
 
-    public void setSelectedItem(Holder holder) {
-        if (selectedItem != null) {
+    public void setSelectedItem(Holder holder, int position) {
+        if (holder == null && selectedItem != null) {
             selectedItem.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light));
             selectedItem.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.dark_eq));
-        }
-        if (holder == null)
             return;
-        selectedItem = holder;
-        selectedItem.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light_eq));
-        selectedItem.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.yellow_ios));
+        } else if (holder == null)
+            return;
+        if (selectedItem == null) {
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light_eq));
+            holder.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.yellow_ios));
+            selectedItem = holder;
+        } else if (position != positionSaver) {
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light_eq));
+            holder.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.yellow_ios));
+            selectedItem = holder;
+        } else {
+            selectedItem.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light_eq));
+            selectedItem.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.yellow_ios));
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light));
+            holder.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.dark_eq));
+        }
     }
 
     @Override
