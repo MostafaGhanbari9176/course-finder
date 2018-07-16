@@ -11,7 +11,7 @@ public class ApiClient {
 
 
     public static final String serverAddress = "http://172.17.33.156:8090";
-    public static final String BASE_URL = serverAddress + "/city_need/v1/";
+    public static String BASE_URL = "";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {

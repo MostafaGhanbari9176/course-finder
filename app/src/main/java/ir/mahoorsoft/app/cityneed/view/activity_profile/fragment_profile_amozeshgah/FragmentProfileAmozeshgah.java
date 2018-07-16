@@ -296,7 +296,7 @@ public class FragmentProfileAmozeshgah extends Fragment implements OnMapReadyCal
         //isResponseForImage = false;
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.email, "") + ".pdf", path);
+        presentUpload.uploadFile("madrak", Pref.getStringValue(PrefKey.email, "") + ".madrak.pdf", path);
 
     }
 

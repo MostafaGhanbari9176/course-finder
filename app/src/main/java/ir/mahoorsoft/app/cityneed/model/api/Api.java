@@ -44,41 +44,45 @@ public interface Api {
             @Path("flag") String flag
     );
 
-    @GET("logOut/{email}")
+    @FormUrlEncoded
+    @POST("logOut")//
     Call<ArrayList<ResponseOfServer>> logOut(
-            @Path("email") String phone
+            @Field("email") String phone
     );
 
-    //  @GET()
 
-    @GET("createAndSaveSmsCode/{email}")
+    @FormUrlEncoded
+    @POST("createAndSaveSmsCode")//
     Call<ArrayList<ResponseOfServer>> createSmsCode(
-            @Path("email") String phone
+            @Field("email") String phone
     );
 
-    @GET("logUp/{email}/{name}/{code}")
+    @FormUrlEncoded
+    @POST("logUp")//
     Call<ArrayList<ResponseOfServer>> logUp(
-            @Path("email") String phone,
-            @Path("name") String name,
-            @Path("code") int code
+            @Field("email") String phone,
+            @Field("name") String name,
+            @Field("code") int code
     );
 
-    @GET("logIn/{email}/{code}")
+    @FormUrlEncoded
+    @POST("logIn")//
     Call<ArrayList<ResponseOfServer>> logIn(
-            @Path("email") String phone,
-            @Path("code") int code
+            @Field("email") String phone,
+            @Field("code") int code
     );
 
-    @GET("addTeacher/{ac}/{landPhone}/{subject}/{tozihat}/{type}/{lat}/{lon}/{address}")
+    @FormUrlEncoded
+    @POST("addTeacher")//
     Call<ArrayList<ResponseOfServer>> addTeacher(
-            @Path("ac") String ApiCode,
-            @Path("landPhone") String landPhone,
-            @Path("subject") String subject,
-            @Path("tozihat") String tozihat,
-            @Path("type") int type,
-            @Path("lat") String lat,
-            @Path("lon") String lon,
-            @Path("address") String address
+            @Field("ac") String ApiCode,
+            @Field("landPhone") String landPhone,
+            @Field("subject") String subject,
+            @Field("tozihat") String tozihat,
+            @Field("type") int type,
+            @Field("lat") String lat,
+            @Field("lon") String lon,
+            @Field("address") String address
     );
 
     @Multipart
@@ -112,23 +116,24 @@ public interface Api {
             @Path("uperId") int uperId
     );
 
-    @GET("addCourse/{ac}/{teacherName}/{subject}/{tabagheId}/{type}/{capacity}/{mony}/{sharayet}/{tozihat}/{startDate}/{endDate}/{day}/{hours}/{minOld}/{maxOld}")
+    @FormUrlEncoded
+    @POST("addCourse")//
     Call<ArrayList<ResponseOfServer>> addCourse(
-            @Path("ac") String ac,
-            @Path("teacherName") String teacherName,
-            @Path("subject") String subject,
-            @Path("tabagheId") int tabagheId,
-            @Path("type") int type,
-            @Path("capacity") int capacity,
-            @Path("mony") int mony,
-            @Path("sharayet") String sharayet,
-            @Path("tozihat") String tozihat,
-            @Path("startDate") String startDate,
-            @Path("endDate") String endDate,
-            @Path("day") String day,
-            @Path("hours") String hours,
-            @Path("minOld") int minOld,
-            @Path("maxOld") int maxOld
+            @Field("ac") String ac,
+            @Field("teacherName") String teacherName,
+            @Field("subject") String subject,
+            @Field("tabagheId") int tabagheId,
+            @Field("type") int type,
+            @Field("capacity") int capacity,
+            @Field("mony") int mony,
+            @Field("sharayet") String sharayet,
+            @Field("tozihat") String tozihat,
+            @Field("startDate") String startDate,
+            @Field("endDate") String endDate,
+            @Field("day") String day,
+            @Field("hours") String hours,
+            @Field("minOld") int minOld,
+            @Field("maxOld") int maxOld
     );
 
     @GET("getAllCourse")

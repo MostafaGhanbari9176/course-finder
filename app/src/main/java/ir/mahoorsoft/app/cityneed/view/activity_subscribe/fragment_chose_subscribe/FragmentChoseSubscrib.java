@@ -114,7 +114,11 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
 
         ZarinPal purchase = ZarinPal.getPurchase(G.context);
         PaymentRequest payment = ZarinPal.getPaymentRequest();
-
+        if (G.MID.isEmpty()) {
+            Toast.makeText(G.context, "خطا !!!", Toast.LENGTH_SHORT).show();
+            G.activity.finish();
+            return;
+        }
         payment.setMerchantID(G.MID);
         payment.setAmount(source.get(position).price);
         payment.setDescription("خرید اشتراک " + source.get(position).subject + " به قیمت " + source.get(position).price + " تومان ");
@@ -183,7 +187,7 @@ public class FragmentChoseSubscrib extends Fragment implements PresentSubscribe.
         Long t = System.currentTimeMillis();
         String data1 = String.valueOf(t);
         char[] data = data1.toCharArray();
-        for (int i = 0; i < data.length-1; i++) {
+        for (int i = 0; i < data.length - 1; i++) {
             if (i == 9)
                 returnData = returnData + id;
             returnData = returnData + data[i];

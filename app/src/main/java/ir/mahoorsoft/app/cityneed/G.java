@@ -2,36 +2,25 @@ package ir.mahoorsoft.app.cityneed;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
-import android.content.Intent;
-import android.media.RingtoneManager;
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.BadPaddingException;
@@ -43,12 +32,11 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.view.activity_subscribe.fragment_chose_subscribe.FragmentChoseSubscrib;
 
 
 public class G extends Application {
 
-    public static String MID = "18e4d686-6592-11e8-803c-005056a205be";
+    public static String MID = "";
     public static String VN = "1.0.6";
     public static String appLink = "http://www.mahoorsoft.ir/%D8%A7%D8%AE%D8%A8%D8%A7%D8%B1/ID/12/%D8%A7%D9%86%D8%AA%D8%B4%D8%A7%D8%B1-%D8%A7%D9%BE%D9%84%DB%8C%DA%A9%DB%8C%D8%B4%D9%86-%D8%AF%D9%88%D8%B1%D9%87-%DB%8C%D8%A7%D8%A8";
     public static AppCompatActivity activity;
@@ -56,41 +44,67 @@ public class G extends Application {
     public static SharedPreferences preferences;
     public static String Name;
     public static int INTERVAL_CHECK_PM = 300000;
-    String data;
+    ///////////////////////////////////
+    private static final int PBK_ITERATIONS = 1000;
+    private static final String PBE_ALGORITHM = "PBEwithSHA256and128BITAES-CBC-BC";
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
-        // data = encrypt(MID);
-        int i = 0;
 
-        // dectypt("96d4221858752696f016284037072f53ec0d213ac615c5d61cb0517913ec3d9a2a0b577b99cec1ebbe29b12700be5592");
+
+        try {
+            byte[] decryptedData = func(stData("assets4.txt"), data(stData("assets1.txt")), data(stData("assets2.txt")), data(stData("assets3.txt")));
+            MID = new String(decryptedData, "UTF-8");
+
+            decryptedData = func(stData("assets24.txt"), data(stData("assets21.txt")), data(stData("assets22.txt")), data(stData("assets23.txt")));
+            ApiClient.BASE_URL = ApiClient.serverAddress + new String(decryptedData, "UTF-8");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private String encrypt(String data) {
-        try {
-            Hefaz hefaz = new Hefaz();
+    private byte[] func(String password, byte[] salt, byte[] iv, byte[] encryptedData) throws
+            NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException,
+            BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
+        PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, PBK_ITERATIONS);
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(PBE_ALGORITHM);
+        Key key = secretKeyFactory.generateSecret(keySpec);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
+        return cipher.doFinal(encryptedData);
+    }
 
-            String s = hefaz.bytesToHex(hefaz.encrypt(data));
-            return s;
+    private String stData(String filename) {
+        StringBuilder text = new StringBuilder();
+        try {
+            InputStream inputStream = this.getAssets().open(filename);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+            String line;
+            while ((line = reader.readLine()) != null)
+                text.append(line);
+
+            reader.close();
+
+            return text.toString();
+
         } catch (Exception e) {
-            e.printStackTrace();
             return "";
         }
     }
 
-    private String dectypt(String data) {
-        Hefaz hefaz = new Hefaz();
-        try {
-            String s = hefaz.bytesToHex(hefaz.decrypt(data));
-            return s;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
+    private byte[] data(String s) {
+        String[] stData = (s.split("%"));
+        byte[] data = new byte[stData.length];
+        for (int i = 0; i < stData.length; i++)
+            data[(stData.length - 1) - i] = (byte) (Integer.parseInt(stData[i]));
+        return data;
     }
 
     public static String myTrim(String string, char subString) {

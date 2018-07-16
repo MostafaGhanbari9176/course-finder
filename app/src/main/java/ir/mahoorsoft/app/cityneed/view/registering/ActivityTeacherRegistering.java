@@ -153,8 +153,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
             txtAddress.setError("کامل کنید");
             txtAddress.requestFocus();
         } /*else if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
-            showDialog("خطا", "لطفا موقعیت مکانی خود را تعیین کنید", "", "قبول");*/
-        else {
+            showDialog("خطا", "لطفا موقعیت مکانی خود را تعیین کنید", "", "قبول");*/ else {
             try {
                 Long.parseLong(txtPhone.getText().toString().trim());
                 showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید؟", "بله", "بررسی");
@@ -209,7 +208,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
     public void confirmTeacher(boolean flag) {
         dialogProgres.closeProgresBar();
         if (flag) {
-            Pref.saveStringValue(PrefKey.pictureId, Pref.getStringValue(PrefKey.apiCode, ""));
+            Pref.saveStringValue(PrefKey.pictureId, Pref.getStringValue(PrefKey.email, ""));
             Pref.saveStringValue(PrefKey.landPhone, txtPhone.getText().toString().trim());
             Pref.saveStringValue(PrefKey.subject, txtSubject.getText().toString().trim());
             Pref.saveStringValue(PrefKey.address, txtAddress.getText().toString().trim());
@@ -224,7 +223,7 @@ public class ActivityTeacherRegistering extends AppCompatActivity implements Vie
         dialogProgres = new DialogProgres(this, "درحال بارگذاری");
         dialogProgres.showProgresBar();
         PresentUpload presentUpload = new PresentUpload(this);
-        presentUpload.uploadFile("teacher", Pref.getStringValue(PrefKey.apiCode, "") + ".png", path);
+        presentUpload.uploadFile("teacher", Pref.getStringValue(PrefKey.email, "") + ".png", path);
     }
 
     @Override
