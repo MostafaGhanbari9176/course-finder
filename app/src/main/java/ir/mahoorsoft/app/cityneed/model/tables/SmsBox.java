@@ -120,9 +120,9 @@ public class SmsBox {
         });
     }
 
-    public void deleteSms(int smsId) {
+    public void deleteSms(int smsId, String apiCode) {
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<ResponseOfServer>> save = api.deleteSms(smsId);
+        Call<ArrayList<ResponseOfServer>> save = api.deleteSms(smsId, apiCode);
         save.enqueue(new Callback<ArrayList<ResponseOfServer>>() {
             @Override
             public void onResponse(Call<ArrayList<ResponseOfServer>> call, Response<ArrayList<ResponseOfServer>> response) {

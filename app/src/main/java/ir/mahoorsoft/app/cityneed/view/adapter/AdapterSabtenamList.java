@@ -111,7 +111,8 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
         holder.btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCourseList.btnItemMenuPressed(position);
+                if (!(items.isDeleted == 1 || items.isCanceled == 1))
+                    onClickItemCourseList.btnItemMenuPressed(position);
             }
         });
     }

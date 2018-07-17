@@ -199,7 +199,7 @@ public class ActivitySabtenamList extends AppCompatActivity implements AdapterSa
 
     private void queryForUpdateCanceledFlag(int id) {
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.updateCanceledFlag(id, 2, -1, "a", "a", "a");
+        presentSabtenam.updateCanceledFlag(id, 2, -1, "aaa", "aaa", "aaa");
 
     }
 

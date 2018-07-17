@@ -28,7 +28,7 @@ public class PresentFeedBack implements FeedBack.OnFeedBackListener {
     }
 
     public void saveFeedBack(String feedBackMessage) {
-        (new FeedBack(this)).saveFeedBack(Pref.getStringValue(PrefKey.apiCode, ""), feedBackMessage);
+        (new FeedBack(this)).saveFeedBack(Pref.getStringValue(PrefKey.email, ""), feedBackMessage);
     }
 
     @Override

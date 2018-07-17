@@ -2,7 +2,9 @@ package ir.mahoorsoft.app.cityneed.presenter;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
+import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
@@ -60,7 +62,7 @@ public class PresenterSmsBox implements SmsBox.OnSmsBoxResponseListener {
 
     public void deleteMessage(int smsId) {
         SmsBox smsBox = new SmsBox(this);
-        smsBox.deleteSms(smsId);
+        smsBox.deleteSms(smsId, Pref.getStringValue(PrefKey.apiCode, "aaa"));
     }
 
     @Override

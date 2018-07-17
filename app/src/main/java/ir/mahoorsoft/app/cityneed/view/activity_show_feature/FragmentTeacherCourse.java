@@ -94,6 +94,8 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
                     if (course.get(i).vaziat == 0)
                         surce.remove(course.get(i));
                 }
+                if (surce.size() == 0)
+                    txt.setVisibility(View.VISIBLE);
                 adapter = new AdapterCourseList(G.context, surce, this);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                         , LinearLayoutManager.VERTICAL, false);

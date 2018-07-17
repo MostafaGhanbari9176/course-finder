@@ -45,20 +45,23 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("logOut")//
+    @POST("logOut")
+//
     Call<ArrayList<ResponseOfServer>> logOut(
             @Field("email") String phone
     );
 
 
     @FormUrlEncoded
-    @POST("createAndSaveSmsCode")//
+    @POST("createAndSaveSmsCode")
+//
     Call<ArrayList<ResponseOfServer>> createSmsCode(
             @Field("email") String phone
     );
 
     @FormUrlEncoded
-    @POST("logUp")//
+    @POST("logUp")
+//
     Call<ArrayList<ResponseOfServer>> logUp(
             @Field("email") String phone,
             @Field("name") String name,
@@ -66,14 +69,16 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("logIn")//
+    @POST("logIn")
+//
     Call<ArrayList<ResponseOfServer>> logIn(
             @Field("email") String phone,
             @Field("code") int code
     );
 
     @FormUrlEncoded
-    @POST("addTeacher")//
+    @POST("addTeacher")
+//
     Call<ArrayList<ResponseOfServer>> addTeacher(
             @Field("ac") String ApiCode,
             @Field("landPhone") String landPhone,
@@ -92,10 +97,12 @@ public interface Api {
             @Part MultipartBody.Part file
     );
 
-    @GET("getTeacher/{teacherApi}/{userApi}")
+    @FormUrlEncoded
+    @POST("getTeacher")
+//
     Call<ArrayList<StTeacher>> getTeacher(
-            @Path("teacherApi") String teacherApi,
-            @Path("userApi") String userApi
+            @Field("teacherApi") String teacherApi,
+            @Field("userApi") String userApi
     );
 
     @GET("getAllTeacher")
@@ -117,7 +124,8 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("addCourse")//
+    @POST("addCourse")
+//
     Call<ArrayList<ResponseOfServer>> addCourse(
             @Field("ac") String ac,
             @Field("teacherName") String teacherName,
@@ -152,10 +160,12 @@ public interface Api {
     @GET("getCustomCourseListForHome")
     Call<ArrayList<StCustomCourseListHome>> getCustomCourseListData();
 
-    @GET("getCourseById/{id}/{userApi}")
+    @FormUrlEncoded
+    @POST("getCourseById")
+//
     Call<ArrayList<StCourse>> getCourseById(
-            @Path("id") int id,
-            @Path("userApi") String userApi
+            @Field("id") int id,
+            @Field("userApi") String userApi
     );
 
     @GET("getCourseForListHome/{id}")
@@ -173,69 +183,91 @@ public interface Api {
             @Path("ac") String ac
     );
 
-    @GET("getUserCourse/{ac}")
+    @FormUrlEncoded
+    @POST("getUserCourse")
+//
     Call<ArrayList<StCourse>> getUserCourse(
-            @Path("ac") String ac
+            @Field("ac") String ac
     );
 
-    @GET("checkedUserStatuse/{id}")
+    @FormUrlEncoded
+    @POST("checkedUserStatuse")
+//
     Call<ArrayList<ResponseOfServer>> checkedUserStatuse(
-            @Path("id") String id
+            @Field("id") String id
     );
 
-    @GET("sabtenam/{idCourse}/{idTeacher}/{idUser}/{cellPhone}")
+    @FormUrlEncoded
+    @POST("sabtenam")
+//
     Call<ArrayList<ResponseOfServer>> sabtenam(
-            @Path("idCourse") int idCourse,
-            @Path("idTeacher") String idTeacher,
-            @Path("idUser") String idUser,
-            @Path("cellPhone") String cellPhone
+            @Field("idCourse") int idCourse,
+            @Field("idTeacher") String idTeacher,
+            @Field("idUser") String idUser,
+            @Field("cellPhone") String cellPhone
     );
 
-    @GET("checkSabtenam/{idCourse}/{idUser}")
+    @FormUrlEncoded
+    @POST("checkSabtenam")
+//
     Call<ArrayList<ResponseOfServer>> checkSabtenam(
-            @Path("idCourse") int idCourse,
-            @Path("idUser") String idUser
+            @Field("idCourse") int idCourse,
+            @Field("idUser") String idUser
     );
 
-    @GET("getRegistrationsName/{idCourse}/{idTeacher}")
+    @FormUrlEncoded
+    @POST("getRegistrationsName")
+//
     Call<ArrayList<StUser>> getRegistrationsName(
-            @Path("idCourse") int idCourse,
-            @Path("idTeacher") String ac
+            @Field("idCourse") int idCourse,
+            @Field("idTeacher") String ac
     );
 
-    @GET("getMsAndRat/{ac}")
+    @FormUrlEncoded
+    @POST("getMsAndRat")
+//
     Call<ArrayList<ResponseOfServer>> getMadrakStateAndRat(
-            @Path("ac") String ac
+            @Field("ac") String ac
     );
 
-    @GET("upMs/{ac}")
+    @FormUrlEncoded
+    @POST("upMs")
+//
     Call<ArrayList<ResponseOfServer>> upMadrakState(
-            @Path("ac") String ac
+            @Field("ac") String ac
     );
 
-    @GET("saveSms/{text}/{tsId}/{rsId}/{courseId}/{howSending}")
+    @FormUrlEncoded
+    @POST("saveSms")
+//
     Call<ArrayList<ResponseOfServer>> saveSms(
-            @Path("text") String smsText,
-            @Path("tsId") String tsId,
-            @Path("rsId") String rsId,
-            @Path("courseId") int courseId,
-            @Path("howSending") int howSending
+            @Field("text") String smsText,
+            @Field("tsId") String tsId,
+            @Field("rsId") String rsId,
+            @Field("courseId") int courseId,
+            @Field("howSending") int howSending
     );
 
-    @GET("sendMoreSms/{data}/{message}")
+    @FormUrlEncoded
+    @POST("sendMoreSms")
+//
     Call<ArrayList<ResponseOfServer>> sendMoreSms(
-            @Path("data") String data,
-            @Path("message") String message
+            @Field("data") String data,
+            @Field("message") String message
     );
 
-    @GET("getRsSms/{rsId}")
+    @FormUrlEncoded
+    @POST("getRsSms")
+//
     Call<ArrayList<StSmsBox>> getRsSms(
-            @Path("rsId") String rsId
+            @Field("rsId") String rsId
     );
 
-    @GET("getTsSms/{tsId}")
+    @FormUrlEncoded
+    @POST("getTsSms")
+//
     Call<ArrayList<StSmsBox>> getTsSms(
-            @Path("tsId") String rsId
+            @Field("tsId") String rsId
     );
 
     @GET("upDateSeen/{id}")
@@ -243,9 +275,12 @@ public interface Api {
             @Path("id") int smsId
     );
 
-    @GET("deleteSms/{id}")
+    @FormUrlEncoded
+    @POST("deleteSms")
+//
     Call<ArrayList<ResponseOfServer>> deleteSms(
-            @Path("id") int smsId
+            @Field("id") int smsId,
+            @Field("ac") String ac
     );
 
     @GET("updateDeletedFlag/{courseId}/{code}")
@@ -254,46 +289,57 @@ public interface Api {
             @Path("code") int code
     );
 
-    @GET("updateCanceledFlag/{sabtenamId}/{code}/{courseId}/{message}/{tsId}/{rsId}")
+    @FormUrlEncoded
+    @POST("updateCanceledFlag")
+//
     Call<ArrayList<ResponseOfServer>> updateCanceledFlag(
-            @Path("sabtenamId") int sabtenamId,
-            @Path("code") int code,
-            @Path("courseId") int courseId,
-            @Path("message") String message,
-            @Path("tsId") String tsId,
-            @Path("rsId") String rsId
+            @Field("sabtenamId") int sabtenamId,
+            @Field("code") int code,
+            @Field("courseId") int courseId,
+            @Field("message") String message,
+            @Field("tsId") String tsId,
+            @Field("rsId") String rsId
     );
 
-    @GET("updateMoreCanceledFlag/{data}/{message}")
+    @FormUrlEncoded
+    @POST("updateMoreCanceledFlag")
+//
     Call<ArrayList<ResponseOfServer>> updateMoreCanceledFlag(
-            @Path("data") String data,
-            @Path("message") String message
+            @Field("data") String data,
+            @Field("message") String message
     );
 
-    @GET("saveComment/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}")
+    @FormUrlEncoded
+    @POST("saveComment")
+//
     Call<ArrayList<ResponseOfServer>> saveComment(
-            @Path("commentText") String commentText,
-            @Path("userId") String userId,
-            @Path("courseId") int courseId,
-            @Path("teacherId") String teacherId,
-            @Path("teacherRat") float teacherRat
+            @Field("commentText") String commentText,
+            @Field("userId") String userId,
+            @Field("courseId") int courseId,
+            @Field("teacherId") String teacherId,
+            @Field("teacherRat") float teacherRat
     );
 
-    @GET("saveCourseRat/{userId}/{courseId}/{teacherId}/{courseRat}")
+    @FormUrlEncoded
+    @POST("saveCourseRat")
+//
     Call<ArrayList<ResponseOfServer>> saveCourseRat(
-            @Path("userId") String userId,
-            @Path("courseId") int courseId,
-            @Path("teacherId") String teacherId,
-            @Path("courseRat") float courseRat
+            @Field("userId") String userId,
+            @Field("courseId") int courseId,
+            @Field("teacherId") String teacherId,
+            @Field("courseRat") float courseRat
     );
 
-    @GET("commentFeedBack/{userId}/{commentId}/{isLicked}")
+    @FormUrlEncoded
+    @POST("commentFeedBack")
+//
     Call<ArrayList<ResponseOfServer>> commentFeedBack(
-            @Path("userId") String userId,
-            @Path("commentId") int commentId,
-            @Path("isLicked") int isLicked
+            @Field("userId") String userId,
+            @Field("commentId") int commentId,
+            @Field("isLicked") int isLicked
     );
 
+    //*notUsed*
     @GET("updateComment/{id}/{commentText}/{userId}/{courseId}/{teacherId}/{teacherRat}/{courseRat}")
     Call<ArrayList<ResponseOfServer>> upDateComment(
             @Path("id") int id,
@@ -310,28 +356,33 @@ public interface Api {
             @Path("teacherId") String teacherId
     );
 
-    @GET("RePoRt/{signText}/{reportText}/{spamId}/{spamerId}/{reporterId}")
+    @FormUrlEncoded
+    @POST("RePoRt")
+//
     Call<ArrayList<ResponseOfServer>> report(
-            @Path("signText") String signText,
-            @Path("reportText") String reportText,
-            @Path("spamId") int spamId,
-            @Path("spamerId") String spamerId,
-            @Path("reporterId") String reporterId
+            @Field("signText") String signText,
+            @Field("reportText") String reportText,
+            @Field("spamId") int spamId,
+            @Field("spamerId") String spamerId,
+            @Field("reporterId") String reporterId
     );
 
-    @GET("confirmStudent/{sabtenamId}/{courseId}/{message}/{tsId}/{rsId}")
+    @FormUrlEncoded
+    @POST("confirmStudent")
+//
     Call<ArrayList<ResponseOfServer>> confirmStudent(
-            @Path("sabtenamId") int sabtenamId,
-            @Path("courseId") int courseId,
-            @Path("message") String message,
-            @Path("tsId") String tsId,
-            @Path("rsId") String rsId
+            @Field("sabtenamId") int sabtenamId,
+            @Field("courseId") int courseId,
+            @Field("message") String message,
+            @Field("tsId") String tsId,
+            @Field("rsId") String rsId
     );
 
-    @GET("confirmMoreStudent/{data}/{message}")
+    @FormUrlEncoded
+    @POST("confirmMoreStudent")//
     Call<ArrayList<ResponseOfServer>> confirmMoreStudent(
-            @Path("data") String jsonData,
-            @Path("message") String message
+            @Field("data") String jsonData,
+            @Field("message") String message
     );
 
     @GET("getSelectedTeacher")
@@ -354,11 +405,12 @@ public interface Api {
             @Field("subId") String subId
     );
 
-    @GET("getUserBuySubscribe/{ac}")
+    @FormUrlEncoded
+    @POST("getUserBuySubscribe")//
     Call<ArrayList<StBuy>> getUserSubscribe(
-            @Path("ac") String ac
+            @Field("ac") String ac
     );
-
+//////////////////////////////tainga
     @GET("saveFeedBack/{ac}/{feedBackText}")
     Call<ArrayList<ResponseOfServer>> saveFeedBack(
             @Path("ac") String ac,

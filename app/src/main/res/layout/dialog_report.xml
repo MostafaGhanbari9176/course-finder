@@ -41,7 +41,7 @@
                     android:layout_margin="8dp"
                     android:ems="10"
                     android:gravity="start"
-                    android:hint="یه دلیل "
+                    android:hint="متن گزارش "
                     android:inputType="textMultiLine"
                     android:maxLength="50" />
             </LinearLayout>
