@@ -16,6 +16,7 @@ import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StComment;
@@ -26,6 +27,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
  */
 
 public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.Holder> {
+
+    private int lastPosition;
 
     public interface OnClickItemCommentList {
         void likePresed(int position);
@@ -92,11 +95,18 @@ public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.
     @Override
     public void onBindViewHolder(final AdapterCommentList.Holder holder, final int position) {
         final StComment items = surce.get(position);
+        if(surce.get(position).courseName == null){
+            holder.txtCourseName.setVisibility(View.GONE);
+            holder.txtStartDate.setVisibility(View.GONE);
+        }else{
+            holder.txtCourseName.setVisibility(View.VISIBLE);
+            holder.txtStartDate.setVisibility(View.VISIBLE);
+            holder.txtCourseName.setText("بابت دوره : " + items.courseName);
+            holder.txtStartDate.setText("تاریخ برگزاری دوره : " + items.startDate);
+        }
         holder.txtUserName.setText(items.userName);
-        holder.txtStartDate.setText(items.startDate);
         holder.txtLikeNum.setText(items.likeNum + "");
         holder.txtDisLikeNum.setText(items.disLikeNum + "");
-        holder.txtCourseName.setText(items.courseName);
         holder.txtCommentDate.setText(items.date);
         holder.txtCommentText.setText(items.commentText);
         holder.ratingBar.setRating(items.teacherRat);
@@ -154,6 +164,8 @@ public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.
 
             }
         });
+
+        lastPosition = G.setListItemsAnimation(new View[]{holder.ratingBar, holder.txtUserName}, new View[]{holder.txtCommentText, holder.btnLike, holder.btnDisLike, holder.btnFeedBack},position, lastPosition);
 
     }
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 
@@ -21,6 +22,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 
 public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Holder> {
 
+
+    private int lastPosition;
 
     public interface OnClickItemSmsList {
         void seenMessage(int position);
@@ -74,9 +77,8 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_sms_in, parent, false);
-        Holder holder = new Holder(view);
 
-        return holder;
+        return new Holder(view);
     }
 
     @Override
@@ -84,6 +86,8 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
         final StSmsBox items = surce.get(position);
         if (items.seen == 0)
             holder.imgSeenSms.setVisibility(View.GONE);
+        else
+            holder.imgSeenSms.setVisibility(View.VISIBLE);
 
         holder.txtCourseName.setText(items.courseName);
         holder.txtTsName.setText(items.tsName);
@@ -97,15 +101,17 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
         holder.btnSeen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.imgSeenSms.setVisibility(View.VISIBLE);
+
                 itemSmsList.seenMessage(position);
+
             }
         });
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.imgSeenSms.setVisibility(View.VISIBLE);
+
                 itemSmsList.seenMessage(position);
+
             }
         });
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +120,8 @@ public class AdapterSmsListIn extends RecyclerView.Adapter<AdapterSmsListIn.Hold
                 itemSmsList.deleteMessage(position);
             }
         });
+
+        lastPosition = G.setListItemsAnimation(new View[]{holder.item}, new View[]{holder.imgSeenSms, holder.btnSeen}, position, lastPosition);
 
     }
 

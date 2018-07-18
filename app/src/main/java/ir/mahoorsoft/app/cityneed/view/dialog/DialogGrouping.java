@@ -111,7 +111,6 @@ public class DialogGrouping implements PresentGrouping.OnPresentTabagheListener,
     @Override
     public void tabagheListItemClick(int position) {
         this.position = position;
-        adapter.setSelectedItem(null);
         if (source.get(position).isFinaly == 1) {
             txtToolBar.setText("آخرین زیر شاخه");
             choseHandle();

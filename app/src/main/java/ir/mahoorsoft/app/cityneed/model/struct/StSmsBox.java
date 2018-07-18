@@ -18,4 +18,20 @@ public class StSmsBox {
     public String rsId;
     public String tsId;
 
+    public StSmsBox(int id, int seen, int empty, int courseId, String text, String courseName, String date, String rsName, String tsName, String rsId, String tsId) {
+        this.id = id;
+        this.seen = seen;
+        this.empty = empty;
+        this.courseId = courseId;
+        this.text = text;
+        this.courseName = courseName;
+        this.date = date;
+        this.rsName = rsName;
+        this.tsName = tsName;
+        this.rsId = rsId;
+        this.tsId = tsId;
+    }
+
+    public StSmsBox() {
+    }
 }

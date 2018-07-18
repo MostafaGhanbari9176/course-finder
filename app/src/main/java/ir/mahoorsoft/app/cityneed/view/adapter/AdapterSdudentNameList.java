@@ -8,10 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 
@@ -29,6 +28,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 
 public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentNameList.Holder> {
 
+    private int lastposition;
+
     public interface OnClickItemSdutentNameList {
         void sendSms(int position);
 
@@ -37,9 +38,7 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
         void confirmStudent(int position, CardView cardView);
     }
 
-    public static Stack<Integer> checkedUser = new Stack<>();
-    public static Stack<CardView> selectedItems = new Stack<>();
-
+    public static Stack<Integer> checkedPositions = new Stack<>();
     private OnClickItemSdutentNameList onClickItemSdutentNameList;
     private Context context;
     private ArrayList<StUser> surce = new ArrayList<>();
@@ -47,8 +46,7 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
 
 
     public AdapterSdudentNameList(Context context, ArrayList<StUser> surce, OnClickItemSdutentNameList onClickItemSdutentNameList, boolean showCheckBox) {
-        checkedUser.clear();
-        selectedItems.clear();
+        checkedPositions.clear();
         this.context = context;
         this.surce = surce;
         this.onClickItemSdutentNameList = onClickItemSdutentNameList;
@@ -92,28 +90,35 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
         final StUser items = surce.get(position);
         if (items.isCanceled != 0)
             holder.RLDelete.setVisibility(View.VISIBLE);
+        else
+            holder.RLDelete.setVisibility(View.GONE);
         if (items.status == 0) {
             holder.cardView.setCardBackgroundColor(Color.argb(100, 255, 118, 144));
+            holder.btnConfirm.setVisibility(View.VISIBLE);
         } else {
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light));
             holder.btnConfirm.setVisibility(View.GONE);
         }
         holder.txtName.setText(items.name);
         holder.txtCellPhone.setText(items.cellPhone);
+        if (checkedPositions.indexOf(position) != -1)
+            holder.cbx.setChecked(true);
+        else
+            holder.cbx.setChecked(false);
         if (showCheckBox) {
             holder.cbx.setVisibility(View.VISIBLE);
             holder.llButton.setVisibility(View.GONE);
+        } else {
+            holder.cbx.setVisibility(View.GONE);
+            holder.llButton.setVisibility(View.VISIBLE);
         }
-        holder.cbx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.cbx.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    checkedUser.push(position);
-                    selectedItems.push(holder.cardView);
-                } else {
-                    int index = checkedUser.indexOf(position);
-                    checkedUser.remove(index);
-                    selectedItems.remove(index);
-                }
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked())
+                    checkedPositions.push(position);
+                else
+                    checkedPositions.remove(checkedPositions.indexOf(position));
             }
         });
         holder.btnSendSms.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +144,8 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
                     Toast.makeText(context, "تایید شده!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        lastposition = G.setListItemsAnimation(new View[]{holder.cardView, holder.txtName}, new View[]{holder.btnConfirm, holder.btnDeleteSabtenam, holder.btnSendSms}, position, lastposition);
     }
 
     @Override

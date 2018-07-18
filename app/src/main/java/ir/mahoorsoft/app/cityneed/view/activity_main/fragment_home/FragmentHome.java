@@ -155,7 +155,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             @Override
             public void onClick(View v) {
                 queryForCourses(-1);
-                //adapterGrouping.setSelectedItem(null);
+                adapterGrouping.selectedPosition = -1;
+                adapterGrouping.notifyDataSetChanged();
             }
         });
         btnDelete.setVisibility(View.GONE);

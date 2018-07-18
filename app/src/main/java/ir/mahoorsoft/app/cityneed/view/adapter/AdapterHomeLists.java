@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
@@ -24,6 +25,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
  */
 
 public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Holder> {
+
+    private int lastPosition;
 
     public interface setOnClickItem {
 
@@ -73,7 +76,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             endOfList = (LinearLayout) itemView.findViewById(R.id.llCustomColorItemHome);
         }
 
-        public void bindData(final StCourse items) {
+        public void bindData(final StCourse items, int position) {
 
             if (items.endOfList == 0) {
                 endOfList.setVisibility(View.GONE);
@@ -104,6 +107,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                 }
             });
 
+           lastPosition = G.setListItemsAnimation(new View[]{item}, new View[]{txtCourseName, txtMasterName, item}, position, lastPosition);
         }
     }
 
@@ -124,7 +128,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
 
         StCourse items = surce.get(position);
 
-        holder.bindData(items);
+        holder.bindData(items, position);
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
@@ -25,6 +26,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StGrouping;
  */
 
 public class AdapterGroupingListDialog extends RecyclerView.Adapter<AdapterGroupingListDialog.Holder> {
+
+    private int lastPosition;
 
     public interface OnClickItemTabagheList {
         void tabagheListItemClick(int position);
@@ -76,25 +79,13 @@ public class AdapterGroupingListDialog extends RecyclerView.Adapter<AdapterGroup
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSelectedItem(holder);
                 onClickItemTabagheList.tabagheListItemClick(position);
             }
         });
+
+        lastPosition = G.setListItemsAnimation(new View[]{holder.cardView}, new View[]{holder.txtTabagheName}, position, lastPosition);
     }
 
-    public void setSelectedItem(Holder holder) {
-        if (selectedItem != null) {
-            selectedItem.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light));
-            selectedItem.imgItem.setVisibility(View.VISIBLE);
-            selectedItem.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.dark_eq));
-
-        }
-        if (holder == null)
-            return;
-        selectedItem = holder;
-        selectedItem.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.light_eq));
-        selectedItem.txtTabagheName.setTextColor(ContextCompat.getColor(context, R.color.yellow_ios));
-    }
 
     @Override
     public int getItemCount() {
