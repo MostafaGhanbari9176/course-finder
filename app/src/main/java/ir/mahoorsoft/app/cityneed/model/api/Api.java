@@ -379,7 +379,8 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("confirmMoreStudent")//
+    @POST("confirmMoreStudent")
+//
     Call<ArrayList<ResponseOfServer>> confirmMoreStudent(
             @Field("data") String jsonData,
             @Field("message") String message
@@ -406,74 +407,86 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("getUserBuySubscribe")//
+    @POST("getUserBuySubscribe")
+//
     Call<ArrayList<StBuy>> getUserSubscribe(
             @Field("ac") String ac
     );
-//////////////////////////////tainga
+
     @GET("saveFeedBack/{ac}/{feedBackText}")
     Call<ArrayList<ResponseOfServer>> saveFeedBack(
             @Path("ac") String ac,
             @Path("feedBackText") String feedBackText
     );
 
-    @GET("SaveFavorite/{teacherApi}/{userApi}")
+    @FormUrlEncoded
+    @POST("SaveFavorite")
+//
     Call<ArrayList<ResponseOfServer>> saveFavorite(
-            @Path("teacherApi") String teacherApi,
-            @Path("userApi") String userApi
+            @Field("teacherApi") String teacherApi,
+            @Field("userApi") String userApi
     );
 
-    @GET("RemoveFavorite/{teacherApi}/{userApi}")
+    @FormUrlEncoded
+    @POST("RemoveFavorite")
+//
     Call<ArrayList<ResponseOfServer>> removeFavorite(
-            @Path("teacherApi") String teacherApi,
-            @Path("userApi") String userApi
+            @Field("teacherApi") String teacherApi,
+            @Field("userApi") String userApi
     );
 
-    @GET("SaveBookMark/{courseId}/{userApi}")
+    @FormUrlEncoded
+    @POST("SaveBookMark")
+//
     Call<ArrayList<ResponseOfServer>> saveBookMark(
-            @Path("courseId") int courseId,
-            @Path("userApi") String userApi
+            @Field("courseId") int courseId,
+            @Field("userApi") String userApi
     );
 
-    @GET("RemoveBookMark/{courseId}/{userApi}")
+    @FormUrlEncoded
+    @POST("RemoveBookMark")
+//
     Call<ArrayList<ResponseOfServer>> removeBookMark(
-            @Path("courseId") int courseId,
-            @Path("userApi") String userApi
+            @Field("courseId") int courseId,
+            @Field("userApi") String userApi
     );
 
-    @GET("getFavoriteTeachers/{userApi}")
+    @FormUrlEncoded
+    @POST("getFavoriteTeachers")
+//
     Call<ArrayList<StTeacher>> getFavoriteTeachers(
-            @Path("userApi") String userApi
+            @Field("userApi") String userApi
     );
 
-    @GET("getBookMarkCourses/{userApi}")
+    @FormUrlEncoded
+    @POST("getBookMarkCourses")
+//
     Call<ArrayList<StCourse>> getBookMarkCourses(
-            @Path("userApi") String userApi
+            @Field("userApi") String userApi
     );
 
     @GET("checkUpdate")
     Call<ArrayList<ResponseOfServer>> checkUpdate();
 
-    @GET("remaining_credit/{tableName}/{email}")
-    Call<String> remainCredit(
-            @Path("tableName") String tableName,
-            @Path("email") String phone);
-
-    @GET("checkGiftCode/{giftCode}/{userApi}")
+    @FormUrlEncoded
+    @POST("checkGiftCode")
+//
     Call<ArrayList<ResponseOfServer>> checkGiftCode(
-            @Path("giftCode") String giftCode,
-            @Path("userApi") String userApi
+            @Field("giftCode") String giftCode,
+            @Field("userApi") String userApi
     );
 
-    @GET("upDateCourse/{teacherApi}/{courseId}/{startDate}/{endDate}/{hours}/{days}/{state}")
+    @FormUrlEncoded
+    @POST("upDateCourse")
+//
     Call<ArrayList<ResponseOfServer>> upDateCourse(
-            @Path("teacherApi") String teacherApi,
-            @Path("courseId") int courseId,
-            @Path("startDate") String startDate,
-            @Path("endDate") String endDate,
-            @Path("hours") String hours,
-            @Path("days") String days,
-            @Path("state") int state
+            @Field("teacherApi") String teacherApi,
+            @Field("courseId") int courseId,
+            @Field("startDate") String startDate,
+            @Field("endDate") String endDate,
+            @Field("hours") String hours,
+            @Field("days") String days,
+            @Field("state") int state
     );
 
     @GET("sendEmail/{code}")
@@ -481,16 +494,18 @@ public interface Api {
             @Path("code") String code
     );
 
-    @GET("getSabtenamNotifyData/{apiCode}/{lastId}")
+    @FormUrlEncoded
+    @POST("getSabtenamNotifyData")//
     Call<ArrayList<StNotifyData>> getSabtenamNotifyData(
-            @Path("apiCode") String apiCode,
-            @Path("lastId") int lastId
+            @Field("apiCode") String apiCode,
+            @Field("lastId") int lastId
     );
 
-    @GET("getMessageNotifyData/{apiCode}/{lastId}")
+    @FormUrlEncoded
+    @POST("getMessageNotifyData")//
     Call<ArrayList<StNotifyData>> getMessageNotifyData(
-            @Path("apiCode") String apiCode,
-            @Path("lastId") int lastId
+            @Field("apiCode") String apiCode,
+            @Field("lastId") int lastId
     );
 
     @GET("getNewCourseNotifyData/{lastId}")
@@ -503,30 +518,34 @@ public interface Api {
 
     );
 
-    @GET("notifySetting/{apiCode}/{courseId}/{weakNotify}/{startNotify}")
+    @FormUrlEncoded
+    @POST("notifySetting")//
     Call<ArrayList<ResponseOfServer>> notifySetting(
-            @Path("apiCode") String apiCode,
-            @Path("courseId") int courseId,
-            @Path("weakNotify") int weakNotify,
-            @Path("startNotify") int startNotify
+            @Field("apiCode") String apiCode,
+            @Field("courseId") int courseId,
+            @Field("weakNotify") int weakNotify,
+            @Field("startNotify") int startNotify
     );
 
-    @GET("getWeakNotifyData/{apiCode}")
+    @FormUrlEncoded
+    @POST("getWeakNotifyData")//
     Call<ArrayList<StNotifyData>> getWeakNotifyData(
-            @Path("apiCode") String apiCode
+            @Field("apiCode") String apiCode
     );
 
-    @GET("getStartNotifyData/{apiCode}/{tomDate}")
+    @FormUrlEncoded
+    @POST("getStartNotifyData")//
     Call<ArrayList<StNotifyData>> getStartNotifyData(
-            @Path("apiCode") String apiCode,
-            @Path("tomDate") String tomDate
+            @Field("apiCode") String apiCode,
+            @Field("tomDate") String tomDate
 
     );
 
-    @GET("getSettingNotifyData/{apiCode}/{courseId}")
+    @FormUrlEncoded
+    @POST("getSettingNotifyData")//
     Call<ArrayList<StNotifyData>> getSettingNotifyData(
-            @Path("apiCode") String apiCode,
-            @Path("courseId") int courseId
+            @Field("apiCode") String apiCode,
+            @Field("courseId") int courseId
 
     );
 

@@ -33,9 +33,9 @@ public class PresentSabtenam implements Sabtenam.OnSabtenamListener {
         this.onPresentSabtenamListaener = onPresentSabtenamListaener;
     }
 
-    public void add(int idCourse, String idTeacher, String iduser) {
+    public void add(int idCourse, String idTeacher, String iduser, String cellPhone) {
         Sabtenam sabtenam = new Sabtenam(this);
-        sabtenam.add(idCourse, idTeacher, iduser, Pref.getStringValue(PrefKey.cellPhone, ""));
+        sabtenam.add(idCourse, idTeacher, iduser, cellPhone);
     }
 
     public void checkSabtenam(int idCourse, String iduser) {

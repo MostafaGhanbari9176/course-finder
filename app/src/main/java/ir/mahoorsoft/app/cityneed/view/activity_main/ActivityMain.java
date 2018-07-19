@@ -476,8 +476,8 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     public void OnReceiveFlagFromFeedBack(Boolean flag) {
         if (flag)
             sendMessageFromFeedBack("بازخورد شما ثبت شد");
-        else
-            sendMessageFromFeedBack(Message.getMessage(1));
+/*        else
+            sendMessageFromFeedBack(Message.getMessage(1));*/
     }
 
     @Override

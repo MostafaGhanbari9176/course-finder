@@ -45,7 +45,6 @@ public class ActivityBookMarkCourses extends AppCompatActivity implements Adapte
     private void init() {
         pointers();
         sDown.setOnRefreshListener(this);
-        list.setBackgroundColor(ContextCompat.getColor(this, R.color.light_two));
         setSupportActionBar(tlb);
         getSupportActionBar().setTitle("دوره های نشانه گذاری شده");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

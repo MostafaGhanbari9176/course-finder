@@ -99,10 +99,9 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     @Override
     public void onReceiveFlag(ArrayList<ResponseOfServer> res) {
-        if (res == null || res.size() == 0) {
-            sendMessage("خطا");
+        if (res == null || res.size() == 0)
             return;
-        }
+
         if (res.get(0).code == 0)
             sendMessage("خطا, باارز پوزش لطفا بعدا امتحان کنید");
         else

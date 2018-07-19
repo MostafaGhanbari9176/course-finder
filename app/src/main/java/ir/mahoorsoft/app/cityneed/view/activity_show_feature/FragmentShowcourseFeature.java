@@ -200,10 +200,13 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             showDialog();
     }
 
-    private void queryForRegistery() {
+    private void queryForRegistery(boolean tekrari) {
         sDown.setRefreshing(true);
         PresentSabtenam presentSabtenam = new PresentSabtenam(this);
-        presentSabtenam.add(courseId, idTeacher, idUser);
+        if (tekrari)
+            presentSabtenam.add(courseId, idTeacher, idUser, "aaa");
+        else
+            presentSabtenam.add(courseId, idTeacher, idUser, Pref.getStringValue(PrefKey.cellPhone, ""));
     }
 
     private void getPhoneNumber() {
@@ -222,8 +225,12 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             @Override
             public void onClick(View v) {
                 if (editText.getText().toString().trim().length() == 11 && TextUtils.isDigitsOnly(editText.getText().toString().trim())) {
-                    Pref.saveStringValue(PrefKey.cellPhone, editText.getText().toString().trim());
-                    queryForRegistery();
+                    if (Pref.getStringValue(PrefKey.cellPhone, "").equals(editText.getText().toString().trim()))
+                        queryForRegistery(true);
+                    else {
+                        Pref.saveStringValue(PrefKey.cellPhone, editText.getText().toString().trim());
+                        queryForRegistery(false);
+                    }
                     dialog.cancel();
                 } else
                     editText.setError("لطفا صحیح وارد کنید");

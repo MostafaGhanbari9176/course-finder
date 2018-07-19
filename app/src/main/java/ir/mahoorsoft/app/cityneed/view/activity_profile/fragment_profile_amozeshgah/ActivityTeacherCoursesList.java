@@ -108,6 +108,7 @@ public class ActivityTeacherCoursesList extends AppCompatActivity implements Ada
     @Override
     public void confirmCourse(int id) {
         sDown.setRefreshing(false);
+        Toast.makeText(this, "انجام شد ...", Toast.LENGTH_SHORT).show();
     }
 
 

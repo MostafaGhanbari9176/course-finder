@@ -122,8 +122,8 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
 
     @Override
     public void seenMessage(int position) {
-        upDateSeen();
         this.position = position;
+        upDateSeen();
         showMessage();
     }
 
