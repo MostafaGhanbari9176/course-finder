@@ -29,6 +29,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StMahoorAppData;
 
 public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingList.Holder> {
 
+    private int lastPsition;
+
     public interface OnClickItemGroupingList {
         void groupingListItemClick(int position);
     }
@@ -90,6 +92,8 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
                 onClickItemGroupingList.groupingListItemClick(position);
             }
         });
+
+      lastPsition = G.setListItemsAnimation(new View[] {holder.img, holder.item}, new View[]{holder.txt}, position, lastPsition);
     }
 
 

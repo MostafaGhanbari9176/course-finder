@@ -151,7 +151,6 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
         moreDetails = (LinearLayout) view.findViewById(R.id.MoreDetailsShowFeature);
         ((LinearLayout) view.findViewById(R.id.btnMoreDetailsShowFeature)).setOnClickListener(this);
         btnRegister = (Button) view.findViewById(R.id.btnRegisterShowFeature);
-        G.animatingForGone(moreDetails, 1f, 0f, -moreDetails.getHeight());
         ((ImageView) view.findViewById(R.id.imgButtonShareCourseFuture)).setOnClickListener(this);
         imgBookMark.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
@@ -514,7 +513,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
                     imgDrop.setImageResource(R.drawable.icon_drop_up);
                 } else {
                     moreDetails.setVisibility(View.GONE);
-                    G.animatingForGone(moreDetails, 1f, 0f, -moreDetails.getHeight());
+                    G.animatingForGone(moreDetails, 1f, 0f, -(moreDetails.getHeight()));
                     imgDrop.setImageResource(R.drawable.icon_drop_down);
                 }
                 break;

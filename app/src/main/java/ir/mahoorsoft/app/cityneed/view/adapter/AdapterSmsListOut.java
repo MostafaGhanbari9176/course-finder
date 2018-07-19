@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 
@@ -21,6 +22,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
 public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Holder> {
 
     int position;
+    private int lastPosition;
 
     public interface OnClickItemSmsList {
         void seenMessage(int position);
@@ -74,9 +76,10 @@ public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Ho
     public void onBindViewHolder(Holder holder, final int position) {
         final StSmsBox items = surce.get(position);
         this.position = position;
-        if (items.seen == 0) {
+        if (items.seen == 0)
             holder.imgSeenSms.setVisibility(View.GONE);
-        }
+        else
+            holder.imgSeenSms.setVisibility(View.VISIBLE);
         holder.txtCourseName.setText(items.courseName);
         holder.txtRsName.setText(items.rsName);
         holder.txtDate.setText(items.date);
@@ -98,6 +101,7 @@ public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Ho
                 itemSmsList.deleteMessage(position);
             }
         });
+        lastPosition = G.setListItemsAnimation(new View[]{holder.item}, new View[]{holder.imgSeenSms, holder.btnSeen}, position, lastPosition);
 
     }
 

@@ -198,7 +198,16 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
         if (source.get(position).seen == 0) {
             PresenterSmsBox presenterSmsBox = new PresenterSmsBox(this);
             presenterSmsBox.upDateSeen(source.get(position).id);
+            changeSeen(position);
         }
+    }
+
+    private void changeSeen(int position) {
+
+        StSmsBox stSmsBox = source.get(position);
+        stSmsBox.seen = 1;
+        source.set(position, stSmsBox);
+        adapter.notifyDataSetChanged();
     }
 
     private void answerForDelete() {

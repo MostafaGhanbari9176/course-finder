@@ -1,11 +1,15 @@
 package ir.mahoorsoft.app.cityneed.view;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.RadioButton;
@@ -23,6 +27,13 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +46,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import static ir.mahoorsoft.app.cityneed.G.context;
 import static ir.mahoorsoft.app.cityneed.model.struct.PrefKey.lat;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMyLocationButtonClickListener {
 
     private GoogleMap mMap;
     Marker marker;
@@ -84,6 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         else
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
     }
 
     private void checkLocation() {
@@ -141,9 +153,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         normal.setChecked(true);
-        showDialog("راهنما", "لطفا برای تعیین موقعیت خود بر روی مکان مورد نظر کلیک کنید,همچنین می توانید با نگه داشتن مکان نما و جابجایی آن مکان مورد نظر خودرا دقیقتر انتخاب کنید.سپس بر روی دکمه پایین صفحه کلیک کنید.", "", "قبول");
+        showDialog("راهنما", "درصورت دادن مجوز دسترسی به مکان گوشی,مکان خودرا روشن کنید و بروی کلید مکان در بالای همین صفحه کلیک کنید,درصورت ندادن مجوز برای تعیین موقعیت خود بر روی مکان مورد نظر کلیک کنید,همچنین می توانید با نگه داشتن مکان نما و جابجایی آن مکان مورد نظر خودرا دقیقتر انتخاب کنید.سپس بر روی دکمه پایین صفحه کلیک کنید.", "", "قبول");
         mMap = googleMap;
-        // Add a marker in Sydney and move the camera
+
         try {
             if (Pref.getStringValue(PrefKey.lat, "").length() == 0)
                 location = new LatLng(29.4892550, 60.8612360);
@@ -151,9 +163,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 location = new LatLng(Double.parseDouble(Pref.getStringValue(PrefKey.lat, "")), Double.parseDouble(Pref.getStringValue(PrefKey.lon, "")));
 
         } catch (Exception e) {
-            showDialog("خطا!", "لطفا مجددا تلاش کنید.", "", "قبول");
+            //  showDialog("خطا!", "لطفا مجددا تلاش کنید.", "", "قبول");
         }
-
+        mMap.setOnMyLocationButtonClickListener(this);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(location);
         markerOptions.draggable(true);
@@ -162,15 +174,70 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(
                 location).zoom(12).build();
-        // mMap.setBuildingsEnabled(true);
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setRotateGesturesEnabled(true);
         mMap.getUiSettings().setAllGesturesEnabled(true);
         mMap.setOnMapClickListener(this);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+            onMyLocationButtonClick();
+        } else {
+            getPermision();
+        }
+
+    }
+
+    private void getPermision() {
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        // check if all permissions are granted
+                        if (report.areAllPermissionsGranted()) {
+
+                            if (ActivityCompat.checkSelfPermission(MapsActivity.this,
+                                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                // TODO: Consider calling
+                                //    ActivityCompat#requestPermissions
+                                // here to request the missing permissions, and then overriding
+                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                //                                          int[] grantResults)
+                                // to handle the case where the user grants the permission. See the documentation
+                                // for ActivityCompat#requestPermissions for more details.
+                                return;
+                            }
+                            mMap.setMyLocationEnabled(true);
+                            onMyLocationButtonClick();
+                        }
+
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            // next();
+                            // show alert dialog navigating to Settings
+                            // showSettingsDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).
+                withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError error) {
+                        // Toast.makeText(getApplicationContext(), "خطا در دسترسی به حافظه!لطفا دسترسی به حافظه را چک کنید ", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onSameThread()
+                .check();
     }
 
     @Override
@@ -180,5 +247,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 latLng).zoom(mMap.getCameraPosition().zoom).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         marker.setPosition(latLng);
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        try {
+            location = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
+            marker.setPosition(location);
+        } catch (Exception ignored) {
+        }
+        return false;
     }
 }

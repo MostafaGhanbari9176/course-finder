@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -32,6 +34,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 
 public class G extends Application {
@@ -177,6 +180,25 @@ public class G extends Application {
                         view.setVisibility(View.VISIBLE);
                     }
                 });
+    }
+
+
+    public static int setListItemsAnimation(View[] fadeIn, View[] fadeLeft, int position, int lastPosition) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        Animation animation;
+        if (fadeIn != null) {
+            for (View aFadeIn : fadeIn) {
+                animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+                aFadeIn.startAnimation(animation);
+            }
+        }
+        if (position > lastPosition && fadeLeft != null) {
+            for (View aFadeLeft : fadeLeft) {
+                animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+                aFadeLeft.startAnimation(animation);
+            }
+        }
+        return position;
     }
 
 }

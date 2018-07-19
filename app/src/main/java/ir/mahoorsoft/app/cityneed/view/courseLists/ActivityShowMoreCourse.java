@@ -31,17 +31,18 @@ import ir.mahoorsoft.app.cityneed.view.adapter.AdapterHomeLists;
  * Created by RCC1 on 4/29/2018.
  */
 
-public class ActivityShowMoreCourse extends AppCompatActivity implements PresentCourse.OnPresentCourseLitener, AdapterHomeLists.setOnClickItem{
+public class ActivityShowMoreCourse extends AppCompatActivity implements PresentCourse.OnPresentCourseLitener, AdapterHomeLists.setOnClickItem {
     int groupId = -1;
     String groupingRootName = "";
     ProgressBar pbar;
     LinearLayout llScrollView;
     Toolbar toolBar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_more_course);
-        if(getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null) {
             groupId = getIntent().getIntExtra("groupId", -1);
             groupingRootName = getIntent().getStringExtra("groupName");
         }
@@ -58,12 +59,12 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
         getData();
     }
 
-    private void getData(){
+    private void getData() {
         PresentCourse presentCourse = new PresentCourse(this);
         presentCourse.getCourseForListHome(groupId);
     }
 
-    private void pointer(){
+    private void pointer() {
         toolBar = (Toolbar) findViewById(R.id.tlbShowMoreCourse);
         pbar = (ProgressBar) findViewById(R.id.pbarShowMoreCourse);
         llScrollView = (LinearLayout) findViewById(R.id.llScrollViewShowMoreCource);
@@ -91,7 +92,7 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
         settingUpLists(items);
     }
 
-    private void settingUpLists(ArrayList<StCustomCourseListHome> items){
+    private void settingUpLists(ArrayList<StCustomCourseListHome> items) {
         if (((LinearLayout) llScrollView).getChildCount() > 0)
             ((LinearLayout) llScrollView).removeAllViews();
         for (int i = 0; i < items.size(); i++) {
@@ -103,31 +104,26 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
 
             TextView textView = new TextView(G.context);
             textView.setTextColor(ContextCompat.getColor(G.context, R.color.light));
+            textView.setBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
             textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
             textView.setText("دوره های " + items.get(i).groupSubject);
             LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             int dp = G.dpToPx(16);
-            textParams.setMargins(dp, dp, dp, dp);
+            textView.setPadding(dp, dp, dp, dp);
+            textView.setGravity(Gravity.CENTER);
             masterLayout.addView(textView, textParams);
-
-            CardView cardView = new CardView(G.context);
-            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            cardView.setLayoutParams(cardParam);
-            cardParam.setMargins(0, G.dpToPx(4), 0, 0);
-            masterLayout.addView(cardView, cardParam);
 
             if (items.get(i).empty == 0) {
                 RecyclerView list = new RecyclerView(G.context);
-                AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this);
+                AdapterHomeLists adapter = new AdapterHomeLists(this, items.get(i).courses, this);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
                         , LinearLayoutManager.HORIZONTAL, false);
                 list.setLayoutManager(layoutManager);
                 list.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-                cardView.addView(list);
+                masterLayout.addView(list);
             } else {
                 TextView textEmpty = new TextView(G.context);
                 textEmpty.setTextColor(ContextCompat.getColor(G.context, R.color.pink_tel));
@@ -139,16 +135,15 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
                 textEmptyParams.setMargins(dp, dp, dp, dp);
                 textEmpty.setLayoutParams(textEmptyParams);
                 textEmpty.setGravity(Gravity.CENTER);
-                cardView.addView(textEmpty);
+                masterLayout.addView(textEmpty);
             }
 
 
             CardView cardViewMaster = new CardView(G.context);
-            cardViewMaster.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
             LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardViewMaster.setLayoutParams(cardViewMasterParam);
-            dp =  G.dpToPx(8);
+            dp = G.dpToPx(8);
             cardViewMasterParam.setMargins(dp, dp, dp, dp);
             cardViewMaster.addView(masterLayout);
             llScrollView.addView(cardViewMaster, cardViewMasterParam);

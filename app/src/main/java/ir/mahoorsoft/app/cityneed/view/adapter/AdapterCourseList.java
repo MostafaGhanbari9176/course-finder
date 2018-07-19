@@ -16,6 +16,7 @@ import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
@@ -25,6 +26,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
  */
 
 public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Holder> {
+
+    private int lastPosition;
 
     public interface OnClickItemCourseList {
         void courseListItemClick(int position);
@@ -92,7 +95,12 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
                 onClickItemCourseList.courseListItemClick(position);
             }
         });
+
+
+       lastPosition = G.setListItemsAnimation(new View[]{holder.item}, new View[]{holder.item}, position, lastPosition);
     }
+
+
 
     @Override
     public int getItemCount() {

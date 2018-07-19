@@ -155,7 +155,8 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             @Override
             public void onClick(View v) {
                 queryForCourses(-1);
-                adapterGrouping.setSelectedItem(null);
+                adapterGrouping.selectedPosition = -1;
+                adapterGrouping.notifyDataSetChanged();
             }
         });
         btnDelete.setVisibility(View.GONE);
@@ -318,22 +319,16 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
             TextView textView = new TextView(G.context);
             textView.setTextColor(ContextCompat.getColor(G.context, R.color.light));
+            textView.setBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
             textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
             textView.setText(items.get(i).groupSubject);
             LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             int dp = G.dpToPx(16);
-            textParams.setMargins(dp, dp, dp, dp);
+            textView.setPadding(dp, dp, dp, dp);
+            textView.setGravity(Gravity.CENTER);
             masterLayout.addView(textView, textParams);
-
-            CardView cardView = new CardView(G.context);
-            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            cardView.setLayoutParams(cardParam);
-            cardParam.setMargins(0, G.dpToPx(4), 0, 0);
-            masterLayout.addView(cardView, cardParam);
-
 
             RecyclerView list = new RecyclerView(G.context);
             AdapterTeacherListHome adapterTeacherListHome = new AdapterTeacherListHome(G.context, items.get(i).teachers, this);
@@ -342,10 +337,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             list.setLayoutManager(layoutManager);
             list.setAdapter(adapterTeacherListHome);
             adapterTeacherListHome.notifyDataSetChanged();
-            cardView.addView(list);
+            masterLayout.addView(list);
 
             CardView cardViewMaster = new CardView(G.context);
-            cardViewMaster.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
             LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardViewMaster.setLayoutParams(cardViewMasterParam);
@@ -373,22 +367,16 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
             TextView textView = new TextView(G.context);
             textView.setTextColor(ContextCompat.getColor(G.context, R.color.light));
+            textView.setBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
             textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
             textView.setText(items.get(i).groupSubject);
             LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             int dp = G.dpToPx(16);
-            textParams.setMargins(dp, dp, dp, dp);
+            textView.setPadding(dp, dp, dp, dp);
+            textView.setGravity(Gravity.CENTER);
             masterLayout.addView(textView, textParams);
-
-            CardView cardView = new CardView(G.context);
-            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            cardView.setLayoutParams(cardParam);
-            cardParam.setMargins(0, G.dpToPx(4), 0, 0);
-            masterLayout.addView(cardView, cardParam);
-
 
             RecyclerView list = new RecyclerView(G.context);
             AdapterHomeLists adapter = new AdapterHomeLists(G.context, items.get(i).courses, this);
@@ -397,10 +385,9 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             list.setLayoutManager(layoutManager);
             list.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-            cardView.addView(list);
+            masterLayout.addView(list);
 
             CardView cardViewMaster = new CardView(G.context);
-            cardViewMaster.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
             LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardViewMaster.setLayoutParams(cardViewMasterParam);
@@ -431,21 +418,16 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
 
             TextView textView = new TextView(G.context);
             textView.setTextColor(ContextCompat.getColor(G.context, R.color.light));
+            textView.setBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
             textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
             textView.setText("دوره های " + items.get(i).groupSubject);
             LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             int dp = G.dpToPx(16);
-            textParams.setMargins(dp, dp, dp, dp);
+            textView.setPadding(dp, dp, dp, dp);
+            textView.setGravity(Gravity.CENTER);
             masterLayout.addView(textView, textParams);
-
-            CardView cardView = new CardView(G.context);
-            LinearLayout.LayoutParams cardParam = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            cardView.setLayoutParams(cardParam);
-            cardParam.setMargins(0, G.dpToPx(4), 0, 0);
-            masterLayout.addView(cardView, cardParam);
 
             if (items.get(i).empty == 0) {
                 RecyclerView list = new RecyclerView(G.context);
@@ -455,7 +437,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
                 list.setLayoutManager(layoutManager);
                 list.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-                cardView.addView(list);
+                masterLayout.addView(list);
             } else {
                 TextView textEmpty = new TextView(G.context);
                 textEmpty.setTextColor(ContextCompat.getColor(G.context, R.color.pink_tel));
@@ -467,12 +449,11 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
                 textEmptyParams.setMargins(dp, dp, dp, dp);
                 textEmpty.setLayoutParams(textEmptyParams);
                 textEmpty.setGravity(Gravity.CENTER);
-                cardView.addView(textEmpty);
+                masterLayout.addView(textEmpty);
             }
 
 
             CardView cardViewMaster = new CardView(G.context);
-            cardViewMaster.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.blue_tel));
             LinearLayout.LayoutParams cardViewMasterParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardViewMaster.setLayoutParams(cardViewMasterParam);

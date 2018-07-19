@@ -1,6 +1,7 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
@@ -23,6 +25,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
  */
 
 public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamList.Holder> {
+
+    private int lastPosition;
 
     public interface OnClickItemCourseList {
         void courseListItemClick(int position);
@@ -54,11 +58,13 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
         RelativeLayout rlDeletedMessage;
         TextView btnOk;
         ImageView btnMenu;
+        CardView cardView;
 
 
         public Holder(View itemView) {
             super(itemView);
             btnOk = (TextView) itemView.findViewById(R.id.btnOkItemSabtenam);
+            cardView = (CardView) itemView.findViewById(R.id.CVSabtenamListItem);
             btnMenu = (ImageView) itemView.findViewById(R.id.btnMenuItemSabtenam);
             imgItem = (ImageView) itemView.findViewById(R.id.imgItemCourseList);
             txtMasterName = (TextView) itemView.findViewById(R.id.txtMasterNameItem);
@@ -83,13 +89,17 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
         final StCourse items = surce.get(position);
         if (items.isDeleted == 1 || items.isCanceled == 1 || items.vaziat == 0) {
             holder.rlDeletedMessage.setVisibility(View.VISIBLE);
-            if (items.isCanceled == 1)
+            if (items.isCanceled == 1){
                 holder.txtDeleted.setText("دوره مورد نظر از سمت مدرس لغو ثبت نام شده است");
+                holder.btnOk.setVisibility(View.VISIBLE);
+            }
             else if (items.vaziat == 0) {
                 holder.txtDeleted.setText("ثبت نام شما در انتظار تایید مدرس است");
                 holder.btnOk.setVisibility(View.GONE);
             }
         }
+        else
+            holder.rlDeletedMessage.setVisibility(View.GONE);
 
         holder.txtCourseName.setText(items.CourseName);
         holder.txtstartDate.setText(items.startDate);
@@ -115,6 +125,8 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
                     onClickItemCourseList.btnItemMenuPressed(position);
             }
         });
+
+       lastPosition = G.setListItemsAnimation(new View[]{holder.cardView}, new View[]{holder.btnMenu}, position, lastPosition);
     }
 
     @Override

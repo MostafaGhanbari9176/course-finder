@@ -27,6 +27,8 @@ import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 
 public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.Holder> {
 
+    private int lastPsition;
+
     public interface OnClickItemTeacherList {
         void teacherListItemClick(int position);
     }
@@ -90,6 +92,7 @@ public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.
                 onClickItemTeacherList.teacherListItemClick(position);
             }
         });
+        lastPsition = G.setListItemsAnimation(new View[] {holder.img, holder.item}, new View[]{holder.txt}, position, lastPsition);
     }
 
     @Override

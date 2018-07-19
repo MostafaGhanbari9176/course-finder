@@ -244,9 +244,9 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     private void deleteMore(String message) {
         checkedUser.clear();
-        checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        checkedUser.addAll(AdapterSdudentNameList.checkedPositions);
         JSONArray array = new JSONArray();
-        int size = AdapterSdudentNameList.checkedUser.size();
+        int size = AdapterSdudentNameList.checkedPositions.size();
         for (int i = 0; i < size; i++) {
             int position = checkedUser.pop();
             try {
@@ -352,10 +352,10 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     private void deleteItems() {
         checkedUser.clear();
-        checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        checkedUser.addAll(AdapterSdudentNameList.checkedPositions);
         Collections.sort(checkedUser);
         Collections.reverse(checkedUser);
-        int size = AdapterSdudentNameList.checkedUser.size();
+        int size = AdapterSdudentNameList.checkedPositions.size();
         if (size == 0 && position != -1) {
             source.remove(position);
             adapter.notifyItemRemoved(position);
@@ -371,20 +371,18 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
     }
 
     private void changeColorItems() {
-        int size = AdapterSdudentNameList.selectedItems.size();
+        int size = AdapterSdudentNameList.checkedPositions.size();
         if (size == 0 && cardView != null) {
             StUser user = source.get(position);
             user.status = 1;
-            source.remove(position);
-            source.add(position, user);
-            cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
+            source.set(position, user);
+           // cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
         } else if (size != 0) {
             for (int i = 0; i < size; i++) {
-                StUser user = source.get(i);
+                StUser user = source.get( AdapterSdudentNameList.checkedPositions.get(i));
                 user.status = 1;
-                source.remove(i);
-                source.add(i, user);
-                (AdapterSdudentNameList.selectedItems.pop()).setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
+                source.set(AdapterSdudentNameList.checkedPositions.get(i), user);
+               // (AdapterSdudentNameList.checkedViews.pop()).setCardBackgroundColor(ContextCompat.getColor(this, R.color.light));
             }
         }
         adapter.notifyDataSetChanged();
@@ -423,7 +421,7 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
                 break;
             case R.id.fltbConfirmActivityList:
 
-                if (AdapterSdudentNameList.checkedUser.size() == 0) {
+                if (AdapterSdudentNameList.checkedPositions.size() == 0) {
                     Toast.makeText(this, "لطفا چند نفر را انتخاب کنید", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -458,9 +456,9 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     private void sendMoreMessage(String message) {
         checkedUser.clear();
-        checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        checkedUser.addAll(AdapterSdudentNameList.checkedPositions);
         JSONArray array = new JSONArray();
-        int size = AdapterSdudentNameList.checkedUser.size();
+        int size = AdapterSdudentNameList.checkedPositions.size();
         for (int i = 0; i < size; i++) {
             int position = checkedUser.pop();
             try {
@@ -485,9 +483,9 @@ public class ActivityStudentNameList extends AppCompatActivity implements Adapte
 
     private void confirmMoreStudent(String message) {
         checkedUser.clear();
-        checkedUser.addAll(AdapterSdudentNameList.checkedUser);
+        checkedUser.addAll(AdapterSdudentNameList.checkedPositions);
         JSONArray array = new JSONArray();
-        int size = AdapterSdudentNameList.checkedUser.size();
+        int size = AdapterSdudentNameList.checkedPositions.size();
         for (int i = 0; i < size; i++) {
             int position = checkedUser.pop();
             try {
