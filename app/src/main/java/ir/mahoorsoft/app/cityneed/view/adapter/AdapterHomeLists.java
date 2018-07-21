@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
         TextView txtCourseName;
         LinearLayout item;
         LinearLayout endOfList;
+        LinearLayout LLLineHomeCourseItem;
 
         public Holder(View itemView) {
             super(itemView);
@@ -71,13 +73,16 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
             txtMasterName = (TextView) itemView.findViewById(R.id.txtMasterNameHomeItem);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtNameCourseHomeItem);
             item = (LinearLayout) itemView.findViewById(R.id.itemHome);
-
-
             endOfList = (LinearLayout) itemView.findViewById(R.id.llCustomColorItemHome);
+            LLLineHomeCourseItem = (LinearLayout) itemView.findViewById(R.id.LLLineHomeCourseItem);
         }
 
         public void bindData(final StCourse items, int position) {
 
+            if(position == surce.size()-1)
+                LLLineHomeCourseItem.setBackgroundResource(0);
+            else
+                LLLineHomeCourseItem.setBackgroundColor(ContextCompat.getColor(context, R.color.light_one));
             if (items.endOfList == 0) {
                 endOfList.setVisibility(View.GONE);
                 Glide.with(context)
@@ -101,7 +106,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                 @Override
                 public void onClick(View view) {
                     if (items.endOfList == 0)
-                        setOnClickItem.itemClick(items.id, items.idTeacher, view);
+                        setOnClickItem.itemClick(items.id, items.idTeacher, imgItem);
                     else
                         setOnClickItem.moreCourse(items.idTabaghe, groupName);
                 }

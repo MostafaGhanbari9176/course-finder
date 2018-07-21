@@ -88,7 +88,7 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemTeacherList.teacherListItemClick(items.ac, v);
+                onClickItemTeacherList.teacherListItemClick(items.ac, holder.img);
             }
         });
         lastPsition = G.setListItemsAnimation(new View[] {holder.item}, new View[]{holder.txt}, position, lastPsition);

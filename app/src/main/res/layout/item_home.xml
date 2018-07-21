@@ -2,99 +2,85 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:id="@+id/itemHome"
-    android:layout_width="wrap_content"
+    android:layout_width="107dp"
+    android:layout_height="150dp"
+    android:layout_marginBottom="12dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginTop="12dp"
+    android:gravity="bottom"
     android:layoutDirection="rtl"
-    android:layout_height="wrap_content">
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_item"
+                android:layout_width="@dimen/img_item"
+                android:layout_height="@dimen/img_item"
+                android:layout_marginBottom="8dp"
+                app:civ_border_color="@color/light_two"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:id="@+id/txtNameCourseHomeItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textSize="@dimen/txt_item_home" />
+
+            <TextView
+                android:id="@+id/txtMasterNameHomeItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textSize="@dimen/txt_item_home" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCustomColorItemHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="موارد بیشتر"
+                android:textColor="@color/green_tel"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:layout_margin="8dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/img_item"
-                        android:layout_width="@dimen/img_item"
-                        android:layout_height="@dimen/img_item"
-                        android:background="@color/light_one" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txtNameCourseHomeItem"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="3dp"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textSize="@dimen/txt_item_home"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txtMasterNameHomeItem"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="3dp"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textSize="@dimen/txt_item_home"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llCustomColorItemHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/light"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="موارد بیشتر"
-                    android:textColor="@color/green_tel"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
+        android:id="@+id/LLLineHomeCourseItem"
+        android:layout_width="1dp"
+        android:layout_height="105dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="6dp"
+        android:background="@color/light_one"
+        android:orientation="horizontal"></LinearLayout>
 
 </LinearLayout>
