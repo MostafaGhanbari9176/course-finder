@@ -1,9 +1,11 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_search;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -392,11 +394,17 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     @Override
-    public void courseListItemClick(int position) {
+    public void courseListItemClick(int position, View view) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", source.get(position).id);
         intent.putExtra("teacherId", source.get(position).idTeacher);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions  options = ActivityOptions
+                    .makeSceneTransitionAnimation(G.activity, view, "courseInHome");
+            startActivity(intent, options.toBundle());
+        }
+        else
+            startActivity(intent);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_teacher_list;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -119,11 +121,17 @@ public class FragmentAllTeacher extends Fragment implements PresentTeacher.OnPre
     }
 
     @Override
-    public void teacherListItemClick(int position) {
+    public void teacherListItemClick(int position, View view) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", -1);
         intent.putExtra("teacherId", source.get(position).ac);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(G.activity, view, "teacherInHome");
+            startActivity(intent, options.toBundle());
+        }
+        else
+            startActivity(intent);
 
     }
 

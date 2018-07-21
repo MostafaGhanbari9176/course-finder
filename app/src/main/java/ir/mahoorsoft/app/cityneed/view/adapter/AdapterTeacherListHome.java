@@ -30,7 +30,7 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
     private int lastPsition;
 
     public interface OnClickItemTeacherList {
-        void teacherListItemClick(String ac);
+        void teacherListItemClick(String ac, View view);
     }
 
     private OnClickItemTeacherList onClickItemTeacherList;
@@ -77,7 +77,7 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, final int position) {
+    public void onBindViewHolder(final Holder holder, final int position) {
         final StTeacher items = surce.get(position);
         holder.txt.setText("آموزشگاه "+items.subject);
         Glide.with(context)
@@ -88,7 +88,7 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemTeacherList.teacherListItemClick(items.ac);
+                onClickItemTeacherList.teacherListItemClick(items.ac, v);
             }
         });
         lastPsition = G.setListItemsAnimation(new View[] {holder.item}, new View[]{holder.txt}, position, lastPsition);

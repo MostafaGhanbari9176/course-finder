@@ -30,7 +30,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
     private int lastPosition;
 
     public interface OnClickItemCourseList {
-        void courseListItemClick(int position);
+        void courseListItemClick(int position, View view);
 
     }
 
@@ -76,7 +76,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, final int position) {
+    public void onBindViewHolder(final Holder holder, final int position) {
         final StCourse items = surce.get(position);
         if (items.isDeleted == 1 || items.isCanceled == 1) {
             holder.rlDeletedMessage.setVisibility(View.VISIBLE);
@@ -92,7 +92,7 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItemCourseList.courseListItemClick(position);
+                onClickItemCourseList.courseListItemClick(position, holder.imgItem);
             }
         });
 

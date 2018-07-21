@@ -1,6 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -119,11 +121,17 @@ public class FragmentTeacherCourse extends Fragment implements AdapterCourseList
     }
 
     @Override
-    public void courseListItemClick(int position) {
+    public void courseListItemClick(int position , View view) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", surce.get(position).id);
         intent.putExtra("teacherId", ActivityOptionalCourse.teacherId);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(G.activity, view, "courseInHome");
+            startActivity(intent, options.toBundle());
+        }
+        else
+            startActivity(intent);
     }
 
 

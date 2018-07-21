@@ -1,5 +1,6 @@
 package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -77,7 +78,10 @@ public class ActivityOptionalCourse extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.finishAfterTransition();
+        }else
+            this.finish();
         super.onBackPressed();
     }
 

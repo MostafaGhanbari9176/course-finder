@@ -1,7 +1,9 @@
 package ir.mahoorsoft.app.cityneed.view.courseLists;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -156,11 +158,17 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
     }
 
     @Override
-    public void itemClick(int id, String teacherId) {
+    public void itemClick(int id, String teacherId, View view) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", id);
         intent.putExtra("teacherId", teacherId);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this, view, "courseInHome");
+            startActivity(intent, options.toBundle());
+        }
+        else
+            startActivity(intent);
     }
 
     @Override

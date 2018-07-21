@@ -1,11 +1,14 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -82,6 +85,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     WebView webView;
     public ActivityMain activityMain;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,6 +97,7 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     public void init() {
+
         pointer();
         getCustomCourseListData();
         getSelectedTeacher();
@@ -180,11 +185,17 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void itemClick(int id, String teacherId) {
+    public void itemClick(int id, String teacherId, View view) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", id);
         intent.putExtra("teacherId", teacherId);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions  options = ActivityOptions
+                    .makeSceneTransitionAnimation(G.activity, view, "courseInHome");
+            startActivity(intent, options.toBundle());
+        }
+        else
+            startActivity(intent);
 
     }
 
@@ -535,11 +546,17 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
     }
 
     @Override
-    public void teacherListItemClick(String ac) {
+    public void teacherListItemClick(String ac, View view) {
         Intent intent = new Intent(G.context, ActivityOptionalCourse.class);
         intent.putExtra("id", -1);
         intent.putExtra("teacherId", ac);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions  options = ActivityOptions
+                    .makeSceneTransitionAnimation(G.activity, view, "teacherInHome");
+            startActivity(intent, options.toBundle());
+        }
+        else
+            startActivity(intent);
     }
 
 

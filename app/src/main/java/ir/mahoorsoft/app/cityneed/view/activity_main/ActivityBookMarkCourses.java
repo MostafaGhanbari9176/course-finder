@@ -1,6 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -113,17 +115,27 @@ public class ActivityBookMarkCourses extends AppCompatActivity implements Adapte
     }
 
     @Override
-    public void courseListItemClick(int position) {
+    public void courseListItemClick(int position, View view) {
         Intent intent = new Intent(this, ActivityOptionalCourse.class);
         intent.putExtra("id", source.get(position).id);
         intent.putExtra("teacherId", source.get(position).idTeacher);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this, view, "courseInHome");
+            startActivity(intent, options.toBundle());
+        }
+        else
+            startActivity(intent);
     }
 
 
     @Override
     public void onBackPressed() {
-        finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.finishAfterTransition();
+        }
+        else
+            this.finish();
         super.onBackPressed();
     }
 

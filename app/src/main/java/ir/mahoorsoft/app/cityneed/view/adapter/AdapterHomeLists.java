@@ -30,7 +30,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
 
     public interface setOnClickItem {
 
-        void itemClick(int id, String teacherId);
+        void itemClick(int id, String teacherId, View view);
 
         void moreCourse(int groupingId, String groupName);
 
@@ -101,7 +101,7 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
                 @Override
                 public void onClick(View view) {
                     if (items.endOfList == 0)
-                        setOnClickItem.itemClick(items.id, items.idTeacher);
+                        setOnClickItem.itemClick(items.id, items.idTeacher, view);
                     else
                         setOnClickItem.moreCourse(items.idTabaghe, groupName);
                 }
