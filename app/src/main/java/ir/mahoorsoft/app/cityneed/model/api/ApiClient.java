@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
 
-    public static final String serverAddress = "http://172.20.6.40:8090";
+    public static final String serverAddress = "http://app.mahoorsoft.ir";
     public static String BASE_URL = "";
     private static Retrofit retrofit = null;
 

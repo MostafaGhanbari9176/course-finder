@@ -46,6 +46,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
     TextView txtNewVersion;
     TextView txtCurrentVersion;
     TextView txtPresentDownload;
+    TextView txtVersionName;
     ProgressBar progressBarDownload;
     DownloadManager downloadManager;
     Button btnDownload;
@@ -55,6 +56,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
         pointer();
+        txtVersionName.setText(G.VN);
         if (!Pref.getBollValue(PrefKey.smsListReady, false))
             setSmsTextData();
         runLogo();
@@ -68,6 +70,7 @@ public class ActivityLauncher extends AppCompatActivity implements PresentChecke
         txtCurrentVersion = (TextView) findViewById(R.id.txtCurrentVersion);
         progressBarDownload = (ProgressBar) findViewById(R.id.progressBarDownloadApp);
         txtPresentDownload = (TextView) findViewById(R.id.txtPresentDownload);
+        txtVersionName = (TextView) findViewById(R.id.txtVersonNameInLuncher);
         txtNewVersion = (TextView) findViewById(R.id.txtNewVersion);
         txtCurrentVersion.setText(G.VN);
         (btnDownload = (Button) findViewById(R.id.btnDownload)).setOnClickListener(this);
