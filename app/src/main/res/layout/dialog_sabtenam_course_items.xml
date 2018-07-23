@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:layout_weight="1"
-                    android:text="دریافت اعلان فرارسید تاریخ برگزاری دوره" />
+                    android:text="دریافت اعلان فرارسیدن تاریخ برگزاری دوره" />
 
                 <android.support.v7.widget.SwitchCompat
 

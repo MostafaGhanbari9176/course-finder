@@ -161,7 +161,7 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
     private void settingUpVideoView() {
         try {
             MediaController mediaController = new MediaController(G.context);
-            Uri video = Uri.parse(ApiClient.BASE_URL + "uploads/newsVideo/" + courseId + ".mp4");
+            Uri video = Uri.parse((ApiClient.BASE_URL.replace("v2", "v1")) + "uploads/newsVideo/" + courseId + ".mp4");
             videoView.setMediaController(mediaController);
             videoView.setVideoURI(video);
             videoView.setVisibility(View.VISIBLE);
