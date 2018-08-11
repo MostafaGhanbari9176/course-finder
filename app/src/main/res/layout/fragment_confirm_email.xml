@@ -14,8 +14,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -23,10 +23,12 @@
                 android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/CVEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="2dp"
-                    app:cardBackgroundColor="@color/light_two">
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/light_two"
+                    app:cardCornerRadius="18dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -36,13 +38,15 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="8dp"
-                            android:gravity="center">
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center_vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="16dp"
                                 android:text="انتخاب کنید : "
                                 android:textColor="@color/dark_eq"
                                 android:textStyle="bold" />
@@ -65,7 +69,8 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="4dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="8dp"
                                     android:text="یا"
                                     android:textColor="@color/dark_eq"
                                     android:textStyle="bold" />
@@ -83,81 +88,55 @@
 
                         </LinearLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/RLNameEmailConfirm"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="32dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="32dp"
-                            android:orientation="horizontal">
+                            android:layout_height="2dp"
+                            android:background="@color/light"
+                            android:orientation="horizontal"></LinearLayout>
 
-                            <EditText
-                                android:id="@+id/txtNameConfirmEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginStart="48dp"
-                                android:background="@drawable/border_light_eq"
-                                android:ems="10"
-                                android:gravity="start"
-                                android:hint="نام ونام خانوادگی"
-                                android:inputType="textMultiLine"
-                                android:maxLength="50"
-                                android:padding="16dp"
-                                android:textColor="@color/dark_eq"
-                                android:textColorHint="@color/light_eq"
-                                android:textColorLink="@color/dark_eq"
-                                android:textSize="@dimen/txt_submit_iformation" />
-
-                            <ImageView
-                                android:layout_width="@dimen/btn_nav"
-                                android:layout_height="@dimen/btn_nav"
-                                android:layout_alignParentEnd="false"
-                                android:layout_centerVertical="true"
-                                app:srcCompat="@drawable/icon_txtshort" />
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
+                        <EditText
+                            android:id="@+id/txtNameConfirmEmail"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="32dp"
-                            android:layout_marginEnd="32dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginEnd="16dp"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="32dp"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/border_light_eq"
+                            android:ems="10"
+                            android:gravity="start"
+                            android:hint="نام ونام خانوادگی"
+                            android:inputType="textMultiLine"
+                            android:maxLength="50"
+                            android:padding="16dp"
+                            android:textColor="@color/dark_eq"
+                            android:textColorHint="@color/light_eq"
+                            android:textColorLink="@color/dark_eq"
+                            android:textSize="@dimen/txt_submit_iformation" />
 
-                            <EditText
-                                android:id="@+id/txtEmailConfirmٍEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginStart="48dp"
-                                android:background="@drawable/border_light_eq"
-                                android:ems="10"
-                                android:gravity="start"
-                                android:hint="آدرس ایمیل"
-                                android:inputType="textMultiLine"
-                                android:maxLength="100"
-                                android:padding="16dp"
-                                android:textColor="@color/dark_eq"
-                                android:textColorHint="@color/light_eq"
-                                android:textColorLink="@color/dark_eq"
-                                android:textSize="@dimen/txt_submit_iformation" />
-
-                            <ImageView
-                                android:layout_width="@dimen/btn_nav"
-                                android:layout_height="@dimen/btn_nav"
-                                android:layout_alignParentEnd="false"
-                                android:layout_centerVertical="true"
-                                app:srcCompat="@drawable/icon_txtshort" />
-
-                        </RelativeLayout>
+                        <EditText
+                            android:id="@+id/txtEmailConfirmٍEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/border_light_eq"
+                            android:ems="10"
+                            android:gravity="start"
+                            android:hint="آدرس ایمیل"
+                            android:inputType="textMultiLine"
+                            android:maxLength="100"
+                            android:padding="16dp"
+                            android:textColor="@color/dark_eq"
+                            android:textColorHint="@color/light_eq"
+                            android:textColorLink="@color/dark_eq"
+                            android:textSize="@dimen/txt_submit_iformation" />
 
                         <android.support.v7.widget.CardView
                             android:layout_width="match_parent"
@@ -180,102 +159,82 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/CVEmailVerifyCode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="2dp"
-                    app:cardBackgroundColor="@color/light_two">
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/light_two"
+                    app:cardCornerRadius="18dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <RelativeLayout
+                        <EditText
+                            android:id="@+id/txtSmsCodeConfirmEmail"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="32dp"
-                            android:layout_marginEnd="32dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginEnd="16dp"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="32dp"
-                            android:orientation="horizontal">
-
-                            <EditText
-                                android:id="@+id/txtSmsCodeConfirmEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginStart="48dp"
-                                android:background="@drawable/border_light_eq"
-                                android:ems="10"
-                                android:gravity="start"
-                                android:hint="کد تایید"
-                                android:inputType="textPersonName"
-                                android:maxLength="50"
-                                android:maxLines="1"
-                                android:padding="16dp"
-                                android:textColor="@color/dark_eq"
-                                android:textColorHint="@color/light_eq"
-                                android:textColorLink="@color/dark_eq"
-                                android:textSize="@dimen/txt_submit_iformation" />
-
-                            <ImageView
-                                android:layout_width="@dimen/btn_nav"
-                                android:layout_height="@dimen/btn_nav"
-                                android:layout_alignParentEnd="false"
-                                android:layout_centerVertical="true"
-                                app:srcCompat="@drawable/icon_txtshort" />
-
-                        </RelativeLayout>
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/border_light_eq"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:hint="کد ایمیل شده"
+                            android:inputType="number"
+                            android:maxLength="6"
+                            android:maxLines="1"
+                            android:padding="16dp"
+                            android:textColor="@color/dark_eq"
+                            android:textColorHint="@color/light_eq"
+                            android:textColorLink="@color/dark_eq"
+                            android:textSize="@dimen/txt_submit_iformation" />
 
                         <android.support.v7.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="16dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
                             app:cardCornerRadius="18dp">
 
                             <Button
-                                android:id="@+id/btnConfirmCodeConfirmEmail"
+                                android:id="@+id/btnReplaceDataConfirmEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/transparent"
                                 android:padding="8dp"
-                                android:text="بررسی صحت کد"
+                                android:text="تغییر اطلاعات وارد شده"
+                                android:textSize="@dimen/txt_size_smal"
+                                android:textStyle="bold" />
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            app:cardCornerRadius="18dp">
+
+                            <Button
+                                android:id="@+id/btnResendEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:padding="8dp"
+                                android:text="ارسال مجدد ایمیل"
                                 android:textSize="@dimen/txt_size_smal"
                                 android:textStyle="bold" />
                         </android.support.v7.widget.CardView>
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        app:cardBackgroundColor="@color/dark_eq">
-
-                        <Button
-                            android:id="@+id/btnResendEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/btn_dark_eq"
-                            android:enabled="true"
-                            android:padding="16dp"
-                            android:text="ارسال مجدد ایمیل"
-                            android:textColor="@color/light"
-                            android:textSize="@dimen/txt_size_smal"
-                            android:textStyle="bold" />
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

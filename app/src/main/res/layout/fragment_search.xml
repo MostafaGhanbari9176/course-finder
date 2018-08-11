@@ -6,227 +6,6 @@
     android:layout_height="match_parent"
     android:layoutDirection="rtl">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed"
-            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator">
-
-            <android.support.v7.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/light"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="right|center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:gravity="right|center"
-                            android:text="جستجو در : "
-                            android:textSize="@dimen/txt_size_smal"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <RadioGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="right|center"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/rbBaseOnTeacherNameSearch"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="4dp"
-                                android:layout_weight="1"
-                                android:gravity="start"
-                                android:text="نام آموزشگاه"
-                                android:textStyle="bold" />
-
-                            <RadioButton
-                                android:id="@+id/rbBaseOnCourseNameSearch"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:typeface="normal" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="4dp"
-                                android:layout_weight="1"
-                                android:gravity="start"
-                                android:text="نام دوره"
-                                android:textStyle="bold" />
-
-                        </RadioGroup>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/purple_tel"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:orientation="horizontal"></LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <EditText
-                            android:id="@+id/txtSearch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="16dp"
-                            android:background="@drawable/txt_search"
-                            android:ems="10"
-                            android:gravity="right|center"
-                            android:hint="جستجو کنید"
-                            android:inputType="textPersonName"
-                            android:padding="8dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/purple_tel"
-                            android:textSize="@dimen/txt_size_big" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:orientation="horizontal"></LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/light"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/llbtnFilter"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                app:srcCompat="@drawable/icon_menu" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_weight="1"
-                                android:gravity="right|center"
-                                android:text="تنظیم کردن فیلتر"
-                                android:textSize="@dimen/txt_size_smal" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/purple_tel"
-                            android:orientation="horizontal"></LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/llDeleteFilter"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                app:srcCompat="@drawable/icon_delete_red" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_weight="1"
-                                android:gravity="right|center"
-                                android:text="حذف فیلتر"
-                                android:textSize="@dimen/txt_size_smal" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/purple_tel"
-                        android:orientation="horizontal"></LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/SDFragmentSearch"
         android:layout_width="match_parent"
@@ -240,10 +19,231 @@
             android:gravity="top"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/RVSerarch"
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/purple_tel"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="right|center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:gravity="right|center"
+                                    android:text="جستجو در : "
+                                    android:textColor="@color/light"
+                                    android:textSize="@dimen/txt_size_smal"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RadioGroup
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="right|center"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/rbBaseOnTeacherNameSearch"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/light" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="4dp"
+                                        android:layout_weight="1"
+                                        android:gravity="start"
+                                        android:text="نام آموزشگاه"
+                                        android:textColor="@color/light"
+                                        android:textStyle="bold" />
+
+                                    <RadioButton
+                                        android:id="@+id/rbBaseOnCourseNameSearch"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/light"
+                                        android:typeface="normal" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="4dp"
+                                        android:layout_weight="1"
+                                        android:gravity="start"
+                                        android:text="نام دوره"
+                                        android:textColor="@color/light"
+                                        android:textStyle="bold" />
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/purple_tel"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.CardView
+                                android:id="@+id/CVTxtSearch"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:id="@+id/imageView"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="20dp"
+                                        android:layout_marginStart="20dp"
+                                        app:srcCompat="@drawable/icon_search_true" />
+
+                                    <EditText
+                                        android:id="@+id/txtSearch"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:background="@null"
+                                        android:ems="10"
+                                        android:gravity="right|center"
+                                        android:hint="جستجو کنید"
+                                        android:inputType="textMultiLine"
+                                        android:padding="8dp"
+                                        android:textColor="@color/dark_eq"
+                                        android:textColorHint="@color/purple_tel"
+                                        android:textSize="@dimen/txt_size_big" />
+                                </LinearLayout>
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/light"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:id="@+id/llbtnFilter"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="8dp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="16dp"
+                                        app:srcCompat="@drawable/icon_menu" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="16dp"
+                                        android:layout_weight="1"
+                                        android:gravity="right|center"
+                                        android:text="تنظیم کردن فیلتر"
+                                        android:textSize="@dimen/txt_size_smal" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/purple_tel"
+                                    android:orientation="horizontal"></LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/llDeleteFilter"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="8dp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="16dp"
+                                        app:srcCompat="@drawable/icon_delete_red" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="16dp"
+                                        android:layout_weight="1"
+                                        android:gravity="right|center"
+                                        android:text="حذف فیلتر"
+                                        android:textSize="@dimen/txt_size_smal" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/purple_tel"
+                                android:orientation="horizontal"></LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/RVSerarch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
 
         </LinearLayout>
 

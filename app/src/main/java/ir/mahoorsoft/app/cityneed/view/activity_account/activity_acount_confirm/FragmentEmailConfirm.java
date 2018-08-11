@@ -2,12 +2,14 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +45,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     View view;
     boolean isUserChanged = true;
-    RelativeLayout llName;
     Button btnConfirmEmail;
-    Button btnConfirmCode;
+    Button btnReplaceData;
     Button btnResend;
     public TextView txtEmail;
     public TextView txtName;
@@ -54,6 +55,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     public RadioButton rbLogIn;
     public RadioButton rbLogUp;
     RelativeLayout rlPbar;
+    CardView cvEmail;
+    CardView cvVerifyCode;
 
     @Nullable
     @Override
@@ -72,6 +75,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     private void pointers() {
+        cvEmail = (CardView) view.findViewById(R.id.CVEmail);
+        cvVerifyCode = (CardView) view.findViewById(R.id.CVEmailVerifyCode);
         rlPbar = (RelativeLayout) view.findViewById(R.id.rlPbarFragmentConfirmEmail);
         txtCode = (TextView) view.findViewById(R.id.txtSmsCodeConfirmEmail);
         // txtCode.setEnabled(false);
@@ -79,7 +84,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    llName.setVisibility(View.GONE);
+                    txtName.setVisibility(View.GONE);
                     isLogIn = true;
                 }
             }
@@ -88,7 +93,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    llName.setVisibility(View.VISIBLE);
+                    txtName.setVisibility(View.VISIBLE);
                     isLogIn = false;
                 }
             }
@@ -96,13 +101,29 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         txtName = (TextView) view.findViewById(R.id.txtNameConfirmEmail);
         txtEmail = (TextView) view.findViewById(R.id.txtEmailConfirmٍEmail);
         btnConfirmEmail = (Button) view.findViewById(R.id.btnConfirmEmailConfirmEmail);
-        btnConfirmCode = (Button) view.findViewById(R.id.btnConfirmCodeConfirmEmail);
+        btnReplaceData = (Button) view.findViewById(R.id.btnReplaceDataConfirmEmail);
         btnResend = (Button) view.findViewById(R.id.btnResendEmail);
-        llName = (RelativeLayout) view.findViewById(R.id.RLNameEmailConfirm);
         txtEmail.setText("");
         txtCode.setText("");
+        txtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 6)
+                    checkCode();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         btnConfirmEmail.setOnClickListener(this);
-        btnConfirmCode.setOnClickListener(this);
+        btnReplaceData.setOnClickListener(this);
         btnResend.setOnClickListener(this);
 
     }
@@ -178,11 +199,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
         if (flag) {*/
         Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
-        btnConfirmEmail.setText("تغیر اطلاعات وارد شده");
-        txtEmail.setEnabled(false);
-        txtName.setEnabled(false);
-        txtCode.setEnabled(true);
-        btnConfirmCode.setEnabled(true);
+        cvEmail.setVisibility(View.GONE);
+        cvVerifyCode.setVisibility(View.VISIBLE);
         txtCode.requestFocus();
         //}
     }
@@ -191,11 +209,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     public void sendMessageFScT(String message) {
         rlPbar.setVisibility(View.GONE);
         Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
-        btnConfirmEmail.setText("تغیر اطلاعات وارد شده");
-        txtEmail.setEnabled(false);
-        txtName.setEnabled(false);
-        txtCode.setEnabled(true);
-        btnConfirmCode.setEnabled(true);
+        cvEmail.setVisibility(View.GONE);
+        cvVerifyCode.setVisibility(View.VISIBLE);
         // Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -308,17 +323,17 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         alertDialog.setPositiveButton(buttonTrue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                btnConfirmEmail.setText("تایید ایمیل");
-                txtEmail.setEnabled(true);
-                txtName.setEnabled(true);
-                // txtCode.setEnabled(false);
                 txtCode.setText("");
-                //  btnConfirmCode.setEnabled(false);
-
                 if (buttonTrue.equals("ثبت نام")) {
+
+                    cvEmail.setVisibility(View.VISIBLE);
+                    cvVerifyCode.setVisibility(View.GONE);
                     rbLogUp.setChecked(true);
                     dialog.cancel();
                 } else if (buttonTrue.equals("ورود")) {
+
+                    cvEmail.setVisibility(View.VISIBLE);
+                    cvVerifyCode.setVisibility(View.GONE);
                     rbLogIn.setChecked(true);
                     dialog.cancel();
                 }
@@ -350,18 +365,12 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.btnConfirmCodeConfirmEmail:
-                checkCode();
+            case R.id.btnReplaceDataConfirmEmail:
+                cvEmail.setVisibility(View.VISIBLE);
+                cvVerifyCode.setVisibility(View.GONE);
                 break;
             case R.id.btnConfirmEmailConfirmEmail:
-                if (btnConfirmEmail.getText().equals("تغیر اطلاعات وارد شده")) {
-                    btnConfirmEmail.setText("تایید ایمیل");
-                    txtEmail.setEnabled(true);
-                    txtName.setEnabled(true);
-                    // txtCode.setEnabled(false);
-                    // btnConfirmCode.setEnabled(false);
-                } else
-                    checkeInData(txtEmail.getText().toString().trim());
+                checkeInData(txtEmail.getText().toString().trim());
                 break;
             case R.id.btnResendEmail:
                 checkeInData(txtEmail.getText().toString().trim());

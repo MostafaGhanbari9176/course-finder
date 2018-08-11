@@ -13,6 +13,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +51,7 @@ import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 public class FragmentSearch extends Fragment implements View.OnClickListener, PresentCourse.OnPresentCourseLitener, AdapterCourseList.OnClickItemCourseList, DialogGrouping.OnTabagheItemClick, DialogDayWeek.ReturnDay, SwipeRefreshLayout.OnRefreshListener {
 
+    CardView cvSearch;
     View view;
     LinearLayout btnFilter;
     LinearLayout btnDeleteFilter;
@@ -236,10 +238,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
                 serachSource.add(helpSource.get(i));
         }
         if (serachSource.size() == 0) {
-            txtSearch.setBackgroundResource(R.drawable.txt_search_errore);
+            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.red_one));
             txtSearch.setTextColor(getResources().getColor(R.color.light));
         } else {
-            txtSearch.setBackgroundResource(R.drawable.txt_search);
+            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
             txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
         }
         source.clear();
@@ -264,10 +266,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             }
         }
         if (serachSource.size() == 0) {
-            txtSearch.setBackgroundResource(R.drawable.txt_search_errore);
+            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.red_one));
             txtSearch.setTextColor(getResources().getColor(R.color.light));
         } else {
-            txtSearch.setBackgroundResource(R.drawable.txt_search);
+            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
             txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
         }
         source.clear();
@@ -278,6 +280,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void pointers() {
+        cvSearch = (CardView) view.findViewById(R.id.CVTxtSearch);
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentSearch);
         sDown.setOnRefreshListener(this);
         dialog = new Dialog(G.context);
@@ -341,7 +344,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         try {
             sDown.setRefreshing(false);
             dialog.cancel();
-            txtSearch.setBackgroundResource(R.drawable.txt_search);
+            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
             txtSearch.setTextColor(ContextCompat.getColor(G.context, R.color.dark_eq));
             if (isFilterRes) {
                 btnDeleteFilter.setVisibility(View.VISIBLE);
