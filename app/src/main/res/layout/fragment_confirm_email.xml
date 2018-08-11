@@ -1,267 +1,280 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@color/light"
+    android:background="@android:color/transparent"
+    android:gravity="center"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/light_two"
+                app:cardCornerRadius="18dp">
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/CVEmail"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    app:cardBackgroundColor="@color/light_two"
-                    app:cardCornerRadius="18dp">
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/imgCloseConfirmEmail"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/border_close"
+                        android:padding="2dp"
+                        app:srcCompat="@drawable/ic_close" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_marginTop="8dp">
 
                         <LinearLayout
+                            android:id="@+id/LLEmail"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginTop="16dp"
-                            android:gravity="center_vertical">
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginStart="16dp"
-                                android:text="انتخاب کنید : "
-                                android:textColor="@color/dark_eq"
-                                android:textStyle="bold" />
-
-                            <RadioGroup
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <RadioButton
-                                    android:id="@+id/rbLogInWithEmail"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="4dp"
-                                    android:text="ورود"
-                                    android:textColor="@color/dark_eq"
-                                    android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="16dp"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center_vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="8dp"
-                                    android:layout_marginStart="8dp"
-                                    android:text="یا"
+                                    android:layout_marginStart="16dp"
+                                    android:text="انتخاب کنید : "
                                     android:textColor="@color/dark_eq"
                                     android:textStyle="bold" />
 
-                                <RadioButton
-                                    android:id="@+id/rbLogUpWithEmail"
+                                <RadioGroup
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="4dp"
-                                    android:checked="true"
-                                    android:text="ثبت نام"
-                                    android:textColor="@color/dark_eq"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/rbLogInWithEmail"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="4dp"
+                                        android:text="ورود"
+                                        android:textColor="@color/dark_eq"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8dp"
+                                        android:layout_marginStart="8dp"
+                                        android:text="یا"
+                                        android:textColor="@color/dark_eq"
+                                        android:textStyle="bold" />
+
+                                    <RadioButton
+                                        android:id="@+id/rbLogUpWithEmail"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="4dp"
+                                        android:checked="true"
+                                        android:text="ثبت نام"
+                                        android:textColor="@color/dark_eq"
+                                        android:textStyle="bold" />
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:background="@color/light"
+                                android:orientation="horizontal"></LinearLayout>
+
+                            <EditText
+                                android:id="@+id/txtNameConfirmEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/border_light_eq"
+                                android:ems="10"
+                                android:gravity="start"
+                                android:hint="نام ونام خانوادگی"
+                                android:inputType="textMultiLine"
+                                android:maxLength="50"
+                                android:padding="16dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+
+                            <EditText
+                                android:id="@+id/txtEmailConfirmٍEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/border_light_eq"
+                                android:ems="10"
+                                android:gravity="start"
+                                android:hint="آدرس ایمیل"
+                                android:inputType="textMultiLine"
+                                android:maxLength="100"
+                                android:padding="16dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="16dp"
+                                app:cardCornerRadius="18dp">
+
+                                <Button
+                                    android:id="@+id/btnConfirmEmailConfirmEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:padding="8dp"
+                                    android:text="تایید ایمیل"
+                                    android:textSize="@dimen/txt_size_smal"
                                     android:textStyle="bold" />
-                            </RadioGroup>
+                            </android.support.v7.widget.CardView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/light"
-                            android:orientation="horizontal"></LinearLayout>
-
-                        <EditText
-                            android:id="@+id/txtNameConfirmEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/border_light_eq"
-                            android:ems="10"
-                            android:gravity="start"
-                            android:hint="نام ونام خانوادگی"
-                            android:inputType="textMultiLine"
-                            android:maxLength="50"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textColorLink="@color/dark_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <EditText
-                            android:id="@+id/txtEmailConfirmٍEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/border_light_eq"
-                            android:ems="10"
-                            android:gravity="start"
-                            android:hint="آدرس ایمیل"
-                            android:inputType="textMultiLine"
-                            android:maxLength="100"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textColorLink="@color/dark_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="16dp"
-                            app:cardCornerRadius="18dp">
-
-                            <Button
-                                android:id="@+id/btnConfirmEmailConfirmEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@android:color/transparent"
-                                android:padding="8dp"
-                                android:text="تایید ایمیل"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-                        </android.support.v7.widget.CardView>
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/CVEmailVerifyCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    app:cardBackgroundColor="@color/light_two"
-                    app:cardCornerRadius="18dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <EditText
-                            android:id="@+id/txtSmsCodeConfirmEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/border_light_eq"
-                            android:ems="10"
-                            android:gravity="center"
-                            android:hint="کد ایمیل شده"
-                            android:inputType="number"
-                            android:maxLength="6"
-                            android:maxLines="1"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textColorLink="@color/dark_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <android.support.v7.widget.CardView
+                            android:id="@+id/LLEmailVerifyCode"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            app:cardCornerRadius="18dp">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
-                            <Button
-                                android:id="@+id/btnReplaceDataConfirmEmail"
+                            <EditText
+                                android:id="@+id/txtSmsCodeConfirmEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@android:color/transparent"
-                                android:padding="8dp"
-                                android:text="تغییر اطلاعات وارد شده"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-                        </android.support.v7.widget.CardView>
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/border_light_eq"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:hint="کد ایمیل شده"
+                                android:inputType="number"
+                                android:maxLength="6"
+                                android:maxLines="1"
+                                android:padding="16dp"
+                                android:textColor="@color/dark_eq"
+                                android:textColorHint="@color/light_eq"
+                                android:textColorLink="@color/dark_eq"
+                                android:textSize="@dimen/txt_submit_iformation" />
 
-                        <android.support.v7.widget.CardView
+                            <android.support.v7.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                app:cardCornerRadius="18dp">
+
+                                <Button
+                                    android:id="@+id/btnReplaceDataConfirmEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:padding="8dp"
+                                    android:text="تغییر اطلاعات وارد شده"
+                                    android:textSize="@dimen/txt_size_smal"
+                                    android:textStyle="bold" />
+                            </android.support.v7.widget.CardView>
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                app:cardCornerRadius="18dp">
+
+                                <Button
+                                    android:id="@+id/btnResendEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:padding="8dp"
+                                    android:text="ارسال مجدد ایمیل"
+                                    android:textSize="@dimen/txt_size_smal"
+                                    android:textStyle="bold" />
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlPbarFragmentConfirmEmail"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            app:cardCornerRadius="18dp">
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:visibility="gone">
 
-                            <Button
-                                android:id="@+id/btnResendEmail"
+                            <LinearLayout
                                 android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:alpha="0.5"
+                                android:background="@color/dark_eq"
+                                android:orientation="horizontal"></LinearLayout>
+
+                            <ProgressBar
+                                style="?android:attr/progressBarStyle"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@android:color/transparent"
-                                android:padding="8dp"
-                                android:text="ارسال مجدد ایمیل"
-                                android:textSize="@dimen/txt_size_smal"
-                                android:textStyle="bold" />
-                        </android.support.v7.widget.CardView>
+                                android:layout_centerInParent="true" />
+                        </RelativeLayout>
 
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
+                    </RelativeLayout>
+                </LinearLayout>
 
-            </LinearLayout>
-        </ScrollView>
+            </android.support.v7.widget.CardView>
 
-        <RelativeLayout
-            android:id="@+id/rlPbarFragmentConfirmEmail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:alpha="0.5"
-                android:background="@color/dark_eq"
-                android:orientation="horizontal"></LinearLayout>
-
-            <ProgressBar
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
-
-    </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

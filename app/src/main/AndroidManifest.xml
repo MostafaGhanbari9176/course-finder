@@ -99,7 +99,7 @@
         <activity
             android:name=".view.activity_account.activity_acount_confirm.ActivityAcountConfirm"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/Trans"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.courseLists.ActivityCoursesListByGroupingId"

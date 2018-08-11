@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,8 +56,9 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     public RadioButton rbLogIn;
     public RadioButton rbLogUp;
     RelativeLayout rlPbar;
-    CardView cvEmail;
-    CardView cvVerifyCode;
+    LinearLayout llEmail;
+    LinearLayout llVerifyCode;
+
 
     @Nullable
     @Override
@@ -74,9 +76,24 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     }
 
+    private void setPbarVisible() {
+        rlPbar.setVisibility(View.VISIBLE);
+        if (llEmail.getVisibility() == View.VISIBLE)
+            rlPbar.getLayoutParams().height = llEmail.getHeight();
+        else
+            rlPbar.getLayoutParams().height = llVerifyCode.getHeight();
+
+    }
+
     private void pointers() {
-        cvEmail = (CardView) view.findViewById(R.id.CVEmail);
-        cvVerifyCode = (CardView) view.findViewById(R.id.CVEmailVerifyCode);
+        llEmail = (LinearLayout) view.findViewById(R.id.LLEmail);
+        ((ImageView) view.findViewById(R.id.imgCloseConfirmEmail)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                G.activity.finish();
+            }
+        });
+        llVerifyCode = (LinearLayout) view.findViewById(R.id.LLEmailVerifyCode);
         rlPbar = (RelativeLayout) view.findViewById(R.id.rlPbarFragmentConfirmEmail);
         txtCode = (TextView) view.findViewById(R.id.txtSmsCodeConfirmEmail);
         // txtCode.setEnabled(false);
@@ -173,7 +190,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
         }
         try {
             Integer.parseInt(txtCode.getText().toString().trim());
-            rlPbar.setVisibility(View.VISIBLE);
+            setPbarVisible();
             PresentUser presentUser = new PresentUser(this);
             if (!isLogIn)
                 presentUser.logUp(txtEmail.getText().toString().trim(), txtName.getText().toString().trim(), Integer.parseInt(txtCode.getText().toString().trim()));
@@ -186,7 +203,7 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     }
 
     private void sendEmailForServer(String phone) {
-        rlPbar.setVisibility(View.VISIBLE);
+        setPbarVisible();
         PresentSmsCode p = new PresentSmsCode(this);
         p.createAndSaveSmsCode(phone);
     }
@@ -199,8 +216,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
         if (flag) {*/
         Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
-        cvEmail.setVisibility(View.GONE);
-        cvVerifyCode.setVisibility(View.VISIBLE);
+        llEmail.setVisibility(View.GONE);
+        llVerifyCode.setVisibility(View.VISIBLE);
         txtCode.requestFocus();
         //}
     }
@@ -209,8 +226,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
     public void sendMessageFScT(String message) {
         rlPbar.setVisibility(View.GONE);
         Toast.makeText(G.context, "ایمیلی حاوی کد تایید به آدرس ایمیل وارد شده ارسال شد", Toast.LENGTH_SHORT).show();
-        cvEmail.setVisibility(View.GONE);
-        cvVerifyCode.setVisibility(View.VISIBLE);
+        llEmail.setVisibility(View.GONE);
+        llVerifyCode.setVisibility(View.VISIBLE);
         // Toast.makeText(G.context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -326,14 +343,14 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
                 txtCode.setText("");
                 if (buttonTrue.equals("ثبت نام")) {
 
-                    cvEmail.setVisibility(View.VISIBLE);
-                    cvVerifyCode.setVisibility(View.GONE);
+                    llEmail.setVisibility(View.VISIBLE);
+                    llVerifyCode.setVisibility(View.GONE);
                     rbLogUp.setChecked(true);
                     dialog.cancel();
                 } else if (buttonTrue.equals("ورود")) {
 
-                    cvEmail.setVisibility(View.VISIBLE);
-                    cvVerifyCode.setVisibility(View.GONE);
+                    llEmail.setVisibility(View.VISIBLE);
+                    llVerifyCode.setVisibility(View.GONE);
                     rbLogIn.setChecked(true);
                     dialog.cancel();
                 }
@@ -366,8 +383,8 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
         switch (v.getId()) {
             case R.id.btnReplaceDataConfirmEmail:
-                cvEmail.setVisibility(View.VISIBLE);
-                cvVerifyCode.setVisibility(View.GONE);
+                llEmail.setVisibility(View.VISIBLE);
+                llVerifyCode.setVisibility(View.GONE);
                 break;
             case R.id.btnConfirmEmailConfirmEmail:
                 checkeInData(txtEmail.getText().toString().trim());

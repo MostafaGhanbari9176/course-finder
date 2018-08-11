@@ -23,8 +23,8 @@ import ir.mahoorsoft.app.cityneed.view.adapter.AdapterViewPager;
  */
 
 public class ActivityAcountConfirm extends AppCompatActivity {
-    Toolbar tlb;
-    TabLayout tabLayout;
+   // Toolbar tlb;
+   // TabLayout tabLayout;
     AdapterViewPager adapterViewPager;
     ViewPager viewPager;
 
@@ -39,16 +39,10 @@ public class ActivityAcountConfirm extends AppCompatActivity {
 
     private void init() {
         pointer();
-        setSupportActionBar(tlb);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("حساب کاربری");
-        tlb.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        tabLayout.setupWithViewPager(viewPager);
+        //setSupportActionBar(tlb);
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getSupportActionBar().setTitle("حساب کاربری");
+        //tabLayout.setupWithViewPager(viewPager);
         settingUpViewPager();
         showDialog();
 
@@ -57,7 +51,7 @@ public class ActivityAcountConfirm extends AppCompatActivity {
     private void settingUpViewPager() {
         adapterViewPager = new AdapterViewPager(getSupportFragmentManager());
         adapterViewPager.add(new FragmentEmailConfirm(), "ثبت نام یا ورود با ایمیل");
-        adapterViewPager.add(new FragmentPhoneConfirm(), "ثبت نام یا ورود با شماره همراه");
+       // adapterViewPager.add(new FragmentPhoneConfirm(), "ثبت نام یا ورود با شماره همراه");
         viewPager.setAdapter(adapterViewPager);
 
     }
@@ -76,8 +70,8 @@ public class ActivityAcountConfirm extends AppCompatActivity {
 
     private void pointer() {
         viewPager = (ViewPager) findViewById(R.id.vpAcountConfirm);
-        tlb = (Toolbar) findViewById(R.id.tlbAcountConfirm);
-        tabLayout = (TabLayout) findViewById(R.id.tabsAcountConfirm);
+        //tlb = (Toolbar) findViewById(R.id.tlbAcountConfirm);
+       // tabLayout = (TabLayout) findViewById(R.id.tabsAcountConfirm);
     }
 
     @Override
