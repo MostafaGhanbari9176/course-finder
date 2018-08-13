@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -69,7 +70,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     private LinearLayout btnEndDate;
     private LinearLayout btnDay;
     private LinearLayout btnGroup;
-
+    ImageView imgSearch;
     private TextView txtStartDate;
     private TextView txtEndDate;
     private TextView txtDay;
@@ -239,9 +240,11 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         }
         if (serachSource.size() == 0) {
             cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.red_one));
+            imgSearch.setImageResource(R.drawable.icon_search_false);
             txtSearch.setTextColor(getResources().getColor(R.color.light));
         } else {
             cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
+            imgSearch.setImageResource(R.drawable.icon_search_true);
             txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
         }
         source.clear();
@@ -267,9 +270,11 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         }
         if (serachSource.size() == 0) {
             cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.red_one));
+            imgSearch.setImageResource(R.drawable.icon_search_false);
             txtSearch.setTextColor(getResources().getColor(R.color.light));
         } else {
             cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
+            imgSearch.setImageResource(R.drawable.icon_search_true);
             txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
         }
         source.clear();
@@ -280,6 +285,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     }
 
     private void pointers() {
+        imgSearch = (ImageView) view.findViewById(R.id.imgSearchFragmentSearch);
         cvSearch = (CardView) view.findViewById(R.id.CVTxtSearch);
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDFragmentSearch);
         sDown.setOnRefreshListener(this);
@@ -345,6 +351,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             sDown.setRefreshing(false);
             dialog.cancel();
             cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
+            imgSearch.setImageResource(R.drawable.icon_search_true);
             txtSearch.setTextColor(ContextCompat.getColor(G.context, R.color.dark_eq));
             if (isFilterRes) {
                 btnDeleteFilter.setVisibility(View.VISIBLE);

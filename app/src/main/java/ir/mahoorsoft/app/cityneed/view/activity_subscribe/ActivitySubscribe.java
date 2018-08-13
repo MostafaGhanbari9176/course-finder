@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozesh
 
 public class ActivitySubscribe extends AppCompatActivity implements PresentSubscribe.OnPresentSubscribeListener {
 
-    Toolbar tlb;
+   // Toolbar tlb;
     boolean haveSubscribe;
     FragmentChoseSubscrib fragmentChoseSubscrib;
     RelativeLayout pbar;
@@ -93,19 +94,20 @@ public class ActivitySubscribe extends AppCompatActivity implements PresentSubsc
             replaceContentWith(fragmentChoseSubscrib);
         }
         pointers();
-        setSupportActionBar(tlb);
-        getSupportActionBar().setTitle("اشتراک");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        tlb.setNavigationOnClickListener(new View.OnClickListener() {
+       // setSupportActionBar(tlb);
+      //  getSupportActionBar().setTitle("اشتراک");
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    private void pointers() {
+        ((ImageView) findViewById(R.id.imgCloseSubscribe)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-    }
-
-    private void pointers() {
-        tlb = (Toolbar) findViewById(R.id.tlbSubscribe);
+        //tlb = (Toolbar) findViewById(R.id.tlbSubscribe);
     }
 
     public static void replaceContentWith(Fragment fragment) {

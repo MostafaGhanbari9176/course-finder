@@ -147,16 +147,16 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     private void checkeInData(String mail) {
         if (!isLogIn && txtName.getText().toString().trim().length() == 0) {
-            txtName.setError("کامل کنید");
+            txtName.setError("نام خودرا وارد کنید");
             txtName.requestFocus();
             return;
         }
         if (TextUtils.isEmpty(mail)) {
-            txtEmail.setError("کامل کنید");
+            txtEmail.setError("ایمیل خودرا وارد کنید");
             txtEmail.requestFocus();
         } else if (!isEmailValid(mail)) {
             txtEmail.requestFocus();
-            txtEmail.setError("صحیح وارد کنید");
+            txtEmail.setError("ایمیل خودرا صحیح وارد کنید");
         } else {
             Pref.saveStringValue(PrefKey.emailWhenConfirm, mail);
             Pref.saveStringValue(PrefKey.nameWhenConfirm, txtName.getText().toString().trim());
@@ -174,18 +174,18 @@ public class FragmentEmailConfirm extends Fragment implements View.OnClickListen
 
     private void checkCode() {
         if (!isLogIn && txtName.getText().toString().trim().length() == 0) {
-            txtName.setError("کامل کنید");
+            txtName.setError("نام خودرا وارد کنید");
             txtName.requestFocus();
             return;
         }
         if (TextUtils.isEmpty(txtEmail.getText().toString().trim())) {
-            txtEmail.setError("کامل کنید");
+            txtEmail.setError("ایمیل خودرا وارد کنید");
             txtEmail.requestFocus();
             return;
         }
         if (!(isEmailValid(txtEmail.getText().toString().trim()))) {
             txtEmail.requestFocus();
-            txtEmail.setError("صحیح وارد کنید");
+            txtEmail.setError("ایمیل خودرا صحیح وارد کنید");
             return;
         }
         try {

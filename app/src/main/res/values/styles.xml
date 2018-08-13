@@ -6,9 +6,10 @@
         <item name="colorPrimary">@color/dark_eq</item>
         <item name="android:textColor">@color/dark_eq</item>
         <item name="android:textSize">@dimen/txt_size_smal</item>
-        <item name="android:textColorHint">@color/yellow_ios</item>
+
         <item name="colorPrimaryDark">@color/dark_eq</item>
         <item name="colorAccent">@color/yellow_ios</item>
+        <item name="android:typeface">serif</item>
 
 
     </style>
@@ -22,6 +23,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:typeface">normal</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

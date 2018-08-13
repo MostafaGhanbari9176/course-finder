@@ -9,7 +9,8 @@
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/light_one">
+        app:cardBackgroundColor="@color/light_one"
+        app:cardCornerRadius="18dp">
 
         <ScrollView
             android:layout_width="match_parent"

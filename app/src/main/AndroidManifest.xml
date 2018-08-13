@@ -109,7 +109,7 @@
         <activity
             android:name=".view.activity_subscribe.ActivitySubscribe"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/Trans"
             android:windowSoftInputMode="stateHidden|adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

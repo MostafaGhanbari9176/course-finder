@@ -3,7 +3,7 @@
     <dimen name="txt_size_smal">16dp</dimen>
     <dimen name="txt_size_vsmal">14dp</dimen>
     <dimen name="txt_size_xvsmal">12dp</dimen>
-    <dimen name="txt_size_big">24dp</dimen>
+    <dimen name="txt_size_big">20dp</dimen>
 
 
     <dimen name="txt_item_home">12dp</dimen>

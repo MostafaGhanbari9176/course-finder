@@ -31,14 +31,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/purple_tel"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/purple_tel"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -122,7 +123,10 @@
                                 android:id="@+id/CVTxtSearch"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="16dp">
+                                android:layout_marginBottom="14dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="16dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -131,11 +135,11 @@
                                     android:orientation="horizontal">
 
                                     <ImageView
-                                        android:id="@+id/imageView"
+                                        android:id="@+id/imgSearchFragmentSearch"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginEnd="20dp"
-                                        android:layout_marginStart="20dp"
+                                        android:layout_marginEnd="9dp"
+                                        android:layout_marginStart="16dp"
                                         app:srcCompat="@drawable/icon_search_true" />
 
                                     <EditText
@@ -146,9 +150,9 @@
                                         android:background="@null"
                                         android:ems="10"
                                         android:gravity="right|center"
-                                        android:hint="جستجو کنید"
+                                        android:hint="جستجو"
                                         android:inputType="textMultiLine"
-                                        android:padding="8dp"
+                                        android:padding="7dp"
                                         android:textColor="@color/dark_eq"
                                         android:textColorHint="@color/purple_tel"
                                         android:textSize="@dimen/txt_size_big" />

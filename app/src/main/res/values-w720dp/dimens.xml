@@ -6,7 +6,7 @@
     <dimen name="txt_size_smal">28dp</dimen>
     <dimen name="txt_size_vsmal">24dp</dimen>
     <dimen name="txt_size_xvsmal">20dp</dimen>
-    <dimen name="txt_size_big">34dp</dimen>
+    <dimen name="txt_size_big">30dp</dimen>
 
 
 </resources>

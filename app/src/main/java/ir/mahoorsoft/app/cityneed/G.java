@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -24,6 +26,7 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Locale;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -34,6 +37,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.view.TypefaceUtil;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 
@@ -57,6 +61,7 @@ public class G extends Application {
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
 
+        TypefaceUtil.overrideFont(context, "SERIF", "fonts/Far_Elham.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 
         try {
             byte[] decryptedData = func(stData("assets4.txt"), data(stData("assets1.txt")), data(stData("assets2.txt")), data(stData("assets3.txt")));

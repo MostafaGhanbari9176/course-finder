@@ -305,6 +305,10 @@ public class ActivityMain extends AppCompatActivity implements PresentFeedBack.O
     }
 
     public void replaceContentWith(String key, Fragment value) {
+/*        if(key.equals("fSearch"))
+            getSupportActionBar().hide();
+        else
+            getSupportActionBar().show();*/
         if (!keySaver.empty() && keySaver.peek().equals(key))
             return;
         boolean isAvailable = false;
