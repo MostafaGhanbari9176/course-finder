@@ -517,11 +517,11 @@ public class FragmentShowcourseFeature extends Fragment implements PresentCourse
             case R.id.btnMoreDetailsShowFeature:
                 if (moreDetails.getVisibility() == View.GONE) {
                     G.animatingForVisible(moreDetails, 0f, 1f, 0f);
-                    imgDrop.setImageResource(R.drawable.icon_drop_up);
+                    imgDrop.animate().rotation(180).start();
                 } else {
                     moreDetails.setVisibility(View.GONE);
                     G.animatingForGone(moreDetails, 1f, 0f, -(moreDetails.getHeight()));
-                    imgDrop.setImageResource(R.drawable.icon_drop_down);
+                    imgDrop.animate().rotation(0).start();
                 }
                 break;
             case R.id.CVbtnPlayVideo:

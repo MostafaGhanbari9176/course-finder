@@ -2,13 +2,17 @@ package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -63,6 +67,8 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
         sDown = (SwipeRefreshLayout) view.findViewById(R.id.SDComment);
         sDown.setOnRefreshListener(this);
         pointers();
+        if (ActivityOptionalCourse.courseId == -1)
+            btnAddComment.setVisibility(View.GONE);
         getCommentList();
         setFont();
     }
@@ -88,10 +94,19 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
         btnAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Pref.getBollValue(PrefKey.IsLogin, false))
-                    getCommentData();
-                else
-                    messageFromComment("ابتدا وارد حساب کاربری خود شوید");
+                try {
+                    if (Pref.getBollValue(PrefKey.IsLogin, false)) {
+                        if (FragmentShowcourseFeature.issabtenamed)
+                            getCommentData();
+                        else
+                            throw new Exception("شما در این دوره ثبت نام ندارید");
+                    } else
+                        throw new Exception("ابتدا وارد حساب کاربری خود شوید");
+
+                } catch (Exception e) {
+                    Toast.makeText(G.context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -211,58 +226,43 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
     }
 
     @Override
-    public void feedBAckPresed(int position) {
-        getReportData(position);
-    }
-
-    private void getReportData(final int position) {
-        final Dialog dialog = new Dialog(G.context);
-        LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = li.inflate(R.layout.dialog_report, null, false);
-        final TextView textView = (TextView) view.findViewById(R.id.txtDialogReport);
-        Button btnConfirm = (Button) view.findViewById(R.id.btnConfirmDialogReport);
-        Button btnCancel = (Button) view.findViewById(R.id.btnCancelDialogReport);
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
+    public void feedBAckPresed(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
+        builder.setTitle("گزارش این نظر");
+        builder.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (checkReportData(textView)) {
-                    sendReport("comment", textView.getText().toString(), source.get(position).id, source.get(position).userId, Pref.getStringValue(PrefKey.apiCode, ""));
-                    dialog.cancel();
-                }
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
-        dialog.setContentView(view);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.show();
-    }
 
-    private boolean checkReportData(TextView txt) {
-        if (TextUtils.isEmpty(txt.getText().toString().trim()))
-            txt.setError("یه دلیل ثبت کنید");
-        else
-            return true;
-        return false;
+        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                sendReport("comment", "aaa", source.get(position).id, source.get(position).userId, Pref.getStringValue(PrefKey.apiCode, ""));
+            }
+        });
+
+        builder.show();
     }
 
     private void sendReport(String signText, String reportText, int spamId, String spamerId, String reporterId) {
-        sDown.setRefreshing(true);
+
         PresentReport presentReport = new PresentReport(this);
         presentReport.report(signText, reportText, spamId, spamerId, reporterId);
+
+        Snackbar snackbar = Snackbar.make(view, "ازبازخورد شما متشکریم", 1000);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(ContextCompat.getColor(G.context, R.color.blue_eq));
+        snackbar.show();
     }
 
     @Override
     public void flagFromReport(boolean flag) {
         sDown.setRefreshing(false);
-        if (flag)
-            messageFromComment("ارسال شد,بابت فیدبک شما متشکریم");
-        else
-            messageFromComment("خطا");
+
     }
 
     @Override

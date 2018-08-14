@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -134,58 +136,43 @@ public class FragmentSmsBoxIn extends Fragment implements PresenterSmsBox.OnPres
     }
 
     @Override
-    public void reportSms(int position) {
-        getReportData(position);
-    }
-
-    private void getReportData(final int position) {
-        final Dialog dialog = new Dialog(G.context);
-        LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = li.inflate(R.layout.dialog_report, null, false);
-        final TextView textView = (TextView) view.findViewById(R.id.txtDialogReport);
-        Button btnConfirm = (Button) view.findViewById(R.id.btnConfirmDialogReport);
-        Button btnCancel = (Button) view.findViewById(R.id.btnCancelDialogReport);
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
+    public void reportSms(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(G.context);
+        builder.setTitle("گزارش این پیام");
+        builder.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (checkReportData(textView)) {
-                    sendReport("sms", textView.getText().toString(), source.get(position).id, source.get(position).tsId, Pref.getStringValue(PrefKey.apiCode, ""));
-                    dialog.cancel();
-                }
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
-        dialog.setContentView(view);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.show();
-    }
 
-    private boolean checkReportData(TextView txt) {
-        if (TextUtils.isEmpty(txt.getText().toString().trim()))
-            txt.setError("یه دلیل ثبت کنید");
-        else
-            return true;
-        return false;
+        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                sendReport("sms", "aaa", source.get(position).id, source.get(position).tsId, Pref.getStringValue(PrefKey.apiCode, ""));
+            }
+        });
+
+        builder.show();
     }
 
     private void sendReport(String signText, String reportText, int spamId, String spamerId, String reporterId) {
-        sDown.setRefreshing(true);
+
         PresentReport presentReport = new PresentReport(this);
         presentReport.report(signText, reportText, spamId, spamerId, reporterId);
+
+        Snackbar snackbar = Snackbar.make(view, "ازبازخورد شما متشکریم", 1000);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(ContextCompat.getColor(G.context, R.color.blue_eq));
+        snackbar.show();
     }
 
     @Override
     public void flagFromReport(boolean flag) {
         sDown.setRefreshing(false);
-        if (flag)
-            messageFromReport("ارسال شد,بابت فیدبک شما متشکریم");
-        else
-            messageFromReport("خطا");
+
     }
 
     @Override

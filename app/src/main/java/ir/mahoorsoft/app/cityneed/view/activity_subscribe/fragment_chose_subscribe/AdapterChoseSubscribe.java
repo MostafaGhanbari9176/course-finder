@@ -89,10 +89,10 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
             public void onClick(View v) {
                 if (holder.showMoreFeature.getVisibility() == View.GONE) {
                     G.animatingForVisible(holder.showMoreFeature, 0f, 1f, 0f);
-                    holder.imgDropDown.setImageResource(R.drawable.icon_drop_up_light);
+                    holder.imgDropDown.animate().rotation(180).start();
                 } else {
                     G.animatingForGone(holder.showMoreFeature, 1f, 0f, -holder.showMoreFeature.getHeight());
-                    holder.imgDropDown.setImageResource(R.drawable.icon_drop_down_light);
+                    holder.imgDropDown.animate().rotation(0).start();
                 }
             }
         });
