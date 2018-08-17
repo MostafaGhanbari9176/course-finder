@@ -43,151 +43,83 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtSubject"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/border_light_eq"
+                        android:ems="10"
+                        android:gravity="start"
+                        android:hint="عنوان آموزش "
+                        android:inputType="textMultiLine"
+                        android:maxLength="200"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq"
+                        android:textColorLink="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtSubject"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="48dp"
-                            android:background="@drawable/border_light_eq"
-                            android:ems="10"
-                            android:gravity="start"
-                            android:hint="عنوان آموزش "
-                            android:inputType="textMultiLine"
-                            android:maxLength="200"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textColorLink="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_txtshort" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtPhoneRegistery"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="false"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="start"
+                        android:hint="شماره تماس"
+                        android:inputType="phone"
+                        android:maxLength="11"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq"
+                        android:textColorLink="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtPhoneRegistery"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="false"
-                            android:layout_marginStart="48dp"
-                            android:background="@drawable/border_light_eq"
-                            android:gravity="start"
-                            android:hint="تلفن ثابت با پیش شماره"
-                            android:inputType="phone"
-                            android:maxLength="11"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textColorLink="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_landphone" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtTozihat"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="false"
+                        android:layout_alignParentTop="false"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="start"
+                        android:hint="توضیحات "
+                        android:inputType="textMultiLine"
+                        android:maxLength="1000"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq"
+                        android:textColorLink="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtTozihat"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="false"
-                            android:layout_alignParentTop="false"
-                            android:layout_marginStart="48dp"
-                            android:background="@drawable/border_light_eq"
-                            android:gravity="start"
-                            android:hint="توضیحات "
-                            android:inputType="textMultiLine"
-                            android:maxLength="1000"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textColorLink="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_alignParentStart="false"
-                            android:layout_centerInParent="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_txtshort" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtAddressRegistery"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="32dp"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="false"
+                        android:layout_alignParentTop="false"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/txtAddressRegistery"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="false"
-                            android:layout_alignParentTop="false"
-                            android:layout_marginStart="48dp"
-                            android:background="@drawable/border_light_eq"
-                            android:gravity="start"
-                            android:hint="آدرس آموزشگاه"
-                            android:inputType="textMultiLine"
-                            android:maxLength="500"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textColorLink="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_alignParentStart="false"
-                            android:layout_centerInParent="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_txtshort" />
-
-                    </RelativeLayout>
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="start"
+                        android:hint="آدرس آموزشگاه"
+                        android:inputType="textMultiLine"
+                        android:maxLength="500"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq"
+                        android:textColorLink="@color/light_eq" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -206,8 +138,7 @@
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="تعیین موقعیت مکانی"
-                    android:textColor="@color/text_home"
-                    android:textSize="@dimen/txt_submit_iformation" />
+                    android:textColor="@color/text_home" />
             </android.support.v7.widget.CardView>
 
             <LinearLayout
@@ -333,8 +264,7 @@
                         android:background="@drawable/btn_dark_eq"
                         android:padding="16dp"
                         android:text="ذخیره اطلاعات"
-                        android:textColor="@color/light"
-                        android:textSize="@dimen/txt_size_smal" />
+                        android:textColor="@color/light" />
                 </android.support.v7.widget.CardView>
 
             </LinearLayout>

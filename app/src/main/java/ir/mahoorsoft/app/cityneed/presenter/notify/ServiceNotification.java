@@ -53,10 +53,10 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
-        checkForNewCourse();
+       // checkForNewCourse();
         checkForNewMessage();
         checkForNewStudent();
-        checkForNewTeacher();
+        //checkForNewTeacher();
         checkForStartDateNotifyData();
         checkForWeakNotifyData();
 

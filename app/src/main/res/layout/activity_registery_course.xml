@@ -43,290 +43,166 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtSubjectRegisteryCourse"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="center|start"
+                        android:hint="عنوان دوره "
+                        android:inputType="textMultiLine"
+                        android:maxLength="200"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtSubjectRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="48dp"
-                            android:background="@drawable/border_light_eq"
-                            android:gravity="center|start"
-                            android:hint="عنوان دوره "
-                            android:inputType="textMultiLine"
-                            android:maxLength="200"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_txtshort" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtTeacherNameRegisteryCourse"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="center|start"
+                        android:hint="نام ونام خانوادگی مدرس"
+                        android:inputType="textMultiLine"
+                        android:maxLength="50"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtTeacherNameRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="48dp"
-                            android:background="@drawable/border_light_eq"
-                            android:gravity="center|start"
-                            android:hint="نام ونام خانوادگی مدرس"
-                            android:inputType="textMultiLine"
-                            android:maxLength="50"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_txtshort" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtsharayetRegisteryCourse"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="center|start"
+                        android:hint="شرایط و پیش نیاز ها "
+                        android:inputType="textMultiLine"
+                        android:maxLength="500"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtsharayetRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="48dp"
-                            android:background="@drawable/border_light_eq"
-                            android:gravity="center|start"
-                            android:hint="شرایط و پیش نیاز ها "
-                            android:inputType="textMultiLine"
-                            android:maxLength="500"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_txtshort" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtMonyRegisteryCourse"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_light_eq"
+                        android:ems="10"
+                        android:gravity="center|start"
+                        android:hint="شهریه(تومان)"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtMonyRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="48dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_light_eq"
-                            android:ems="10"
-                            android:gravity="center|start"
-                            android:hint="شهریه(تومان)"
-                            android:inputType="number"
-                            android:maxLength="20"
-                            android:maxLines="1"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_mony" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtMinRange"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_light_eq"
+                        android:ems="10"
+                        android:gravity="center|start"
+                        android:hint="کمترین سن"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtMinRange"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="false"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="48dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_light_eq"
-                            android:ems="10"
-                            android:gravity="center|start"
-                            android:hint="کمترین سن"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:maxLines="1"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_range" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtMaxRange"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_light_eq"
+                        android:ems="10"
+                        android:gravity="center|start"
+                        android:hint="بیشترین سن"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtMaxRange"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="false"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="48dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_light_eq"
-                            android:ems="10"
-                            android:gravity="center|start"
-                            android:hint="بیشترین سن"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:maxLines="1"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_range" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtCapacityRegisteryCourse"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_light_eq"
+                        android:ems="10"
+                        android:gravity="center|start"
+                        android:hint="ظرفیت(نفر)"
+                        android:inputType="number"
+                        android:maxLength="9"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq" />
 
-                        <EditText
-                            android:id="@+id/txtCapacityRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="false"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="48dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_light_eq"
-                            android:ems="10"
-                            android:gravity="center|start"
-                            android:hint="ظرفیت(نفر)"
-                            android:inputType="number"
-                            android:maxLength="9"
-                            android:maxLines="1"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_range" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/txtTozihatRegisteryCourse"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="32dp"
-                        android:layout_marginEnd="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/txtTozihatRegisteryCourse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="48dp"
-                            android:background="@drawable/border_light_eq"
-                            android:gravity="center|start"
-                            android:hint="توضیحات "
-                            android:inputType="textMultiLine"
-                            android:maxLength="1000"
-                            android:padding="16dp"
-                            android:textColor="@color/dark_eq"
-                            android:textColorHint="@color/light_eq"
-                            android:textSize="@dimen/txt_submit_iformation" />
-
-                        <ImageView
-                            android:layout_width="@dimen/btn_nav"
-                            android:layout_height="@dimen/btn_nav"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/icon_txtshort" />
-
-                    </RelativeLayout>
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/border_light_eq"
+                        android:gravity="center|start"
+                        android:hint="توضیحات "
+                        android:inputType="textMultiLine"
+                        android:maxLength="1000"
+                        android:padding="16dp"
+                        android:textColor="@color/dark_eq"
+                        android:textColorHint="@color/light_eq" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -435,8 +311,7 @@
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="انتخاب ایام برگزاری"
-                    android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_submit_iformation" />
+                    android:textColor="@color/dark_eq" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -454,8 +329,7 @@
                     android:background="@android:color/transparent"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="انتخاب تاریخ شروع دوره"
-                    android:textSize="@dimen/txt_submit_iformation" />
+                    android:text="انتخاب تاریخ شروع دوره" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -474,8 +348,7 @@
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="انتخاب تاریخ پایان دوره"
-                    android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_submit_iformation" />
+                    android:textColor="@color/dark_eq" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -494,8 +367,7 @@
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="انتخاب ساعت برگزاری"
-                    android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_submit_iformation" />
+                    android:textColor="@color/dark_eq" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -515,8 +387,7 @@
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="دسته بندی"
-                    android:textColor="@color/dark_eq"
-                    android:textSize="@dimen/txt_submit_iformation" />
+                    android:textColor="@color/dark_eq" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -531,8 +402,7 @@
                     android:background="@drawable/btn_dark_eq"
                     android:padding="16dp"
                     android:text="ذخیره اطلاعات"
-                    android:textColor="@color/light"
-                    android:textSize="@dimen/txt_size_smal" />
+                    android:textColor="@color/light" />
             </android.support.v7.widget.CardView>
 
         </LinearLayout>

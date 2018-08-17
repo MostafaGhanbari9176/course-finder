@@ -4,7 +4,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -59,7 +59,6 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     TextView txtPhone;
     View view;
     DialogProgres dialogProgres;
-    Typeface typeface;
     BottomNavigationView bottomNav;
     ImageView imgProfile;
     ImageButton btnHome;
@@ -78,16 +77,9 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
     private void init() {
         dialogProgres = new DialogProgres(G.context, false);
         pointers();
-        setFont();
         txtPhone.setText(Pref.getStringValue(PrefKey.email, ""));
         txtName.setText(Pref.getStringValue(PrefKey.userName, ""));
 
-    }
-
-    private void setFont() {
-        typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
-        txtName.setTypeface(typeface);
-        txtPhone.setTypeface(typeface);
     }
 
     private void pointers() {

@@ -3,29 +3,21 @@ package ir.mahoorsoft.app.cityneed.view.registering;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
-
-
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
-
 import java.util.ArrayList;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.CheckedSTatuse;
@@ -34,7 +26,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
-import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogDayWeek;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;
@@ -245,7 +236,7 @@ public class ActivityCourseRegistring extends AppCompatActivity implements View.
                     throw new Exception("لطفا تاریخ شروع و پایان دوره را انتخاب کنید");
                 if (eD.compareTo(sD) == -1)
                     throw new Exception("لطفا تاریخ شروع و پایان دوره را صحیح انتخاب کنید");
-                if (Integer.parseInt(txtMaxRange.getText().toString().trim()) < Integer.parseInt(txtMinRange.getText().toString().trim()))
+                if (Integer.parseInt(txtMaxRange.getText().toString().trim()) <= Integer.parseInt(txtMinRange.getText().toString().trim()))
                     throw new Exception("رنج سنی صحیح نمی باشد");
                 showDialog("تایید اطلاعات", "از صحت اطلاعات وارد شده مطمعن هستید", "بله", "بررسی");
             } catch (Exception e) {

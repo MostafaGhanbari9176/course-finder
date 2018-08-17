@@ -2,7 +2,7 @@ package ir.mahoorsoft.app.cityneed.view.activity_account.activity_acount_confirm
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -69,18 +69,8 @@ public class FragmentPhoneConfirm extends Fragment implements View.OnClickListen
     private void init(){
         dialogProgres = new DialogProgres(G.context);
         pointers();
-        setFont();
+
        // startDialog();
-    }
-
-    private void setFont() {
-        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Far_Nazanin.ttf");
-        txtName.setTypeface(typeface);
-        txtTimer.setTypeface(typeface);
-        txtCode.setTypeface(typeface);
-        txtPhone.setTypeface(typeface);
-        txtSubject.setTypeface(typeface);
-
     }
 
     private void pointers() {

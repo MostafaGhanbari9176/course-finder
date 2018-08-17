@@ -61,7 +61,7 @@ public class G extends Application {
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
 
-        TypefaceUtil.overrideFont(context, "SERIF", "fonts/Far_Elham.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
+        TypefaceUtil.overrideFont(context, "SERIF", "fonts/dirooz.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 
         try {
             byte[] decryptedData = func(stData("assets4.txt"), data(stData("assets1.txt")), data(stData("assets2.txt")), data(stData("assets3.txt")));
