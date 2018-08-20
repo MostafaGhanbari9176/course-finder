@@ -7,6 +7,7 @@ import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.model.tables.Subscribe;
 
@@ -57,6 +58,11 @@ public class PresentSubscribe implements Subscribe.OnSubscribeListener {
             sendMessage(Message.getMessage(1));
         else
             onPresentSubscribeListener.onReceiveFlagFromSubscribe(res.get(0).code != 0);
+    }
+
+    @Override
+    public void onRecieveBuyNotifyData(ArrayList<StNotifyData> data) {
+
     }
 
     public PresentSubscribe(OnPresentSubscribeListener onPresentSubscribeListener) {

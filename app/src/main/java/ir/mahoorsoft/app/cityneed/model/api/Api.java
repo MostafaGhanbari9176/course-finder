@@ -557,4 +557,11 @@ public interface Api {
             @Field("email") String phone);
 
 
+    @FormUrlEncoded
+    @POST("c")
+    Call<ArrayList<StNotifyData>> checkUserBuy(
+            @Field("apiCode") String apicode
+    );
+
+
 }

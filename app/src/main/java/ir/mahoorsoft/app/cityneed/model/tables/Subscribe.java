@@ -6,6 +6,7 @@ import ir.mahoorsoft.app.cityneed.model.api.Api;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
+import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,6 +66,23 @@ public class Subscribe {
         });
     }
 
+    public void checkUserBuy(){
+
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<ArrayList<StNotifyData>> getData = api.checkUserBuy("");
+        getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {
+                onSubscribeListener.onRecieveBuyNotifyData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StNotifyData>> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     public Subscribe(OnSubscribeListener onSubscribeListener) {
         this.onSubscribeListener = onSubscribeListener;
@@ -80,5 +98,7 @@ public class Subscribe {
         void sendMessage(String message);
 
         void onReceiveFlag(ArrayList<ResponseOfServer> res);
+
+        void onRecieveBuyNotifyData(ArrayList<StNotifyData> data);
     }
 }
