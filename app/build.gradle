@@ -9,8 +9,8 @@ android {
         applicationId "ir.mahoorsoft.app.cityneed"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.0.7"
+        versionCode 4
+        versionName "1.0.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

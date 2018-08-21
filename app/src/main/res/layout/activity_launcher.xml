@@ -93,7 +93,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
-                            android:ems="10"
+                            android:ems="8"
                             android:gravity="center"
                             android:lineSpacingExtra="5sp"
                             android:text="لطفا اتصال اینترنت خود را چک کرده و مجددا تلاش کنید" />
