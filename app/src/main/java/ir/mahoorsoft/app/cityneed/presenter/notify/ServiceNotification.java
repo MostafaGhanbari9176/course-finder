@@ -3,17 +3,14 @@ package ir.mahoorsoft.app.cityneed.presenter.notify;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,32 +18,32 @@ import java.util.Locale;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
-import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
+import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 import ir.mahoorsoft.app.cityneed.model.struct.StSmsBox;
+import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
 import ir.mahoorsoft.app.cityneed.model.tables.Notify;
 import ir.mahoorsoft.app.cityneed.model.tables.SmsBox;
+import ir.mahoorsoft.app.cityneed.model.tables.Subscribe;
 import ir.mahoorsoft.app.cityneed.model.tables.course.Course;
 import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 import ir.mahoorsoft.app.cityneed.model.tables.teacher.Teacher;
-import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityTeacherCoursesList;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
 import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
-import ir.mahoorsoft.app.cityneed.view.date.Roozh;
 
 /**
  * Created by M-gh on 14-Aug-17.
  */
 
-public class ServiceNotification extends Service implements Sabtenam.OnSabtenamListener, SmsBox.OnSmsBoxResponseListener, Teacher.OnTeacherListener, Course.OnCourseLitener, Notify.OnNotifyResponseListener {
+public class ServiceNotification extends Service implements Sabtenam.OnSabtenamListener, SmsBox.OnSmsBoxResponseListener, Teacher.OnTeacherListener, Course.OnCourseLitener, Notify.OnNotifyResponseListener, Subscribe.OnSubscribeListener {
 
 
     @Override
@@ -59,7 +56,7 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
         //checkForNewTeacher();
         checkForStartDateNotifyData();
         checkForWeakNotifyData();
-
+        checkUserBuy();
 
         return Service.START_STICKY;
     }
@@ -69,6 +66,10 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
         return null;
     }
 
+
+    private void checkUserBuy(){
+        (new Subscribe(this)).checkUserBuy();
+    }
 
     private void checkForNewMessage() {
         int lastId = Pref.getIntegerValue(PrefKey.lastIdMessage, 0);
@@ -126,6 +127,15 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
             notificationManager.notify((int) System.currentTimeMillis(), builder.build());
             this.stopSelf();
         } catch (Exception ignore) {
+        }
+    }
+
+    @Override
+    public void onRecieveBuyNotifyData(ArrayList<StNotifyData> data) {
+
+        if(data != null && data.size() != 0){
+            String todayDate = DateCreator.todayDate();
+            //if(true)
         }
     }
 
@@ -268,6 +278,8 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
 
     }
 
+
+
     @Override
     public void onReceiveData(ArrayList<StTeacher> data) {
 
@@ -320,6 +332,16 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
 
     @Override
     public void sendingMessageFlag(ArrayList<ResponseOfServer> res) {
+
+    }
+
+    @Override
+    public void onReceiveSubscribeList(ArrayList<StSubscribe> data) {
+
+    }
+
+    @Override
+    public void onReceiveUserBuy(ArrayList<StBuy> data) {
 
     }
 
