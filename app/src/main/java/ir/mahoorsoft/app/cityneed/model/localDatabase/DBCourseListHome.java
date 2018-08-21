@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
+
 /**
  * Created by M-gh on 20-Aug-18.
  */
@@ -16,18 +18,23 @@ public class DBCourseListHome extends SQLiteOpenHelper {
 
     private static final String databaseName = "DBCourseListHome";
     private static final String tableName = "home_list";
-    private String groupSubject = "message";
-    private String groupSubjectColumn = "message";
-    private String groupSubjectColumn = "message";
+    private String column1 = "courseListId";
+    private String column2 = "groupSubject";
+    private String column3 = "empty";
+    private Context context;
+
 
     public DBCourseListHome(Context context) {
         super(context, databaseName, null, 1);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(" CREATE TABLE " + tableName + "( " + columnName + " TEXT )");
+        db.execSQL(" CREATE TABLE " +
+                tableName
+                + " (" + column1 + " INTEGER PRIMARY KEY, " + column2 + " TEXT, " + column3 + " INTEGER )");
     }
 
     @Override
@@ -35,43 +42,38 @@ public class DBCourseListHome extends SQLiteOpenHelper {
         db.execSQL("DROP IF TABLE IF EXIST" + tableName);
     }
 
-    public void saveSmsText(String smsText) {
+    public void saveData(ArrayList<StCustomCourseListHome> data) {
         SQLiteDatabase writer = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(columnName, smsText);
-        writer.insert(tableName, null, contentValues);
-        writer.close();
-    }
-
-    public void saveSmsText(ArrayList<String> smsTexts) {
-        SQLiteDatabase writer = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        for(int i=0 ; i<smsTexts.size(); i++) {
-            contentValues.put(columnName, smsTexts.get(i));
+        for (StCustomCourseListHome d : data ) {
+            contentValues.put(column1, data.indexOf(d));
+            contentValues.put(column2, d.groupSubject);
+            contentValues.put(column3, d.empty);
             writer.insert(tableName, null, contentValues);
         }
         writer.close();
     }
 
-    public void removeSmsText(String smsText) {
-        SQLiteDatabase writer = this.getWritableDatabase();
-        writer.execSQL(" DELETE FROM " + tableName + " WHERE " + columnName + " = '" + smsText + "' ");
-        writer.close();
-    }
-
-    public ArrayList<String> getSmsText() {
-        ArrayList<String> datas = new ArrayList<>();
+    public ArrayList<StCustomCourseListHome> getData() {
+        ArrayList<StCustomCourseListHome> dataList = new ArrayList<>();
         SQLiteDatabase reader = this.getReadableDatabase();
         Cursor cursor = reader.rawQuery(" SELECT * FROM " + tableName, null);
         if (cursor.moveToFirst()) {
             do {
-
-                String data = cursor.getString(cursor.getColumnIndex(columnName));
-                datas.add(data);
-
+                StCustomCourseListHome data = new StCustomCourseListHome();
+                data.courseListId = cursor.getInt(cursor.getColumnIndex(column1));
+                data.groupSubject = cursor.getString(cursor.getColumnIndex(column2));
+                data.empty = cursor.getInt(cursor.getColumnIndex(column3));
+                dataList.add(data);
             } while (cursor.moveToNext());
         }
 
-        return datas;
+        return dataList;
+    }
+
+    public void removeData(){
+        SQLiteDatabase sqlWrite = this.getWritableDatabase();
+        context.deleteDatabase(sqlWrite.getPath());
+        sqlWrite.close();
     }
 }

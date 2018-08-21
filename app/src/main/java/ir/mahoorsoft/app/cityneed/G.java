@@ -26,6 +26,7 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.crypto.BadPaddingException;
@@ -37,6 +38,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
+import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.view.TypefaceUtil;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
@@ -60,7 +63,7 @@ public class G extends Application {
         super.onCreate();
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
-
+        //LocalDatabase.removeCourseData(this);
         TypefaceUtil.overrideFont(context, "SERIF", "fonts/dirooz.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 
         try {

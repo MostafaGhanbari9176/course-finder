@@ -1,9 +1,11 @@
 package ir.mahoorsoft.app.cityneed.presenter;
 
+import android.content.Context;
 import android.util.Base64;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.Message;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
@@ -34,7 +36,14 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     private OnPresentCourseLitener onPresentCourseLitener;
 
+    private Context context;
+
     public PresentCourse(OnPresentCourseLitener onPresentCourseLitener) {
+        this.onPresentCourseLitener = onPresentCourseLitener;
+    }
+
+    public PresentCourse(Context context, OnPresentCourseLitener onPresentCourseLitener) {
+        this.context = context;
         this.onPresentCourseLitener = onPresentCourseLitener;
     }
 
@@ -58,8 +67,27 @@ public class PresentCourse implements Course.OnCourseLitener {
     }
 
     public void getCustomCourseListData() {
-        Course course = new Course(this);
-        course.getCustomCourseListData();
+
+        ArrayList<StCustomCourseListHome> data = LocalDatabase.getCourseListSubject(context);
+        ArrayList<StCourse> data2 = LocalDatabase.getCourseList(context);
+
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
+                if (data.get(i).empty == 1)
+                    continue;
+                ArrayList<StCourse> courses = new ArrayList<>();
+                for (int j = 0; j < data2.size(); j++) {
+                    if (data2.get(j).courseListId == i) {
+                        courses.add(data2.get(j));
+                    }
+                }
+                data.get(i).courses = courses;
+            }
+        } else {
+
+            Course course = new Course(this);
+            course.getCustomCourseListData();
+        }
     }
 
     public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days) {
@@ -132,8 +160,17 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     @Override
     public void DataForCustomCourseListHome(ArrayList<StCustomCourseListHome> data) {
-        if (!(data == null || data.size() == 0))
+        if (!(data == null || data.size() == 0)) {
+            for (StCustomCourseListHome d : data) {
+                if (d.empty == 1)
+                    continue;
+                for (StCourse c : d.courses)
+                    c.courseListId = data.indexOf(d);
+                LocalDatabase.saveCourseList(context, d.courses);
+            }
+            LocalDatabase.saveCourseListSubject(context, data);
             onPresentCourseLitener.onReceiveCustomCourseListForHome(data);
+        }
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.struct.StCourse;
+import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StNotifyData;
 
 /**
@@ -32,4 +34,27 @@ public class LocalDatabase {
         DBSmsText dbSmsText = new DBSmsText(context);
         dbSmsText.removeSmsText(smsText);
     }
+
+    public static ArrayList<StCustomCourseListHome> getCourseListSubject(Context context){
+        return  (new DBCourseListHome(context)).getData();
+    }
+
+    public static ArrayList<StCourse> getCourseList (Context context){
+        return (new DBCourse(context)).getData();
+    }
+
+    public static void saveCourseListSubject(Context context, ArrayList<StCustomCourseListHome> data){
+        (new DBCourseListHome(context)).saveData(data);
+    }
+
+    public static void saveCourseList(Context context, ArrayList<StCourse> data){
+        (new DBCourse(context)).saveData(data);
+    }
+
+    public static void removeCourseData(Context context){
+        (new DBCourse(context)).removeData();
+        (new DBCourseListHome(context)).removeData();
+    }
+
+
 }
