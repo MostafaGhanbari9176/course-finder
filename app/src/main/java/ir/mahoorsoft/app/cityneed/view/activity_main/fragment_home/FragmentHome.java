@@ -139,10 +139,10 @@ public class FragmentHome extends Fragment implements AdapterHomeLists.setOnClic
             btnDelete.setVisibility(View.GONE);
         else
             btnDelete.setVisibility(View.VISIBLE);
-/*        rlPbar.setVisibility(View.VISIBLE);
+        rlPbar.setVisibility(View.VISIBLE);
         sDown.setRefreshing(true);
         PresentCourse presentCourse = new PresentCourse(G.context , this);
-        presentCourse.getCourseForListHome(groupId);*/
+        presentCourse.getCourseForListHome(groupId);
     }
 
     private void pointer() {

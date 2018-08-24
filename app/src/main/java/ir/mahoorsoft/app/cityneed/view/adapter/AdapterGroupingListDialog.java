@@ -86,6 +86,12 @@ public class AdapterGroupingListDialog extends RecyclerView.Adapter<AdapterGroup
         lastPosition = G.setListItemsAnimation(new View[]{holder.cardView}, new View[]{holder.txtTabagheName}, position, lastPosition);
     }
 
+    @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.item.clearAnimation();
+        holder.itemView.clearAnimation();
+    }
 
     @Override
     public int getItemCount() {

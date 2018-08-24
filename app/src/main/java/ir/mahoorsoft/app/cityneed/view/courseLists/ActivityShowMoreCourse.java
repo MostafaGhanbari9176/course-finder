@@ -62,7 +62,7 @@ public class ActivityShowMoreCourse extends AppCompatActivity implements Present
     }
 
     private void getData() {
-        PresentCourse presentCourse = new PresentCourse(this);
+        PresentCourse presentCourse = new PresentCourse(this, this);
         presentCourse.getCourseForListHome(groupId);
     }
 

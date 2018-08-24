@@ -149,6 +149,13 @@ public class AdapterSdudentNameList extends RecyclerView.Adapter<AdapterSdudentN
     }
 
     @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+
+        holder.itemView.clearAnimation();
+    }
+
+    @Override
     public int getItemCount() {
         return surce.size();
     }

@@ -130,6 +130,13 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
     }
 
     @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.item.clearAnimation();
+        holder.itemView.clearAnimation();
+    }
+
+    @Override
     public int getItemCount() {
 
         return surce.size();

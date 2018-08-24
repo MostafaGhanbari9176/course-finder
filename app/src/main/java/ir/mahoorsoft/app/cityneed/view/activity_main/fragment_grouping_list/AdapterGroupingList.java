@@ -96,6 +96,13 @@ public class AdapterGroupingList extends RecyclerView.Adapter<AdapterGroupingLis
       lastPsition = G.setListItemsAnimation(new View[] {holder.img, holder.item}, new View[]{holder.txt}, position, lastPsition);
     }
 
+    @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.item.clearAnimation();
+        holder.itemView.clearAnimation();
+    }
+
 
     @Override
     public int getItemCount() {

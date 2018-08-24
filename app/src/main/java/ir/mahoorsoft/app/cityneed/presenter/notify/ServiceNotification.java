@@ -37,20 +37,24 @@ import ir.mahoorsoft.app.cityneed.model.tables.sabtenam.Sabtenam;
 import ir.mahoorsoft.app.cityneed.model.tables.teacher.Teacher;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityTeacherCoursesList;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
+import ir.mahoorsoft.app.cityneed.view.activity_subscribe.ActivitySubscribe;
 import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
 
 /**
  * Created by M-gh on 14-Aug-17.
  */
 
-public class ServiceNotification extends Service implements Sabtenam.OnSabtenamListener, SmsBox.OnSmsBoxResponseListener, Teacher.OnTeacherListener, Course.OnCourseLitener, Notify.OnNotifyResponseListener, Subscribe.OnSubscribeListener {
+public class ServiceNotification extends Service implements Sabtenam.OnSabtenamListener, SmsBox.OnSmsBoxResponseListener, Teacher.OnTeacherListener, Course.OnCourseLitener, Notify.OnNotifyResponseListener, Subscribe.OnSubscribeListener
+
+
+{
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
-       // checkForNewCourse();
+        // checkForNewCourse();
         checkForNewMessage();
         checkForNewStudent();
         //checkForNewTeacher();
@@ -67,8 +71,8 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     }
 
 
-    private void checkUserBuy(){
-        (new Subscribe(this)).checkUserBuy();
+    private void checkUserBuy() {
+        (new Subscribe(this)).checkUserBuy(Pref.getStringValue(PrefKey.apiCode, ""));
     }
 
     private void checkForNewMessage() {
@@ -133,10 +137,38 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     @Override
     public void onRecieveBuyNotifyData(ArrayList<StNotifyData> data) {
 
-        if(data != null && data.size() != 0){
-            String todayDate = DateCreator.todayDate();
-            //if(true)
+        if (data != null && data.size() != 0) {
+            String message = getBuyDateNotifyMessage(data.get(0).endBuyDate);
+            if (message.length() > 0 && ! (data.get(0).endBuyDate).equals("0000-00-00"))
+                notification("دوره یاب", message, new Intent(this, ActivitySubscribe.class));
+            if((data.get(0).endBuyDate).compareTo(DateCreator.futureDate_day(7)) > 0){
+                Pref.saveBollValue(PrefKey.endBuyNews2, false);
+                Pref.saveBollValue(PrefKey.endBuyNews3, false);
+                Pref.saveBollValue(PrefKey.endBuyNews4, false);
+            }
         }
+    }
+
+    private String getBuyDateNotifyMessage(String date) {
+        String todayDate = DateCreator.todayDate();
+        if (todayDate.compareTo(date) > 0 && !Pref.getBollValue(PrefKey.endBuyNews4, false)) {
+            Pref.saveBollValue(PrefKey.endBuyNews4, true);
+            return "شما هیچ اشتراک فعالی ندارید.با پایان یافتن اشتراک دوره ها و اموزشگاه شما توسط کاربر قابل مشاهده نخواهد بود.لطفا اقدام به خرید اشتراک نمایید.";
+        }
+        if (todayDate.equals(date) && !Pref.getBollValue(PrefKey.endBuyNews3, false)) {
+            Pref.saveBollValue(PrefKey.endBuyNews3, true);
+            Pref.saveBollValue(PrefKey.endBuyNews4, true);
+            return "اشتراک شما امروز به پایان میرسد.با پایان یافتن اشتراک دوره ها و اموزشگاه شما توسط کاربر قابل مشاهده نخواهد بود.لطفا اقدام به خرید اشتراک نمایید.";
+        }
+        for (int i = 1; i < 6; i++) {
+            String nextDay = DateCreator.futureDate_day(i);
+            if (nextDay.equals(date) && !Pref.getBollValue(PrefKey.endBuyNews2, false)) {
+                Pref.saveBollValue(PrefKey.endBuyNews2, true);
+                Pref.saveBollValue(PrefKey.endBuyNews4, true);
+                return "اشتراک شما " + i + " روز دیگر به پایان میرسد.با پایان یافتن اشتراک دوره ها و اموزشگاه شما توسط کاربر قابل مشاهده نخواهد بود.";
+            }
+        }
+        return "";
     }
 
     @Override
@@ -279,7 +311,6 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     }
 
 
-
     @Override
     public void onReceiveData(ArrayList<StTeacher> data) {
 
@@ -301,7 +332,7 @@ public class ServiceNotification extends Service implements Sabtenam.OnSabtenamL
     }
 
     @Override
-    public void DataForHomeLists(ArrayList<StCustomCourseListHome> data) {
+    public void DataForHomeLists(ArrayList<StCustomCourseListHome> data, int groupId) {
 
     }
 

@@ -87,6 +87,12 @@ public class AdapterGroupingListHome extends RecyclerView.Adapter<AdapterGroupin
         lastPosition = G.setListItemsAnimation(new View[]{holder.cardView}, new View[]{holder.txtTabagheName}, position, lastPosition);
     }
 
+    @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+
+        holder.itemView.clearAnimation();
+    }
 
     private void selectItem(View view) {
         if (view == null)

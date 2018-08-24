@@ -95,6 +95,13 @@ public class AdapterTeacherListHome extends RecyclerView.Adapter<AdapterTeacherL
     }
 
     @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.item.clearAnimation();
+        holder.itemView.clearAnimation();
+    }
+
+    @Override
     public int getItemCount() {
 
         return surce.size();

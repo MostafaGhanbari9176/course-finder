@@ -44,4 +44,8 @@ public class PrefKey {
     public static final String refId = "refID";
     public static final String telChanel = "telChanel";
 
+    public static final String endBuyNews2 = "endBuyNews2";
+    public static final String endBuyNews3 = "endBuyNews3";
+    public static final String endBuyNews4 = "endBuyNews4";
+
 }

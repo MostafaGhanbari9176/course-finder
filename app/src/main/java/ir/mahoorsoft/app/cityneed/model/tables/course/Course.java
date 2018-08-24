@@ -1,7 +1,10 @@
 package ir.mahoorsoft.app.cityneed.model.tables.course;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
+import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
 import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
@@ -26,7 +29,7 @@ public class Course {
 
         void onReceiveData(ArrayList<StCourse> data, int listId);
 
-        void DataForHomeLists(ArrayList<StCustomCourseListHome> data);
+        void DataForHomeLists(ArrayList<StCustomCourseListHome> data, int groupId);
 
         void DataForCustomCourseListHome(ArrayList<StCustomCourseListHome> data);
 
@@ -93,13 +96,21 @@ public class Course {
         });
     }
 
-    public void getAllCourse() {
+    public void getAllCourse(Context context) {
+
+
+        ArrayList<StCourse> data = LocalDatabase.getCourseList(context, "s");
+        if (data.size() > 0) {
+            onCourseLitener.onReceiveData(data, -11);
+        }
+
+
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StCourse>> getAllCourse = api.getAllCourse();
         getAllCourse.enqueue(new Callback<ArrayList<StCourse>>() {
             @Override
             public void onResponse(Call<ArrayList<StCourse>> call, retrofit2.Response<ArrayList<StCourse>> response) {
-                onCourseLitener.onReceiveData(response.body(), -1);
+                onCourseLitener.onReceiveData(response.body(), -11);
             }
 
             @Override
@@ -125,7 +136,27 @@ public class Course {
         });
     }
 
-    public void getCustomCourseListData() {
+    public void getCustomCourseListData(Context context) {
+
+        ArrayList<StCustomCourseListHome> data = LocalDatabase.getCourseListSubject(context, "c");
+        ArrayList<StCourse> data2 = LocalDatabase.getCourseList(context, "c");
+
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
+                if (data.get(i).empty == 1)
+                    continue;
+                ArrayList<StCourse> courses = new ArrayList<>();
+                for (int j = 0; j < data2.size(); j++) {
+                    if (data2.get(j).courseListId.equals("c" + i)) {
+                        courses.add(data2.get(j));
+                    }
+                }
+                data.get(i).courses = courses;
+            }
+
+            onCourseLitener.DataForCustomCourseListHome(data);
+        }
+
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StCustomCourseListHome>> get = api.getCustomCourseListData();
         get.enqueue(new Callback<ArrayList<StCustomCourseListHome>>() {
@@ -157,13 +188,33 @@ public class Course {
         });
     }
 
-    public void getCourseForListHome(int id) {
+    public void getCourseForListHome(final int id, Context context) {
+
+        ArrayList<StCustomCourseListHome> data = LocalDatabase.getCourseListSubject(context, "h");
+        ArrayList<StCourse> data2 = LocalDatabase.getCourseList(context, "h");
+
+        if (data.size() > 0 && id == -1) {
+            for (int i = 0; i < data.size(); i++) {
+                if (data.get(i).empty == 1)
+                    continue;
+                ArrayList<StCourse> courses = new ArrayList<>();
+                for (int j = 0; j < data2.size(); j++) {
+                    if (data2.get(j).courseListId.equals("h" + i)) {
+                        courses.add(data2.get(j));
+                    }
+                }
+                data.get(i).courses = courses;
+            }
+
+            onCourseLitener.DataForHomeLists(data, id);
+        }
+
         Api api = ApiClient.getClient().create(Api.class);
         Call<ArrayList<StCustomCourseListHome>> get = api.getCourseForListHome(id);
         get.enqueue(new Callback<ArrayList<StCustomCourseListHome>>() {
             @Override
             public void onResponse(Call<ArrayList<StCustomCourseListHome>> call, Response<ArrayList<StCustomCourseListHome>> response) {
-                onCourseLitener.DataForHomeLists(response.body());
+                onCourseLitener.DataForHomeLists(response.body(), id);
             }
 
             @Override

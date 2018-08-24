@@ -64,19 +64,13 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     AdapterCourseList adapter;
     TextView txtSearch;
     TextView txtEmpty;
-    private View dialogView;
     private Dialog dialog;
-    private LinearLayout btnStartDate;
-    private LinearLayout btnEndDate;
-    private LinearLayout btnDay;
-    private LinearLayout btnGroup;
     ImageView imgSearch;
     private TextView txtStartDate;
     private TextView txtEndDate;
     private TextView txtDay;
     private TextView txtGroup;
 
-    private Button btnConfirm;
     TextView txtMinOld;
     TextView txtMaxOld;
     String sD = "";
@@ -135,7 +129,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
 
     private void getDataFromServer() {
         sDown.setRefreshing(true);
-        PresentCourse presentCourse = new PresentCourse(this);
+        PresentCourse presentCourse = new PresentCourse(G.context, this);
         presentCourse.getAllCourse();
     }
 
@@ -238,19 +232,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
             if (((helpSource.get(i).CourseName).toLowerCase()).contains((searchFlag).toLowerCase()))
                 serachSource.add(helpSource.get(i));
         }
-        if (serachSource.size() == 0) {
-            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.red_one));
-            imgSearch.setImageResource(R.drawable.icon_search_false);
-            txtSearch.setTextColor(getResources().getColor(R.color.light));
-        } else {
-            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
-            imgSearch.setImageResource(R.drawable.icon_search_true);
-            txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
-        }
+        settingsView(serachSource.size() != 0);
         source.clear();
         source.addAll(serachSource);
-        adapter = new AdapterCourseList(G.context, source, this);
-        list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
@@ -268,19 +252,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
                 e.getMessage();
             }
         }
-        if (serachSource.size() == 0) {
-            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.red_one));
-            imgSearch.setImageResource(R.drawable.icon_search_false);
-            txtSearch.setTextColor(getResources().getColor(R.color.light));
-        } else {
-            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
-            imgSearch.setImageResource(R.drawable.icon_search_true);
-            txtSearch.setTextColor(getResources().getColor(R.color.dark_eq));
-        }
+        settingsView(serachSource.size() != 0);
         source.clear();
         source.addAll(serachSource);
-        adapter = new AdapterCourseList(G.context, source, this);
-        list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
@@ -307,12 +281,12 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     private void showDialog() {
 
         LayoutInflater li = (LayoutInflater) G.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        dialogView = li.inflate(R.layout.dialog_filter, null, false);
-        btnConfirm = (Button) dialogView.findViewById(R.id.btnConfirmFilter);
-        btnDay = (LinearLayout) dialogView.findViewById(R.id.btnSelectDayFilter);
-        btnStartDate = (LinearLayout) dialogView.findViewById(R.id.btnStartDateFilter);
-        btnEndDate = (LinearLayout) dialogView.findViewById(R.id.btnEndDateFilter);
-        btnGroup = (LinearLayout) dialogView.findViewById(R.id.btnSelectGroupFilter);
+        View dialogView = li.inflate(R.layout.dialog_filter, null, false);
+        Button btnConfirm = (Button) dialogView.findViewById(R.id.btnConfirmFilter);
+        LinearLayout btnDay = (LinearLayout) dialogView.findViewById(R.id.btnSelectDayFilter);
+        LinearLayout btnStartDate = (LinearLayout) dialogView.findViewById(R.id.btnStartDateFilter);
+        LinearLayout btnEndDate = (LinearLayout) dialogView.findViewById(R.id.btnEndDateFilter);
+        LinearLayout btnGroup = (LinearLayout) dialogView.findViewById(R.id.btnSelectGroupFilter);
 
         txtDay = (TextView) dialogView.findViewById(R.id.txtSelectDayFilter);
         txtStartDate = (TextView) dialogView.findViewById(R.id.txtStartDateFilter);
@@ -349,10 +323,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
     public void onReceiveCourse(ArrayList<StCourse> course, int listId) {
         try {
             sDown.setRefreshing(false);
-            dialog.cancel();
-            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
-            imgSearch.setImageResource(R.drawable.icon_search_true);
-            txtSearch.setTextColor(ContextCompat.getColor(G.context, R.color.dark_eq));
+            settingsView(true);
             if (isFilterRes) {
                 btnDeleteFilter.setVisibility(View.VISIBLE);
                 isFilterRes = false;
@@ -362,6 +333,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
                 source.clear();
                 helpSource.clear();
                 adapter = new AdapterCourseList(G.context, source, this);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                        , LinearLayoutManager.VERTICAL, false);
+                list.setLayoutManager(layoutManager);
                 list.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 return;
@@ -382,14 +356,27 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
                 }
 
             }
-
-            adapter = new AdapterCourseList(G.context, source, this);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
-                    , LinearLayoutManager.VERTICAL, false);
-            list.setLayoutManager(layoutManager);
-            list.setAdapter(adapter);
+            if (adapter == null) {
+                adapter = new AdapterCourseList(G.context, source, this);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(G.context
+                        , LinearLayoutManager.VERTICAL, false);
+                list.setLayoutManager(layoutManager);
+                list.setAdapter(adapter);
+            }
             adapter.notifyDataSetChanged();
-        } catch (Exception ignore) {
+        } catch (Exception ignore){}
+    }
+
+    private void settingsView(boolean normal) {
+
+        if (normal) {
+            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.light));
+            imgSearch.setImageResource(R.drawable.icon_search_true);
+            txtSearch.setTextColor(ContextCompat.getColor(G.context, R.color.dark_eq));
+        } else {
+            cvSearch.setCardBackgroundColor(ContextCompat.getColor(G.context, R.color.red_one));
+            imgSearch.setImageResource(R.drawable.icon_search_false);
+            txtSearch.setTextColor(getResources().getColor(R.color.light));
         }
     }
 
@@ -409,11 +396,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Pr
         intent.putExtra("id", source.get(position).id);
         intent.putExtra("teacherId", source.get(position).idTeacher);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions  options = ActivityOptions
+            ActivityOptions options = ActivityOptions
                     .makeSceneTransitionAnimation(G.activity, view, "courseInHome");
             startActivity(intent, options.toBundle());
-        }
-        else
+        } else
             startActivity(intent);
     }
 

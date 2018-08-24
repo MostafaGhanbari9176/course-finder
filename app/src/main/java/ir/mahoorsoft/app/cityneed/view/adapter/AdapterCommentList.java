@@ -168,7 +168,11 @@ public class AdapterCommentList extends RecyclerView.Adapter<AdapterCommentList.
         lastPosition = G.setListItemsAnimation(new View[]{holder.ratingBar, holder.txtUserName}, new View[]{holder.txtCommentText, holder.btnLike, holder.btnDisLike, holder.btnFeedBack},position, lastPosition);
 
     }
-
+    @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
     @Override
     public int getItemCount() {
 

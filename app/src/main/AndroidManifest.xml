@@ -35,7 +35,7 @@
             android:name=".view.activity_main.ActivityMain"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustNothing" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.registering.ActivityTeacherRegistering"
             android:screenOrientation="portrait"

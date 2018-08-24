@@ -116,7 +116,12 @@ public class AdapterHomeLists extends RecyclerView.Adapter<AdapterHomeLists.Hold
         }
     }
 
-
+    @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.item.clearAnimation();
+        holder.itemView.clearAnimation();
+    }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {

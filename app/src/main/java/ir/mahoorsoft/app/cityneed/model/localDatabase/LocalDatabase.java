@@ -35,25 +35,30 @@ public class LocalDatabase {
         dbSmsText.removeSmsText(smsText);
     }
 
-    public static ArrayList<StCustomCourseListHome> getCourseListSubject(Context context){
-        return  (new DBCourseListHome(context)).getData();
+    public static ArrayList<StCustomCourseListHome> getCourseListSubject(Context context, String signText){
+        return  (new DBCourseListHome(context)).getData(signText);
     }
 
-    public static ArrayList<StCourse> getCourseList (Context context){
-        return (new DBCourse(context)).getData();
+    public static ArrayList<StCourse> getCourseList (Context context, String signText){
+        return (new DBCourse(context)).getData(signText);
     }
 
-    public static void saveCourseListSubject(Context context, ArrayList<StCustomCourseListHome> data){
-        (new DBCourseListHome(context)).saveData(data);
+    public static void saveCourseListSubject(Context context, ArrayList<StCustomCourseListHome> data, String signText){
+        (new DBCourseListHome(context)).saveData(data, signText);
     }
 
-    public static void saveCourseList(Context context, ArrayList<StCourse> data){
-        (new DBCourse(context)).saveData(data);
+    public static void saveCourseList(Context context, ArrayList<StCourse> data, String signText){
+        (new DBCourse(context)).saveData(data, signText);
     }
 
-    public static void removeCourseData(Context context){
-        (new DBCourse(context)).removeData();
-        (new DBCourseListHome(context)).removeData();
+    public static void removeCourseDataBAse(Context context){
+        (new DBCourse(context)).removeDataBase();
+        (new DBCourseListHome(context)).removeDataBase();
+    }
+
+    public static void removeCourseData(Context context, String signText){
+        (new DBCourse(context)).removeData(signText);
+        (new DBCourseListHome(context)).removeData(signText);
     }
 
 

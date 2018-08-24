@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -20,9 +21,11 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -34,7 +37,6 @@ import ir.mahoorsoft.app.cityneed.presenter.PresentCheckedStatuse;
 import ir.mahoorsoft.app.cityneed.presenter.notify.Alarm;
 import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.date.DateCreator;
-
 
 
 public class ActivityLauncher extends AppCompatActivity implements PresentCheckedStatuse.OnPresentCheckServrer, View.OnClickListener, DownloadManager.OnProgressDownloadListener {

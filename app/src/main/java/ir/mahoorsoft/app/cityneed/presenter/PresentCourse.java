@@ -59,7 +59,7 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     public void getAllCourse() {
         Course course = new Course(this);
-        course.getAllCourse();
+        course.getAllCourse(context);
     }
 
     public void getBookMarkCourses() {
@@ -67,27 +67,8 @@ public class PresentCourse implements Course.OnCourseLitener {
     }
 
     public void getCustomCourseListData() {
-
-        ArrayList<StCustomCourseListHome> data = LocalDatabase.getCourseListSubject(context);
-        ArrayList<StCourse> data2 = LocalDatabase.getCourseList(context);
-
-        if (data.size() > 0) {
-            for (int i = 0; i < data.size(); i++) {
-                if (data.get(i).empty == 1)
-                    continue;
-                ArrayList<StCourse> courses = new ArrayList<>();
-                for (int j = 0; j < data2.size(); j++) {
-                    if (data2.get(j).courseListId == i) {
-                        courses.add(data2.get(j));
-                    }
-                }
-                data.get(i).courses = courses;
-            }
-        } else {
-
-            Course course = new Course(this);
-            course.getCustomCourseListData();
-        }
+        Course course = new Course(this);
+        course.getCustomCourseListData(context);
     }
 
     public void getCourseByFilter(int minOld, int maxOld, String startDate, String endDate, int groupId, String days) {
@@ -97,7 +78,7 @@ public class PresentCourse implements Course.OnCourseLitener {
 
     public void getCourseForListHome(int id) {
         Course course = new Course(this);
-        course.getCourseForListHome(id);
+        course.getCourseForListHome(id, context);
     }
 
     public void getCourseByGroupingId(int id) {
@@ -146,31 +127,56 @@ public class PresentCourse implements Course.OnCourseLitener {
     public void onReceiveData(ArrayList<StCourse> data, int listId) {
         if (data == null || data.size() == 0)
             sendMessage("خطا");
-        else
+        else {
+            if (listId == -11) {
+                LocalDatabase.removeCourseData(context, "s");
+                for (StCourse c : data) {
+                    if (c.empty == 1)
+                        continue;
+                    c.courseListId = data.indexOf(c) + "";
+                }
+                LocalDatabase.saveCourseList(context, data, "s");
+            }
             onPresentCourseLitener.onReceiveCourse(data, listId);
+        }
     }
 
     @Override
-    public void DataForHomeLists(ArrayList<StCustomCourseListHome> data) {
-        if (data == null || data.size() == 0)
-            sendMessage("خطا");
-        else
+    public void DataForHomeLists(ArrayList<StCustomCourseListHome> data, int groupId) {
+        if (!(data == null || data.size() == 0)) {
+            if (groupId == -1) {
+                LocalDatabase.removeCourseData(context, "h");
+                for (StCustomCourseListHome d : data) {
+                    if (d.empty == 1)
+                        continue;
+                    for (StCourse c : d.courses)
+                        c.courseListId = data.indexOf(d) + "";
+                    LocalDatabase.saveCourseList(context, d.courses, "h");
+                }
+                LocalDatabase.saveCourseListSubject(context, data, "h");
+            }
             onPresentCourseLitener.onReceiveCourseForListHome(data);
+        } else
+            sendMessage("خطا");
+
+
     }
 
     @Override
     public void DataForCustomCourseListHome(ArrayList<StCustomCourseListHome> data) {
         if (!(data == null || data.size() == 0)) {
+            LocalDatabase.removeCourseData(context, "c");
             for (StCustomCourseListHome d : data) {
                 if (d.empty == 1)
                     continue;
                 for (StCourse c : d.courses)
-                    c.courseListId = data.indexOf(d);
-                LocalDatabase.saveCourseList(context, d.courses);
+                    c.courseListId = data.indexOf(d) + "";
+                LocalDatabase.saveCourseList(context, d.courses, "c");
             }
-            LocalDatabase.saveCourseListSubject(context, data);
+            LocalDatabase.saveCourseListSubject(context, data, "c");
             onPresentCourseLitener.onReceiveCustomCourseListForHome(data);
-        }
+        } else
+            sendMessage("خطا");
     }
 
     @Override

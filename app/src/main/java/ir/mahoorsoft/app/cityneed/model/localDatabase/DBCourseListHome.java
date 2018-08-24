@@ -34,7 +34,7 @@ public class DBCourseListHome extends SQLiteOpenHelper {
 
         db.execSQL(" CREATE TABLE " +
                 tableName
-                + " (" + column1 + " INTEGER PRIMARY KEY, " + column2 + " TEXT, " + column3 + " INTEGER )");
+                + " (" + column1 + " TEXT PRIMARY KEY, " + column2 + " TEXT, " + column3 + " INTEGER )");
     }
 
     @Override
@@ -42,11 +42,11 @@ public class DBCourseListHome extends SQLiteOpenHelper {
         db.execSQL("DROP IF TABLE IF EXIST" + tableName);
     }
 
-    public void saveData(ArrayList<StCustomCourseListHome> data) {
+    public void saveData(ArrayList<StCustomCourseListHome> data, String signText) {
         SQLiteDatabase writer = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         for (StCustomCourseListHome d : data ) {
-            contentValues.put(column1, data.indexOf(d));
+            contentValues.put(column1, signText + data.indexOf(d));
             contentValues.put(column2, d.groupSubject);
             contentValues.put(column3, d.empty);
             writer.insert(tableName, null, contentValues);
@@ -54,14 +54,14 @@ public class DBCourseListHome extends SQLiteOpenHelper {
         writer.close();
     }
 
-    public ArrayList<StCustomCourseListHome> getData() {
+    public ArrayList<StCustomCourseListHome> getData(String signText) {
         ArrayList<StCustomCourseListHome> dataList = new ArrayList<>();
         SQLiteDatabase reader = this.getReadableDatabase();
-        Cursor cursor = reader.rawQuery(" SELECT * FROM " + tableName, null);
+        Cursor cursor = reader.rawQuery(" SELECT * FROM " + tableName + " WHERE " + column1 + " LIKE '%" + signText + "%' ", null);
         if (cursor.moveToFirst()) {
             do {
                 StCustomCourseListHome data = new StCustomCourseListHome();
-                data.courseListId = cursor.getInt(cursor.getColumnIndex(column1));
+                data.courseListId = cursor.getString(cursor.getColumnIndex(column1));
                 data.groupSubject = cursor.getString(cursor.getColumnIndex(column2));
                 data.empty = cursor.getInt(cursor.getColumnIndex(column3));
                 dataList.add(data);
@@ -71,9 +71,15 @@ public class DBCourseListHome extends SQLiteOpenHelper {
         return dataList;
     }
 
-    public void removeData(){
+    public void removeDataBase(){
         SQLiteDatabase sqlWrite = this.getWritableDatabase();
         context.deleteDatabase(sqlWrite.getPath());
+        sqlWrite.close();
+    }
+
+    public void removeData(String signText) {
+        SQLiteDatabase sqlWrite = this.getWritableDatabase();
+        sqlWrite.execSQL(" DELETE FROM " + tableName + " WHERE " + column1 + " LIKE '%" + signText + "%' ");
         sqlWrite.close();
     }
 }

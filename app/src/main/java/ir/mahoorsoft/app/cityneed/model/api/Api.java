@@ -558,9 +558,9 @@ public interface Api {
 
 
     @FormUrlEncoded
-    @POST("c")
+    @POST("checkUserBuy")
     Call<ArrayList<StNotifyData>> checkUserBuy(
-            @Field("apiCode") String apicode
+            @Field("apiCode") String apiCode
     );
 
 

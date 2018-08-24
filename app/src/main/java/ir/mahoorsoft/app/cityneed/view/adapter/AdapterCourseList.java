@@ -97,10 +97,15 @@ public class AdapterCourseList extends RecyclerView.Adapter<AdapterCourseList.Ho
         });
 
 
-       lastPosition = G.setListItemsAnimation(new View[]{holder.item}, new View[]{holder.item}, position, lastPosition);
+      //. lastPosition = G.setListItemsAnimation(new View[]{holder.item}, new View[]{holder.item}, position, lastPosition);
     }
 
-
+/*    @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.item.clearAnimation();
+        holder.itemView.clearAnimation();
+    }*/
 
     @Override
     public int getItemCount() {

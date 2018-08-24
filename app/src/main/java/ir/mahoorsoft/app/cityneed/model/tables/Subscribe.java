@@ -66,10 +66,10 @@ public class Subscribe {
         });
     }
 
-    public void checkUserBuy(){
+    public void checkUserBuy(String apiCode){
 
         Api api = ApiClient.getClient().create(Api.class);
-        Call<ArrayList<StNotifyData>> getData = api.checkUserBuy("");
+        Call<ArrayList<StNotifyData>> getData = api.checkUserBuy(apiCode);
         getData.enqueue(new Callback<ArrayList<StNotifyData>>() {
             @Override
             public void onResponse(Call<ArrayList<StNotifyData>> call, Response<ArrayList<StNotifyData>> response) {

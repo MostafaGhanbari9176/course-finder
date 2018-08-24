@@ -10,5 +10,5 @@ public class StCustomCourseListHome {
     public String groupSubject;
     public ArrayList<StCourse> courses;
     public int empty;
-    public int courseListId;
+    public String courseListId;
 }

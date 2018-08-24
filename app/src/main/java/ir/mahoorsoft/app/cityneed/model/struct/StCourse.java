@@ -6,7 +6,7 @@ package ir.mahoorsoft.app.cityneed.model.struct;
 
 public class StCourse {
     public int id;
-    public int courseListId;
+    public String courseListId;
     public int empty;
     public int idTabaghe;
     public String CourseName = "";

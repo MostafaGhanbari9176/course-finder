@@ -106,6 +106,13 @@ public class AdapterSmsListOut extends RecyclerView.Adapter<AdapterSmsListOut.Ho
     }
 
     @Override
+    public void onViewDetachedFromWindow(Holder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.item.clearAnimation();
+        holder.itemView.clearAnimation();
+    }
+
+    @Override
     public int getItemCount() {
 
         return surce.size();

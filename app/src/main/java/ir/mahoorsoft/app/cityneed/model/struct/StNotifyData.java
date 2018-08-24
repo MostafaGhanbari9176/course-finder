@@ -15,4 +15,5 @@ public class StNotifyData {
     public int courseId;
     public String apiCode;
     public String days;
+    public String endBuyDate;
 }

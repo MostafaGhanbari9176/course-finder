@@ -63,7 +63,7 @@ public class G extends Application {
         super.onCreate();
         context = this;
         preferences = context.getSharedPreferences(Name, MODE_PRIVATE);
-        //LocalDatabase.removeCourseData(this);
+      //  LocalDatabase.removeCourseDataBAse(this);
         TypefaceUtil.overrideFont(context, "SERIF", "fonts/dirooz.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 
         try {
