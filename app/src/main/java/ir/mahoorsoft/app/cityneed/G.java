@@ -71,8 +71,9 @@ public class G extends Application {
             MID = new String(decryptedData, "UTF-8");
 
             decryptedData = func(stData("assets24.txt"), data(stData("assets21.txt")), data(stData("assets22.txt")), data(stData("assets23.txt")));
-            ApiClient.BASE_URL = ApiClient.serverAddress + new String(decryptedData, "UTF-8");
-            ApiClient.BASE_URL = ApiClient.BASE_URL.replace("v1", "v2");
+            //ApiClient.BASE_URL = ApiClient.serverAddress + new String(decryptedData, "UTF-8");
+            //ApiClient.BASE_URL = ApiClient.BASE_URL.replace("v1", "v2");
+            ApiClient.BASE_URL = ApiClient.serverAddress + "/city_need_api/v2/index.php/";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,10 +149,10 @@ public class G extends Application {
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
                 //noinspection RestrictedApi
-                item.setShiftingMode(false);
+               // item.setShifting(false);
                 // set once again checked value, so view will be updated
                 //noinspection RestrictedApi
-                item.setChecked(item.getItemData().isChecked());
+               // item.setChecked(item.getItemData().isChecked());
             }
         } catch (NoSuchFieldException e) {
             Log.e("BNVHelper", "Unable to get shift mode field", e);

@@ -45,7 +45,7 @@ public class DBCourse extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP IF TABLE IF EXIST" + tableName);
+        db.execSQL("DROP  TABLE IF EXISTS " + tableName);
     }
 
     public void saveData(ArrayList<StCourse> data, String signText) {

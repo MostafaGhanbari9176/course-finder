@@ -87,7 +87,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
 
         String endBuyDate = new String(Base64.decode(Base64.decode(buyData.endBuyDate, Base64.DEFAULT), Base64.DEFAULT));
         String todayDate = DateCreator.todayDate();
-        if (endBuyDate.compareTo(todayDate) == -1 || buyData.remainingCourses == 0) {
+        if (endBuyDate.compareTo(todayDate) < 0 || buyData.remainingCourses == 0) {///oooooook
             btnBuyNew.setVisibility(View.VISIBLE);
             txtSubject.setText("اشتراک شما به پایان رسیده");
         } else
