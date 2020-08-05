@@ -2,6 +2,7 @@ package ir.mahoorsoft.app.cityneed;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -73,7 +74,7 @@ public class G extends Application {
             decryptedData = func(stData("assets24.txt"), data(stData("assets21.txt")), data(stData("assets22.txt")), data(stData("assets23.txt")));
             //ApiClient.BASE_URL = ApiClient.serverAddress + new String(decryptedData, "UTF-8");
             //ApiClient.BASE_URL = ApiClient.BASE_URL.replace("v1", "v2");
-            ApiClient.BASE_URL = ApiClient.serverAddress + "/city_need_api/v2/index.php/";
+            ApiClient.BASE_URL = ApiClient.serverAddress + "/city_need/v2/index.php/";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,6 +140,8 @@ public class G extends Application {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
 
+
+    @SuppressLint("RestrictedApi")
     public static void disableShiftModeNavigation(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
@@ -149,10 +152,10 @@ public class G extends Application {
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
                 //noinspection RestrictedApi
-               // item.setShifting(false);
-                // set once again checked value, so view will be updated
+                item.setShifting(false);
+                 //set once again checked value, so view will be updated
                 //noinspection RestrictedApi
-               // item.setChecked(item.getItemData().isChecked());
+                item.setChecked(item.getItemData().isChecked());
             }
         } catch (NoSuchFieldException e) {
             Log.e("BNVHelper", "Unable to get shift mode field", e);

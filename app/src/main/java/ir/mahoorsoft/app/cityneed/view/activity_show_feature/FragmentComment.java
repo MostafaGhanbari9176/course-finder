@@ -1,5 +1,6 @@
 package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -68,7 +69,7 @@ public class FragmentComment extends Fragment implements PresenterComment.OnPres
         sDown.setOnRefreshListener(this);
         pointers();
         if (ActivityOptionalCourse.courseId == -1)
-            btnAddComment.setVisibility(View.GONE);
+            btnAddComment.hide();
         getCommentList();
         setFont();
     }
