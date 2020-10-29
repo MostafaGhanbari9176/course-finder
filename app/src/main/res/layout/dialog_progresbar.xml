@@ -7,7 +7,7 @@
     android:layoutDirection="rtl"
     android:orientation="horizontal">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="2dp"
@@ -24,9 +24,9 @@
             android:gravity="center|start"
             android:textColor="@color/light"
             android:textSize="@dimen/txt_size_smal" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -38,6 +38,6 @@
             android:layout_width="@dimen/progresbar"
             android:layout_height="@dimen/progresbar"
             android:layout_margin="8dp" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

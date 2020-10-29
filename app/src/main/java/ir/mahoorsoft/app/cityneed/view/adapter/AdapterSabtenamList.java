@@ -1,8 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,7 +105,7 @@ public class AdapterSabtenamList extends RecyclerView.Adapter<AdapterSabtenamLis
         holder.txtstartDate.setText(items.startDate);
         holder.txtMasterName.setText(items.MasterName);
         Glide.with(context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/course/" + items.id + ".png")
+                .load(ApiClient.serverAddress + "/city-need/v1/uploads/course/" + items.id + ".png")
                 .error(R.drawable.books)
                 .centerCrop()
                 .into(holder.imgItem);

@@ -1,9 +1,11 @@
 package ir.mahoorsoft.app.cityneed.model.struct;
 
+import androidx.annotation.Keep;
+
 /**
  * Created by RCC1 on 1/29/2018.
  */
-
+@Keep
 public class StGrouping {
 
     public int id;

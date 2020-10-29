@@ -6,12 +6,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -27,8 +26,6 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-import java.util.Locale;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -39,17 +36,14 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
-import ir.mahoorsoft.app.cityneed.model.localDatabase.LocalDatabase;
-import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.view.TypefaceUtil;
-import ir.mahoorsoft.app.cityneed.view.dialog.DialogGrouping;
 
 
 public class G extends Application {
 
     public static String MID = "";
     public static String VN = BuildConfig.VERSION_NAME;
-    public static String appLink = "http://www.mahoorsoft.ir/%D8%A7%D8%AE%D8%A8%D8%A7%D8%B1/ID/12/%D8%A7%D9%86%D8%AA%D8%B4%D8%A7%D8%B1-%D8%A7%D9%BE%D9%84%DB%8C%DA%A9%DB%8C%D8%B4%D9%86-%D8%AF%D9%88%D8%B1%D9%87-%DB%8C%D8%A7%D8%A8";
+    public static String appLink = "https://www.mostafaghanbari.ir/city-need/apk/coursefinder.apk";
     public static AppCompatActivity activity;
     public static Context context;
     public static SharedPreferences preferences;
@@ -74,7 +68,7 @@ public class G extends Application {
             decryptedData = func(stData("assets24.txt"), data(stData("assets21.txt")), data(stData("assets22.txt")), data(stData("assets23.txt")));
             //ApiClient.BASE_URL = ApiClient.serverAddress + new String(decryptedData, "UTF-8");
             //ApiClient.BASE_URL = ApiClient.BASE_URL.replace("v1", "v2");
-            ApiClient.BASE_URL = ApiClient.serverAddress + "/city_need/v2/index.php/";
+            ApiClient.BASE_URL = ApiClient.serverAddress + "/city-need/v2/index.php/";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,25 +137,7 @@ public class G extends Application {
 
     @SuppressLint("RestrictedApi")
     public static void disableShiftModeNavigation(BottomNavigationView view) {
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
-        try {
-            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
-            shiftingMode.setAccessible(true);
-            shiftingMode.setBoolean(menuView, false);
-            shiftingMode.setAccessible(false);
-            for (int i = 0; i < menuView.getChildCount(); i++) {
-                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
-                //noinspection RestrictedApi
-                item.setShifting(false);
-                 //set once again checked value, so view will be updated
-                //noinspection RestrictedApi
-                item.setChecked(item.getItemData().isChecked());
-            }
-        } catch (NoSuchFieldException e) {
-            Log.e("BNVHelper", "Unable to get shift mode field", e);
-        } catch (IllegalAccessException e) {
-            Log.e("BNVHelper", "Unable to change value of shift mode", e);
-        }
+
     }
 
     public static void animatingForGone(final View view, float firstAlpha, float lastAlpha, float translationYValue) {

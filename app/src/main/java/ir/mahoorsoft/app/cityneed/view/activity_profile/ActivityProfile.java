@@ -4,32 +4,28 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import com.bumptech.glide.signature.MediaStoreSignature;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.takusemba.spotlight.OnSpotlightEndedListener;
 import com.takusemba.spotlight.OnSpotlightStartedListener;
 import com.takusemba.spotlight.SimpleTarget;
 import com.takusemba.spotlight.Spotlight;
-
 import java.util.ArrayList;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -40,11 +36,9 @@ import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StCustomTeacherListHome;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.model.struct.StTeacher;
-import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentTeacher;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
-import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.FragmentProfileAmozeshgah;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_karbar.FragmentProfileKarbar;
@@ -145,9 +139,8 @@ public class ActivityProfile extends AppCompatActivity implements PresentUpload.
 
     public void setImgUrl() {
         Glide.with(G.context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + Pref.getStringValue(PrefKey.pictureId, "") + ".png")
+                .load(ApiClient.serverAddress + "/city-need/v1/uploads/teacher/" + Pref.getStringValue(PrefKey.pictureId, "") + ".png")
                 .fitCenter()
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .error(R.drawable.university)
                 .into(imgAppBar);
     }

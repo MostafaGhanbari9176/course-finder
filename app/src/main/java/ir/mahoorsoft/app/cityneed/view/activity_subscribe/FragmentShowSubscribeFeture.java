@@ -1,10 +1,10 @@
 package ir.mahoorsoft.app.cityneed.view.activity_subscribe;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.cardview.widget.CardView;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
@@ -103,8 +102,7 @@ public class FragmentShowSubscribeFeture extends Fragment {
 
     private void setImage() {
         Glide.with(G.context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/subscribe/" + buyData.subscribeId + ".png")
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                .load(ApiClient.serverAddress + "/city-need/v1/uploads/subscribe/" + buyData.subscribeId + ".png")
                 .error(R.drawable.subscribe_pressure)
                 .fitCenter()
                 .into(img);

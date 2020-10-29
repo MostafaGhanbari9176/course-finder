@@ -1,21 +1,17 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
-
 import java.util.ArrayList;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -72,7 +68,7 @@ public class AdapterGroupingListDialog extends RecyclerView.Adapter<AdapterGroup
         final StGrouping items = source.get(position);
         holder.txtTabagheName.setText(items.subject);
         Glide.with(context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/tabaghe/" + items.id + ".png")
+                .load(ApiClient.serverAddress + "/city-need/v1/uploads/tabaghe/" + items.id + ".png")
                 .centerCrop()
                 .error(R.drawable.grouping)
                 .into(holder.imgItem);

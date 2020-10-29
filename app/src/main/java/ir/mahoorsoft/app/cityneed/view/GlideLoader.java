@@ -24,7 +24,6 @@ public class GlideLoader implements ImageLoader {
             Glide.with(context)
                     .load( res)
                     .centerCrop()
-                    .crossFade()
                     .into(targetView);
         }
     }

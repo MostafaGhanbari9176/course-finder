@@ -496,13 +496,13 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/RVoneAboutUs"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1" />
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/RVtwoAboutUs"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"

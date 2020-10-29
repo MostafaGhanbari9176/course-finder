@@ -17,7 +17,7 @@
         android:gravity="bottom|center"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/CVHederItemChoseSubscribe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,9 +85,9 @@
                     app:srcCompat="@drawable/icon_drop_down_light" />
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/CVShowMoreFetureSubscribe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                     android:textSize="@dimen/txt_size_vsmal"
                     android:textStyle="bold" />
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/CVConfirmItemChoseSubscribe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,10 +129,10 @@
                         android:background="@android:color/transparent"
                         android:text="خرید"
                         android:textColor="@color/light" />
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

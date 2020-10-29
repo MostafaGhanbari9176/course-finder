@@ -1,7 +1,7 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +62,7 @@ public class AdapterMahoorAppDataItem extends RecyclerView.Adapter<AdapterMahoor
         final StMahoorAppData items = surce.get(position);
         holder.txtName.setText(items.appName);
         Glide.with(context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/MAP/" + items.pictureId + ".png")
+                .load(ApiClient.serverAddress + "/city-need/v1/uploads/MAP/" + items.pictureId + ".png")
                 .fitCenter()
                 .into(holder.imgItem);
         holder.item.setOnClickListener(new View.OnClickListener() {

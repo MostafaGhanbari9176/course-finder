@@ -1,9 +1,11 @@
 package ir.mahoorsoft.app.cityneed.model.struct;
 
+import androidx.annotation.Keep;
+
 /**
  * Created by RCC1 on 3/6/2018.
  */
-
+@Keep
 public class StComment {
 
     public int id;

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/SDShowCourseFuture"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -93,7 +93,7 @@
 
                     </LinearLayout>
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -366,9 +366,9 @@
                             </LinearLayout>
 
                         </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp">
@@ -407,9 +407,9 @@
                             </LinearLayout>
 
                         </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="16dp"
@@ -629,7 +629,7 @@
                             </LinearLayout>
 
                         </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -656,7 +656,7 @@
                                 android:visibility="gone" />
                         </RelativeLayout>
 
-                        <android.support.v7.widget.CardView
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/CVbtnPlayVideo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -682,7 +682,7 @@
                                     android:text="پخش ویدیویی گزارشی از دوره"
                                     android:textSize="18sp" />
                             </LinearLayout>
-                        </android.support.v7.widget.CardView>
+                        </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
 
@@ -694,7 +694,7 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.CardView
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="16dp">
@@ -707,7 +707,7 @@
                                 android:text="ثبت نام"
                                 android:textColor="@color/light"
                                 android:textSize="@dimen/txt_size_smal" />
-                        </android.support.v7.widget.CardView>
+                        </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
 
@@ -755,7 +755,7 @@
 
                 </LinearLayout>
             </ScrollView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <TextView
             android:id="@+id/txtConfirmRegistry"

@@ -1,13 +1,13 @@
 package ir.mahoorsoft.app.cityneed.view.activity_main.fragment_home;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +26,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.StCustomCourseListHome;
 import ir.mahoorsoft.app.cityneed.presenter.PresentCourse;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUpload;
 import ir.mahoorsoft.app.cityneed.view.activityFiles.ActivityFiles;
-import ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.fragment_profile_amozeshgah.ActivityStudentNameList;
 import ir.mahoorsoft.app.cityneed.view.adapter.AdapterCourseListTeacher;
 import ir.mahoorsoft.app.cityneed.view.dialog.DialogProgres;

@@ -6,33 +6,27 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.takusemba.spotlight.OnSpotlightEndedListener;
 import com.takusemba.spotlight.OnSpotlightStartedListener;
 import com.takusemba.spotlight.SimpleTarget;
 import com.takusemba.spotlight.Spotlight;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.preferences.Pref;
@@ -40,7 +34,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.PrefKey;
 import ir.mahoorsoft.app.cityneed.model.struct.ResponseOfServer;
 import ir.mahoorsoft.app.cityneed.model.struct.StUser;
 import ir.mahoorsoft.app.cityneed.presenter.PresentUser;
-import ir.mahoorsoft.app.cityneed.view.CharCheck;
 import ir.mahoorsoft.app.cityneed.view.activity_main.fragment_map.FragmentMap;
 import ir.mahoorsoft.app.cityneed.view.activity_profile.ActivityProfile;
 import ir.mahoorsoft.app.cityneed.view.activity_sms_box.ActivitySmsBox;
@@ -116,7 +109,6 @@ public class FragmentProfileKarbar extends Fragment implements PresentUser.OnPre
         Glide.with(G.context)
                 .load(img)
                 .fitCenter()
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                 .into(imgProfile);
     }
 

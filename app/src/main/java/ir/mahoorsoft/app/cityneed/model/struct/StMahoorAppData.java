@@ -1,9 +1,11 @@
 package ir.mahoorsoft.app.cityneed.model.struct;
 
+import androidx.annotation.Keep;
+
 /**
  * Created by M-gh on 16-Mar-18.
  */
-
+@Keep
 public class StMahoorAppData {
 
     public StMahoorAppData(String appName, String url, int pictureId, int sourceNumber){

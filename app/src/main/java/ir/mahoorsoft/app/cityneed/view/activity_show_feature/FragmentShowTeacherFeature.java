@@ -1,22 +1,19 @@
 package ir.mahoorsoft.app.cityneed.view.activity_show_feature;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,9 +22,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -175,8 +170,7 @@ public class FragmentShowTeacherFeature extends Fragment implements PresentTeach
 
     private void setImg(String pictureId) {
         Glide.with(G.context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + pictureId + ".png")
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                .load(ApiClient.serverAddress + "/city-need/v1/uploads/teacher/" + pictureId + ".png")
                 .fitCenter()
                 .error(R.drawable.university)
                 .clone()

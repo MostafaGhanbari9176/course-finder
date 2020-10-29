@@ -10,12 +10,12 @@
     android:layoutDirection="rtl"
     tools:context="ir.mahoorsoft.app.cityneed.view.activity_main.ActivityMain">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/tlbProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,9 +70,9 @@
                 </RadioGroup>
 
             </LinearLayout>
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
 
     </RelativeLayout>
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav_down_Home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

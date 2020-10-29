@@ -1,9 +1,9 @@
 package ir.mahoorsoft.app.cityneed.view.activity_subscribe.fragment_chose_subscribe;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,7 +135,7 @@ public class AdapterChoseSubscribe extends RecyclerView.Adapter<AdapterChoseSubs
 
     private void setImage(ImageView img, int position) {
         Glide.with(G.context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/subscribe/" + source.get(position).id + ".png")
+                .load(ApiClient.serverAddress + "/city-need/v1/uploads/subscribe/" + source.get(position).id + ".png")
                 .error(R.drawable.subscribe_pressure)
                 .fitCenter()
                 .into(img);

@@ -1,9 +1,11 @@
 package ir.mahoorsoft.app.cityneed.model.struct;
 
+import androidx.annotation.Keep;
+
 /**
  * Created by RCC1 on 12/21/2017.
  */
-
+@Keep
 public class StTeacher {
     public String landPhone;
     public String ac;

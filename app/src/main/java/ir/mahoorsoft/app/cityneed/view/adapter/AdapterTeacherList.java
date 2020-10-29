@@ -1,8 +1,8 @@
 package ir.mahoorsoft.app.cityneed.view.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
-
 import java.util.ArrayList;
-
 import ir.mahoorsoft.app.cityneed.G;
 import ir.mahoorsoft.app.cityneed.R;
 import ir.mahoorsoft.app.cityneed.model.api.ApiClient;
@@ -82,7 +78,7 @@ public class AdapterTeacherList extends RecyclerView.Adapter<AdapterTeacherList.
         final StTeacher items = surce.get(position);
         holder.txt.setText("آموزشگاه " + items.subject);
         Glide.with(context)
-                .load(ApiClient.serverAddress + "/city_need/v1/uploads/teacher/" + items.pictureId + ".png")
+                .load(ApiClient.serverAddress + "/city-need/v1/uploads/teacher/" + items.pictureId + ".png")
                 .error(R.drawable.university)
                 .centerCrop()
                 .into(holder.img);

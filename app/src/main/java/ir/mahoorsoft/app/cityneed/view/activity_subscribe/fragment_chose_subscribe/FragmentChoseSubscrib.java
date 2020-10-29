@@ -3,12 +3,11 @@ package ir.mahoorsoft.app.cityneed.view.activity_subscribe.fragment_chose_subscr
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ import ir.mahoorsoft.app.cityneed.model.struct.StBuy;
 import ir.mahoorsoft.app.cityneed.model.struct.StSubscribe;
 import ir.mahoorsoft.app.cityneed.presenter.PresentGift;
 import ir.mahoorsoft.app.cityneed.presenter.PresentSubscribe;
-import ir.mahoorsoft.app.cityneed.view.activity_subscribe.ActivitySubscribe;
 
 import static android.app.Activity.RESULT_OK;
 
